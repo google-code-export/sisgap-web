@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="GenerationSISGAP">
+        <jta-data-source>java:/jdbc/sisgapDS</jta-data-source>
+        
+        <class>pe.com.mmh.sisgap.domain.ActividadSocio</class>
+		<class>pe.com.mmh.sisgap.domain.SectorSocio</class>
+		<class>pe.com.mmh.sisgap.domain.Socio</class>
+		<class>pe.com.mmh.sisgap.domain.TipoSocio</class>
+		<class>pe.com.mmh.sisgap.domain.Detallefactura</class>
+		<class>pe.com.mmh.sisgap.domain.DetallefacturaPK</class>
+		<class>pe.com.mmh.sisgap.domain.Factura</class>
+		<class>pe.com.mmh.sisgap.domain.Itemcobranza</class>
+		<class>pe.com.mmh.sisgap.domain.Unidadmedida</class>		
+        
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+            <!--  <property name="hibernate.hbm2ddl.auto" value="update" />-->
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
+            <property name="hibernate.use_sql_comments" value="true" />
+        </properties>
+        
+
+	</persistence-unit>
+</persistence>
