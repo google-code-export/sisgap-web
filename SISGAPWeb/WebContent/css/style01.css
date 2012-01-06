@@ -1,0 +1,596 @@
+/* CSS Document */
+body {
+	/*background-color:rgb(214,227,238);*/
+/* 	background-color: #FFFFFF; */
+	background: #D6E3EE;
+	margin-top:0px;
+	margin-left:0px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+input, select, td, textarea{ 
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size: 11px;
+	margin-left: 0px;
+	margin-top: 0px;
+}
+.print {
+	display: none
+}
+.encabezado{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:#333333;
+}
+.encabezado:hover{
+	text-decoration:underline;
+}
+.enlaceBlanco{
+	color:#FFFFFF;
+	text-decoration:none;
+}
+.enlaceBlanco:hover{
+	text-decoration:underline;	
+}
+.menuCabecera{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	background-color:rgb(92,152,191);
+	cursor:pointer;
+	width:157px;
+	text-align:center;
+}
+.menuCabeceraActivo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:rgb(31,111,176);
+	cursor:pointer;
+	width:157px;
+	text-align:center;
+}
+.mnPaises01{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:#000000;
+	cursor:pointer;
+}
+.mnPaises02{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:#000000;
+	cursor:pointer;
+	border-top-style:dashed;
+	border-top-width:1px;
+	height:19px;
+}
+
+.tablaEquifaxMundo{
+	border-color:#999999;
+	border-left-style:solid;
+	border-left-width:1px;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	border-right-style:solid;
+	border-right-width:1px;
+}
+
+.mnSubCabecera{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:rgb(34,79,101);
+	border-color:rgb(210,207,223);
+	border-left-style:solid;
+	border-left-width:1px;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	background-color:#FFFFFF;
+}
+.tituloLogin{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#000000;
+	text-align:left;
+}
+.labelLogin{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+}
+.txtLogin{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+	text-align:left;
+	width:100px;	
+}
+.btnLogin{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#000000;
+	cursor:pointer;
+	width:100px;
+	height:18px;
+	
+}
+.tableLogin{
+	border-color:#000000;
+	border-top-width:8px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-left-style:solid;	
+	border-right-style:solid;
+	border-bottom-color:#C00000;
+	border-bottom-style:solid;
+	border-bottom-width:8px;
+	width:151px;
+	height:83px;
+	margin:0px;
+}
+.tituloPaginaColDerecha{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	color:#FFFFFF;
+}
+.tituloCuerpo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:15px;
+	color:#000000;
+}
+.parrafoCuerpo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+	text-align:justify;
+}
+.subTituloPersonal{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	height:27;
+	color:#FFFFFF;
+}
+.subTituloAlertas{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-align:left;
+	height:27;
+	color:#FFFFFF;
+	background-image:url(images/bg_SubTituloAlerta.gif); 
+}
+.parrafoPersonal{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:justify;
+}
+.copyrightEquifax{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	text-align:center;
+	color:#FFFFFF;
+	height:22px;
+	background-color:#666666;
+}
+.bgEmpresas{
+	background-color:rgb(250,249,236);
+	border-color:#AAAAAA;
+	border-right-style:solid;
+	border-right-width:1px;
+	border-left-style:solid;
+	border-left-width:1px;
+}
+.txtEmpresas{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#777777;
+	text-decoration:none;
+ 	border-color:#999999; 
+ 	border-bottom-style:dashed; 
+ 	border-bottom-width:1px;
+}
+.txtEmpresas:hover{
+	color:rgb(140,24,35);
+}
+.linkOver{
+	text-decoration:none;
+	color:#000000;
+}
+.linkRed{
+	text-align:left;
+	color:#FF0000;
+	font-size:12px;
+}
+.bodytext{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:left;
+	color:#000000;
+}
+.bodytext2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:center;
+	color:#000000;
+}
+.bodytextwhite{
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:12px;
+}
+.bodytextbold{
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:12px;
+}
+.linkColorInfocorp{
+	color:rgb(187,0,0);
+}
+.linkRutaAcceso{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:rgb(34,86,142);
+}
+.creatividadEmpresaria{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+.tituloProductos{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	text-align:center;
+}
+.tituloServiciosInformacion_OLD{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	text-align:left;
+	background-image:url(images/fon_pro_sist_deci2.gif); 
+}
+.tituloServiciosInformacion{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	text-align:left;
+}
+
+.borderProdColIzquierda{
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-top-color:rgb(250,188,47);
+}
+.borderProdColCentral{
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(78,147,223);
+}
+.borderProdColDerecha{
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(158,11,14);
+}
+.borderProdColAbajo{
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(20,157,18);
+}
+.leerMasProductos{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-decoration:none;
+	color:#0066CC;
+	font-weight:bold;
+	font-size:10px;
+}
+.leerMasProductos:hover{
+	color:#000000;
+}
+.borderServInformacion{
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-top-color:rgb(250,188,47);
+}
+.borderSistemaDecision{
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-top-color:rgb(158,11,14);
+} 
+.fondoTituloMapa{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#666666;
+	font-weight:bold;
+	background-image:url(images/fon_titulo_mapa.gif);
+	width:227px;
+	height:28px;
+	text-align:center;
+}
+.fondoTituloMapa:hover{
+	text-decoration:underline;
+}
+.cuerpoMapa{
+	border-right-style:dashed;
+	border-right-width:1px;
+	border-right-color:#999999; 
+	border-top-style:solid;
+	border-top-width:2px;
+	border-top-color:#246EB7;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px; 
+	color:#246EB7;
+	text-decoration:underline;
+}
+.barraNavegacion{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:rgb(34,86,142);
+	background-color:#B7CFE1;
+	border-style:solid;
+	border-width:1px;
+	border-color:rgb(34,86,142);
+	padding-left:10px;
+	height:20px;
+}
+.degrade{
+	border-left-style:solid; 
+	border-left-color:#AAAAAA; 
+	border-left-width:1px;
+	border-bottom-style:solid; 
+	border-bottom-color:#AAAAAA; 
+	border-bottom-width:1px;
+	background-image:url(images/fondo_DegradeAzulBlancoVertical.gif); 
+	background-repeat:repeat-x;
+	font-family:Arial, Helvetica, sans-serif; 
+	padding-left:6px;
+}
+.bordeTexto{
+	border-right-style:solid; 
+	border-right-color:#999999; 
+	border-right-width:1px; 
+	padding-left:10px; 
+	padding-right:6px;
+	border-bottom-style:solid; 
+	border-bottom-color:#AAAAAA; 
+	border-bottom-width:1px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:justify;
+	color:#000000;
+}
+.e-menuCabecera{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	background-color:rgb(92,152,191);
+	cursor:pointer;
+	text-align:center;
+}
+.e-menuCabeceraActivo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:rgb(31,111,176);
+	cursor:pointer;
+	text-align:center;
+}
+.red {
+	color:#990000;
+	font: bold 10px Verdana, Arial;
+	position: relative;
+	top: 2px;
+}
+span.pagebanner {
+	background-color: #eee;
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	width:100%;
+	display:block;
+	margin-top: 10px;
+}
+span.pagelinks {
+	background-color: #eee;
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	width: 100%;
+	display:block;
+	border-top: none;
+}
+table.consultanormal {
+	border: 0px solid #666;	
+	width: 100%;
+	margin: 0 0 0 0;	
+}
+table.consultanormal thead tr th {	
+	background-color: #DDEEFF;
+	font: normal 11px Tahoma, Arial;
+	color: #003399;
+	font-weight: bold;	
+}
+table.consultanormal tr.even {
+  background-color:#F0F0F0
+}
+table.consultanormal tr.odd {
+  background-color: #FFFFFF;
+}
+th.sorted {
+  background-color: orange;
+}
+th a, th a:visited {  
+  color: #003399;
+  font-weight: bold;
+}
+th a:hover {
+  text-decoration: underline;
+  color: #003399;
+  font-weight: bold;  
+}
+th.sorted a, th.sortable a {
+	background-repeat:no-repeat;
+	background-position: right;
+	display: block;
+	width: 100%;
+	height: 16px;
+}
+td.links a,td.links a:visited,td.links a:hover {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+   
+th.sortable a {
+}  
+
+th.order1 a {
+	
+}
+
+th.order2 a {
+	
+}
+
+.sorted order1 {
+	font: normal 11px Tahoma, Arial; 
+	color: #FFFFFF;
+}
+
+.sorted{
+	font: normal 11px Tahoma, Arial; 
+	color: #FFFFFF;
+}
+.order1 {
+	font: normal 11px Tahoma, Arial; 
+	color: #FFFFFF;
+}
+
+table.consultaestadistica {
+	border: 1px solid #666;	
+	width: 100%;
+	margin: 0 0 0 0;
+}
+table.consultaestadistica thead tr th {	
+	background-color: #0086C6;
+	color: #FFFFFF;  
+}
+table.consultaestadistica tr.even {
+  background-color:#B7CFE1;
+  color: #003399;
+}
+table.consultaestadistica tr.odd {
+  background-color: #E8F4FF;
+  color: #003399;
+}
+div.tableContainer table.consultanormal thead tr {
+	position: relative
+}
+span.export {
+	padding-right: 4px; 
+	display: inline-block; 
+	padding-left: 20px; 
+	padding-bottom: 1px; 
+	cursor: pointer; 
+	padding-top: 0px
+}
+
+span.excel {
+	background-repeat:no-repeat;
+	background-image: url(../imagenes/ico_file_excel.png);
+}
+
+span.csv {
+	background-repeat:no-repeat;
+    background-image: url(../imagenes/ico_file_csv.png);
+}
+
+span.dbf{
+	background-repeat:no-repeat;
+	background-image: url(../imagenes/ico_file_dbf.png);
+}
+
+span.pdf {
+	background-repeat:no-repeat;
+	background-image: url(../imagenes/ico_file_pdf.png);
+}
+
+.bordes {
+	border-right: 1px solid #336699; 
+	border-bottom: 1px solid #336699; 
+	color: #003399;
+}
+
+center {
+	text-align: center;
+}
+
+div.scroll {	
+   height: 100%;	
+   width: 100%;	
+   overflow: auto;	
+   border: 1px solid #666;	
+   padding: 1px;
+}
+.selectwidth{
+	width: 170px;
+	border: 1px solid #000000;
+}
+.tahoma11    {font: normal 11px Tahoma, Arial; color: #003399;}
+.titulo      {font: bold   18px Tahoma, Arial; color: #003399;}
+.text        {font: normal 11px Tahoma, Arial; color: #003399; background-color: #FFFFFF; border: 1px solid #003399;}
+.readonly    {font: normal 11px Tahoma, Arial; color: #666666; background-color: #FCFCFC; border: 1px solid #999999;}
+.boton       {font: normal 11px Tahoma, Arial; color: #003399;}
+a            {font: normal 11px Tahoma, Arial; color: #333333;}
+a:hover      {font: normal 11px Tahoma, Arial; color: #003399; text-transform: none}
+#idTitulo    {text-transform: uppercase;}

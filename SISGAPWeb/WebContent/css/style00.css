@@ -1,0 +1,183 @@
+.divGeneral{
+	background-color:#FFFFFF; 
+	width:766px; 
+	height:600px; 
+	background-image:url(images/pagebg_right.gif); 
+	background-position:right;
+	background-repeat:repeat-y;
+}
+.tituloContenido{
+	background-image:url(images/bg_SubTitulo.gif); 
+	background-repeat:no-repeat;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	color:#FFFFFF;
+	height:27px;
+	width:550px;
+	text-align:left;
+	padding-left:20px;
+	padding-top:5px;
+	padding-right:0px;
+	margin:0px;
+}
+.tituloFormulario{
+	background-color:rgb(92,152,191);
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#FFFFFF;
+	height:18px;
+	width:530px;
+	text-align:left;
+	padding-left:20px;
+	padding-top:3px;
+	padding-right:0px;
+	margin:0px;
+}
+.subTituloFormulario{
+	font-size:12px;
+	padding-left:20px;
+	padding-top:3px;
+	margin:0px;
+	width:100%;
+	height:18px;
+	color:#0066CC;
+	background-color:rgb(186,226,255);
+}
+.txtForm{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-transform:uppercase;
+	background-color: #F0F9FF;
+	color: #003399;
+	border: 1px inset #CCCCCC;
+	height: 13px;
+}
+.selForm{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color: #F0F9FF;
+	color: #003399;
+}
+.lblForm{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+#contenidoCuerpo{
+	text-align:left;
+	position:static;
+	margin:0px;
+	padding:0px;
+}
+.frmUsrRegistrados{
+	border: 1px solid #006699;
+	height:75px;
+	margin-top:2px;
+	margin-bottom:0px;
+	margin-right:0px;
+	margin-left:0px;
+	font: normal 11px Tahoma, Arial;
+}
+/****** INICIO ESTILOS HOME PAGE ******/
+.ordenarAhora{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	background-image:url(images/btn_Fondo.gif); 
+	height:17px;
+	text-align:center;
+	width:120px;
+	cursor:pointer;
+	border-left-style:solid;
+	border-left-width:1px;
+	border-left-color:rgb(85,136,178);
+	border-right-style:solid;
+	border-right-width:1px;
+	border-right-color:rgb(85,136,178);
+}
+.tituloTresColumnas{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#990000;
+	padding-left:15px;
+	padding-right:20px;
+	padding-top:5px;
+	padding-bottom:5px;
+	background-repeat:no-repeat;
+}
+.fondoTresColumnas{
+	background-image:url(images/blue_white_fade.gif);
+	background-repeat:no-repeat;
+}
+.obtengaYaDetalle{
+	font-size:11px;
+	width:130px;
+	font-weight:bold;
+	margin-left:12px;
+	margin-top:5px;
+	color:#555555;
+}
+.obtengaYaDetalleProx{
+	font-size:11px;
+	font-weight:bold;
+	margin-left:12px;
+	margin-top:5px;
+	color:#555555;
+}
+.obtengaYaDescripcion{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	padding-left:6px;
+	text-align:left;
+}
+.leerMasVerEjemplo{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#0066CC;
+}
+.leerMasVerEjemplo:hover{
+	color:#000000;
+}
+.colInferiorIzq{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	border-right-style:dashed;
+	border-right-width:1px;
+	border-right-color:#0066CC;
+}
+.parrafoColInfIzq{
+	font-size:11px;
+	font-weight:normal;
+	color:#4E82AD;
+	margin-left:14px;
+}
+.leerMas_10{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#0066CC;
+	font-size:10px;
+}
+.leerMas_10:hover{
+	color:#000000;
+}
+.bracketsTop{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	padding-left:10px;
+	background-image:url(images/brackets_blue_top.gif);
+	background-repeat:no-repeat;
+	color:#000000;
+}
+.bracketsBot{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	padding-left:10px;
+	background-image:url(images/brackets_blue_bot.gif);
+	background-position:bottom;
+	background-repeat:no-repeat;
+}
+
+/****** FIN ESTILOS HOME PAGE ******/

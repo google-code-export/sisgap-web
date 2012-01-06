@@ -1,0 +1,166 @@
+.divGeneral{
+	background-color:#FFFFFF; 
+	width:766px; 
+	height:600px; 
+	background-position:right;
+	background-repeat:repeat-y;
+}
+.tituloContenido{
+	font-family:Times New Roman;
+	font-size:13px;
+	font-weight:bold;
+	color:#FFFFFF;
+	height:27px;
+	width:550px;
+	text-align:left;
+	padding-left:20px;
+	padding-top:5px;
+	padding-right:0px;
+	margin:0px;
+}
+.tituloFormulario{
+	font-family:Times New Roman;
+	font-size:12px;
+	font-weight:bold;
+	height:18px;
+	width:530px;
+	text-align:left;
+	padding-left:20px;
+	padding-top:3px;
+	padding-right:0px;
+	margin:0px;
+}
+.subTituloFormulario{
+	font-size:12px;
+	padding-left:20px;
+	padding-top:3px;
+	margin:0px;
+	width:100%;
+	height:18px;
+	color:#0066CC;
+}
+.txtForm{
+	font-family:Times New Roman;
+	font-size:11px;
+	text-transform:uppercase;
+	border: 1px solid #000000;
+}
+.selForm{
+	font-family:Times New Roman;
+	font-size:11px;
+}
+.lblForm{
+	font-family:Times New Roman;
+	font-size:11px;
+}
+#contenidoCuerpo{
+	text-align:left;
+	position:static;
+	margin:0px;
+	padding:0px;
+}
+.frmUsrRegistrados{
+	border: 1px solid #000000;
+	width:548px;
+	height:75px;
+	margin-top:2px;
+	margin-bottom:0px;
+	margin-right:0px;
+	margin-left:0px;
+}
+/****** INICIO ESTILOS HOME PAGE ******/
+.ordenarAhora{
+	font-family:Times New Roman;
+	font-size:13px;
+	font-weight:bold;
+	height:17px;
+	text-align:center;
+	width:120px;
+	cursor:pointer;
+	border-left-style:solid;
+	border-left-width:1px;
+	border-left-color:rgb(85,136,178);
+	border-right-style:solid;
+	border-right-width:1px;
+	border-right-color:rgb(85,136,178);
+}
+.tituloTresColumnas{
+	font-family:Times New Roman;
+	font-size:14px;
+	font-weight:bold;
+	color:#000000;
+	padding-left:15px;
+	padding-right:20px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.fondoTresColumnas{
+	background-repeat:no-repeat;
+}
+.obtengaYaDetalle{
+	font-size:11px;
+	width:130px;
+	font-weight:bold;
+	margin-left:12px;
+	margin-top:5px;
+	color:#555555;
+}
+.obtengaYaDetalleProx{
+	font-size:11px;
+	font-weight:bold;
+	margin-left:12px;
+	margin-top:5px;
+	color:#555555;
+}
+.obtengaYaDescripcion{
+	font-family:Times New Roman;
+	font-size:10px;
+	padding-left:6px;
+	text-align:left;
+}
+.leerMasVerEjemplo{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:#0066CC;
+}
+.leerMasVerEjemplo:hover{
+	color:#000000;
+}
+.colInferiorIzq{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:10px;
+	border-right-style:dashed;
+	border-right-width:1px;
+	border-right-color:#0066CC;
+}
+.parrafoColInfIzq{
+	font-size:11px;
+	font-weight:normal;
+	color:#4E82AD;
+	margin-left:14px;
+}
+.leerMas_10{
+	font-family:Times New Roman;
+	color:#0066CC;
+	font-size:10px;
+}
+.leerMas_10:hover{
+	color:#000000;
+}
+.bracketsTop{
+	font-family:Times New Roman;
+	font-size:11px;
+	padding-left:10px;
+	background-repeat:no-repeat;
+	color:#000000;
+}
+.bracketsBot{
+	font-family:Times New Roman;
+	font-size:11px;
+	padding-left:10px;
+	background-position:bottom;
+	background-repeat:no-repeat;
+}
+
+/****** FIN ESTILOS HOME PAGE ******/

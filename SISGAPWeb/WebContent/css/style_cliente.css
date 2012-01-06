@@ -1,0 +1,265 @@
+h1, h2, h3, h4, h5, h6, p, strong, div, form, acronym, label, table, td, th, span, a, hr, code, pre, hr {
+	margin:1;
+	padding:1;
+	font-size: 1em;
+	background-repeat:no-repeat;
+	list-style-type:none;
+}
+table{ border-collapse:collapse;}
+
+a, a:visited, a:hover { 
+	color:#666; text-decoration:none; 
+}
+body, input, select, td, textarea{ 
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size: 11px;
+}
+body{ 
+	background-color:rgb(214,227,238);
+	background-position: right;
+}
+a:hover {
+	text-decoration: underline;
+}
+fieldset {
+	margin: 0 0 0 0;
+	padding: 1em .5em .5em .5em;
+	border: 1px solid #528AB5;
+} 
+legend { 
+	padding: .2em; 
+	FONT: bold 12px Arial, Helvetica, sans-serif;
+	color: #186DB5; 
+	border: 0px solid #CE0000; 
+	white-space:nowrap;
+}
+.titulo
+{
+    FONT:BOLD 12px ARIAL;
+    COLOR: #CE0000;
+}
+.tituloPrincipal {
+	font-size: 18px;
+	color: #5A9ABD;
+	font-weight: bold;
+}
+.etiqueta
+{
+	font-weight: bolder;   /*FONT: bold 11px; Arial, Helvetica, sans-serif;*/
+}
+.campo
+{
+	border-right: 1px solid;
+	border-top: 1px solid;	
+	border-left: 1px solid;
+	border-bottom: 1px solid;
+}
+.boton  {
+	font-size:11px;
+	margin: 1px 2px 1px 2px;
+	border-top: 1px outset #528AB5;
+	border-right: 1px outset #528AB5;
+	border-bottom: 1px outset #528AB5;
+	border-left: 1px outset #528AB5;
+	background-color:#E2E2E2;
+	background-image: url(../imagenes/fondo_boton.gif);
+}
+
+
+
+.asterisco{
+    FONT:BOLD 10px Arial;
+    COLOR: red
+}
+.lista {
+	width: 120px;
+	height: 130px;
+	/*FONT: 9px Arial, Helvetica, sans-serif;*/
+	border: 1px solid #000000;
+}
+.botonlista {
+	width: 150px;
+}
+span.pagebanner {
+	background-color: #eee;
+	border: 1px dotted #999;
+	padding: 2px 0px 2px 0px;
+	width: 100%;
+	margin-top: 10px;
+	display:block;
+	border-bottom: none;
+}
+span.pagelinks {
+	background-color: #eee;
+	border: 1px dotted #999;
+	padding: 2px 0px 2px 0px;
+	width: 100%;
+	display:block;
+	border-top: none;
+	margin-bottom: -5px;
+}
+table.criterios {
+	border-collapse:collapse; 
+	border: 0px solid #000000;
+	margin: 0 0 0 0;
+}
+table.criterios th {
+  background-color: #BDBEBD;
+}
+table.consultanormal {
+	border: 1px solid #666;
+	width: 100%;
+	margin: 0 0 0 0;
+}
+table.consultanormal thead tr th {
+	background-color: #000000;
+	color: #FFFFFF;    
+	/*background-repeat: repeat;*/
+	/*background-image: url(../images/celda_fondo_03.jpg);*/
+}
+table.consultanormal tr.even {
+  background-color:#F0F0F0
+}
+table.consultanormal tr.odd {
+  background-color: #FFFFFF;
+}
+th.sorted {
+    background-color: orange;
+}
+th a, th a:visited {
+  color: #FFFFFF;
+}
+th a:hover {
+  text-decoration: underline;
+  color: #FFFFFF;
+}
+th.sorted a, th.sortable a {
+	background-repeat:no-repeat;
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+th.sortable a {
+	background-image: url(../imagenes/arrow_off.png);
+}
+th.order1 a {
+	background-image: url(../imagenes/arrow_down.png);
+}
+th.order2 a {
+	background-image: url(../imagenes/arrow_up.png);
+}
+table.inline {
+	display: inline;
+}
+.bigText{
+font-size:18px;
+font-weight:bolder;
+}
+.readOnly
+{
+	border-right: 1px solid;
+	border-top: 1px solid;	
+	border-left: 1px solid;
+	border-bottom: 1px solid;
+	background-color:#CCCCCC;
+}
+.infoTitulo
+{
+    FONT: bold 10px verdana, arial;
+    COLOR: #000000;
+    BACKGROUND-COLOR:#E8F4FF;
+    TEXT-DECORATION: none
+}
+.infoLabel
+{
+    FONT: 10px Arial, Helvetica, sans-serif;
+    COLOR: #000000;
+    BACKGROUND-COLOR: #F4FAFF;
+	font-weight:bold;
+    
+	
+}
+.infoText
+{
+    FONT: 10px Arial, Helvetica, sans-serif;
+    COLOR: #000000;
+    BACKGROUND-COLOR: #ffffff;
+    TEXT-DECORATION: none
+}
+.mnPaises01 {
+	FONT-SIZE: 11px; CURSOR: pointer; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+.tituloLogin {
+	FONT-SIZE: 13px; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: left
+}
+.labelLogin {
+	FONT-SIZE: 11px; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: left
+}
+.txtLogin {
+	FONT-SIZE: 11px; WIDTH: 100px; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: left
+}
+.copyrightEquifax {
+	FONT-SIZE: 10px; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; HEIGHT: 22px; BACKGROUND-COLOR: #666666; TEXT-ALIGN: center
+}
+.textoNombre {
+	FONT-WEIGHT: bold; FONT-SIZE: 10px; COLOR: #0066cc; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+.menuCabecera {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; WIDTH: 135px; CURSOR: pointer; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: rgb(92,152,191); TEXT-ALIGN: center; TEXT-DECORATION: none
+}
+.menuCabeceraActivo {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; WIDTH: 135px; CURSOR: pointer; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: rgb(31,111,176); TEXT-ALIGN: center
+}
+
+
+
+/*  INICIO PRUEBA DE TABLE SCROLLING*/
+/* define height and width of scrollable area. Add 16px to width for scrollbar          */
+div.tableContainer {
+	clear: both;
+	border: 0px solid #666;
+	height: 350px;
+	overflow: auto;
+	width: 100%;
+}
+
+
+
+/* define width of table. IE browsers only                 */
+/*div.tableContainer table {
+	float: left;
+	width: 740px
+}*/
+
+
+
+/* set table header to a fixed position. WinIE 6.x only                                       */
+/* In WinIE 6.x, any element with a position property set to relative and is a child of       */
+/* an element that has an overflow property set, the relative value translates into fixed.    */
+/* Ex: parent element DIV with a class of tableContainer has an overflow property set to auto */
+div.tableContainer table.consultanormal thead tr {
+	position: relative
+}
+
+
+
+/* FIN DE PRUEBA TABLE SCROLLING */
+
+div.scroll {	
+   position:relative;
+   height:350px;	
+   width: 100%;	
+   overflow: auto;	
+   border: 1px solid #666;	
+   padding: 1px;
+}
+div.scroll table td{
+	white-space:nowrap;
+}
+div.scroll table th{
+	white-space:nowrap;
+}
+td.link{
+	text-decoration:underline;
+	cursor:hand;
+}

@@ -1,0 +1,330 @@
+/* CSS Document */
+body {
+/* 	background-color:rgb(255,255,255); */
+	background: #D6E3EE;
+	margin-top:0px;
+	margin-left:0px;
+	font-family:Times New Roman;
+}
+.noprint {
+	display: none
+}
+.encabezado{
+	font-family:Times New Roman;
+	font-size:11px;
+	text-decoration:none;
+	color:#333333;
+}
+.encabezado:hover{
+	text-decoration:underline;
+}
+.enlaceBlanco{
+	color:#FFFFFF;
+	text-decoration:none;
+}
+.enlaceBlanco:hover{
+	text-decoration:underline;	
+}
+.menuCabecera{
+	font-family:Times New Roman;
+	font-size:11px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	background-color:rgb(92,152,191);
+	cursor:pointer;
+	width:157px;
+	text-align:center;
+}
+.menuCabeceraActivo{
+	font-family:Times New Roman;
+	font-size:11px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:rgb(31,111,176);
+	cursor:pointer;
+	width:157px;
+	text-align:center;
+}
+.mnPaises01{
+	font-family:Times New Roman;
+	font-size:11px;
+	text-decoration:none;
+	color:#000000;
+	cursor:pointer;
+}
+.mnPaises02{
+	font-family:Times New Roman;
+	font-size:11px;
+	text-decoration:none;
+	color:#000000;
+	cursor:pointer;
+	border-top-style:dashed;
+	border-top-width:1px;
+	height:19px;
+}
+
+.tablaEquifaxMundo{
+	border-color:#999999;
+	border-left-style:solid;
+	border-left-width:1px;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	border-right-style:solid;
+	border-right-width:1px;
+}
+
+.mnSubCabecera{
+	font-family:Times New Roman;
+	font-size:12px;
+	text-decoration:none;
+	color:rgb(34,79,101);
+	border-color:rgb(210,207,223);
+	border-left-style:solid;
+	border-left-width:1px;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	cursor:pointer;
+	background-color:#FFFFFF;
+}
+.tituloLogin{
+	font-family:Times New Roman;
+	font-size:13px;
+	color:#000000;
+	text-align:left;
+}
+.labelLogin{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:#000000;
+	text-align:left;
+}
+.txtLogin{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:#000000;
+	text-align:left;
+	width:100px;	
+}
+.btnLogin{
+	font-family:Times New Roman;
+	font-size:12px;
+	color:#000000;
+	cursor:pointer;
+	width:100px;
+	height:18px;
+	
+}
+.tableLogin{
+	border-color:#000000;
+	border-top-width:8px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-left-style:solid;	
+	border-right-style:solid;
+	border-bottom-color:#C00000;
+	border-bottom-style:solid;
+	border-bottom-width:8px;
+	width:151px;
+	height:83px;
+	margin:0px;
+}
+.tituloPaginaColDerecha{
+	font-family:Times New Roman;
+	font-size:17px;
+	color:#FFFFFF;
+}
+.tituloCuerpo{
+	font-family:Times New Roman;
+	font-size:15px;
+	color:#000000;
+}
+.parrafoCuerpo{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:#000000;
+	text-align:justify;
+}
+.subTituloPersonal{
+	font-family:Times New Roman;
+	font-size:20px;
+	font-weight:bold;
+	text-align:left;
+	height:27;
+	color:#000000;
+}
+.parrafoPersonal{
+	font-family:Times New Roman;
+	font-size:12px;
+	text-align:justify;
+}
+.copyrightEquifax{
+	font-family:Times New Roman;
+	font-size:12px;
+	text-align:left;
+	color: #000000;
+	height:22px;
+	font-weight: bold;
+	padding-left: 10px;
+}
+.bgEmpresas{
+	background-color:rgb(255,255,255);
+}
+.txtEmpresas{
+	font-size:13px;
+	text-decoration:none;
+	color:#000000;
+}
+.txtEmpresas:hover{
+	color:rgb(140,24,35);
+}
+.linkOver{
+	text-decoration:none;
+	color:#000000;
+}
+.linkRed{
+	text-align:left;
+	color:#FF0000;
+	font-size:12px;
+}
+.bodytext{
+	font-family:Times New Roman;
+	font-size:12px;
+	text-align:left;
+	color:#000000;
+}
+.bodytext2{
+	font-family:Times New Roman;
+	font-size:12px;
+	text-align:center;
+	color:#000000;
+}
+.bodytextwhite{
+	color:#FFFFFF;
+	font-family:Times New Roman;
+	font-weight:bold;
+	font-size:12px;
+}
+.bodytextbold{
+	font-family:Times New Roman;
+	font-weight:bold;
+	font-size:12px;
+}
+.linkColorInfocorp{
+	color:rgb(187,0,0);
+}
+.linkRutaAcceso{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:rgb(34,86,142);
+}
+.creatividadEmpresaria{
+	font-family:Times New Roman;
+	font-size:11px;
+}
+.tituloProductos{
+	font-family:Times New Roman;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFFFFF;
+	text-align:center;
+}
+.tituloServiciosInformacion{
+	font-family:Times New Roman;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#000000;
+	text-align:left;
+}
+.borderProdColIzquierda{
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-top-color:rgb(250,188,47);
+}
+.borderProdColCentral{
+	border-right-style:solid;
+	border-right-color:#999999;
+	border-right-width:1px;
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(78,147,223);
+}
+.borderProdColDerecha{
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(158,11,14);
+}
+.borderProdColAbajo{
+	border-top-style:solid;
+	border-top-color:#999999;
+	border-top-width:1px;
+	border-left-style:solid;
+	border-left-color:#999999;
+	border-left-width:1px;
+	border-top-color:rgb(20,157,18);
+}
+.leerMasProductos{
+	font-family:Times New Roman;
+	font-size:11px;
+	text-decoration:none;
+	color:#0066CC;
+	font-weight:bold;
+	font-size:10px;
+}
+.leerMasProductos:hover{
+	color:#000000;
+}
+.fondoTituloMapa{
+	font-family:Times New Roman;
+	font-size:11px;
+	color:#666666;
+	font-weight:bold;
+	width:227px;
+	height:28px;
+	text-align:center;
+}
+.fondoTituloMapa:hover{
+	text-decoration:underline;
+}
+.cuerpoMapa{
+	border-right-style:dashed;
+	border-right-width:1px;
+	border-right-color:#999999; 
+	border-top-style:solid;
+	border-top-width:2px;
+	border-top-color:#246EB7;
+	font-family:Times New Roman;
+	font-size:12px; 
+	color:#246EB7;
+	text-decoration:underline;
+}
+.barraNavegacion{
+	display : none;
+}
+.degrade{
+	font-family:Arial, Helvetica, sans-serif; 
+	padding-left:6px;
+}
+.bordeTexto{
+	padding-left:10px; 
+	padding-right:6px;
+	font-family:Times New Roman;
+	font-size:12px;
+	text-align:left;
+	color:#000000;
+}

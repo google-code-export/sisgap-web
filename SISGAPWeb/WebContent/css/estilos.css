@@ -1,0 +1,125 @@
+body{
+	font-size: 11px;
+	background: #D6E3EE;
+}
+/*Estilso para el menu*/
+.botonDelMenu {	font-size: 11px;	text-align: center;	}
+.botonDelMenu a img{ border:0px;	margin: auto; width: 45px; height:45px;}
+.botonDelMenu p {	font-size: 10px;}
+.menuv {
+      /*  border: 1px solid #ACCFE8;*/
+        /*border-width:  1px 1px 0px 1px;  */      
+        width: 116px;
+        font: 80% "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+.menuv ul, li {       list-style-type: none;}
+.menuv ul {        margin: 0;        padding: 0;}
+.menuv li {       /* border: 1px solid #ACCFE8; */       text-align: center;}
+.menuv a {
+		border: 1px solid #ACCFE8; 
+		text-decoration: none;
+	    color: #3366CC;
+	   /* background: #F0F7FC;*/
+	    padding: 0;/*3px 6px;*/
+	    width: 116px;
+}
+.menuv a img{ display:  block;}
+.menuv a:hover {   background: #FBEE99;	}
+.menuv a:ACTIVE { 	background: #FBEE99;	}
+
+/*Estilos para el texto*/
+.textoSubTitulo {	font-size: 1.5em;	color: gray;}
+
+/*Estilos para tablas*/
+.tablaEquifax {	padding: 10px;	text-align:center;border: 2px;border-color: black;}
+.tablaEquifax  th{background: #4682B4; color: white;}
+.tablaEquifax  td{	margin: 3px;color: black;}
+.tablaEquifax  tr.impar{	background: white;}
+.tablaEquifax  tr.par{	background: gray;}
+tr.par{background-color:#F0F0F0}
+
+/*Estilos para tablas de Equifax*/
+.consultanormal tr.titulo{background-color:  #DDEEFF}
+.consultanormal tr.titulo:hover{background-color:  #DDEEFF}
+table.consultanormal tr {  background-color: #FFFFFF;}
+table.consultanormal tr.par{background-color:#F0F0F0}
+table.consultanormal tr.impar{background-color:#FFFFFF}
+table.consultanormal tr.seleccion{background-color:#FBEE99;}
+
+table.consultanormal tr:hover {  background-color: #7ACAFF;}
+table.consultanormal tr.par:hover{background-color:#7ACAFF;}
+table.consultanormal tr.even:hover{background-color:#7ACAFF;}
+table.consultanormal tr.odd:hover{background-color:#7ACAFF;}
+table.consultanormal tr.seleccion:hover{background-color:#7ACAFF;}
+table.consultanormal tr.impar:hover{background-color:#7ACAFF;}	
+/* Color verde : #0066CC*/
+
+legend {	font-size: 14px;}
+.obligatorio{color: red;font-size: 1em;}
+
+/*Alineacion de botones*/
+.botones ul, li {         list-style-type: none;  margin: auto;}
+.botones ul li {      display: inline;}
+.botones ul li.alejadoIzquierda{    margin-left:20px;}
+.botones ul li.alejadoDerecha{    margin-right:20px;} 
+.botones ul li.alejadoCentrado{    margin-left:20px;    margin-right:20px;} 
+.divCentrado{
+	text-align: center;
+/*vertical-align:center;*/
+
+}
+.divCentradoHorizontal{text-align:center; }
+.divCentradoVertical{/*vertical-align:center;*/}
+/* Ocultar div*/
+.oculto{ display: none;}
+.visible{ display: inline;}
+
+.mensajeError{
+	border-color: #FF0000;
+	border-width: 1px;
+	border-style: solid;
+	font-family: Arial, Helvetica, sans-serif;
+	 font-size: 11px; 
+	 font-style: normal; 
+	 line-height: normal;
+	  font-weight: bold; 
+	  font-variant: normal;
+	   color: #FF0000; 
+	   background-color: #FFFFFF;
+	   padding: 3px;
+	   margin: 3px;
+	}
+.mensajeRequerido{
+	color: red;
+}
+.mensajeExito{
+	border-color: #0000FF;
+	border-width: 1px;
+	border-style: solid;
+	font-family: Arial, Helvetica, sans-serif;
+	 font-size: 11px; 
+	 font-style: normal; 
+	 line-height: normal;
+	  font-weight: bold; 
+	  font-variant: normal;
+	   color: #0000FF; 
+	   background-color: #FFFFFF;
+	   padding: 3px;
+	   margin: 3px;
+	}
+	
+	
+.divBotonCerrar{
+	margin-top: -15px;
+width: 100%;
+text-align: right;
+display: block;
+}
+.botonCerrar{
+height: 32px;
+width: 32px;
+}
+
+.divBotonCerrar a img{
+border: 0px;
+}

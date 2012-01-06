@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config SYSTEM "struts-config_1_2.dtd">
+                               
+<struts-config>
+
+ <data-sources/>
+ <form-beans>
+    <form-bean name="loginActionForm" type="pe.com.mmh.sisgap.seguridad.action.form.LoginActionForm"/>
+    <form-bean name="gestionarSociosActionForm" type="pe.com.mmh.sisgap.administracion.action.form.GestionarSociosActionForm"/>
+    <form-bean name="gestionarItemCobranzaActionForm" type="pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionForm"/>
+    <form-bean name="facturacionActionForm" type="pe.com.mmh.sisgap.administracion.action.form.FacturacionActionForm"/>
+    <form-bean name="SuministroLuzActionForm" type="pe.com.mmh.sisgap.administracion.action.form.SuministroLuzActionForm"/>                                                          
+<!--     
+    <form-bean name="gestionarConceptosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarConceptosActionForm"/>
+    <form-bean name="gestionarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarModelosActionForm"/>
+    <form-bean name="seleccionarConceptosAtributosActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.SeleccionarConceptosAtributosActionForm"/>
+    <form-bean name="modificarSeleccionConceptosAtributosActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.ModificarSeleccionConceptosAtributosActionForm"/>
+    <form-bean name="seleccionarConceptosActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.SeleccionarConceptosActionForm"/>
+    <form-bean name="modificarSeleccionConceptosActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.ModificarSeleccionConceptosActionForm"/>
+  	<form-bean name="auditoriaActionForm" type="pe.com.equifax.paramweb.seguridad.action.form.AuditoriaForm"/>
+	<form-bean name="asociarModeloActionForm" type="pe.com.equifax.paramweb.general.action.form.AsociarModeloActionForm"/>
+	<form-bean name="asociarModeloEquifaxActionForm" type="pe.com.equifax.paramweb.general.action.form.AsociarModeloEquifaxActionForm"/>
+	<form-bean name="transmitirTramaEjecutorActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.TransmitirTramaEjecutorActionForm"/>
+	<form-bean name="transmitirTramaReporteCrediticioActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.TransmitirTramaReporteCrediticioActionForm"/>
+	<form-bean name="reporteDiccionarioGeneralActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteDiccionarioGeneralActionForm"/>
+	<form-bean name="reporteConceptosAtributosActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteConceptosAtributosActionForm"/>
+	<form-bean name="reporteModelosGeneradosActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteModelosGeneradosActionForm"/>	
+	<form-bean name="historialActionForm" type="pe.com.equifax.paramweb.administracion.action.form.HistorialActionForm"/>
+	<form-bean name="aprobarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.AprobarModelosActionForm"/>
+	<form-bean name="transmitirProduccionActionForm" type="pe.com.equifax.paramweb.general.action.form.TransmitirProduccionActionForm"/>
+		 -->
+	
+ </form-beans>
+ 
+ <global-exceptions/>
+ 
+ <global-forwards>
+  <forward name="sesion.invalida" path="/jsp/cerrarSesion.jsp"/>
+ <!--  <forward name="errorGenerico.server" path="/error/errorGenericoServer.jsp"/> -->
+ </global-forwards>
+ 
+ <action-mappings>
+ 
+  <!-- seguridad -->  
+  <action input="/login.jsp" name="loginActionForm" path="/login"
+   scope="request" type="pe.com.mmh.sisgap.seguridad.action.LoginAction">
+   <forward name="cargarAction" path="/login.jsp"/>
+   <forward name="ingresarSistema" path="/login.jsp"/>
+   <forward name="cargarCambiarPassword" path="/jsp/cambiarContrasena.jsp"/> 
+   <forward name="inicio" path="/jsp/inicio.jsp"/>   
+  </action>
+  
+  <action name="gestionarSociosActionForm" path="/gestionarSocios"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.GestionarSociosAction">
+     <forward name="cargarAction" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+     <forward name="gestionarClientes" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
+   </action>
+   
+  <action name="gestionarItemCobranzaActionForm" path="/gestionarItemCobranza"
+   scope="session" type="pe.com.mmh.sisgap.administracion.action.GestionarItemCobranzaAction">
+     <forward name="cargarAction" path="/jsp/administracion/itemcobranza/gestionarItemCob.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+	 <forward name="agregarCobranzas" path="/jsp/administracion/itemcobranza/agregarItemCob.jsp"/>
+	 <forward name="editarItem" path="/jsp/administracion/itemcobranza/editarItemCob.jsp"/>
+   </action>   
+ 
+   <action name="facturacionActionForm" path="/gestionarFacturacion"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.FacturacionAction">
+     <forward name="cargarAction" path="/jsp/administracion/facturacion/gestionarFacturacion.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+     <forward name="agregarFacturacion" path="/jsp/administracion/facturacion/agregarFacturacion.jsp"/>
+     <forward name="editarItem" path="/jsp/administracion/itemcobranza/agregarItemCob.jsp"/>
+     
+   </action> 
+
+   <action name="SuministroLuzActionForm" path="/SuministroLuz"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.SuministroLuzAction">
+     <forward name="cargarAction" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+     <forward name="admSuministroluz" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
+     <forward name="agrebarSuministroluz" path="/jsp/administracion/suministroluz/agregarSuministroLuzSocio.jsp"/>
+     
+   </action>    
+  <!-- ejecutor -->  
+<!--   <action input="/jsp/ejecutor/seleccionarConceptosAtributos.jsp" name="seleccionarConceptosAtributosActionForm" path="/selConAtr"
+   scope="request" type="pe.com.equifax.paramweb.ejecutor.action.SeleccionarConceptosAtributosAction">
+    <forward name="cargarAction" path="/jsp/ejecutor/seleccionarConceptosAtributos.jsp"/>
+    <forward name="listar" path="/jsp/ejecutor/seleccionarConceptosAtributos.jsp"/>    
+  </action>
+
+  <action input="/jsp/ejecutor/modificarSeleccionConceptosAtributos.jsp" name="modificarSeleccionConceptosAtributosActionForm" path="/modConAtr"
+   scope="request" type="pe.com.equifax.paramweb.ejecutor.action.ModificarSeleccionConceptosAtributosAction">
+    <forward name="cargarAction" path="/jsp/ejecutor/modificarSeleccionConceptosAtributos.jsp"/>
+    <forward name="regresar" path="/selConAtr.do?metodo=cargarAction"/>
+    <forward name="iframe" path="/jsp/ejecutor/iframe.jsp"/>           
+  </action>
+    
+  <action input="/jsp/ejecutor/transmitirTramaEjecutor.jsp" name="transmitirTramaEjecutorActionForm" path="/traTraEje"
+   scope="request" type="pe.com.equifax.paramweb.ejecutor.action.TransmitirTramaEjecutorAction">
+    <forward name="cargarAction" path="/jsp/ejecutor/transmitirTramaEjecutor.jsp"/>
+    <forward name="buscar" path="/jsp/ejecutor/transmitirTramaEjecutor.jsp"/>
+    <forward name="transmitir" path="/jsp/ejecutor/transmitirTramaEjecutorPopup.jsp"/>          
+  </action>
+  
+  Reporte Crediticio  
+  <action input="/jsp/reporteCrediticio/seleccionarConceptos.jsp" name="seleccionarConceptosActionForm" path="/selCon"
+   scope="request" type="pe.com.equifax.paramweb.reportecrediticio.action.SeleccionarConceptosAction">
+    <forward name="cargarAction" path="/jsp/reporteCrediticio/seleccionarConceptos.jsp"/>
+    <forward name="listar" path="/jsp/reporteCrediticio/seleccionarConceptos.jsp"/>    
+  </action>
+  
+  <action input="/jsp/reporteCrediticio/modificarSeleccionConceptos.jsp" name="modificarSeleccionConceptosActionForm" path="/modCon"
+   scope="request" type="pe.com.equifax.paramweb.reportecrediticio.action.ModificarSeleccionConceptosAction">
+    <forward name="cargarAction" path="/jsp/reporteCrediticio/modificarSeleccionConceptos.jsp"/>
+    <forward name="regresar" path="/selCon.do?metodo=cargarAction"/>          
+  </action>
+ 
+  <action input="/jsp/reporteCrediticio/transmitirTramaReporteCrediticio.jsp" name="transmitirTramaReporteCrediticioActionForm" path="/traTraRc"
+   scope="request" type="pe.com.equifax.paramweb.reportecrediticio.action.TransmitirTramaReporteCrediticioAction">
+    <forward name="cargarAction" path="/jsp/reporteCrediticio/transmitirTramaReporteCrediticio.jsp"/>
+    <forward name="buscar" path="/jsp/reporteCrediticio/transmitirTramaReporteCrediticio.jsp"/>
+    <forward name="transmitir" path="/jsp/reporteCrediticio/transmitirTramaReporteCrediticioPopup.jsp"/>          
+  </action>
+  
+ 
+  mantenimiento
+
+  
+ 
+  <action  name="gestionarConceptosActionForm" path="/gestionarConceptos"
+   scope="request" type="pe.com.equifax.paramweb.administracion.action.GestionarConceptosAction">
+     <forward name="cargarAction" path="/jsp/administracion/concepto/gestionarConceptos.jsp"/>
+     <forward name="gestionarConceptos" path="/jsp/administracion/concepto/gestionarConceptos.jsp"/>
+     <forward name="agregarConcepto" 	path="/jsp/administracion/concepto/agregarConcepto.jsp"/>
+     <forward name="modificarConcepto" 	path="/jsp/administracion/concepto/modificarConcepto.jsp"/>
+     <forward name="modificarAtributoConcepto" path="/jsp/administracion/concepto/modificarAtributoConcepto.jsp"/>
+       
+  </action>
+ 
+ 	<action  name="auditoriaActionForm" path="/auditoria"
+    scope="request" type="pe.com.equifax.paramweb.seguridad.action.AuditoriaAction">
+     	<forward name="cargarAction" path="/jsp/administracion/auditoria/auditoria.jsp"/>
+   		<forward name="auditoria" path="/jsp/administracion/auditoria/auditoria.jsp"/> 
+      	<forward name="listaAuditoria" path="/jsp/administracion/auditoria/listaAuditoria.jsp"/> 
+   </action>
+    <action  name="gestionarModelosActionForm" path="/gestionarModelos"
+    scope="request" type="pe.com.equifax.paramweb.administracion.action.GestionarModelosAction">
+    	<forward name="cargarAction" path="/jsp/general/modelo/gestionarModelos.jsp"/>
+      	<forward name="gestionarModelos" path="/jsp/general/modelo/gestionarModelos.jsp"/> 
+      	<forward name="agregarModelo" path="/jsp/general/modelo/agregarModelo.jsp"/>
+      	<forward name="modificarModelo" path="/jsp/general/modelo/modificarModelo.jsp"/>      
+   </action>
+   
+   
+   <action  name="aprobarModelosActionForm" path="/aprobarModelos"
+    scope="request" type="pe.com.equifax.paramweb.administracion.action.AprobarModelosAction">
+    	<forward name="cargarAction" path="/jsp/administracion/modelo/aprobarModelos.jsp"/>
+      	<forward name="aprobarModelos" path="/jsp/administracion/modelo/aprobarModelos.jsp"/>  
+ 		<forward name="iframe" path="/jsp/administracion/modelo/iframe.jsp"/>    
+   </action>
+   
+   <action  name="historialActionForm" path="/his" scope="request" type="pe.com.equifax.paramweb.administracion.action.HistorialAction">
+      	<forward name="cargarAction" path="/jsp/administracion/historial/historial.jsp"/>    		
+      	<forward name="buscar" path="/jsp/administracion/historial/historial.jsp"/>    
+   </action>
+   
+
+ 	<action  name="asociarModeloActionForm" path="/asociarModelo"
+    scope="request" type="pe.com.equifax.paramweb.general.action.AsociarModeloAction">
+    	<forward name="cargarAction" path="/jsp/general/asociarModelo.jsp"/>
+      	<forward name="asociarModelo" path="/jsp/general/asociarModelo.jsp"/> 
+      	<forward name="asociarModeloDetalle" path="/jsp/general/asociarModeloDetalle.jsp"/> 
+      	<forward name="elegirModelo" path="/jsp/general/elegirModelo.jsp"/> 
+   </action>
+    <action  name="asociarModeloEquifaxActionForm" path="/asociarModeloEquifax"
+    scope="request" type="pe.com.equifax.paramweb.general.action.AsociarModeloEquifaxAction">
+    	<forward name="cargarAction" path="/jsp/general/asociarModeloEquifax.jsp"/>
+      	<forward name="asociarModeloEquifax" path="/jsp/general/asociarModeloEquifax.jsp"/> 
+   		<forward name="asociarModeloEquifaxDetalle" path="/jsp/general/asociarModeloEquifaxDetalle.jsp"/> 
+   		<forward name="elegirModeloEquifax" path="/jsp/general/elegirModeloEquifax.jsp"/> 
+   </action>
+  
+  <action  name="transmitirProduccionActionForm" path="/transmitirProduccion"
+    scope="request" type="pe.com.equifax.paramweb.general.action.TransmitirProduccionAction">
+    	<forward name="cargarAction" path="/jsp/general/transmitirTramasProduccion.jsp"/>
+      	<forward name="trasmitirTramasProduccion" path="/jsp/general/transmitirTramasProduccion.jsp"/> 
+   </action>
+  
+  
+  reportes
+  <action  name="reporteDiccionarioGeneralActionForm" path="/repDicGen"
+    scope="request" type="pe.com.equifax.paramweb.reporte.action.ReporteDiccionarioGeneralAction">
+    	<forward name="cargarAction" path="/jsp/reportes/reporteDiccionarioGeneral.jsp"/>  
+    	<forward name="buscar" path="/jsp/reportes/reporteDiccionarioGeneral.jsp"/>     
+   </action>
+   
+   <action  name="reporteConceptosAtributosActionForm" path="/repConAtr"
+    scope="request" type="pe.com.equifax.paramweb.reporte.action.ReporteConceptosAtributosAction">
+    	<forward name="cargarAction" path="/jsp/reportes/reporteConceptosAtributos.jsp"/>
+    	<forward name="buscar" path="/jsp/reportes/reporteConceptosAtributos.jsp"/>         
+   </action>
+   
+    <action  name="reporteModelosGeneradosActionForm" path="/repModGen"
+    scope="request" type="pe.com.equifax.paramweb.reporte.action.ReporteModelosGeneradosAction">
+    	<forward name="cargarAction" path="/jsp/reportes/buscarModelosGenerados.jsp"/>
+    	<forward name="buscar" path="/jsp/reportes/buscarModelosGenerados.jsp"/>         
+   </action> -->
+  
+ </action-mappings>
+ <controller/>
+ <message-resources parameter="pe.com.mmh.sisgap.resources.mensajes"/>
+</struts-config>
