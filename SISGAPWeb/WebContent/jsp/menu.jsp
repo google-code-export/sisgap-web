@@ -285,7 +285,7 @@
 			<li>
 			<div class="botonDelMenu">
 			    				  
-			   <a href="<%=request.getContextPath()%>/SuministroLuz.do?metodo=cargarAction" target="FraMain">						
+			   <a href="<%=request.getContextPath()%>/suministroLuz.do?metodo=cargarAction" target="FraMain">						
 								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
 								         Suministro de Luz 
 		       </a>	  

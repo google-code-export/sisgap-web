@@ -13,5 +13,6 @@ public class ConstantesJNDI {
 	public final static String ACTIVIDADSOCIOFACADE = "java:app/SISGAPEJB/ActividadSocioFacade!pe.com.mmh.sisgap.administracion.ejb.ActividadSocioFacadeLocal";
 	public final static String LOCALIDADFACADE 		= "java:app/SISGAPEJB/LocalidadFacade!pe.com.mmh.sisgap.administracion.ejb.LocalidadFacadeLocal";
 	public final static String DETALLEFACTURAFACADE = "java:app/SISGAPEJB/DetallefacturaFacade!pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal";
-	
+	public final static String SUMINISTROLUZ		= "java:app/SISGAPEJB/SuministroLuzFacade!pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal";
+
 }

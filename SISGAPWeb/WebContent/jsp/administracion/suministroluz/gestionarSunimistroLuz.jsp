@@ -1,19 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="pe.com.mmh.sisgap.system.propiedades.PropiedadesSistema"%>
+<!DOCTYPE html>
+
 <%@include file="../../../taglibs.jsp"%>
-<%@page import="pe.com.mmh.sisgap.comun.constantes.Constantes"%>
-<%@page import="pe.com.mmh.sisgap.system.domain.Parametro"%>
-<html>
+
+<html:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
 
-	$(function() {
+$(function() {
 
-		$("#periodo-p").datepicker(
-	            {   dateFormat: 'd MM, yy',
+		$("#nuevo-f").button();
+		$("#salir-f").button();
+		$("#pdf-f").button();
+		$("#imprimir-f").button();
+		$("#buscar-f").button();
+		//$("#btncerrar").button();
+		//$("#btngrabar").button();
+	
+		$("#periodo").datepicker(
+	            {   
 	                minDate: '+0D',
 	                maxDate: '+1Y',
 	                changeMonth: false,
@@ -26,54 +31,24 @@
 	                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
 	                    'May', 'Jun', 'Jul', 'Ago',
 	                    'Sep', 'Oct', 'Nov', 'Dic'] 
-	            });         
-		$("#nuevo-f").button();
-		$("#salir-f").button();
-		$("#pdf-f").button();
-		$("#imprimir-f").button();
-		$("#buscar-f").button();
+	            });   
+             
 
-		$("#selectdoc-form").dialog({
+		
+		$("#grabar-form").dialog({
 					autoOpen : false,
 					height : 250,
 					width : 320,
-					modal : true,
-					buttons : {
-						Agregar : function() {
-							var frm = document.formFacturacion;
-							frm.metodo.value = 'irGrabar';
-							//frm.submit();
-						},
-						Cancel : function() {
-							$(this).dialog("close");
-						}},
+					modal : true,		
 					close : function() {
 						allFields.val("").removeClass("ui-state-error");
 					}
 			});
 
-		$("#anulardoc-form").dialog({
-			autoOpen : false,
-			height : 280,
-			width : 600,
-			modal : true,
-			buttons : {
-				Anular : function() {
-					var frm = document.formFacturacion;									
-					$("#descripanulada").val($("#descanulada").val());	
-					frm.submit();
-				},
-				Cancel : function() {
-					$(this).dialog("close");
-				}},
-			close : function() {
-				allFields.val("").removeClass("ui-state-error");
-			}
-	});
 		
 		$('#nuevo-f').click(function() { 
 
-			$("#selectdoc-form").dialog("open");
+			$("#grabar-form").dialog("open");
      
 
 		});
@@ -87,18 +62,65 @@
 
 	function eliminar(cod) {
 		var frm = document.formFacturacion;
-		frm.codigoFactura.value = cod;
-		frm.metodo.value = 'eliminar';
-		$("#anulardoc-form").dialog("open");
+		$("#codigoModi").val(cod);
+		frm.metodo.value = 'eliminarReciboLuz';
+		frm.submit();
+		//$("#anulardoc-form").dialog("open");
 	}
 
-	function ver(cod) {
+	function ver(cod,lecturaIni,lecturaFin,monto,costoWats,periodo,estado) {
+
 		var frm = document.formFacturacion;
-		frm.codigoFactura.value = cod;
-		frm.metodo.value = 'ver';
+				
+		$("#codigoModi").val(cod);	
+		$("#lecturaIni").val(lecturaIni);
+		$("#lecturaFin").val(lecturaFin);
+		$("#monto").val(monto);
+		$("#costoWats").val(costoWats);
+		$("#periodo").val(periodo);
+
+		if(estado==1){
+			$('input[name=estado]').attr('checked', true);
+		}else{
+			$('input[name=estado]').attr('checked', false);
+		}
+		
+		
+
+		$("#grabar-form").dialog("open");
+
+	}
+
+	function grabar() {
+		var frm = document.formFacturacion;
+
+
+		$("#lecturaInix").val($("#lecturaIni").val());
+		$("#lecturaFinx").val($("#lecturaFin").val());
+		$("#montox").val($("#monto").val());
+		$("#costoWatsx").val($("#costoWats").val());
+		$("#periodox").val($("#periodo").val());
+
+		if($('input[name=estado]').is(':checked')){
+			$("#estadox").val("1");
+		}else{$
+			$("#estadox").val("0");
+		}
+
+		if($("#codigoModi").val()!=''){
+			frm.metodo.value = 'actualizarReciboLuz';
+		}else{
+			frm.metodo.value = 'registrarReciboLuz';
+		}
+		
+		
 		frm.submit();
 	}
-	
+
+	function cerrarPop() {
+		$("#grabar-form").dialog("close");
+	}
+		
 	function setTipoDoc(cod){
 		var frm = document.formFacturacion;
 		frm.tipodocumento.value = cod;
@@ -108,53 +130,31 @@
 </head>
 <body>
 
-	<html:form action="/gestionarFacturacion.do" method="post"
-		styleId="formFacturacion">
+	<html:form action="/suministroLuz.do" styleId="formFacturacion">
 		<input type="hidden" name="metodo" />
-		<input type="hidden" name="codigoFactura" id="codigoFactura"/>
+		
 		<input type="hidden" name="descripanulada" id="descripanulada"/>
 		<input type="hidden" name="tipodocumento" id="tipodocumento" value="R"/>
+		
+		<input type="hidden" name="codigoModi" id="codigoModi"/>
+		<input type="hidden" name="lecturaInix" id="lecturaInix"/>
+		<input type="hidden" name="lecturaFinx" id="lecturaFinx"/>
+		<input type="hidden" name="montox" id="montox"/>
+		<input type="hidden" name="costoWatsx" id="costoWatsx"/>
+		<input type="hidden" name="periodox" id="periodox"/>
+		<input type="hidden" name="estadox" id="estadox"/>
+		
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Ingresos /
-					Suministro de Luz</td>
+				<td width=885 align="left" class="titulo">Ingresos / Suministro de Luz</td>
 			</tr>
 		</table>
-		<table align="center">
-			<tr>
-				<td id="mensaje" align="center" valign="middle"
-					style="display: none"></td>
-
-				<td id="error" align="center" valign="middle" class="mensajeError"
-					style="display: none"></td>
-
-			</tr>
-		</table>
-		<logic:notEmpty name="error">
-			<table align="center">
-				<tr>
-
-					<td id="error" align="center" valign="middle" class="mensajeError">
-						${error}</td>
-				</tr>
-			</table>
-		</logic:notEmpty>
-
-		<logic:notEmpty name="mensaje">
-			<table align="center" id="tabalMensaje">
-				<tr>
-					<td id="mensaje" align="center" valign="middle"
-						class="mensajeExito">${mensaje}</td>
-				</tr>
-			</table>
-		</logic:notEmpty>
-
 		<fieldset>
 			<legend>
 				<span class="titulo">Listado de Recibos de Luz
-				<table>
+				<table border="0">
 					<tr>
 						<td>
 							<select>
@@ -178,82 +178,66 @@
 			</legend>
 		</fieldset>
 	
-		<display:table name="lstFac" 
+		<display:table name="lstRes" 
 						class="consultanormal"
 						excludedParams="metodo" 
-						requestURI="/gestionarFacturacion.do?metodo=cargarAction"		
+						requestURI="/suministroLuz.do?metodo=cargarAction"		
 						id="row"
 						export="false">
 				<display:column title="" style="width:60px;">
-					<c:choose>
-						<c:when test="${row.numEstado==1}">
-							<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Anular..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codFactura}');"/>
-						</c:when>
-					</c:choose>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="ver('${row.codFactura}');"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codOrgreciboLuz}');"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado});"/>
 				</display:column>
-				<display:column title="Tipo Documento" sortable="true">
-					<c:choose>
-						<c:when test="${row.strTipodoc=='R'}">Recibo</c:when>
-						<c:when test="${row.strTipodoc=='B'}">Boleta</c:when>
-					</c:choose>
+				<display:column title="Periodo" sortable="true">
+					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />
 				</display:column>
-				<display:column title="Nro Documento" property="numNrodoc" sortable="true"></display:column>
-				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
-				
-				<display:column title="Fecha de Creación" property="datFechacred" sortable="true"></display:column>
-				<display:column title="Total" property="numTotal" sortable="true"></display:column>
+				<display:column title="Lectura Inicial" property="numLecturaInicial" sortable="true"></display:column>
+				<display:column title="Lectura Final" property="numLecturaFinal" sortable="true"></display:column>
+				<display:column title="Costo por Wats" property="numCostoWats" sortable="true"></display:column>
+				<display:column title="Monto" property="numMonto" sortable="true"></display:column>
+				<display:column title="Pendiante" property="numPendienteFac" sortable="true"></display:column>				
 				<display:column title="Estado" sortable="true">
 					<c:choose>
-						<c:when test="${row.numEstado==1}">Pendiante</c:when>
-						<c:when test="${row.numEstado==2}">Cancelada</c:when>
-						<c:when test="${row.numEstado==3}">Anulada</c:when>
+						<c:when test="${row.numEstado==1}">Activo</c:when>
+						<c:when test="${row.numEstado==0}">Inactivo</c:when>
 					</c:choose>
 				
 				</display:column>
 		</display:table>
-		</fieldset>
-	<div id="selectdoc-form" title="Agregar Recibo de Luz">
-			<fieldset>					
-					<!--legend>Registro</legend-->
-					<br>
-					<table width="300px">
-						<tr>
-						<td><label>Lectura Inicial:</label></td>
-						<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
-						</tr>
-						<tr>
-						<td><label>Lectura Final:</label></td>
-						<td><input type='text' name='descrip-p' id='descrip-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
-						</tr>
-						<tr>
-						<td><label>Monto:</label></td>
-						<td><input type='text' name='tipoCobranza-p' id='tipoCobranza-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
-						</tr>
-						<tr>
-						<td><label>Costo Wats:</label></td>
-						<td><input type='text' name='moneda-p' id='moneda-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
-						</tr>
-						<tr>
-						<td><label>Periodo:</label></td>
-						<td><input type='text' name='periodo-p' id='periodo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10"/></td>
-						</tr>
-						<tr>
-						<td><label>Estado:</label></td>
-						<td><input type="checkbox" name='cantidad-p' id='cantidad-p' class='text ui-widget-content ui-corner-all' size="10" onkeypress="calcularTotal();" 
-							onkeyup="calcularTotal();" /></td>
-						</tr>
-					</table>
-																									
-				</fieldset>
-	</div>	
-	<div id="anulardoc-form" title="Anular Documento">
-		<div align="center">	
-			Esta seguro?. favor ingrese el motivo.<br>
-			<textarea rows="12" cols="90" id="descanulada"></textarea>
+		
+		<div id="grabar-form" title="Agregar Recibo de Luz">						
+				<br/>
+				<table width="300px">
+					<tr>
+					<td><label>Lectura Inicial:</label></td>
+					<td><input type='text' name='lecturaIni' id='lecturaIni' class='text ui-widget-content ui-corner-all' size="10" /></td>
+					</tr>
+					<tr>
+					<td><label>Lectura Final:</label></td>
+					<td><input type='text' name='lecturaFin' id='lecturaFin' class='text ui-widget-content ui-corner-all'  size="30" /></td>
+					</tr>
+					<tr>
+					<td><label>Monto:</label></td>
+					<td><input type='text' name='monto' id='monto' class='text ui-widget-content ui-corner-all' size="30" /></td>
+					</tr>
+					<tr>
+					<td><label>Costo Wats:</label></td>
+					<td><input type='text' name='costoWats' id='costoWats' class='text ui-widget-content ui-corner-all' size="20" /></td>
+					</tr>
+					<tr>
+					<td><label>Periodo:</label></td>
+					<td><input type='text' name='periodo' id='periodo' class='text ui-widget-content ui-corner-all'  size="20"/>(mes/dia/año)</td>
+					</tr>
+					<tr>
+					<td><label>Estado:</label></td>
+					<td><input type="checkbox" name='estado' id='estado' class='text ui-widget-content ui-corner-all'/></td>
+					</tr>
+				</table>
+				<P/>
+			<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
+			<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
 		</div>
-	</div>
 	</html:form>
 
 </body>
-</html>
+</html:html>

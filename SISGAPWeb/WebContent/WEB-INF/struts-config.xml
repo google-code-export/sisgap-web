@@ -74,7 +74,7 @@
      
    </action> 
 
-   <action name="SuministroLuzActionForm" path="/SuministroLuz"
+   <action name="SuministroLuzActionForm" path="/suministroLuz"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.SuministroLuzAction">
      <forward name="cargarAction" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="success" path="/index.jsp"/>
