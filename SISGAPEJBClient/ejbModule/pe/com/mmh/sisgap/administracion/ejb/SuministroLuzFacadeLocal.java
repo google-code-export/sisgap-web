@@ -9,6 +9,7 @@ import javax.ejb.Local;
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
+import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
 
@@ -23,7 +24,7 @@ public interface SuministroLuzFacadeLocal {
 
     SumistroLuz find(Object id);
 
-    List<SumistroLuz> findAll();
+    List<SumistroLuz> findAll(Integer codigoResOri);
     
     void grabarSumistro(Long numerodocumento,String totalfac,	String codigoide, String cbtipodoc,Set<SumistroLuzDet> detallesuministro);
 
@@ -33,4 +34,11 @@ public interface SuministroLuzFacadeLocal {
 	
 	List<ItemSumistroLuz> getItemsSuministro();
 	
+	void createResOri(ReciboluzOrg sumistro);
+	
+	void updateResOri(ReciboluzOrg sumistro);
+	
+	void deleteResOri(ReciboluzOrg sumistro);
+	
+	List<ReciboluzOrg> ListReciboluzOrg();
 }

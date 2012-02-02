@@ -61,6 +61,20 @@ public class SumistroLuz implements Serializable {
 	@OneToMany(mappedBy="sisgapSumistroLuz")
 	private Set<SumistroLuzDet> sisgapSumistroLuzDets;
 
+	//bi-directional many-to-one association to SisgapReciboluzOrg
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="COD_ORGRECIBO_LUZ")
+	private ReciboluzOrg sisgapReciboluzOrg;
+
+	@Transient
+	private long codUsuario;
+	
+	@Transient
+	private long codSocio;
+		
+	@Transient
+	private long codFacOri;
+	
     public SumistroLuz() {
     }
 
@@ -159,5 +173,38 @@ public class SumistroLuz implements Serializable {
 	public void setSisgapSumistroLuzDets(Set<SumistroLuzDet> sisgapSumistroLuzDets) {
 		this.sisgapSumistroLuzDets = sisgapSumistroLuzDets;
 	}
+	
+	public ReciboluzOrg getSisgapReciboluzOrg() {
+		return this.sisgapReciboluzOrg;
+	}
+
+	public void setSisgapReciboluzOrg(ReciboluzOrg sisgapReciboluzOrg) {
+		this.sisgapReciboluzOrg = sisgapReciboluzOrg;
+	}
+
+	public long getCodUsuario() {
+		return codUsuario;
+	}
+
+	public void setCodUsuario(long codUsuario) {
+		this.codUsuario = codUsuario;
+	}
+
+	public long getCodSocio() {
+		return codSocio;
+	}
+
+	public void setCodSocio(long codSocio) {
+		this.codSocio = codSocio;
+	}
+
+	public long getCodFacOri() {
+		return codFacOri;
+	}
+
+	public void setCodFacOri(long codFacOri) {
+		this.codFacOri = codFacOri;
+	}
+	
 	
 }
