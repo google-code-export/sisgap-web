@@ -30,7 +30,7 @@ public class SocioFacade implements SocioFacadeLocal {
 	private static final String view_bucar_socio = "select * from view_bucar_socio where tran_razon_social like %s ";
 	
 	
-	@Resource(lookup="java:/jdbc/sisgapDS")
+	@Resource(name="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 	
     @PersistenceContext
