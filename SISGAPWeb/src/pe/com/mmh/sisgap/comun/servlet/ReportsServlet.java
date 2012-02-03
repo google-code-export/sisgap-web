@@ -7,6 +7,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -62,15 +63,17 @@ public class ReportsServlet extends HttpServlet {
 		if(reporte!=null){
 			
 			if(reporte.equals("REPORTE_SOCIO")){
-				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/reportesocios.jrxml");				
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Socios.jrxml");
 			}else if(reporte.equals("REPORTE_ITEMSCOB")){
-				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/reporteitemcob.jrxml");
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte Item de Cobranza.jrxml");
+			}else if(reporte.equals("REPORTE_DOCUMENTOS")){
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos.jrxml");
+			}else if(reporte.equals("REPORTE_DOCUMENTO_DETALLE")){
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Documento por Detalle.jrxml");
+				parametros.put("P_NRO_DOCUMENTO", "63");
 			}
-			
 			generateReport(request, response, ruta, parametros);
-		}
-		
-		
+		}		
 	}
 	
 	@SuppressWarnings("unused")
