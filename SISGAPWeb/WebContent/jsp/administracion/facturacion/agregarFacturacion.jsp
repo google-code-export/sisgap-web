@@ -131,6 +131,7 @@ var codMon = "";
 		$("#btn-cancelar").button();
 		$("#registra-f").button();
 		$("#regresar-f").button();
+		$("#imprimir-f").button();
 		
 		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 		$("#dialog:ui-dialog").dialog("destroy");
@@ -144,6 +145,13 @@ var codMon = "";
 				tips.removeClass("ui-state-highlight", 1500);
 			}, 500);
 		}
+
+		$('#imprimir-f').click(function() {      
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE', 'Popup', caracteristicas);  
+	        return false;  
+		});
+
 
 		function checkLength(o, n, min, max) {
 			if (o.val().length > max || o.val().length < min) {
@@ -537,6 +545,7 @@ var codMon = "";
 					</c:when>
 					<c:when test="${isDetalle==1}">
 						<button id="regresar-f">Regresar</button>
+						<button id="imprimir-f">Imprimir</button>
 					</c:when>					
 				</c:choose>	
 			</span>
