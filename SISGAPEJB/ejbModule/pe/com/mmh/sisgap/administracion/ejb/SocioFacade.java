@@ -67,7 +67,7 @@ public class SocioFacade implements SocioFacadeLocal {
 		try {
 			connection = getConnection();
 			lsSocios = new ArrayList<Socio>();
-			pst=connection.prepareStatement(String.format(view_bucar_socio, "'%"+nombre.toUpperCase()+"%'"));
+			pst=connection.prepareStatement(String.format(view_bucar_socio, "'"+nombre.toUpperCase()+"%'"));
 			rs = pst.executeQuery();
 			
 			while(rs.next()){

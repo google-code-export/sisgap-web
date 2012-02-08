@@ -30,6 +30,7 @@ import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
+import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
 
@@ -48,7 +49,13 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_INS_SUMISTROLUZ = "{call PKG_ADMINISTRACION.SP_INS_SUMISTROLUZ(?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_DEL_SUMISTROLUZ = "{call PKG_ADMINISTRACION.SP_DEL_SUMISTROLUZ(?)}";
 	private static final String SP_LST_SUMISTROLUZ = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZ(?,?)}";
+	private static final String SP_FIN_SUMISTROLUZORI = "{call PKG_ADMINISTRACION.SP_FIN_SUMISTROLUZORI(?,?)}";
 	
+	private static final String SP_INS_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_INS_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_LIST_SUMINISTROLUZSOCIOS = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_LIST_SUMINISTROLUZSOCIOS(?,?)}";
+	private static final String SP_DEL_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_DEL_SUMINISTROLUZSOCIO(?,?,?)}";
+	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 	
@@ -67,13 +74,13 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst = connection.prepareCall(SP_INS_RECIBOORILUZ);
 			
 
-			cst.setBigDecimal("P_NUM_LECTURA_INICIAL", sumistro.getNumLecturaInicial());
-			cst.setBigDecimal("P_NUM_LECTURA_FINAL", sumistro.getNumLecturaFinal());
-			cst.setBigDecimal("P_NUM_MONTO", sumistro.getNumMonto());
-			cst.setBigDecimal("P_NUM_COSTO_WATS", sumistro.getNumCostoWats());
-			cst.setDate("P_FEC_PERIODO", new Date(sumistro.getFecPeriodo().getTime()));
-			cst.setBigDecimal("P_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
-			cst.setBigDecimal("P_NUM_ESTADO", sumistro.getNumEstado());
+			cst.setBigDecimal("p_NUM_LECTURA_INICIAL", sumistro.getNumLecturaInicial());
+			cst.setBigDecimal("p_NUM_LECTURA_FINAL", sumistro.getNumLecturaFinal());
+			cst.setBigDecimal("p_NUM_MONTO", sumistro.getNumMonto());
+			cst.setBigDecimal("p_NUM_COSTO_WATS", sumistro.getNumCostoWats());
+			cst.setDate("p_FEC_PERIODO", new Date(sumistro.getFecPeriodo().getTime()));
+			cst.setBigDecimal("p_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
+			cst.setBigDecimal("p_NUM_ESTADO", sumistro.getNumEstado());
 			
 			cst.execute();
 			
@@ -105,14 +112,14 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
     		
 			cst = connection.prepareCall(SP_UPD_RECIBOORILUZ);
 			
-			cst.setLong("P_COD_ORGRECIBO_LUZ", sumistro.getCodOrgreciboLuz());
-			cst.setBigDecimal("P_NUM_LECTURA_INICIAL", sumistro.getNumLecturaInicial());
-			cst.setBigDecimal("P_NUM_LECTURA_FINAL", sumistro.getNumLecturaFinal());
-			cst.setBigDecimal("P_NUM_MONTO", sumistro.getNumMonto());
-			cst.setBigDecimal("P_NUM_COSTO_WATS", sumistro.getNumCostoWats());
-			cst.setDate("P_FEC_PERIODO", new Date(sumistro.getFecPeriodo().getTime()));
-			cst.setBigDecimal("P_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
-			cst.setBigDecimal("P_NUM_ESTADO", sumistro.getNumEstado());
+			cst.setLong("p_COD_ORGRECIBO_LUZ", sumistro.getCodOrgreciboLuz());
+			cst.setBigDecimal("p_NUM_LECTURA_INICIAL", sumistro.getNumLecturaInicial());
+			cst.setBigDecimal("p_NUM_LECTURA_FINAL", sumistro.getNumLecturaFinal());
+			cst.setBigDecimal("p_NUM_MONTO", sumistro.getNumMonto());
+			cst.setBigDecimal("p_NUM_COSTO_WATS", sumistro.getNumCostoWats());
+			cst.setDate("p_FEC_PERIODO", new Date(sumistro.getFecPeriodo().getTime()));
+			cst.setBigDecimal("p_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
+			cst.setBigDecimal("p_NUM_ESTADO", sumistro.getNumEstado());
 			
 			cst.execute();
 			
@@ -145,7 +152,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
     		
 			cst = connection.prepareCall(SP_DEL_RECIBOORILUZ);
 			
-			cst.setLong("P_COD_ORGRECIBO_LUZ", sumistro.getCodOrgreciboLuz());
+			cst.setLong("p_COD_ORGRECIBO_LUZ", sumistro.getCodOrgreciboLuz());
 			
 			cst.execute();
 			
@@ -353,7 +360,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			lstSumistroLuz = new ArrayList<SumistroLuz>();
 			cst = connection.prepareCall(SP_LST_SUMISTROLUZ);
 			cst.registerOutParameter("LSTSUMISTROLUZ", OracleTypes.CURSOR);
-			cst.setBigDecimal("P_COD_ORGRECIBO_LUZ", new BigDecimal(codigoResOri));
+			cst.setBigDecimal("p_COD_ORGRECIBO_LUZ", new BigDecimal(codigoResOri));
 			cst.execute();
 			
 			rs = (ResultSet) cst.getObject(1);
@@ -399,6 +406,55 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		
 	}
 
+    public ReciboluzOrg buscarRecibo(ReciboluzOrg sumistro) {
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	ResultSet rs = null;
+    	ReciboluzOrg res = null;
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_FIN_SUMISTROLUZORI);
+			
+			cst.registerOutParameter("LSTSUMISTROLUZORI", OracleTypes.CURSOR);
+			cst.setBigDecimal("p_COD_ORGRECIBO_LUZ", new BigDecimal(sumistro.getCodOrgreciboLuz()));
+			cst.execute();
+			
+			rs = (ResultSet) cst.getObject("LSTSUMISTROLUZORI");
+			
+			if(rs.next()){
+				res = new ReciboluzOrg();
+				res.setCodOrgreciboLuz(rs.getLong("COD_ORGRECIBO_LUZ"));
+				res.setNumLecturaInicial(rs.getBigDecimal("NUM_LECTURA_INICIAL"));
+				res.setNumLecturaFinal(rs.getBigDecimal("NUM_LECTURA_FINAL"));
+				res.setNumMonto(rs.getBigDecimal("NUM_MONTO"));
+				res.setNumCostoWats(rs.getBigDecimal("NUM_COSTO_WATS"));
+				res.setFecPeriodo(rs.getDate("FEC_PERIODO"));
+				res.setNumPendienteFac(rs.getBigDecimal("NUM_PENDIENTE_FAC"));
+				res.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
+			}
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+    	
+    	return res;
+	}
+    
 	@Override
 	public BigDecimal generarNrodocumento(String tipodoc) {
 		// TODO Auto-generated method stub
@@ -430,6 +486,206 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void grabarItemReciboLuzSocio(SuministroLusReciboSocio srs) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_INS_SUMINISTROLUZSOCIO);
+			
+			cst.setLong("p_CORRELATIVO",new Long(0));
+			cst.setLong("p_CODIGOSOCIO",srs.getCodigosocio());
+			cst.setLong("p_CODIGORECIBO",srs.getCodigorecibo());
+
+			cst.setBigDecimal("p_LECTURAINI",srs.getLecturaini());
+			cst.setBigDecimal("p_LECTURAFIN",srs.getLecturafin());
+			cst.setBigDecimal("p_CONSUMOMES",srs.getConsumomes());
+			cst.setBigDecimal("p_CAGOFIJO",srs.getCagofijo());
+			cst.setBigDecimal("p_ALUPUBLIC",srs.getAlupublic());
+			cst.setBigDecimal("p_CARGOENER",srs.getCargoener());
+			cst.setBigDecimal("p_SUBTOTALMES",srs.getSubtotalmes());
+			cst.setBigDecimal("p_IGV",srs.getIgv());
+			cst.setBigDecimal("p_TOTALMES",srs.getTotalmes());
+			cst.setBigDecimal("p_USOEQUIPO",srs.getUsoequipo());
+			cst.setBigDecimal("p_SERVMANTO",srs.getServmanto());
+			cst.setBigDecimal("p_APORTELEY",srs.getAporteley());
+			cst.setBigDecimal("p_RECARGO",srs.getRecargo());
+			cst.setBigDecimal("p_REDONDEO",srs.getRedondeo());
+			cst.setBigDecimal("p_TOTAL",srs.getTotal());
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}		
+	}
+
+	@Override
+	public List<SuministroLusReciboSocio> listarItemReciboLuzSocio(Long codigo) {
+		// TODO Auto-generated method stub SP_LIST_SUMINISTROLUZSOCIOS
+    	Connection connection = null;
+    	CallableStatement cst = null;
+		ResultSet rs;
+		List<SuministroLusReciboSocio> lstSuministroLusReciboSocio = null;
+		SuministroLusReciboSocio srs = null;
+		try {
+			connection = getConnection();
+			lstSuministroLusReciboSocio = new ArrayList<SuministroLusReciboSocio>();
+			cst = connection.prepareCall(SP_LIST_SUMINISTROLUZSOCIOS);
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.setLong(2, codigo);
+			cst.execute();
+			rs = (ResultSet) cst.getObject(1);
+			
+			while(rs.next()){
+				
+				srs = new SuministroLusReciboSocio();
+				srs.setNombres(rs.getString("NOMBRES"));
+				srs.setLecturaini(rs.getBigDecimal("LECTURAINI"));
+				srs.setLecturafin(rs.getBigDecimal("LECTURAFIN"));
+				srs.setConsumomes(rs.getBigDecimal("CONSUMOMES"));
+				srs.setCagofijo(rs.getBigDecimal("CAGOFIJO"));
+				srs.setAlupublic(rs.getBigDecimal("ALUPUBLIC"));
+				srs.setCargoener(rs.getBigDecimal("CARGOENER"));
+				srs.setTotalmes(rs.getBigDecimal("TOTALMES"));
+				srs.setIgv(rs.getBigDecimal("IGV"));
+				srs.setSubtotalmes(rs.getBigDecimal("SUBTOTALMES"));
+				srs.setUsoequipo(rs.getBigDecimal("USOEQUIPO"));
+				srs.setServmanto(rs.getBigDecimal("SERVMANTO"));
+				srs.setAporteley(rs.getBigDecimal("APORTELEY"));
+				srs.setRecargo(rs.getBigDecimal("RECARGO"));
+				srs.setRedondeo(rs.getBigDecimal("REDONDEO"));
+				srs.setTotal(rs.getBigDecimal("TOTAL"));
+				srs.setCorrelativo(rs.getLong("CORRELATIVO"));
+				srs.setCodigosocio(rs.getLong("CODIGOSOCIO"));
+				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
+				lstSuministroLusReciboSocio.add(srs);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				if(connection!=null){connection.close();}					
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return lstSuministroLusReciboSocio; 
+	}
+
+	@Override
+	public void eliminarItemReciboLuzSocio(Long correlativo, Long codigoSocio,
+			Long codigoRecibo) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_DEL_SUMINISTROLUZSOCIO);
+			
+			cst.setLong("p_CORRELATIVO", correlativo);
+			cst.setLong("p_CODIGOSOCIO", codigoSocio);
+			cst.setLong("p_CODIGORECIBO", codigoRecibo);
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	@Override
+	public void actualizarItemReciboLuzSocio(SuministroLusReciboSocio srs) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_SUMINISTROLUZSOCIO);
+			
+			cst.setLong("p_CORRELATIVO",srs.getCorrelativo());
+			cst.setLong("p_CODIGOSOCIO",srs.getCodigosocio());
+			cst.setLong("p_CODIGORECIBO",srs.getCodigorecibo());
+
+			cst.setBigDecimal("p_LECTURAINI",srs.getLecturaini());
+			cst.setBigDecimal("p_LECTURAFIN",srs.getLecturafin());
+			cst.setBigDecimal("p_CONSUMOMES",srs.getConsumomes());
+			cst.setBigDecimal("p_CAGOFIJO",srs.getCagofijo());
+			cst.setBigDecimal("p_ALUPUBLIC",srs.getAlupublic());
+			cst.setBigDecimal("p_CARGOENER",srs.getCargoener());
+			cst.setBigDecimal("p_SUBTOTALMES",srs.getSubtotalmes());
+			cst.setBigDecimal("p_IGV",srs.getIgv());
+			cst.setBigDecimal("p_TOTALMES",srs.getTotalmes());
+			cst.setBigDecimal("p_USOEQUIPO",srs.getUsoequipo());
+			cst.setBigDecimal("p_SERVMANTO",srs.getServmanto());
+			cst.setBigDecimal("p_APORTELEY",srs.getAporteley());
+			cst.setBigDecimal("p_RECARGO",srs.getRecargo());
+			cst.setBigDecimal("p_REDONDEO",srs.getRedondeo());
+			cst.setBigDecimal("p_TOTAL",srs.getTotal());
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}	
 	}
 
 
