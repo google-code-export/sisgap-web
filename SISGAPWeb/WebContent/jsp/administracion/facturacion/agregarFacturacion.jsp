@@ -149,6 +149,7 @@ var codMon = "";
 		$('#imprimir-f').click(function() {  
 			var nroDocu =  $('[name=numerodocumento]').val();    
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
 	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);  
 	        return false;  
 		});
