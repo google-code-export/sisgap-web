@@ -10,6 +10,7 @@ import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
+import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
 
@@ -41,4 +42,15 @@ public interface SuministroLuzFacadeLocal {
 	void deleteResOri(ReciboluzOrg sumistro);
 	
 	List<ReciboluzOrg> ListReciboluzOrg();
+
+	ReciboluzOrg buscarRecibo(ReciboluzOrg res);
+
+	void grabarItemReciboLuzSocio(SuministroLusReciboSocio srs);
+
+	List<SuministroLusReciboSocio> listarItemReciboLuzSocio(Long codigo);
+
+	void eliminarItemReciboLuzSocio(Long correlativo, Long codigoSocio,
+			Long codigoRecibo);
+
+	void actualizarItemReciboLuzSocio(SuministroLusReciboSocio srs);
 }
