@@ -70,7 +70,9 @@ public class ReportsServlet extends HttpServlet {
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos.jrxml");
 			}else if(reporte.equals("REPORTE_DOCUMENTO_DETALLE")){
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Documento por Detalle.jrxml");
-				parametros.put("P_NRO_DOCUMENTO", "63");
+				String nroDocumento = request.getParameter("nroDoc");
+				System.out.println("nroDoc : "+nroDocumento);
+				parametros.put("P_NRO_DOCUMENTO", nroDocumento);
 			}
 			generateReport(request, response, ruta, parametros);
 		}		
