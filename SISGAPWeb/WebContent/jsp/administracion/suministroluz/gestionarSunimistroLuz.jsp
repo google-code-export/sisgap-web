@@ -60,6 +60,13 @@ $(function() {
 
 	}
 
+	function mostrarItems(cod) {
+		var frm = document.formFacturacion;
+		frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
+		frm.metodo.value = 'mostrarItemsSuministro';
+		frm.submit();
+	}
+	
 	function eliminar(cod) {
 		var frm = document.formFacturacion;
 		$("#codigoModi").val(cod);
@@ -186,7 +193,8 @@ $(function() {
 						export="false">
 				<display:column title="" style="width:60px;">
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codOrgreciboLuz}');"/>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarItems(${row.codOrgreciboLuz});"/>
 				</display:column>
 				<display:column title="Periodo" sortable="true">
 					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />
