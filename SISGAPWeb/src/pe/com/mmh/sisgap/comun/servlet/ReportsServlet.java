@@ -59,7 +59,7 @@ public class ReportsServlet extends HttpServlet {
 		String ruta = "";
 		HashMap<String, String> parametros = new HashMap<String, String>();		
 		String reporte = request.getParameter("reporte");
-		
+
 		if(reporte!=null){
 			
 			if(reporte.equals("REPORTE_SOCIO")){
@@ -70,6 +70,8 @@ public class ReportsServlet extends HttpServlet {
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos.jrxml");
 			}else if(reporte.equals("REPORTE_DOCUMENTO_DETALLE")){
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Documento por Detalle.jrxml");
+				String nrodoc = request.getParameter("nrodoc");
+				parametros.put("P_NRO_DOCUMENTO", nrodoc);
 				String nroDocumento = request.getParameter("nroDoc");
 				System.out.println("nroDoc : "+nroDocumento);
 				parametros.put("P_NRO_DOCUMENTO", nroDocumento);
