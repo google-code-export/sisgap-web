@@ -418,7 +418,7 @@ Asociar Recibo</td>
 					<td width="80px">Total </td>
 					<td width="80px">${resori.numMonto}</td>
 					<td width="15px"></td>
-					<td width="80px">Pendiante</td>
+					<td width="80px">Pendiente</td>
 					<td width="80px">${resori.numMonto-resori.numPendienteFac}</td>
 					</td>
 				</tr>

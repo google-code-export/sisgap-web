@@ -203,7 +203,7 @@ $(function() {
 				<display:column title="Lectura Final" property="numLecturaFinal" sortable="true"></display:column>
 				<display:column title="Costo por Wats" property="numCostoWats" sortable="true"></display:column>
 				<display:column title="Monto" property="numMonto" sortable="true"></display:column>
-				<display:column title="Pendiante" property="numPendienteFac" sortable="true"></display:column>				
+				<display:column title="Pendiente" property="numPendienteFac" sortable="true"></display:column>				
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.numEstado==1}">Activo</c:when>
