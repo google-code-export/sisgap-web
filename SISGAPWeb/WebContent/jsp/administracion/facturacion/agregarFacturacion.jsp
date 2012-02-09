@@ -177,96 +177,93 @@ var codMon = "";
 		}
 
 
-		$("#buscarsocio-form")
-				.dialog({
-							autoOpen : false,
-							height : 300,
-							width : 550,
-							modal : true,
-							buttons : {
-								Cancel : function() {
-									$(this).dialog("close");
-								}},
-							close : function() {
-								allFields.val("").removeClass("ui-state-error");
-							}
-					});
+		$("#buscarsocio-form").dialog({
+			autoOpen : false,
+			height : 300,
+			width : 550,
+			modal : true,
+			buttons : {
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
 
-		$("#dialog-form-item")
-		.dialog(
-				{
-					autoOpen : false,
-					height : 450,
-					width : 350,
-					modal : true
-				});
+		$("#dialog-form-item").dialog(
+		{
+			autoOpen : false,
+			height : 450,
+			width : 350,
+			modal : true
+		});
 
 		
-		$("#dialog-form")
-				.dialog(
-						{
-							autoOpen : false,
-							height : 520,
-							width : 550,
-							modal : true,
-							buttons : {
-															 
-								/*
-								"Create an account" : function() {
-									var bValid = true;
-									allFields.removeClass("ui-state-error");
+		$("#dialog-form").dialog(
+		{
+			autoOpen : false,
+			height : 520,
+			width : 550,
+			modal : true,
+			buttons : {
+											 
+				/*
+				"Create an account" : function() {
+					var bValid = true;
+					allFields.removeClass("ui-state-error");
 
-									bValid = bValid
-											&& checkLength(name, "username", 3,
-													16);
-									bValid = bValid
-											&& checkLength(email, "email", 6,
-													80);
-									bValid = bValid
-											&& checkLength(password,
-													"password", 5, 16);
+					bValid = bValid
+							&& checkLength(name, "username", 3,
+									16);
+					bValid = bValid
+							&& checkLength(email, "email", 6,
+									80);
+					bValid = bValid
+							&& checkLength(password,
+									"password", 5, 16);
 
-									bValid = bValid
-											&& checkRegexp(name,
-													/^[a-z]([0-9a-z_])+$/i,
-													"Username may consist of a-z, 0-9, underscores, begin with a letter.");
-									// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-									bValid = bValid
-											&& checkRegexp(
-													email,
-													/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
-													"eg. ui@jquery.com");
-									bValid = bValid
-											&& checkRegexp(password,
-													/^([0-9a-zA-Z])+$/,
-													"Password field only allow : a-z 0-9");
+					bValid = bValid
+							&& checkRegexp(name,
+									/^[a-z]([0-9a-z_])+$/i,
+									"Username may consist of a-z, 0-9, underscores, begin with a letter.");
+					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+					bValid = bValid
+							&& checkRegexp(
+									email,
+									/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
+									"eg. ui@jquery.com");
+					bValid = bValid
+							&& checkRegexp(password,
+									/^([0-9a-zA-Z])+$/,
+									"Password field only allow : a-z 0-9");
 
-									if (bValid) {
-										$("#users tbody").append(
-												"<tr>" + "<td>" + name.val()
-														+ "</td>" + "<td>"
-														+ email.val() + "</td>"
-														+ "<td>"
-														+ password.val()
-														+ "</td>" + "</tr>");
-										$(this).dialog("close");
-										
-										$("#dialog-form-item").dialog("open");
-									} }*/									
-								
-								/*
-								Cancel : function() {
-									$(this).dialog("close");
-								}*/
+					if (bValid) {
+						$("#users tbody").append(
+								"<tr>" + "<td>" + name.val()
+										+ "</td>" + "<td>"
+										+ email.val() + "</td>"
+										+ "<td>"
+										+ password.val()
+										+ "</td>" + "</tr>");
+						$(this).dialog("close");
 						
-							/*close : function() {
-								allFields.val("").removeClass("ui-state-error");
-							}*/
+						$("#dialog-form-item").dialog("open");
+					} }*/									
+				
+				/*
+				Cancel : function() {
+					$(this).dialog("close");
+				}*/
+		
+			/*close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}*/
 
-							Cancel : function() {
-								$(this).dialog("close");
-							}
-						}});
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		}});
 
 		$("#create-user").button().click(function() {
 			$("#dialog-form").dialog("open");
@@ -280,14 +277,14 @@ var codMon = "";
 
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
-					$.ajax({
-				        type: "POST",
-				        url: "/SISGAPWeb/AjaxServlet",
-				        data: "action=BUSCAR_SOCIO&nombre="+nombre,
-				        success: function(datos){
-				        	$("#tablesocios").html(datos);
-				      }
-				});
+				$.ajax({
+			        type: "POST",
+			        url: "/SISGAPWeb/AjaxServlet",
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre,
+			        success: function(datos){
+			        	$("#tablesocios").html(datos);
+			      }
+			});
 		});
 
 		$("#btn-aceptar-item").button().click(function() {
@@ -398,29 +395,21 @@ var codMon = "";
 		<input type="hidden" name="codigoide" id="codigoide-f" />
 		<input type="hidden" name="cbtipodoc" value="${tipodocumento}" />
 		
-		<table border="0" width="885" class="tahoma11" cellpadding="3"
-			cellspacing="1">
+		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Administración /
-					Facturación</td>
+				<td width=885 align="left" class="titulo">Administración/Facturación</td>
 			</tr>
 		</table>
 		<table align="center">
 			<tr>
-				<td id="mensaje" align="center" valign="middle"
-					style="display: none"></td>
-
-				<td id="error" align="center" valign="middle" class="mensajeError"
-					style="display: none"></td>
-
+				<td id="mensaje" align="center" valign="middle"	style="display: none"></td>
+				<td id="error" align="center" valign="middle" class="mensajeError"	style="display: none"></td>
 			</tr>
 		</table>
 		<logic:notEmpty name="error">
 			<table align="center">
 				<tr>
-
-					<td id="error" align="center" valign="middle" class="mensajeError">
-						${error}</td>
+					<td id="error" align="center" valign="middle" class="mensajeError">${error}</td>
 				</tr>
 			</table>
 		</logic:notEmpty>
@@ -428,15 +417,13 @@ var codMon = "";
 		<logic:notEmpty name="mensaje">
 			<table align="center" id="tabalMensaje">
 				<tr>
-					<td id="mensaje" align="center" valign="middle"
-						class="mensajeExito">${mensaje}</td>
+					<td id="mensaje" align="center" valign="middle"	class="mensajeExito">${mensaje}</td>
 				</tr>
 			</table>
 		</logic:notEmpty>
 
 		<fieldset>
-			<legend>Nuevo resgistro</legend>
-		
+			<legend>Nuevo registro</legend>		
 			<table border="0" cellpadding="0" cellspacing="0" width="75%">
 				<tr>
 					<td width="40px">Nro. Doc</td>
@@ -446,13 +433,11 @@ var codMon = "";
 					<td>Socio</td>
 					<td colspan="3" ><input type='text' name="socio-f" id="socio-f" size=30 value="${fac.sisgapSocio}" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
 					<td width="15px">
-					
-					<c:choose>
-						<c:when test="${isDetalle!=1 }">
-							<button id="buscar-socio">...</button>
-						</c:when>
-					</c:choose>
-						
+						<c:choose>
+							<c:when test="${isDetalle!=1 }">
+								<button id="buscar-socio">...</button>
+							</c:when>
+						</c:choose>
 					</td>
 					<td width="20px">Código</td>
 					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${fac.sisgapSocio.tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
@@ -464,21 +449,21 @@ var codMon = "";
 					<td width="80px">Tipo Documento</td>
 					<td>
 						<select name="cbtipodocx" id="cbtipodoc" class="text ui-widget-content ui-corner-all" disabled="disabled">
-						<c:choose>
-							<c:when test="${tipodocumento =='R'}">
-								<option value="R" selected="selected">Recibo</option>
-								<option value="B">Boleta</option>
-							</c:when>
-							<c:when test="${tipodocumento =='B'}">
-								<option value="R">Recibo</option>
-								<option value="B" selected="selected">Boleta</option>
-							</c:when>
-						</c:choose>
+							<c:choose>
+								<c:when test="${tipodocumento =='R'}">
+									<option value="R" selected="selected">Recibo</option>
+									<option value="B">Boleta</option>
+								</c:when>
+								<c:when test="${tipodocumento =='B'}">
+									<option value="R">Recibo</option>
+									<option value="B" selected="selected">Boleta</option>
+								</c:when>
+							</c:choose>
 						</select>
 					</td>
 				</tr>
 			</table> 
-	</fieldset>
+		</fieldset>
 		<fieldset>
 			<legend>Detalle de Factura</legend>
 			<span>
@@ -562,39 +547,38 @@ var codMon = "";
 				<fieldset>					
 						<!--legend>Registro</legend-->
 						<br>
-						<table width="300px">
+						<table width="300px" border="1">
 							<tr>
-							<td><label>Codigo:</label></td>
-							<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
+								<td><label>Codigo:</label></td>
+								<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
 							</tr>
 							<tr>
-							<td><label>Descripcion:</label></td>
-							<td><input type='text' name='descrip-p' id='descrip-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
+								<td><label>Descripcion:</label></td>
+								<td><input type='text' name='descrip-p' id='descrip-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
 							</tr>
 							<tr>
-							<td><label>Tipo de Cobranza:</label></td>
-							<td><input type='text' name='tipoCobranza-p' id='tipoCobranza-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
+								<td><label>Tipo de Cobranza:</label></td>
+								<td><input type='text' name='tipoCobranza-p' id='tipoCobranza-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
 							</tr>
 							<tr>
-							<td><label>Moneda:</label></td>
-							<td><input type='text' name='moneda-p' id='moneda-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
+								<td><label>Moneda:</label></td>
+								<td><input type='text' name='moneda-p' id='moneda-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
 							</tr>
 							<tr>
-							<td><label>Costo:</label></td>
-							<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10"/></td>
+								<td><label>Costo:</label></td>
+								<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10"/></td>
 							</tr>
 							<tr>
-							<td><label>Cantidad:</label></td>
-							<td><input type='text' name='cantidad-p' id='cantidad-p' class='text ui-widget-content ui-corner-all' size="10" onkeypress="calcularTotal();" 
-								onkeyup="calcularTotal();" /></td>
+								<td><label>Cantidad:</label></td>
+								<td><input type='text' name='cantidad-p' id='cantidad-p' class='text ui-widget-content ui-corner-all' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" /></td>
 							</tr>
 							<tr>
-							<td><label>Total:</label></td>
-							<td><input type='text' name='total-p' id='total-p' class='text ui-widget-content ui-corner-all' size="10" readonly='readonly'/></td>
+								<td><label>Total:</label></td>
+								<td><input type='text' name='total-p' id='total-p' class='text ui-widget-content ui-corner-all' size="10" readonly='readonly'/></td>
 							</tr>
 							<tr>
-							<td><label>A Cuenta:</label></td>
-							<td><input type='text' name='acuenta-p' id='acuenta-p' class='text ui-widget-content ui-corner-all' size="10" /></td>
+								<td><label>A Cuenta:</label></td>
+								<td><input type='text' name='acuenta-p' id='acuenta-p' class='text ui-widget-content ui-corner-all' size="10" /></td>
 							</tr>
 							<tr>
 								<td><button id="btn-aceptar-item">Agregar</button></td>

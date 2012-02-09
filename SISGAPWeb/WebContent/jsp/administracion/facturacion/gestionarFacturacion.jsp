@@ -18,28 +18,66 @@
 		$("#imprimir-f").button();
 		$("#buscar-f").button();
 
-		$("#selectdoc-form").dialog({
-					autoOpen : false,
-					height : 150,
-					width : 300,
-					modal : true,
-					buttons : {
-						Generar : function() {
-							var frm = document.formFacturacion;
-							frm.metodo.value = 'irGrabar';
-							frm.submit();
-						},
-						Cancel : function() {
-							$(this).dialog("close");
-						}},
-					close : function() {
-						allFields.val("").removeClass("ui-state-error");
-					}
-			});
+		//Botón Nuevo		
+		$('#nuevo-f').click(function() { 
+			$("#selectdoc-form").dialog("open");
+		});
 
+		$("#selectdoc-form").dialog({
+			autoOpen : false,
+			height : 130,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var frm = document.formFacturacion;
+					frm.metodo.value = 'irGrabar';
+					frm.submit();
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});		
+		
+		//Botón Reporte PDF
+		$('#pdf-f').click(function() { 
+			$("#selectrep-form").dialog("open");
+		});
+		
+		$("#selectrep-form").dialog({
+			autoOpen : false,
+			height : 130,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var frm = document.formFacturacion;
+					frm.metodo.value = 'irReportar';
+					frm.submit();
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+
+
+		$('#imprimir-f').click(function() {    
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_CON_FILTRO', 'Popup', caracteristicas);  
+	        return false;  
+		});				
+
+		
+		//Imagen Anular
 		$("#anulardoc-form").dialog({
 			autoOpen : false,
-			height : 280,
+			height : 230,
 			width : 600,
 			modal : true,
 			buttons : {
@@ -54,15 +92,7 @@
 			close : function() {
 				allFields.val("").removeClass("ui-state-error");
 			}
-	});
-		
-		$('#nuevo-f').click(function() { 
-
-			$("#selectdoc-form").dialog("open");
-     
-
 		});
-		
 		
 	});
 
@@ -93,8 +123,7 @@
 </head>
 <body>
 
-	<html:form action="/gestionarFacturacion.do" method="post"
-		styleId="formFacturacion">
+	<html:form action="/gestionarFacturacion.do" method="post"	styleId="formFacturacion">
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoFactura" id="codigoFactura"/>
 		<input type="hidden" name="descripanulada" id="descripanulada"/>
@@ -103,26 +132,19 @@
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Administración /
-					Facturación</td>
+				<td width=885 align="left" class="titulo">Administración / Facturación</td>
 			</tr>
 		</table>
 		<table align="center">
 			<tr>
-				<td id="mensaje" align="center" valign="middle"
-					style="display: none"></td>
-
-				<td id="error" align="center" valign="middle" class="mensajeError"
-					style="display: none"></td>
-
+				<td id="mensaje" align="center" valign="middle"	style="display: none"></td>
+				<td id="error" align="center" valign="middle" class="mensajeError"	style="display: none"></td>
 			</tr>
 		</table>
 		<logic:notEmpty name="error">
 			<table align="center">
 				<tr>
-
-					<td id="error" align="center" valign="middle" class="mensajeError">
-						${error}</td>
+					<td id="error" align="center" valign="middle" class="mensajeError">${error}</td>
 				</tr>
 			</table>
 		</logic:notEmpty>
@@ -130,8 +152,7 @@
 		<logic:notEmpty name="mensaje">
 			<table align="center" id="tabalMensaje">
 				<tr>
-					<td id="mensaje" align="center" valign="middle"
-						class="mensajeExito">${mensaje}</td>
+					<td id="mensaje" align="center" valign="middle"	class="mensajeExito">${mensaje}</td>
 				</tr>
 			</table>
 		</logic:notEmpty>
@@ -139,30 +160,31 @@
 		<fieldset>
 			<legend>
 				<span class="titulo">Listado de Cobranza
-				<table>
-					<tr>
-						<td>
-							<select>
-								<option value="0" selected>Todos los campos</option>
-								<option value="1">Nro Factura</option>
-								<option value="2">Codigo Socio</option>
-								<option value="3">Monto</option>
-								<option value="4">Moneda</option>
-								<option value="5">Estado</option>
-							</select>
-						</td>
-						<td align="center"><input type="text" maxlength="6" size="16" /></td>
-						<td align="center"><input type="button" id="buscar-f" name="buscar-f" value="Busqueda Rápida" onclick="lstBuscar()" /></td>
-						<td align="center"><input type="button" id="pdf-f" name="pdf-f" value="PDF" onclick="lstPdf()" /></td>
-						<td align="center"><input type="button" id="imprimir-f" name="imprimir-f" value="Imprimir" onclick="lstImprimir()" /></td>
-						<td align="center"><input type="button" id="salir-f" name="salir-f" value="Salir" onclick="lstSalir()" /></td>
-						<td align="center"><input type="button" id="nuevo-f" name="nuevo-f" value="Nuevo" /></td>
-					</tr>
-				</table>
+					<table>
+						<tr>
+							<td>
+								<select>
+									<option value="0" selected>Todos los campos</option>
+									<option value="1">Nro. Factura</option>
+									<option value="2">Código Socio</option>
+									<option value="3">Monto</option>
+									<option value="4">Moneda</option>
+									<option value="5">Estado</option>
+								</select>
+							</td>
+							<td align="center"><input type="text" maxlength="6" size="16" /></td>
+							<td align="center"><input type="button" id="buscar-f" name="buscar-f" value="Busqueda Rápida" onclick="lstBuscar()" /></td>
+							<!-- td align="center"><input type="button" id="pdf-f" name="pdf-f" value="PDF" onclick="lstPdf()" /></td -->
+							<td align="center"><input type="button" id="pdf-f" name="pdf-f" value="PDF" /></td>
+							<td align="center"><input type="button" id="imprimir-f" name="imprimir-f" value="Imprimir" onclick="lstImprimir()" /></td>
+							<td align="center"><input type="button" id="nuevo-f" name="nuevo-f" value="Nuevo" /></td>
+						</tr>
+					</table>
 				</span>
 			</legend>
 		</fieldset>
 	
+		<fieldset>
 		<display:table name="lstFac" 
 						class="consultanormal"
 						excludedParams="metodo" 
@@ -185,30 +207,51 @@
 				</display:column>
 				<display:column title="Nro Documento" property="numNrodoc" sortable="true"></display:column>
 				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
-				
 				<display:column title="Fecha de Creación" property="datFechacred" sortable="true"></display:column>
 				<display:column title="Total" property="numTotal" sortable="true"></display:column>
 				<display:column title="Estado" sortable="true">
 					<c:choose>
-						<c:when test="${row.numEstado==1}">Pendiante</c:when>
+						<c:when test="${row.numEstado==1}">Pendiente</c:when>
 						<c:when test="${row.numEstado==2}">Cancelada</c:when>
 						<c:when test="${row.numEstado==3}">Anulada</c:when>
 					</c:choose>
-				
 				</display:column>
 		</display:table>
 		</fieldset>
         
-	<div id="selectdoc-form" title="Seleccione Tipo de Documento">
+	<div id="selectdoc-form" title="Seleccione Tipo de Documento a utilizar...">
 		<div align="center">	
-			<input type="radio" name="tipodoc" value="R" onclick="setTipoDoc('R')" checked> Recibo<br>
-			<input type="radio" name="tipodoc" value="B" onclick="setTipoDoc('B')"> Boleta
+			<input type="radio" name="tipodoc" value="R" onclick="setTipoDoc('R')" checked>con Recibo<br>
+			<input type="radio" name="tipodoc" value="B" onclick="setTipoDoc('B')">con Boleta
 		</div>
 	</div>
-	<div id="anulardoc-form" title="Anular Documento">
-		<div align="center">	
-			Esta seguro?. favor ingrese el motivo.<br>
-			<textarea rows="12" cols="90" id="descanulada"></textarea>
+	<div id="anulardoc-form" title="Esta seguro que desea anular el Documento...?  Por favor ingrese el motivo...">
+		<div align="center">
+			<textarea rows="10" cols="100" id="descanulada" style="BACKGROUND-COLOR: #fdecc4;"></textarea>
+		</div>
+	</div>
+	<div id="selectrep-form" title="Seleccione Tipo de Reporte a mostrar...">
+		<div align="center">
+			<table>
+				<tr>
+					<td>Tipos de Documentos :
+						<select>
+							<option value="T" selected>-- Todos --</option>
+							<option value="R">Recibos</option>
+							<option value="B">Boletas</option>
+						</select>
+					</td>
+					<td>&nbsp;</td>
+					<td>Estado de Documentos :
+						<select>
+							<option value="T" selected>-- Todos --</option>
+							<option value="P">Pendiente</option>
+							<option value="C">Cancelada</option>
+							<option value="A">Anulada</option>
+						</select>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	</html:form>
