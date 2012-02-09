@@ -81,7 +81,15 @@
      <forward name="admSuministroluz" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="agrebarSuministroluz" path="/jsp/administracion/suministroluz/agregarSuministroLuzSocio.jsp"/>
      
-   </action>    
+   </action>
+   
+   <action name="ReportesItemCobranzaActionForm" path="/reporteItemsCobranza"
+   scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesItemCobranzaAction">
+     <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteItemCob.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+     
+   </action>
+       
   <!-- ejecutor -->  
 <!--   <action input="/jsp/ejecutor/seleccionarConceptosAtributos.jsp" name="seleccionarConceptosAtributosActionForm" path="/selConAtr"
    scope="request" type="pe.com.equifax.paramweb.ejecutor.action.SeleccionarConceptosAtributosAction">
