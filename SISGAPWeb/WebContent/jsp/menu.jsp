@@ -385,7 +385,7 @@
 			</li>
 			<li>
 				<div class="botonDelMenu">
-			   		<a href="<%=request.getContextPath()%>/repConAtr.do?metodo=cargarAction" target="FraMain">
+			   		<a href="<%=request.getContextPath()%>/reporteItemsCobranza.do?metodo=cargarAction" target="FraMain">
 				    	<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteItemsCobranza.png"/>
 				       Reporte Items de Cobranza
 			   		</a>			
