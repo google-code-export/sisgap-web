@@ -49,14 +49,19 @@
 		
 		$("#selectrep-form").dialog({
 			autoOpen : false,
-			height : 130,
+			height : 150,
 			width : 350,
 			modal : true,
 			buttons : {
 				Generar : function() {
-					var frm = document.formFacturacion;
-					frm.metodo.value = 'irReportar';
-					frm.submit();
+					var tipDoc = $("#tipDocx").val();
+					//alert("Tipo de documento: "+tipDoc);
+					var estDoc = $("#estDocx").val();
+					//alert("Estado de documento: "+estDoc);
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
+			        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTOS_FILTRO&tipDoc='+tipDoc+'&estDoc='+estDoc, 'Popup', caracteristicas);  
+			        //$(this).dialog("close");
+					//return false; 
 				},
 				Cancel : function() {
 					$(this).dialog("close");
@@ -69,7 +74,7 @@
 
 		$('#imprimir-f').click(function() {    
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_CON_FILTRO', 'Popup', caracteristicas);  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
 	        return false;  
 		});				
 
@@ -207,6 +212,8 @@
 				</display:column>
 				<display:column title="Nro Documento" property="numNrodoc" sortable="true"></display:column>
 				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
+				<display:column title="Puesto" sortable="true">${row.sisgapSocio.tranPuesto}</display:column>
+				<display:column title="Actividad" sortable="true">${row.sisgapSocio.sisgapActividadSocio.actiTranNombre}</display:column>
 				<display:column title="Fecha de Creación" property="datFechacred" sortable="true"></display:column>
 				<display:column title="Total" property="numTotal" sortable="true"></display:column>
 				<display:column title="Estado" sortable="true">
@@ -235,7 +242,7 @@
 			<table>
 				<tr>
 					<td>Tipos de Documentos :
-						<select>
+						<select name="tipDocx" id="tipDocx">
 							<option value="T" selected>-- Todos --</option>
 							<option value="R">Recibos</option>
 							<option value="B">Boletas</option>
@@ -243,7 +250,7 @@
 					</td>
 					<td>&nbsp;</td>
 					<td>Estado de Documentos :
-						<select>
+						<select name="estDocx" id="estDocx">
 							<option value="T" selected>-- Todos --</option>
 							<option value="P">Pendiente</option>
 							<option value="C">Cancelada</option>

@@ -97,6 +97,9 @@ var codTipCob = "";
 var codMon = "";
 
 	$(function() {
+		$("#nuevo-sl").button();
+
+		
 
 		$("#grabar-form").dialog({
 			autoOpen : false,
@@ -227,18 +230,7 @@ var codMon = "";
 				        	$("#tablesocios").html(datos);
 				      }
 				});
-		});
-
-	
-		//$("#registra-f").button().click(function() {
-		//	$('[name=metodo]').val('grabar');
-			//$('#gestionarFacturacion').submit();
-			
-		//});
-		
-
-		
-		
+		});		
 	});
 
 	function grabar() {
@@ -380,57 +372,51 @@ var codMon = "";
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Administración /
-Asociar Recibo</td>
+				<td width=885 align="left" class="titulo">Administración / Asociar Recibo</td>
 			</tr>
 		</table>
 		<table align="center">
 			<tr>
-				<td id="mensaje" align="center" valign="middle"
-					style="display: none"></td>
-
-				<td id="error" align="center" valign="middle" class="mensajeError"
-					style="display: none"></td>
-
+				<td id="mensaje" align="center" valign="middle"	style="display: none"></td>
+				<td id="error" align="center" valign="middle" class="mensajeError" style="display: none"></td>
 			</tr>
 		</table>
 
 		<fieldset>
-			<legend>Datos del Recibo</legend>
-		
-			<table border="0" cellpadding="0" cellspacing="0" width="75%">
+			<legend>Datos del Recibo Original</legend>
+			<table border="0" cellpadding="2" cellspacing="2" width="75%">
 				<tr>
-					<td width="120px">Cod. Recibo</td>
-					<td width="40%">${resori.codOrgreciboLuz}</td>
+					<td width="50px">&nbsp;</td>
+					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td>Lectura Inicial</td>
-					<td colspan="3" >${resori.numLecturaInicial}</td>
-					<td width="15px">		
-					</td>
-					<td width="120px">Lectura Final</td>
+					<td width="50px">&nbsp;</td>
+					<td width="120px"><b>Cod. Recibo</b></td>
+					<td colspan="3">${resori.codOrgreciboLuz}</td>
+				</tr>
+				<tr>
+					<td width="50px">&nbsp;</td>
+					<td><b>Lectura Inicial</b></td>
+					<td>${resori.numLecturaInicial}</td>
+					<td width="120px"><b>Lectura Final</b></td>
 					<td>${resori.numLecturaFinal}</td>
 				</tr>
 				<tr>
-					<td>Costo por Watts</td>
-					<td colspan="3">${resori.numCostoWats}</td>
-					<td width="15px"></td>
-					<td width="80px">Total </td>
-					<td width="80px">${resori.numMonto}</td>
-					<td width="15px"></td>
-					<td width="80px">Pendiente</td>
-					<td width="80px">${resori.numMonto-resori.numPendienteFac}</td>
-					</td>
+					<td width="50px">&nbsp;</td>
+					<td><b>Total Monto Recibo</b></td>
+					<td>${resori.numMonto}</td>
+					<td><b>Pendiente Cancelación</b></td>
+					<td>${resori.numMonto-resori.numPendienteFac}</td>
 				</tr>
 			</table> 
-	</fieldset>
+		</fieldset>
+		<br>
 		<fieldset>
 			<legend>Datos del Socio</legend>
-		
 			<table border="0" cellpadding="0" cellspacing="0" width="75%">
 				<tr>
 					<td>Socio</td>
-					<td colspan="3" ><input type='text' name="socio-f" id="socio-f" size=30 value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+					<td colspan="3" ><input type='text' name="socio-sl" id="socio-sl" size=30 value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
 					<td width="15px"><c:choose>
 						<c:when test="${isDetalle!=1 }">
 							<button id="buscar-socio">...</button>
@@ -439,15 +425,14 @@ Asociar Recibo</td>
 						
 					</td>
 					<td width="20px">Código</td>
-					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td><input type="text" name="codigo-sl" id="codigo-sl" size="10" value="" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
 					<td colspan="3">
-						<input type="text" name="direccion-f" id="direccion-f" size="10" value="" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/>
-						
+						<input type="text" name="direccion-sl" id="direccion-sl" size="10" value="" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/>						
 					</td>
-					<td width="20px"><button id="nuevo-f">Agregar</button></td>
+					<td width="20px"><button id="nuevo-sl">Agregar</button></td>
 					<td width="80px"> </td>
 					<td>&nbsp;</td>
 				</tr>

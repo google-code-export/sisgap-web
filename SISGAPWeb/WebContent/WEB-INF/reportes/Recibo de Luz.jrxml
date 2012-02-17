@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport
+		 name="Recibo de luz"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="297"
+		 pageHeight="425"
+		 columnWidth="237"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="5"
+		 bottomMargin="5"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[SELECT
+     SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" AS SISGAP_RECIBOLUZ_SOCIO_CODIGOS,
+     SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
+     SISGAP_SECTOR_SOCIO."SECT_TRAN_NOMBRE" AS SISGAP_SECTOR_SOCIO_SECT_TRAN_,
+     SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_NOMBRE" AS SISGAP_ACTIVIDAD_SOCIO_ACTI_TR,
+     SISGAP_SOCIO."TRAN_PUESTO" AS SISGAP_SOCIO_TRAN_PUESTO,
+     SISGAP_RECIBOLUZ_SOCIO."LECTURAINI" AS SISGAP_RECIBOLUZ_SOCIO_LEC_INI,
+     SISGAP_RECIBOLUZ_SOCIO."LECTURAFIN" AS SISGAP_RECIBOLUZ_SOCIO_LEC_FIN,
+     SISGAP_RECIBOLUZ_SOCIO."CONSUMOMES" AS SISGAP_RECIBOLUZ_SOCIO_CONSUMO,
+     SISGAP_RECIBOLUZ_SOCIO."CAGOFIJO" AS SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ,
+     SISGAP_RECIBOLUZ_SOCIO."ALUPUBLIC" AS SISGAP_RECIBOLUZ_SOCIO_ALUPUBL,
+     SISGAP_RECIBOLUZ_SOCIO."CARGOENER" AS SISGAP_RECIBOLUZ_SOCIO_CARGOEN,
+     SISGAP_RECIBOLUZ_SOCIO."SUBTOTALMES" AS SISGAP_RECIBOLUZ_SOCIO_SUBTOTA,
+     SISGAP_RECIBOLUZ_SOCIO."IGV" AS SISGAP_RECIBOLUZ_SOCIO_IGV,
+     SISGAP_RECIBOLUZ_SOCIO."TOTALMES" AS SISGAP_RECIBOLUZ_SOCIO_TOTALME,
+     SISGAP_RECIBOLUZ_SOCIO."USOEQUIPO" AS SISGAP_RECIBOLUZ_SOCIO_USOEQUI,
+     SISGAP_RECIBOLUZ_SOCIO."SERVMANTO" AS SISGAP_RECIBOLUZ_SOCIO_SERVMAN,
+     SISGAP_RECIBOLUZ_SOCIO."APORTELEY" AS SISGAP_RECIBOLUZ_SOCIO_APORTEL,
+     SISGAP_RECIBOLUZ_SOCIO."RECARGO" AS SISGAP_RECIBOLUZ_SOCIO_RECARGO,
+     SISGAP_RECIBOLUZ_SOCIO."REDONDEO" AS SISGAP_RECIBOLUZ_SOCIO_REDONDE,
+     SISGAP_RECIBOLUZ_SOCIO."TOTAL" AS SISGAP_RECIBOLUZ_SOCIO_TOTAL,
+     SISGAP_RECIBOLUZ_ORG."FEC_PERIODO" AS SISGAP_RECIBOLUZ_PERIODO
+FROM
+     "SISGAP"."SISGAP_RECIBOLUZ_SOCIO" SISGAP_RECIBOLUZ_SOCIO INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" = SISGAP_SOCIO."TRAN_IDE"
+     INNER JOIN "SISGAP"."SISGAP_SECTOR_SOCIO" SISGAP_SECTOR_SOCIO ON SISGAP_SOCIO."SECT_TRAN_IDE" = SISGAP_SECTOR_SOCIO."SECT_TRAN_IDE"
+     INNER JOIN "SISGAP"."SISGAP_ACTIVIDAD_SOCIO" SISGAP_ACTIVIDAD_SOCIO ON SISGAP_SOCIO."ACTI_TRAN_IDE" = SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_IDE"
+     INNER JOIN "SISGAP"."SISGAP_RECIBOLUZ_ORG" SISGAP_RECIBOLUZ_ORG ON SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" = SISGAP_RECIBOLUZ_ORG."COD_ORGRECIBO_LUZ"]]></queryString>
+
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CODIGOS" class="java.math.BigDecimal"/>
+	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" class="java.lang.String"/>
+	<field name="SISGAP_ACTIVIDAD_SOCIO_ACTI_TR" class="java.lang.String"/>
+	<field name="SISGAP_SOCIO_TRAN_PUESTO" class="java.lang.String"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_INI" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_FIN" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CONSUMO" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_ALUPUBL" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CARGOEN" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_SUBTOTA" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_IGV" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTALME" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_USOEQUI" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_SERVMAN" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_APORTEL" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_RECARGO" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_REDONDE" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTAL" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_PERIODO" class="java.sql.Timestamp"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="36"  isSplitAllowed="true" >
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="2"
+						width="38"
+						height="33"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\MercadoModelo\\cuh.jpg"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement
+						x="44"
+						y="3"
+						width="135"
+						height="24"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Narrow" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="44"
+						y="26"
+						width="134"
+						height="9"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="6" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Fundado el 13 de Noviembre de 1996]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="333"  isSplitAllowed="true" >
+				<rectangle radius="1" >
+					<reportElement
+						mode="Opaque"
+						x="7"
+						y="114"
+						width="224"
+						height="135"
+						forecolor="#000000"
+						key="rectangle-3"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<rectangle radius="1" >
+					<reportElement
+						mode="Opaque"
+						x="7"
+						y="57"
+						width="225"
+						height="55"
+						forecolor="#000000"
+						key="rectangle-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<rectangle radius="1" >
+					<reportElement
+						mode="Opaque"
+						x="7"
+						y="3"
+						width="225"
+						height="52"
+						forecolor="#000000"
+						key="rectangle-2"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<staticText>
+					<reportElement
+						x="10"
+						y="4"
+						width="67"
+						height="11"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[ASOCIADO (A)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="10"
+						y="15"
+						width="67"
+						height="11"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SECTOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="10"
+						y="27"
+						width="67"
+						height="11"
+						key="staticText-5"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[GIRO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="10"
+						y="39"
+						width="67"
+						height="11"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Nº DE PUESTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="78"
+						y="4"
+						width="8"
+						height="11"
+						key="staticText-7"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="78"
+						y="15"
+						width="8"
+						height="11"
+						key="staticText-8"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="78"
+						y="27"
+						width="8"
+						height="11"
+						key="staticText-9"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="78"
+						y="39"
+						width="8"
+						height="11"
+						key="staticText-10"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="75"
+						width="72"
+						height="11"
+						key="staticText-12"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Lectura Anterior]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="86"
+						width="72"
+						height="11"
+						key="staticText-13"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Lectura Actual]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="98"
+						width="72"
+						height="11"
+						key="staticText-14"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Consumo del Mes]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="86"
+						y="98"
+						width="8"
+						height="11"
+						key="staticText-15"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="86"
+						y="86"
+						width="8"
+						height="11"
+						key="staticText-16"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="86"
+						y="75"
+						width="8"
+						height="11"
+						key="staticText-17"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="118"
+						width="135"
+						height="11"
+						key="staticText-18"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Cargo Fijo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="129"
+						width="135"
+						height="11"
+						key="staticText-19"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Alumbrado Público]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="141"
+						width="135"
+						height="11"
+						key="staticText-20"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Cargo por Energía]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="153"
+						width="135"
+						height="11"
+						key="staticText-21"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SUB TOTAL MES ACTUAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="165"
+						width="135"
+						height="11"
+						key="staticText-22"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[I.G.V.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="177"
+						width="135"
+						height="11"
+						key="staticText-23"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TOTAL MES ACTUAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="189"
+						width="135"
+						height="11"
+						key="staticText-24"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Cargo por uso de Equipo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="201"
+						width="135"
+						height="11"
+						key="staticText-25"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Reposic., Mant. y Servicio Técnico]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="213"
+						width="135"
+						height="11"
+						key="staticText-26"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Aporte Ley Nº 28749]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="225"
+						width="135"
+						height="11"
+						key="staticText-27"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Recargo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="237"
+						width="135"
+						height="11"
+						key="staticText-28"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[DEUDA ANTERIOR]]></text>
+				</staticText>
+				<rectangle radius="1" >
+					<reportElement
+						mode="Opaque"
+						x="7"
+						y="251"
+						width="225"
+						height="37"
+						forecolor="#000000"
+						key="rectangle-5"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<staticText>
+					<reportElement
+						x="10"
+						y="253"
+						width="127"
+						height="15"
+						key="staticText-30"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[FECHA DE VENCIMIENTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="141"
+						y="253"
+						width="90"
+						height="15"
+						key="staticText-31"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TOTAL A PAGAR]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="7"
+						y="268"
+						width="224"
+						height="2"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="138"
+						y="252"
+						width="0"
+						height="36"
+						key="line-2"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="4"
+						width="143"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_RAZON_SOCIAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="15"
+						width="143"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SECTOR_SOCIO_SECT_TRAN_}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="27"
+						width="143"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_ACTIVIDAD_SOCIO_ACTI_TR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="39"
+						width="143"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_PUESTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="MMMM yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="10"
+						y="58"
+						width="220"
+						height="15"
+						backcolor="#CCCCCC"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{SISGAP_RECIBOLUZ_PERIODO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="95"
+						y="75"
+						width="50"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="95"
+						y="86"
+						width="50"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="95"
+						y="98"
+						width="50"
+						height="11"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="147"
+						y="118"
+						width="8"
+						height="11"
+						key="staticText-32"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="129"
+						width="8"
+						height="11"
+						key="staticText-33"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="213"
+						width="8"
+						height="11"
+						key="staticText-34"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="177"
+						width="8"
+						height="11"
+						key="staticText-35"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="141"
+						width="8"
+						height="11"
+						key="staticText-36"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="153"
+						width="8"
+						height="11"
+						key="staticText-37"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="201"
+						width="8"
+						height="11"
+						key="staticText-38"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="189"
+						width="8"
+						height="11"
+						key="staticText-39"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="165"
+						width="8"
+						height="11"
+						key="staticText-40"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="225"
+						width="8"
+						height="11"
+						key="staticText-41"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="237"
+						width="8"
+						height="11"
+						key="staticText-42"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="118"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="129"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="141"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="153"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_SUBTOTA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="165"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_IGV}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="177"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_TOTALME}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="189"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_USOEQUI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="201"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_SERVMAN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="213"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_APORTEL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="225"
+						width="70"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_RECARGO}]]></textFieldExpression>
+				</textField>
+				<rectangle radius="1" >
+					<reportElement
+						mode="Opaque"
+						x="7"
+						y="291"
+						width="225"
+						height="40"
+						forecolor="#000000"
+						key="rectangle-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="10"
+						y="294"
+						width="38"
+						height="33"
+						key="image-2"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\MercadoModelo\\al_dia_2.jpg"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement
+						x="51"
+						y="294"
+						width="179"
+						height="35"
+						key="staticText-43"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Mercado Modelo de Huaral donde dá gusto comprar.]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="5"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

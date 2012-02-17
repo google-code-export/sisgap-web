@@ -73,8 +73,21 @@ public class ReportsServlet extends HttpServlet {
 				String nrodoc = request.getParameter("nrodoc");
 				parametros.put("P_NRO_DOCUMENTO", nrodoc);
 				String nroDocumento = request.getParameter("nroDoc");
-				System.out.println("nroDoc : "+nroDocumento);
+				System.out.println("[REPORTE_DOCUMENTO_DETALLE]Parametro nroDoc : "+nroDocumento);
 				parametros.put("P_NRO_DOCUMENTO", nroDocumento);
+			}else if(reporte.equals("REPORTE_DOCUMENTO_X_GRUPO")){
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro x grupo.jrxml");
+			}else if(reporte.equals("REPORTE_DOCUMENTOS_FILTRO")){
+				String tipDoc = request.getParameter("tipDoc");
+				String estDoc = request.getParameter("estDoc");
+				System.out.println("[REPORTE_DOCUMENTOS_FILTRO]Parametro tipDoc : "+tipDoc);
+				if(tipDoc.equals("T")){
+					tipDoc = "%%";
+				}
+				parametros.put("P_TIPO_DOCUMENTOS", tipDoc);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro.jrxml");
+			}else if(reporte.equals("RECIBO_LUZ")){
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz.jrxml");
 			}
 			generateReport(request, response, ruta, parametros);
 		}		

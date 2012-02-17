@@ -318,18 +318,19 @@ var codMon = "";
 		
 		$("#registra-f").button().click(function() {
 			$('[name=metodo]').val('grabar');
-			//$('#gestionarFacturacion').submit();
+			$('#gestionarFacturacion').submit();
 			
 		});
 
 		$("#regresar-f").button().click(function() {
 			$('[name=metodo]').val('cargarAction');
-			//$('#gestionarFacturacion').submit();
+			$('#gestionarFacturacion').submit();
 		});
 		
 
 		$("btn-cancelar").button().click(function() {
 			$("#dialog-form-item").dialog("close");
+			$('#gestionarFacturacion').submit();
 		});
 		
 		
