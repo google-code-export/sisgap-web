@@ -36,7 +36,7 @@ public class Factura implements Serializable {
 
 	@Column(name="STR_TIPODOC", length=1)
 	private String strTipodoc;
-
+	
     @Temporal( TemporalType.DATE)
 	@Column(name="DAT_FECHACRED")
 	private Date datFechacred;
@@ -50,9 +50,9 @@ public class Factura implements Serializable {
 	//bi-directional many-to-one association to SisgapSocio
 	@ManyToOne( fetch=FetchType.EAGER)
 	@JoinColumn(name="TRAN_IDE")
-	private Socio sisgapSocio;
+	private Socio sisgapSocio; 
 
-    public Factura() {
+	public Factura() {
     }
 
 	public long getCodFactura() {
