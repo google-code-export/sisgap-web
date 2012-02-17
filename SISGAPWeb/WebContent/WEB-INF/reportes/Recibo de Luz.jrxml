@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
@@ -73,6 +73,9 @@ FROM
 	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTAL" class="java.math.BigDecimal"/>
 	<field name="SISGAP_RECIBOLUZ_PERIODO" class="java.sql.Timestamp"/>
 
+	<variable name="V_CONSUMO_MES" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new java.lang.Integer(  ($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) -($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) )]]></variableExpression>
+	</variable>
 		<background>
 			<band height="0"  isSplitAllowed="true" >
 			</band>
@@ -116,6 +119,17 @@ FROM
 					</textElement>
 				<text><![CDATA[Fundado el 13 de Noviembre de 1996]]></text>
 				</staticText>
+				<image  scaleImage="RetainShape" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="179"
+						y="3"
+						width="54"
+						height="29"
+						key="barcode-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.awt.Image"><![CDATA[it.businesslogic.ireport.barcode.BcImage.getBarcodeImage(13,$F{SISGAP_RECIBOLUZ_SOCIO_CODIGOS},false,false,null,0,0)]]></imageExpression>
+				</image>
 			</band>
 		</title>
 		<pageHeader>
@@ -625,19 +639,6 @@ FROM
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="95"
-						y="98"
-						width="50"
-						height="11"
-						key="textField-1"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN})]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement
 						x="147"
@@ -947,6 +948,19 @@ FROM
 					</textElement>
 				<text><![CDATA[Mercado Modelo de Huaral donde dá gusto comprar.]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="95"
+						y="98"
+						width="50"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[new java.lang.Integer(  ($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) -($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) )]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
