@@ -86,7 +86,7 @@ public class Socio implements Serializable {
 	private Set<Factura> sisgapFacturas;
 
 	//bi-directional many-to-one association to SisgapActividadSocio
-	@ManyToOne(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	@JoinColumn(name="ACTI_TRAN_IDE")
 	private ActividadSocio sisgapActividadSocio;
 
