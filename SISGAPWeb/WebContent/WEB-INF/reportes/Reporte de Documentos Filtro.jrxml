@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
 <jasperReport
 		 name="Reporte de Documentos Filtro"
 		 columnCount="1"
@@ -25,6 +26,9 @@
 	<parameter name="P_TIPO_DOCUMENTOS" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["R"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_ESTADO" isForPrompting="false" class="java.math.BigDecimal">
+		<defaultValueExpression ><![CDATA[new BigDecimal(1)]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[SELECT
      SISGAP_FACTURA."STR_TIPODOC" AS SISGAP_FACTURA_STR_TIPODOC,
      SISGAP_FACTURA."NUM_NRODOC" AS SISGAP_FACTURA_NUM_NRODOC,
@@ -39,7 +43,7 @@ FROM
      INNER JOIN "SISGAP"."SISGAP_DETALLEFACTURA" SISGAP_DETALLEFACTURA ON SISGAP_FACTURA."COD_FACTURA" = SISGAP_DETALLEFACTURA."COD_FACTURA"
 WHERE
      SISGAP_FACTURA."STR_TIPODOC" LIKE $P{P_TIPO_DOCUMENTOS}
- AND SISGAP_FACTURA."NUM_ESTADO" = 1
+ AND SISGAP_FACTURA."NUM_ESTADO" LIKE $P{P_ESTADO}
 ORDER BY
      SISGAP_FACTURA."NUM_NRODOC" ASC]]></queryString>
 
@@ -52,6 +56,17 @@ ORDER BY
 	<field name="SISGAP_DETALLEFACTURA_NUM_ACUE" class="java.math.BigDecimal"/>
 	<field name="SISGAP_PENDIENTE" class="java.math.BigDecimal"/>
 
+	<variable name="V_CUENTA_REGISTRO" class="java.lang.Integer" resetType="Report" calculation="Count">
+	</variable>
+	<variable name="V_SUMA_TOTAL" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{SISGAP_FACTURA_NUM_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="V_SUMA_ACTA" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{SISGAP_DETALLEFACTURA_NUM_ACUE}]]></variableExpression>
+	</variable>
+	<variable name="V_SUMA_PEND" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{SISGAP_PENDIENTE}]]></variableExpression>
+	</variable>
 
 		<group  name="SISGAP_FACTURA_STR_TIPODOC" >
 			<groupExpression><![CDATA[$F{SISGAP_FACTURA_STR_TIPODOC}]]></groupExpression>
@@ -129,7 +144,7 @@ ORDER BY
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="20" isBold="true"/>
 					</textElement>
-				<text><![CDATA[REPORTE DE DOCUMENTOS -]]></text>
+				<text><![CDATA[REPORTE DE DOCUMENTOS GENERADOS]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -156,21 +171,6 @@ ORDER BY
 					<pen lineWidth="2.0" lineStyle="Solid"/>
 </graphicElement>
 				</line>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="325"
-						y="5"
-						width="151"
-						height="40"
-						key="textField-2"/>
-					<box></box>
-					<textElement verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="20" isBold="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[($F{SISGAP_FACTURA_STR_TIPODOC}.equals("T")? "TODOS":
-($F{SISGAP_FACTURA_STR_TIPODOC}.equals("B")? "BOLETA":"RECIBO")
-)]]></textFieldExpression>
-				</textField>
 			</band>
 		</title>
 		<pageHeader>
@@ -412,6 +412,19 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_PENDIENTE}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="5"
+						y="1"
+						width="20"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{V_CUENTA_REGISTRO}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>
@@ -422,9 +435,9 @@ ORDER BY
 			<band height="27"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="325"
+						x="373"
 						y="4"
-						width="170"
+						width="122"
 						height="19"
 						key="textField"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -471,8 +484,8 @@ ORDER BY
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="1"
-						y="6"
-						width="209"
+						y="4"
+						width="109"
 						height="19"
 						key="textField"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -485,10 +498,75 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="121"
+						y="4"
+						width="230"
+						height="19"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[Sistema de Gestión Administrativa - Huaral]]></text>
+				</staticText>
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="20"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="291"
+						y="2"
+						width="73"
+						height="16"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TOTAL ---]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="368"
+						y="2"
+						width="55"
+						height="16"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="424"
+						y="2"
+						width="55"
+						height="16"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_ACTA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="480"
+						y="2"
+						width="55"
+						height="16"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_PEND}]]></textFieldExpression>
+				</textField>
 			</band>
 		</summary>
 </jasperReport>
