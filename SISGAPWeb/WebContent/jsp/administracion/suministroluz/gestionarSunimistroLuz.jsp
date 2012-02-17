@@ -11,7 +11,6 @@
 		color:rgb(0,0,0);
 	}
 </style>
-<script src="jquery-1.6.2.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 
