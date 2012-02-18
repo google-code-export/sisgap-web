@@ -27,7 +27,7 @@ $(function() {
 	
 		$('#imprimir-sl').click(function() {      
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ', 'Popup', caracteristicas);  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBO_LUZ', 'Popup', caracteristicas);  
 	        return false;
 		});
 

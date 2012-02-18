@@ -342,6 +342,17 @@ var codMon = "";
 	function cerrarPop() {
 		$("#grabar-form").dialog("close");
 	}
+
+	function mostrarRep(codRec, codSoc) {
+		alert("Codigo recibo: "+codRec+" - Codigo socio: "+codSoc);
+		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+        return false;
+		//var frm = document.formFacturacion;
+		//frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
+		//frm.metodo.value = 'mostrarItemsSuministro';
+		//frm.submit();
+	}
 	
 </script>
 </head>
@@ -447,6 +458,8 @@ var codMon = "";
 			<display:column title="" style="width:60px;">
 				<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
 				<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total});"/>
+				<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio});"/>
+				
 			</display:column>
 			<display:column title="Nombres" property="nombres" sortable="true"></display:column>	
 			<display:column title="Lectura Inicial" property="lecturaini" sortable="true"></display:column>
