@@ -2,7 +2,7 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
-		 name="Reporte de Socios"
+		 name="Listado de Recibos de Luz"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -23,81 +23,35 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="V_CONTADOR" isForPrompting="false" class="java.lang.Number"/>
 	<queryString><![CDATA[SELECT
-     SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
-     SISGAP_SOCIO."TRAN_PUESTO" AS SISGAP_SOCIO_TRAN_PUESTO,
-     SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_NOMBRE" AS SISGAP_ACTIVIDAD_SOCIO_ACTI_TR,
-     SISGAP_TIPO_SOCIO."TIPO_TRAN_NOMBRE" AS SISGAP_TIPO_SOCIO_TIPO_TRAN_NO,
-     SISGAP_SECTOR_SOCIO."SECT_TRAN_NOMBRE" AS SISGAP_SECTOR_SOCIO_SECT_TRAN_,
-     SISGAP_SOCIO."TRAN_ESTADO" AS SISGAP_SOCIO_TRAN_ESTADO
+     SISGAP_RECIBOLUZ_ORG."COD_ORGRECIBO_LUZ" AS SISGAP_RECIBOLUZ_ORG_COD_ORGRE,
+     SISGAP_RECIBOLUZ_ORG."NUM_LECTURA_INICIAL" AS SISGAP_RECIBOLUZ_ORG_LEC_INI,
+     SISGAP_RECIBOLUZ_ORG."NUM_LECTURA_FINAL" AS SISGAP_RECIBOLUZ_ORG_LEC_FIN,
+     SISGAP_RECIBOLUZ_ORG."NUM_MONTO" AS SISGAP_RECIBOLUZ_ORG_NUM_MONTO,
+     SISGAP_RECIBOLUZ_ORG."NUM_PENDIENTE_FAC" AS SISGAP_RECIBOLUZ_ORG_NUM_PENDI,
+     SISGAP_RECIBOLUZ_ORG."NUM_ESTADO" AS SISGAP_RECIBOLUZ_ORG_NUM_ESTAD
 FROM
-     "SISGAP"."SISGAP_SECTOR_SOCIO" SISGAP_SECTOR_SOCIO INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_SECTOR_SOCIO."SECT_TRAN_IDE" = SISGAP_SOCIO."SECT_TRAN_IDE"
-     INNER JOIN "SISGAP"."SISGAP_TIPO_SOCIO" SISGAP_TIPO_SOCIO ON SISGAP_SOCIO."TIPO_TRAN_IDE" = SISGAP_TIPO_SOCIO."TIPO_TRAN_IDE"
-     INNER JOIN "SISGAP"."SISGAP_ACTIVIDAD_SOCIO" SISGAP_ACTIVIDAD_SOCIO ON SISGAP_SOCIO."ACTI_TRAN_IDE" = SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_IDE"
-ORDER BY 3, 1]]></queryString>
+     "SISGAP"."SISGAP_RECIBOLUZ_ORG" SISGAP_RECIBOLUZ_ORG]]></queryString>
 
-	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
-	<field name="SISGAP_SOCIO_TRAN_PUESTO" class="java.lang.String"/>
-	<field name="SISGAP_ACTIVIDAD_SOCIO_ACTI_TR" class="java.lang.String"/>
-	<field name="SISGAP_TIPO_SOCIO_TIPO_TRAN_NO" class="java.lang.String"/>
-	<field name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" class="java.lang.String"/>
-	<field name="SISGAP_SOCIO_TRAN_ESTADO" class="java.lang.String"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_COD_ORGRE" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_LEC_INI" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_LEC_FIN" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_NUM_MONTO" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_NUM_PENDI" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_ORG_NUM_ESTAD" class="java.math.BigDecimal"/>
 
 	<variable name="V_CUENTA_REGISTROS" class="java.lang.Integer" resetType="Report" calculation="Count">
 		<variableExpression><![CDATA[$V{COLUMN_COUNT}]]></variableExpression>
 	</variable>
 
 		<group  name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" >
-			<groupExpression><![CDATA[$F{SISGAP_SECTOR_SOCIO_SECT_TRAN_}]]></groupExpression>
+			<groupExpression><![CDATA[]]></groupExpression>
 			<groupHeader>
-			<band height="18"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						mode="Opaque"
-						x="0"
-						y="0"
-						width="123"
-						height="17"
-						forecolor="#FFFFFF"
-						backcolor="#000000"
-						key="staticText"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
-					</textElement>
-				<text><![CDATA[SECTOR]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						mode="Opaque"
-						x="123"
-						y="0"
-						width="432"
-						height="17"
-						forecolor="#FFFFFF"
-						backcolor="#000000"
-						key="textField"/>
-					<box></box>
-					<textElement verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SECTOR_SOCIO_SECT_TRAN_}]]></textFieldExpression>
-				</textField>
+			<band height="5"  isSplitAllowed="true" >
 			</band>
 			</groupHeader>
 			<groupFooter>
 			<band height="8"  isSplitAllowed="true" >
-				<line direction="BottomUp">
-					<reportElement
-						x="1"
-						y="4"
-						width="554"
-						height="1"
-						forecolor="#0000FF"
-						key="line"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
 			</band>
 			</groupFooter>
 		</group>
@@ -139,7 +93,7 @@ ORDER BY 3, 1]]></queryString>
 					<textElement textAlignment="Center">
 						<font size="26" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Listado de Socios]]></text>
+				<text><![CDATA[Listado de Recibos de Luz]]></text>
 				</staticText>
 			</band>
 		</title>
@@ -152,41 +106,41 @@ ORDER BY 3, 1]]></queryString>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="48"
+						x="38"
 						y="0"
-						width="111"
+						width="69"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
 						key="staticText"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[NOMBRE]]></text>
+				<text><![CDATA[CODIGO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="159"
+						x="189"
 						y="0"
-						width="111"
+						width="80"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
 						key="staticText"/>
 					<box></box>
-					<textElement textAlignment="Right">
+					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[PUESTO]]></text>
+				<text><![CDATA[LEC.FIN.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
 						x="270"
 						y="0"
-						width="156"
+						width="93"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -195,36 +149,20 @@ ORDER BY 3, 1]]></queryString>
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[ACTIVIDAD]]></text>
+				<text><![CDATA[MONTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="426"
+						x="459"
 						y="0"
-						width="63"
+						width="95"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
 						key="staticText"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font size="12"/>
-					</textElement>
-				<text><![CDATA[TIPO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						mode="Opaque"
-						x="489"
-						y="0"
-						width="66"
-						height="18"
-						forecolor="#FFFFFF"
-						backcolor="#999999"
-						key="staticText"/>
-					<box></box>
-					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
 				<text><![CDATA[ESTADO]]></text>
@@ -234,98 +172,143 @@ ORDER BY 3, 1]]></queryString>
 						mode="Opaque"
 						x="1"
 						y="0"
-						width="47"
+						width="36"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
 						key="staticText"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
 				<text><![CDATA[NRO.]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="108"
+						y="0"
+						width="80"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[LEC. INI.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="364"
+						y="0"
+						width="93"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[PENDIENTE]]></text>
+				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="12"  isSplitAllowed="true" >
+			<band height="15"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="48"
-						y="0"
-						width="192"
-						height="12"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_RAZON_SOCIAL}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="259"
-						y="0"
-						width="49"
-						height="12"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_PUESTO}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="308"
-						y="0"
-						width="118"
-						height="12"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_ACTIVIDAD_SOCIO_ACTI_TR}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="426"
-						y="0"
-						width="86"
-						height="12"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_TIPO_SOCIO_TIPO_TRAN_NO}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="516"
-						y="0"
-						width="39"
-						height="12"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_ESTADO}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="2"
-						y="0"
-						width="25"
+						x="5"
+						y="2"
+						width="20"
 						height="12"
 						key="textField-1"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{V_CUENTA_REGISTROS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="38"
+						y="2"
+						width="69"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_COD_ORGRE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="108"
+						y="2"
+						width="80"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_LEC_INI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="189"
+						y="2"
+						width="80"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_LEC_FIN}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="270"
+						y="2"
+						width="72"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_NUM_MONTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="364"
+						y="2"
+						width="93"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_NUM_PENDI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="459"
+						y="2"
+						width="93"
+						height="11"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{SISGAP_RECIBOLUZ_ORG_NUM_ESTAD}).toString().equals("1")? "PENDIENTE" : "CANCELADA"]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
