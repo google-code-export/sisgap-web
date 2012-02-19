@@ -26,7 +26,8 @@ import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
 public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstract{
 	
-	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[SuministroLuzAction] cargarAction");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 		List<ReciboluzOrg> lst = facadeLocal.ListReciboluzOrg();		
 		request.setAttribute("lstRes", lst);		
@@ -34,7 +35,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward buscar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] buscar");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
 		List<Factura> lstCob = facadeLocal.findAll();
 		request.setAttribute("lstFac", lstCob);
@@ -44,7 +45,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 
 	@SuppressWarnings("deprecation")
 	public ActionForward registrarReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] registrarReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 
 		ReciboluzOrg res= new ReciboluzOrg();
@@ -69,7 +70,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward actualizarReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] actualizarReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 
 		ReciboluzOrg res= new ReciboluzOrg();
@@ -97,7 +98,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	
 	
 	public ActionForward eliminarReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] eliminarReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 
 		ReciboluzOrg res= new ReciboluzOrg();
@@ -111,7 +112,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	
 	
 	public ActionForward listarReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] listarReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 		List<ReciboluzOrg> lst = facadeLocal.ListReciboluzOrg();		
 		request.setAttribute("lstRes", lst);		
@@ -120,7 +121,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward mostrarItemsSuministro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] mostrarItemsSuministro");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 		String codigoModi = request.getParameter("codigoModi");
 		
@@ -137,7 +138,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward grabarItemReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] grabarItemReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);
 		ReciboluzOrg res= new ReciboluzOrg();		
 		String codigoModi = request.getParameter("codigoModi");
@@ -148,7 +149,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward grabarItemReciboLuzSocio(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] grabarItemReciboLuzSocio");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);
 		SuministroLusReciboSocio srs= new SuministroLusReciboSocio();		
 
@@ -207,7 +208,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward eliminarItemReciboLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] eliminarItemReciboLuz");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);
 		
 		String codigoModi = request.getParameter("codigoModi");
@@ -232,7 +233,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward actualizarItemReciboLuzSocio(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-
+		System.out.println("[SuministroLuzAction] actualizarItemReciboLuzSocio");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);
 		SuministroLusReciboSocio srs= new SuministroLusReciboSocio();		
 
