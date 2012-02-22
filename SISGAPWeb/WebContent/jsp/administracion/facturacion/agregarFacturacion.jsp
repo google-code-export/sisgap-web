@@ -132,6 +132,7 @@ var codMon = "";
 		$("#registra-f").button();
 		$("#regresar-f").button();
 		$("#imprimir-f").button();
+		$("#cancelar-f").button();
 		
 		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 		$("#dialog:ui-dialog").dialog("destroy");
@@ -154,7 +155,10 @@ var codMon = "";
 	        return false;  
 		});
 
-
+		$('#cancelar-f').click(function() {  
+			$('[name=metodo]').val('cancelarFactura');
+		});
+		
 		function checkLength(o, n, min, max) {
 			if (o.val().length > max || o.val().length < min) {
 				o.addClass("ui-state-error");
@@ -395,6 +399,7 @@ var codMon = "";
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoide" id="codigoide-f" />
 		<input type="hidden" name="cbtipodoc" value="${tipodocumento}" />
+		<input type="hidden" name="nrodocumento" value="${numerodocumento}" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
@@ -534,6 +539,7 @@ var codMon = "";
 					<c:when test="${isDetalle==1}">
 						<button id="regresar-f">Regresar</button>
 						<button id="imprimir-f">Imprimir</button>
+						<button id="cancelar-f">Cancelar</button>
 					</c:when>					
 				</c:choose>	
 			</span>
