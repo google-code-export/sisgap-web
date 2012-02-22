@@ -38,4 +38,6 @@ public interface FacturaFacadeLocal {
     BigDecimal generarNrodocumento(String tipodoc);
 
 	void anularFactura(String codigoFactura, String descripanulada);
+	
+	void cancelarFactura(String codigoFactura);
 }
