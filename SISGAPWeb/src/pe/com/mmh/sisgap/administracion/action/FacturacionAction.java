@@ -63,6 +63,21 @@ public class FacturacionAction extends GrandActionAbstract{
 		return mapping.findForward("agregarFacturacion");
 	}
 	
+	public ActionForward cancelarFactura(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
+		
+
+		String codigoFactura = request.getParameter("nrodocumento");		
+		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
+		facadeLocal.cancelarFactura(codigoFactura);
+		List<Factura> lstCob = facadeLocal.findAll();
+		request.setAttribute("lstFac", lstCob);
+		
+		
+		
+		return mapping.findForward("cargarAction");
+	}
+	
 	public ActionForward irGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		
 		BigDecimal numerodocumento = new BigDecimal(0);
