@@ -34,6 +34,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 	private static final String SP_DEL_FACTURA = "{call PKG_ADMINISTRACION.SP_DEL_FACTURA(?)}";
 	private static final String SP_LST_GENERARNRODOC = "{call PKG_ADMINISTRACION.SP_LST_GENERARNRODOC(?,?)}";
 	private static final String SP_UPD_FACTURAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURAANULADA(?,?)}";
+	private static final String SP_UPD_FACTURACANCELADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURACANCELADA(?)}";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -207,6 +208,39 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			
 			cst.setLong("P_COD_FACTURA", new Long(codigoFactura));
 			cst.setString("P_STR_DESC", descripanulada);
+			cst.execute();
+
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	@Override
+	public void cancelarFactura(String codigoFactura) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_FACTURACANCELADA);
+			
+			cst.setLong("P_COD_FACTURA", new Long(codigoFactura));
 			cst.execute();
 
 		} catch (Exception e) {
