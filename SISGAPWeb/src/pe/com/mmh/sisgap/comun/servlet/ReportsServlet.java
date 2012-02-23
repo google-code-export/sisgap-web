@@ -28,6 +28,8 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import org.jfree.chart.plot.CategoryPlot;
+
 /**
  * Servlet implementation class ReportsServlet
  */
@@ -84,7 +86,19 @@ public class ReportsServlet extends HttpServlet {
 				if(tipDoc.equals("T")){
 					tipDoc = "%%";
 				}
+				
+				if(estDoc.equals("T")){
+					estDoc = "%%";
+					
+				}else if(estDoc.equals("P")){
+					estDoc = "1";
+				}else if(estDoc.equals("C")){
+					estDoc = "2";
+				}else if(estDoc.equals("A")){
+					estDoc = "3";
+				}
 				parametros.put("P_TIPO_DOCUMENTOS", tipDoc);
+				parametros.put("P_ESTADO", estDoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro.jrxml");
 			}else if(reporte.equals("LISTADO_RECIBO_LUZ")){
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Recibos de Luz.jrxml");
