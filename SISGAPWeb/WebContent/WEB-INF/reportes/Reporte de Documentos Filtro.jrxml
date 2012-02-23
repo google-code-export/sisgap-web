@@ -2,7 +2,7 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
-		 name="Reporte de Documentos Filtro"
+		 name="Reporte de Documentos Filtro prueba"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -26,9 +26,10 @@
 	<parameter name="P_TIPO_DOCUMENTOS" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["R"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_ESTADO" isForPrompting="false" class="java.math.BigDecimal">
-		<defaultValueExpression ><![CDATA[new BigDecimal(1)]]></defaultValueExpression>
+	<parameter name="P_WHERE_DINAMICO" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["AND SISGAP_FACTURA.'NUM_ESTADO' LIKE '%%'"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_ESTADO" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[SELECT
      SISGAP_FACTURA."STR_TIPODOC" AS SISGAP_FACTURA_STR_TIPODOC,
      SISGAP_FACTURA."NUM_NRODOC" AS SISGAP_FACTURA_NUM_NRODOC,
@@ -43,7 +44,7 @@ FROM
      INNER JOIN "SISGAP"."SISGAP_DETALLEFACTURA" SISGAP_DETALLEFACTURA ON SISGAP_FACTURA."COD_FACTURA" = SISGAP_DETALLEFACTURA."COD_FACTURA"
 WHERE
      SISGAP_FACTURA."STR_TIPODOC" LIKE $P{P_TIPO_DOCUMENTOS}
- AND SISGAP_FACTURA."NUM_ESTADO" LIKE $P{P_ESTADO}
+     AND CAST(SISGAP_FACTURA."NUM_ESTADO" AS VARCHAR(1)) LIKE $P{P_ESTADO}
 ORDER BY
      SISGAP_FACTURA."NUM_NRODOC" ASC]]></queryString>
 
@@ -326,11 +327,11 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[$F{SISGAP_FACTURA_DAT_FECHACRED}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="374"
+						x="387"
 						y="1"
-						width="50"
+						width="37"
 						height="13"
 						key="textField"/>
 					<box leftPadding="2" rightPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -343,11 +344,11 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_FACTURA_NUM_TOTAL}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="426"
+						x="437"
 						y="1"
-						width="50"
+						width="39"
 						height="13"
 						key="textField"/>
 					<box></box>
@@ -356,11 +357,11 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_DETALLEFACTURA_NUM_ACUE}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="477"
+						x="488"
 						y="1"
-						width="50"
+						width="44"
 						height="13"
 						key="textField"/>
 					<box></box>
@@ -382,6 +383,45 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{V_CUENTA_REGISTROS}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="374"
+						y="1"
+						width="13"
+						height="13"
+						key="staticText-3"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="427"
+						y="1"
+						width="13"
+						height="13"
+						key="staticText-4"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="479"
+						y="1"
+						width="13"
+						height="13"
+						key="staticText-5"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>
@@ -468,6 +508,19 @@ ORDER BY
 					</textElement>
 				<text><![CDATA[Sistema de Gestión Administrativa - Huaral]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						x="373"
+						y="26"
+						width="0"
+						height="0"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Static Text]]></text>
+				</staticText>
 			</band>
 		</pageFooter>
 		<summary>
@@ -485,7 +538,7 @@ ORDER BY
 					</textElement>
 				<text><![CDATA[TOTAL ---]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="368"
 						y="2"
@@ -498,7 +551,7 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_TOTAL}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="424"
 						y="2"
@@ -511,7 +564,7 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_ACTA}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="480"
 						y="2"
@@ -524,6 +577,45 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_PEND}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="368"
+						y="2"
+						width="15"
+						height="16"
+						key="staticText-7"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="425"
+						y="2"
+						width="15"
+						height="16"
+						key="staticText-8"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="482"
+						y="2"
+						width="15"
+						height="16"
+						key="staticText-9"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
 			</band>
 		</summary>
 </jasperReport>
