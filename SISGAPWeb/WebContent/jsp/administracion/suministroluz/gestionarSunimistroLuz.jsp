@@ -34,9 +34,7 @@ $(function() {
 	
 		$("#periodo").datepicker(
 	            {   
-	                minDate: '+0D',
-	                maxDate: '+1Y',
-	                changeMonth: false,
+	                changeMonth: true,
 	                changeYear: false,
 	                numberOfMonths: 1,
 	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
@@ -48,7 +46,33 @@ $(function() {
 	                    'Sep', 'Oct', 'Nov', 'Dic'] 
 	            });   
              
+		$("#fecvencimientox").datepicker(
+	            {   
+	                changeMonth: true,
+	                changeYear: false,
+	                numberOfMonths: 1,
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre'],
+	                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+	                    'May', 'Jun', 'Jul', 'Ago',
+	                    'Sep', 'Oct', 'Nov', 'Dic'] 
+	            });  
 
+		$("#fecemisionx").datepicker(
+	            {   
+	                changeMonth: true,
+	                changeYear: false,
+	                numberOfMonths: 1,
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre'],
+	                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+	                    'May', 'Jun', 'Jul', 'Ago',
+	                    'Sep', 'Oct', 'Nov', 'Dic'] 
+	            });  
 		
 		$("#grabar-form").dialog({
 					autoOpen : false,
@@ -91,7 +115,60 @@ $(function() {
 		//$("#anulardoc-form").dialog("open");
 	}
 
-	function ver(cod,lecturaIni,lecturaFin,monto,costoWats,periodo,estado) {
+	function ver(cod,lecturaIni,lecturaFin,monto,costoWats,periodo,estado,
+			vrepomancnx,
+			vcargofijo,
+			valumpublic,
+			vsubtotalmes,
+			vigv,
+			vtotalmesact,
+			vaporteley,
+			vcuotaconv,
+			vredonmesact,
+			vredonmesant,
+			vinteresconvenio,
+			venergactfraptaactual,
+			venergactfraptaanteri,
+			venergactfraptadifer,
+			venergactfraptafactor,
+			venergactfraptaconsu,
+			venergactfraptaconfa,
+			venergactfraptapreuni,
+			venergactfraptatotal,
+			venergacthorptaactu,
+			venergacthorptaant,
+			venergacthorptadif,
+			venergacthorptafac,
+			venergacthorptacons,
+			venergacthorptaconfac,
+			venergacthorptapreuni,
+			venergacthorptatotal,
+			venergreacinicial,
+			venergreacanteri,
+			venergreacdifere,
+			venergreacfactor,
+			venergreacconsu,
+			venergreacfaccons,
+			venergreacpreuni,
+			venergreactotal,
+			vpotenciafpini,
+			vpotenciafpante,
+			vpotenciafpdif,
+			vpotenciafpfac,
+			vpotenciafpcons,
+			vpotenciahpact,
+			vpotenciahpant,
+			vpotenciahpdif,
+			vpotenciahpfac,
+			vpotenciahpcons,
+			vpotusoreddistconfac,
+			vpotusoreddistpreuni,
+			vpotusoreddisttotal,
+			vpotgenfpconfac,
+			vpotgenfppreuni,
+			vpotgenfptotal,
+			vfecvencimiento,
+			vfecemision) {
 
 		var frm = document.formFacturacion;
 				
@@ -102,6 +179,62 @@ $(function() {
 		$("#costoWats").val(costoWats);
 		$("#periodo").val(periodo);
 
+		$('#repomancnx').val(vrepomancnx);
+		$('#cargofijo').val(vcargofijo);
+		$('#alumpublic').val(valumpublic);
+		$('#subtotalmes').val(vsubtotalmes);
+		$('#igv').val(vigv);
+		$('#totalmesact').val(vtotalmesact);
+		$('#aporteley').val(vaporteley);
+		$('#cuotaconv').val(vcuotaconv);
+		$('#redonmesact').val(vredonmesact);
+		$('#redonmesant').val(vredonmesant);
+		$('#interesconvenio').val(vinteresconvenio);
+		$('#energactfraptaactual').val(venergactfraptaactual);
+		$('#energactfraptaanteri').val(venergactfraptaanteri);
+		$('#energactfraptadifer').val(venergactfraptadifer);
+		$('#energactfraptafactor').val(venergactfraptafactor);
+		$('#energactfraptaconsu').val(venergactfraptaconsu);
+		$('#energactfraptaconfa').val(venergactfraptaconfa);
+		$('#energactfraptapreuni').val(venergactfraptapreuni);
+		$('#energactfraptatotal').val(venergactfraptatotal);
+		$('#energacthorptaactu').val(venergacthorptaactu);
+		$('#energacthorptaant').val(venergacthorptaant);
+		$('#energacthorptadif').val(venergacthorptadif);
+		$('#energacthorptafac').val(venergacthorptafac);
+		$('#energacthorptacons').val(venergacthorptacons);
+		$('#energacthorptaconfac').val(venergacthorptaconfac);
+		$('#energacthorptapreuni').val(venergacthorptapreuni);
+		$('#energacthorptatotal').val(venergacthorptatotal);
+		$('#energreacinicial').val(venergreacinicial);
+		$('#energreacanteri').val(venergreacanteri);
+		$('#energreacdifere').val(venergreacdifere);
+		$('#energreacfactor').val(venergreacfactor);
+		$('#energreacconsu').val(venergreacconsu);
+		$('#energreacfaccons').val(venergreacfaccons);
+		$('#energreacpreuni').val(venergreacpreuni);
+		$('#energreactotal').val(venergreactotal);
+		$('#potenciafpini').val(vpotenciafpini);
+		$('#potenciafpante').val(vpotenciafpante);
+		$('#potenciafpdif').val(vpotenciafpdif);
+		$('#potenciafpfac').val(vpotenciafpfac);
+		$('#potenciafpcons').val(vpotenciafpcons);
+		$('#potenciahpact').val(vpotenciahpact);
+		$('#potenciahpant').val(vpotenciahpant);
+		$('#potenciahpdif').val(vpotenciahpdif);
+		$('#potenciahpfac').val(vpotenciahpfac);
+		$('#potenciahpcons').val(vpotenciahpcons);
+		$('#potusoreddistconfac').val(vpotusoreddistconfac);
+		$('#potusoreddistpreuni').val(vpotusoreddistpreuni);
+		$('#potusoreddisttotal').val(vpotusoreddisttotal);
+		$('#potgenfpconfac').val(vpotgenfpconfac);
+		$('#potgenfppreuni').val(vpotgenfppreuni);
+		$('#potgenfptotal').val(vpotgenfptotal);
+		
+		$('#fecvencimiento').val(vfecvencimiento);
+		$('#fecemision').val(vfecemision);
+
+		
 		if(estado==1){
 			$('input[name=estado]').attr('checked', true);
 		}else{
@@ -121,6 +254,63 @@ $(function() {
 		$("#costoWatsx").val($("#costoWats").val());
 		$("#periodox").val($("#periodo").val());
 
+		$('#repomancnxx').val($('#repomancnx').val());
+		$('#cargofijox').val($('#cargofijo').val());
+		$('#alumpublicx').val($('#alumpublic').val());
+		$('#subtotalmesx').val($('#subtotalmes').val());
+		$('#igvx').val($('#igv').val());
+		$('#totalmesactx').val($('#totalmesact').val());
+		$('#aporteleyx').val($('#aporteley').val());
+		$('#cuotaconvx').val($('#cuotaconv').val());
+		$('#redonmesactx').val($('#redonmesact').val());
+		$('#redonmesantx').val($('#redonmesant').val());
+		$('#interesconveniox').val($('#interesconvenio').val());
+		$('#energactfraptaactualx').val($('#energactfraptaactual').val());
+		$('#energactfraptaanterix').val($('#energactfraptaanteri').val());
+		$('#energactfraptadiferx').val($('#energactfraptadifer').val());
+		$('#energactfraptafactorx').val($('#energactfraptafactor').val());
+		$('#energactfraptaconsux').val($('#energactfraptaconsu').val());
+		$('#energactfraptaconfax').val($('#energactfraptaconfa').val());
+		$('#energactfraptapreunix').val($('#energactfraptapreuni').val());
+		$('#energactfraptatotalx').val($('#energactfraptatotal').val());
+		$('#energacthorptaactux').val($('#energacthorptaactu').val());
+		$('#energacthorptaantx').val($('#energacthorptaant').val());
+		$('#energacthorptadifx').val($('#energacthorptadif').val());
+		$('#energacthorptafacx').val($('#energacthorptafac').val());
+		$('#energacthorptaconsx').val($('#energacthorptacons').val());
+		$('#energacthorptaconfacx').val($('#energacthorptaconfac').val());
+		$('#energacthorptapreunix').val($('#energacthorptapreuni').val());
+		$('#energacthorptatotalx').val($('#energacthorptatotal').val());
+		$('#energreacinicialx').val($('#energreacinicial').val());
+		$('#energreacanterix').val($('#energreacanteri').val());
+		$('#energreacdiferex').val($('#energreacdifere').val());
+		$('#energreacfactorx').val($('#energreacfactor').val());
+		$('#energreacconsux').val($('#energreacconsu').val());
+		$('#energreacfacconsx').val($('#energreacfaccons').val());
+		$('#energreacpreunix').val($('#energreacpreuni').val());
+		$('#energreactotalx').val($('#energreactotal').val());
+		$('#potenciafpinix').val($('#potenciafpini').val());
+		$('#potenciafpantex').val($('#potenciafpante').val());
+		$('#potenciafpdifx').val($('#potenciafpdif').val());
+		$('#potenciafpfacx').val($('#potenciafpfac').val());
+		$('#potenciafpconsx').val($('#potenciafpcons').val());
+		$('#potenciahpactx').val($('#potenciahpact').val());
+		$('#potenciahpantx').val($('#potenciahpant').val());
+		$('#potenciahpdifx').val($('#potenciahpdif').val());
+		$('#potenciahpfacx').val($('#potenciahpfac').val());
+		$('#potenciahpconsx').val($('#potenciahpcons').val());
+		$('#potusoreddistconfacx').val($('#potusoreddistconfac').val());
+		$('#potusoreddistpreunix').val($('#potusoreddistpreuni').val());
+		$('#potusoreddisttotalx').val($('#potusoreddisttotal').val());
+		$('#potgenfpconfacx').val($('#potgenfpconfac').val());
+		$('#potgenfppreunix').val($('#potgenfppreuni').val());
+		$('#potgenfptotalx').val($('#potgenfptotal').val());
+
+		$('#fecvencimiento').val($('#fecvencimientox').val());
+		$('#fecemision').val($('#fecemisionx').val());
+		
+
+		
 		if($('input[name=estado]').is(':checked')){
 			$("#estadox").val("1");
 		}else{
@@ -199,7 +389,63 @@ $(function() {
 		<input type="hidden" name="costoWatsx" id="costoWatsx"/>
 		<input type="hidden" name="periodox" id="periodox"/>
 		<input type="hidden" name="estadox" id="estadox"/>
-				
+
+		<input type='hidden' name='repomancnxx' id='repomancnxx'/>
+		<input type='hidden' name='cargofijox' id='cargofijox'/>
+		<input type='hidden' name='alumpublicx' id='alumpublicx'/>
+		<input type='hidden' name='subtotalmesx' id='subtotalmesx'/>
+		<input type='hidden' name='igvx' id='igvx'/>
+		<input type='hidden' name='totalmesactx' id='totalmesactx'/>
+		<input type='hidden' name='aporteleyx' id='aporteleyx'/>
+		<input type='hidden' name='cuotaconvx' id='cuotaconvx'/>
+		<input type='hidden' name='redonmesactx' id='redonmesactx'/>
+		<input type='hidden' name='redonmesantx' id='redonmesantx'/>
+		<input type='hidden' name='interesconveniox' id='interesconveniox'/>
+		<input type='hidden' name='energactfraptaactualx' id='energactfraptaactualx'/>
+		<input type='hidden' name='energactfraptaanterix' id='energactfraptaanterix'/>
+		<input type='hidden' name='energactfraptadiferx' id='energactfraptadiferx'/>
+		<input type='hidden' name='energactfraptafactorx' id='energactfraptafactorx'/>
+		<input type='hidden' name='energactfraptaconsux' id='energactfraptaconsux'/>
+		<input type='hidden' name='energactfraptaconfax' id='energactfraptaconfax'/>
+		<input type='hidden' name='energactfraptapreunix' id='energactfraptapreunix'/>
+		<input type='hidden' name='energactfraptatotalx' id='energactfraptatotalx'/>
+		<input type='hidden' name='energacthorptaactux' id='energacthorptaactux'/>
+		<input type='hidden' name='energacthorptaantx' id='energacthorptaantx'/>
+		<input type='hidden' name='energacthorptadifx' id='energacthorptadifx'/>
+		<input type='hidden' name='energacthorptafacx' id='energacthorptafacx'/>
+		<input type='hidden' name='energacthorptaconsx' id='energacthorptaconsx'/>
+		<input type='hidden' name='energacthorptaconfacx' id='energacthorptaconfacx'/>
+		<input type='hidden' name='energacthorptapreunix' id='energacthorptapreunix'/>
+		<input type='hidden' name='energacthorptatotalx' id='energacthorptatotalx'/>
+		<input type='hidden' name='energreacinicialx' id='energreacinicialx'/>
+		<input type='hidden' name='energreacanterix' id='energreacanterix'/>
+		<input type='hidden' name='energreacdiferex' id='energreacdiferex'/>
+		<input type='hidden' name='energreacfactorx' id='energreacfactorx'/>
+		<input type='hidden' name='energreacconsux' id='energreacconsux'/>
+		<input type='hidden' name='energreacfacconsx' id='energreacfacconsx'/>
+		<input type='hidden' name='energreacpreunix' id='energreacpreunix'/>
+		<input type='hidden' name='energreactotalx' id='energreactotalx'/>
+		<input type='hidden' name='potenciafpinix' id='potenciafpinix'/>
+		<input type='hidden' name='potenciafpantex' id='potenciafpantex'/>
+		<input type='hidden' name='potenciafpdifx' id='potenciafpdifx'/>
+		<input type='hidden' name='potenciafpfacx' id='potenciafpfacx'/>
+		<input type='hidden' name='potenciafpconsx' id='potenciafpconsx'/>
+		<input type='hidden' name='potenciahpactx' id='potenciahpactx'/>
+		<input type='hidden' name='potenciahpantx' id='potenciahpantx'/>
+		<input type='hidden' name='potenciahpdifx' id='potenciahpdifx'/>
+		<input type='hidden' name='potenciahpfacx' id='potenciahpfacx'/>
+		<input type='hidden' name='potenciahpconsx' id='potenciahpconsx'/>
+		<input type='hidden' name='potusoreddistconfacx' id='potusoreddistconfacx'/>
+		<input type='hidden' name='potusoreddistpreunix' id='potusoreddistpreunix'/>
+		<input type='hidden' name='potusoreddisttotalx' id='potusoreddisttotalx'/>
+		<input type='hidden' name='potgenfpconfacx' id='potgenfpconfacx'/>
+		<input type='hidden' name='potgenfppreunix' id='potgenfppreunix'/>
+		<input type='hidden' name='potgenfptotalx' id='potgenfptotalx'/>
+		
+		<input type='hidden' name='fecvencimiento' id='fecvencimiento'/>
+		<input type='hidden' name='fecemision' id='fecemision'/>
+
+
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
 				<td width=885 align="left" class="titulo">Ingresos / Suministro de Luz</td>
@@ -239,17 +485,19 @@ $(function() {
 						export="false">
 				<display:column title="" style="width:60px;">
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codOrgreciboLuz}');"/>
-					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado},${row.repomancnx},${row.cargofijo},${row.alumpublic},${row.subtotalmes},${row.igv},${row.totalmesact},${row.aporteley},${row.cuotaconv},${row.redonmesact},${row.redonmesant},${row.interesconvenio},${row.energactfraptaactual},${row.energactfraptaanteri},${row.energactfraptadifer},${row.energactfraptafactor},${row.energactfraptaconsu},${row.energactfraptaconfa},${row.energactfraptapreuni},${row.energactfraptatotal},${row.energacthorptaactu},${row.energacthorptaant},${row.energacthorptadif},${row.energacthorptafac},${row.energacthorptacons},${row.energacthorptaconfac},${row.energacthorptapreuni},${row.energacthorptatotal},${row.energreacinicial},${row.energreacanteri},${row.energreacdifere},${row.energreacfactor},${row.energreacconsu},${row.energreacfaccons},${row.energreacpreuni},${row.energreactotal},${row.potenciafpini},${row.potenciafpante},${row.potenciafpdif},${row.potenciafpfac},${row.potenciafpcons},${row.potenciahpact},${row.potenciahpant},${row.potenciahpdif},${row.potenciahpfac},${row.potenciahpcons},${row.potusoreddistconfac},${row.potusoreddistpreuni},${row.potusoreddisttotal},${row.potgenfpconfac},${row.potgenfppreuni},${row.potgenfptotal},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecVencimiento}" />','<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecEmision}" />');"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarItems(${row.codOrgreciboLuz});"/>
 				</display:column>
 				<display:column title="Periodo" sortable="true">
 					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />
 				</display:column>
-				<display:column title="Lectura Inicial" property="numLecturaInicial" sortable="true"></display:column>
-				<display:column title="Lectura Final" property="numLecturaFinal" sortable="true"></display:column>
-				<display:column title="Costo por Wats" property="numCostoWats" sortable="true"></display:column>
-				<display:column title="Monto" property="numMonto" sortable="true"></display:column>
-				<display:column title="Pendiente" property="numPendienteFac" sortable="true"></display:column>				
+				<display:column title="Fecha de Emisión" sortable="true">
+					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecEmision}" />
+				</display:column>
+				<display:column title="Vencimiento" sortable="true">
+					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecVencimiento}" />
+				</display:column>				
+				<display:column title="Total a Pagar" property="numMonto" sortable="true"></display:column>			
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.numEstado==1}">Activo</c:when>
@@ -259,6 +507,26 @@ $(function() {
 		</display:table>
 		
 		<div id="grabar-form" title="Agregar Recibo de Luz Original">						
+			<table border="0" width="800px" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><label><b>Periodo:</b></label></td>
+					<td><input type='text' name='periodo' id='periodo' class='text ui-widget-content ui-corner-all'  size="20"/>(mes/dia/año)</td>
+					<td>&nbsp;</td>
+					<td><label><b>Fecha de Vencimiento:</b></label></td>
+					<td><input type='text' name='fecvencimientox' id='fecvencimientox' class='text ui-widget-content ui-corner-all'  size="20"/>(mes/dia/año)</td>
+				</tr>
+				<tr>
+					<td><label><b>Fecha de Emision:</b></label></td>
+					<td><input type='text' name='fecemisionx' id='fecemisionx' class='text ui-widget-content ui-corner-all'  size="20"/>(mes/dia/año)</td>
+					<td>&nbsp;</td>
+					<td><label><b>Costo Wats:</b></label></td>	
+					<td><input type='text' name='costoWats' id='costoWats' class='text ui-widget-content ui-corner-all' size="20" value="0"/></td>
+				</tr>
+				<tr>
+					<td><label><b>Estado:</b></label></td>	
+					<td><input type="checkbox" name='estado' id='estado' class='text ui-widget-content ui-corner-all'/></td>			
+				</tr>
+			</table>
 			<table border="1" width="800px" cellpadding="0" cellspacing="0">
 				<tr>
 					<td align="center" width="200px"><font size="1"><b>Energía y Demanda</b></font></td>
@@ -280,7 +548,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRepMan' id='ConsumosRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRepMan' id='ConsFactRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRepMan' id='PrecUnitRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalRepMan' id='ImporTotalRepMan' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='repomancnx' id='repomancnx' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Cargo Fijo</font></td>
@@ -291,40 +559,40 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosCarFij' id='ConsumosCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactCarFij' id='ConsFactCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitCarFij' id='PrecUnitCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalCarFij' id='ImporTotalCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cargofijo' id='cargofijo' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energ. Activa Fuera Punta (kwh)</font></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActFuePun' id='lecturaActFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntFuePun' id='lecturaAntFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaFuePun' id='DiferenciaFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorFuePun' id='FactorFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosFuePun' id='ConsumosFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactFuePun' id='ConsFactFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitFuePun' id='PrecUnitFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalFuePun' id='ImporTotalFuePun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaactual' id='energactfraptaactual' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaanteri' id='energactfraptaanteri' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptadifer' id='energactfraptadifer' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptafactor' id='energactfraptafactor' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaconsu' id='energactfraptaconsu' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaconfa' id='energactfraptaconfa' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptapreuni' id='energactfraptapreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptatotal' id='energactfraptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energ. Activa Horas Punta (kwh)</font></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActHorPun' id='lecturaActHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntHorPun' id='lecturaAntHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaHorPun' id='DiferenciaHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorHorPun' id='FactorHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosHorPun' id='ConsumosHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactHorPun' id='ConsFactHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitHorPun' id='PrecUnitHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalHorPun' id='ImporTotalHorPun' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptaactu' id='energacthorptaactu' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptaant' id='energacthorptaant' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptadif' id='energacthorptadif' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptafac' id='energacthorptafac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptacons' id='energacthorptacons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptaconfac' id='energacthorptaconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptapreuni' id='energacthorptapreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptatotal' id='energacthorptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energía Reactiva (kVARh)</font></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActEneRea' id='lecturaActEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntEneRea' id='lecturaAntEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaEneRea' id='DiferenciaEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorEneRea' id='FactorEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosEneRea' id='ConsumosEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactEneRea' id='ConsFactEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitEneRea' id='PrecUnitEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalEneRea' id='ImporTotalEneRea' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacinicial' id='energreacinicial' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacanteri' id='energreacanteri' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacdifere' id='energreacdifere' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacfactor' id='energreacfactor' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacconsu' id='energreacconsu' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacfaccons' id='energreacfaccons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacpreuni' id='energreacpreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreactotal' id='energreactotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Interés Convenio</font></td>
@@ -335,26 +603,26 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosIntCon' id='ConsumosIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactIntCon' id='ConsFactIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitIntCon' id='PrecUnitIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalIntCon' id='ImporTotalIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='interesconvenio' id='interesconvenio' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Potencia FP (KW)</font></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActPotFP' id='lecturaActPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntPotFP' id='lecturaAntPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaPotFP' id='DiferenciaPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorPotFP' id='FactorPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotFP' id='ConsumosPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciafpini' id='potenciafpini' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciafpante' id='potenciafpante' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciafpdif' id='potenciafpdif' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciafpfac' id='potenciafpfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciafpcons' id='potenciafpcons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 					<td align="center">&nbsp;<!-- input type='text' name='ConsFactPotFP' id='ConsFactPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' name='PrecUnitPotFP' id='PrecUnitPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' name='ImporTotalPotFP' id='ImporTotalPotFP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 				</tr>
 				<tr>
 					<td><font size="1">Potencia HP (KW)</font></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActPotHP' id='lecturaActPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntPotHP' id='lecturaAntPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaPotHP' id='DiferenciaPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorPotHP' id='FactorPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotHP' id='ConsumosPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciahpact' id='potenciahpact' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciahpant' id='potenciahpant' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciahpdif' id='potenciahpdif' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciahpfac' id='potenciahpfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potenciahpcons' id='potenciahpcons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 					<td align="center">&nbsp;<!-- input type='text' name='ConsFactPotHP' id='ConsFactPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' name='PrecUnitPotHP' id='PrecUnitPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' name='ImporTotalPotHP' id='ImporTotalPotHP' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
@@ -366,9 +634,9 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaPotDis' id='DiferenciaPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorPotDis' id='FactorPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotDis' id='ConsumosPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactPotDis' id='ConsFactPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitPotDis' id='PrecUnitPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalPotDis' id='ImporTotalPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddistconfac' id='potusoreddistconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddistpreuni' id='potusoreddistpreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddisttotal' id='potusoreddisttotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Potencia de Generación FP (KW)</font></td>
@@ -377,20 +645,20 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaPotGen' id='DiferenciaPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorPotGen' id='FactorPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotGen' id='ConsumosPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactPotGen' id='ConsFactPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitPotGen' id='PrecUnitPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalPotGen' id='ImporTotalPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfpconfac' id='potgenfpconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfppreuni' id='potgenfppreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfptotal' id='potgenfptotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Alumbrado Público</font></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActAluPub' id='lecturaActAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntAluPub' id='lecturaAntAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaAluPub' id='DiferenciaAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorAluPub' id='FactorAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosAluPub' id='ConsumosAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactAluPub' id='ConsFactAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center">&nbsp;<!-input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitAluPub' id='PrecUnitAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalAluPub' id='ImporTotalAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaActAluPub' id='lecturaActAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='lecturaAntAluPub' id='lecturaAntAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='DiferenciaAluPub' id='DiferenciaAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='FactorAluPub' id='FactorAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosAluPub' id='ConsumosAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactAluPub' id='ConsFactAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitAluPub' id='PrecUnitAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='alumpublic' id='alumpublic' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1"><b>SUBTOTAL Mes Actual</b></font></td>
@@ -401,7 +669,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosSubTot' id='ConsumosSubTot' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactSubTot' id='ConsFactSubTot' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitSubTot' id='PrecUnitSubTot' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalSubTot' id='ImporTotalSubTot' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='subtotalmes' id='subtotalmes' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">I.G.V.</font></td>
@@ -412,7 +680,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosIGV' id='ConsumosIGV' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactIGV' id='ConsFactIGV' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitIGV' id='PrecUnitIGV' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalIGV' id='ImporTotalIGV' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='igv' id='igv' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1"><b>TOTAL Mes Actual</b></font></td>
@@ -423,7 +691,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosTotMes' id='ConsumosTotMes' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactTotMes' id='ConsFactTotMes' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitTotMes' id='PrecUnitTotMes' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalTotMes' id='ImporTotalTotMes' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='totalmesact' id='totalmesact' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Aporte Ley Nº 28749</font></td>
@@ -434,7 +702,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosApoLey' id='ConsumosApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactApoLey' id='ConsFactApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitApoLey' id='PrecUnitApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalApoLey' id='ImporTotalApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='aporteley' id='aporteley' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Cuota Convenio (10 cuotas)</font></td>
@@ -445,7 +713,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosCuoCon' id='ConsumosCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactCuoCon' id='ConsFactCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitCuoCon' id='PrecUnitCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalCuoCon' id='ImporTotalCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cuotaconv' id='cuotaconv' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Redondeo Mes Anterior</font></td>
@@ -456,7 +724,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRedAnt' id='ConsumosRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRedAnt' id='ConsFactRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRedAnt' id='PrecUnitRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalRedAnt' id='ImporTotalRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesant' id='redonmesant' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
 				</tr>
 				<tr>
 					<td><font size="1">Redondeo Mes Actual</font></td>
@@ -467,32 +735,28 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRedAct' id='ConsumosRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRedAct' id='ConsFactRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRedAct' id='PrecUnitRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align="center"><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ImporTotalRedAct' id='ImporTotalRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesact' id='redonmesact' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' /></td>
+				</tr>
+				<tr>
+					<td><label>Total:</label></td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>
+					<td align="center">&nbsp;</td>	
+					<td align="center"><input type='text' name='monto' class='texto' style='font-family:verdana;font-size:8px;' id='monto' size="10" value="0"/></td>
 				</tr>
 			</table>
-				<!-- tr>
+			<table style="visibility: hidden;">
+				<tr>
 					<td><label>Lectura Anterior:</label></td>
-					<td><input type='text' name='lecturaIni' id='lecturaIni' class='text ui-widget-content ui-corner-all' size="10" /></td>
+					<td><input type='text' name='lecturaIni' id='lecturaIni' class='text ui-widget-content ui-corner-all' size="10" value="0"/></td>
 					<td><label>Lectura Actual:</label></td>
-					<td><input type='text' name='lecturaFin' id='lecturaFin' class='text ui-widget-content ui-corner-all'  size="30" /></td>
+					<td><input type='text' name='lecturaFin' id='lecturaFin' class='text ui-widget-content ui-corner-all'  size="30" value="0"/></td>
 				</tr>
-				<tr>
-					<td><label>Monto:</label></td>
-					<td><input type='text' name='monto' id='monto' class='text ui-widget-content ui-corner-all' size="30" /></td>
-				</tr>
-				<tr>
-					<td><label>Costo Wats:</label></td>
-					<td><input type='text' name='costoWats' id='costoWats' class='text ui-widget-content ui-corner-all' size="20" /></td>
-				</tr>
-				<tr>
-					<td><label>Periodo:</label></td>
-					<td><input type='text' name='periodo' id='periodo' class='text ui-widget-content ui-corner-all'  size="20"/>(mes/dia/año)</td>
-				</tr>
-				<tr>
-					<td><label>Estado:</label></td>
-					<td><input type="checkbox" name='estado' id='estado' class='text ui-widget-content ui-corner-all'/></td>
-				</tr>
-			</table -->
+			</table>
 				<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
 				<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
 		</div>
