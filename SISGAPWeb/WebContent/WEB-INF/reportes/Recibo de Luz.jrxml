@@ -23,8 +23,11 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
+	<parameter name="P_CODIGO_RECIBO" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="P_CODIGO_SOCIOS" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[SELECT
      SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" AS SISGAP_RECIBOLUZ_SOCIO_CODIGOS,
+     SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" AS SISGAP_RECIBOLUZ_SOCIO_CODIGOR,
      SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
      SISGAP_SECTOR_SOCIO."SECT_TRAN_NOMBRE" AS SISGAP_SECTOR_SOCIO_SECT_TRAN_,
      SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_NOMBRE" AS SISGAP_ACTIVIDAD_SOCIO_ACTI_TR,
@@ -44,42 +47,97 @@
      SISGAP_RECIBOLUZ_SOCIO."RECARGO" AS SISGAP_RECIBOLUZ_SOCIO_RECARGO,
      SISGAP_RECIBOLUZ_SOCIO."REDONDEO" AS SISGAP_RECIBOLUZ_SOCIO_REDONDE,
      SISGAP_RECIBOLUZ_SOCIO."TOTAL" AS SISGAP_RECIBOLUZ_SOCIO_TOTAL,
-     SISGAP_RECIBOLUZ_ORG."FEC_PERIODO" AS SISGAP_RECIBOLUZ_PERIODO
+     SISGAP_RECIBOLUZ_ORG."FEC_PERIODO" AS SISGAP_RECIBOLUZ_PERIODO,
+     SISGAP_PADRON_MMH."SECTOR" AS SISGAP_PADRON_MMH_SECTOR
 FROM
      "SISGAP"."SISGAP_RECIBOLUZ_SOCIO" SISGAP_RECIBOLUZ_SOCIO INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" = SISGAP_SOCIO."TRAN_IDE"
      INNER JOIN "SISGAP"."SISGAP_SECTOR_SOCIO" SISGAP_SECTOR_SOCIO ON SISGAP_SOCIO."SECT_TRAN_IDE" = SISGAP_SECTOR_SOCIO."SECT_TRAN_IDE"
      INNER JOIN "SISGAP"."SISGAP_ACTIVIDAD_SOCIO" SISGAP_ACTIVIDAD_SOCIO ON SISGAP_SOCIO."ACTI_TRAN_IDE" = SISGAP_ACTIVIDAD_SOCIO."ACTI_TRAN_IDE"
      INNER JOIN "SISGAP"."SISGAP_RECIBOLUZ_ORG" SISGAP_RECIBOLUZ_ORG ON SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" = SISGAP_RECIBOLUZ_ORG."COD_ORGRECIBO_LUZ"
+     INNER JOIN "SISGAP"."PADRON_MMH" SISGAP_PADRON_MMH ON SISGAP_SOCIO."TRAN_RAZON_SOCIAL" = SISGAP_PADRON_MMH."NOMBRES"
 WHERE
-     SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" = '6186' AND SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" = 146]]></queryString>
+     SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" = $P{P_CODIGO_SOCIOS} AND SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" = $P{P_CODIGO_RECIBO}
+]]></queryString>
 
-	<field name="SISGAP_RECIBOLUZ_SOCIO_CODIGOS" class="java.math.BigDecimal"/>
-	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
-	<field name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" class="java.lang.String"/>
 	<field name="SISGAP_ACTIVIDAD_SOCIO_ACTI_TR" class="java.lang.String"/>
-	<field name="SISGAP_SOCIO_TRAN_PUESTO" class="java.lang.String"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_INI" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_FIN" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_CONSUMO" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_ALUPUBL" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_CARGOEN" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_SUBTOTA" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_IGV" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTALME" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_USOEQUI" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_SERVMAN" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_APORTEL" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_RECARGO" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_REDONDE" class="java.math.BigDecimal"/>
-	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTAL" class="java.math.BigDecimal"/>
+	<field name="SISGAP_PADRON_MMH_SECTOR" class="java.lang.String"/>
 	<field name="SISGAP_RECIBOLUZ_PERIODO" class="java.sql.Timestamp"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_ALUPUBL" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_APORTEL" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CARGOEN" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CODIGOR" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CODIGOS" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_CONSUMO" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_IGV" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_FIN" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_LEC_INI" class="java.math.BigDecimal"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_RECARGO" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_REDONDE" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_SERVMAN" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_SUBTOTA" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTAL" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_TOTALME" class="java.lang.Double"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_USOEQUI" class="java.lang.Double"/>
+	<field name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" class="java.lang.String"/>
+	<field name="SISGAP_SOCIO_TRAN_PUESTO" class="java.lang.String"/>
+	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
 
 	<variable name="V_CONSUMO_MES" class="java.lang.Integer" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[new java.lang.Integer(  ($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) -($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) )]]></variableExpression>
+		<variableExpression><![CDATA[new java.lang.Integer(  
+($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) - 
+($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) 
+)]]></variableExpression>
 	</variable>
-	<variable name="V_SUBTOTAL_MES" class="java.lang.Double" resetType="Report" calculation="Nothing">
-		<variableExpression><![CDATA[new java.lang.Double(  ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) +($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) )]]></variableExpression>
+	<variable name="V_SUB_TOTAL" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new java.lang.Double(  
+($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) +
+($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) +
+($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue())
+)]]></variableExpression>
+	</variable>
+	<variable name="V_IGV" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new Double( 
+(
+ (
+  (($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+  ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+  ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) ) * 
+  (18.00)
+ ) / (100.00) 
+)
+)]]></variableExpression>
+	</variable>
+	<variable name="V_TOTAL_MES" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new Double( 
+ ( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) +
+ (( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) * (18.00)) / (100.00) 
+)]]></variableExpression>
+	</variable>
+	<variable name="V_TOTAL_PAGAR" class="java.lang.Double" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new Double( 
+ (
+ ((($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) +
+ (( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) * (18.00)) / (100.00) 
+ ) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_USOEQUI}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_SERVMAN}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_APORTEL}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_RECARGO}.doubleValue())
+ ) - ($F{SISGAP_RECIBOLUZ_SOCIO_REDONDE}.doubleValue())
+)]]></variableExpression>
 	</variable>
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -130,25 +188,27 @@ WHERE
 						x="179"
 						y="3"
 						width="54"
-						height="29"
+						height="32"
 						forecolor="#000000"
 						backcolor="#FFFFFF"
-						key="barcode-1"/>
+						key="barcode-1"
+						stretchType="RelativeToBandHeight"/>
 					<box></box>
-					<graphicElement stretchType="NoStretch" fill="Solid" />
-					<imageExpression class="java.awt.Image"><![CDATA[it.businesslogic.ireport.barcode.BcImage.getBarcodeImage(13,$F{SISGAP_RECIBOLUZ_SOCIO_CODIGOS},false,false,null,0,0)]]></imageExpression>
+					<graphicElement stretchType="RelativeToBandHeight" fill="Solid" />
+					<imageExpression class="java.awt.Image"><![CDATA[it.businesslogic.ireport.barcode.BcImage.getBarcodeImage(9,($F{SISGAP_RECIBOLUZ_SOCIO_CODIGOS})
+ ,true,false,null,0,0)]]></imageExpression>
 				</image>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="333"  isSplitAllowed="true" >
+			<band height="344"  isSplitAllowed="true" >
 				<rectangle radius="1" >
 					<reportElement
 						mode="Opaque"
 						x="7"
 						y="114"
-						width="224"
-						height="135"
+						width="225"
+						height="146"
 						forecolor="#000000"
 						key="rectangle-3"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -225,7 +285,7 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Nº DE PUESTO]]></text>
+				<text><![CDATA[Nro. DE PUESTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -381,7 +441,7 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Alumbrado Público]]></text>
+				<text><![CDATA[Alumbrado Publico]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -394,7 +454,7 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Cargo por Energía]]></text>
+				<text><![CDATA[Cargo por Energia]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -459,7 +519,7 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Reposic., Mant. y Servicio Técnico]]></text>
+				<text><![CDATA[Reposic., Mant. y Servicio Tecnico]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -472,7 +532,7 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Aporte Ley Nº 28749]]></text>
+				<text><![CDATA[Aporte Ley Nro. 28749]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -498,13 +558,13 @@ WHERE
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DEUDA ANTERIOR]]></text>
+				<text><![CDATA[Redondeo Mes actual]]></text>
 				</staticText>
 				<rectangle radius="1" >
 					<reportElement
 						mode="Opaque"
 						x="7"
-						y="251"
+						y="262"
 						width="225"
 						height="37"
 						forecolor="#000000"
@@ -514,7 +574,7 @@ WHERE
 				<staticText>
 					<reportElement
 						x="10"
-						y="253"
+						y="264"
 						width="127"
 						height="15"
 						key="staticText-30"/>
@@ -526,8 +586,8 @@ WHERE
 				</staticText>
 				<staticText>
 					<reportElement
-						x="141"
-						y="253"
+						x="140"
+						y="264"
 						width="90"
 						height="15"
 						key="staticText-31"/>
@@ -540,7 +600,7 @@ WHERE
 				<line direction="TopDown">
 					<reportElement
 						x="7"
-						y="268"
+						y="279"
 						width="224"
 						height="2"
 						key="line-1"/>
@@ -549,7 +609,7 @@ WHERE
 				<line direction="TopDown">
 					<reportElement
 						x="138"
-						y="252"
+						y="263"
 						width="0"
 						height="36"
 						key="line-2"/>
@@ -567,19 +627,6 @@ WHERE
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_RAZON_SOCIAL}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="88"
-						y="15"
-						width="143"
-						height="11"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SECTOR_SOCIO_SECT_TRAN_}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -621,7 +668,7 @@ WHERE
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[$F{SISGAP_RECIBOLUZ_PERIODO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="95"
 						y="75"
@@ -634,7 +681,7 @@ WHERE
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="95"
 						y="86"
@@ -794,137 +841,98 @@ WHERE
 					<reportElement
 						x="156"
 						y="118"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="129"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="141"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="156"
-						y="153"
-						width="32"
-						height="11"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_SUBTOTA}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="156"
-						y="165"
-						width="70"
-						height="11"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_IGV}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="156"
-						y="177"
-						width="70"
-						height="11"
-						key="textField"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_TOTALME}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="189"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_USOEQUI}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_USOEQUI}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="201"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_SERVMAN}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_SERVMAN}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="213"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_APORTEL}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_APORTEL}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="156"
 						y="225"
-						width="70"
+						width="37"
 						height="11"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_RECARGO}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_RECARGO}]]></textFieldExpression>
 				</textField>
 				<rectangle radius="1" >
 					<reportElement
 						mode="Opaque"
 						x="7"
-						y="291"
+						y="301"
 						width="225"
 						height="40"
 						forecolor="#000000"
@@ -935,7 +943,7 @@ WHERE
 					<reportElement
 						mode="Opaque"
 						x="10"
-						y="294"
+						y="304"
 						width="38"
 						height="33"
 						key="image-2"/>
@@ -946,7 +954,7 @@ WHERE
 				<staticText>
 					<reportElement
 						x="51"
-						y="294"
+						y="304"
 						width="179"
 						height="35"
 						key="staticText-43"/>
@@ -954,9 +962,9 @@ WHERE
 					<textElement verticalAlignment="Middle">
 						<font/>
 					</textElement>
-				<text><![CDATA[Mercado Modelo de Huaral donde dá gusto comprar.]]></text>
+				<text><![CDATA[Mercado Modelo de Huaral donde da gusto comprar.]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="95"
 						y="98"
@@ -967,21 +975,166 @@ WHERE
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[new java.lang.Integer(  ($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) -($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) )]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[new java.lang.Integer(  
+($F{SISGAP_RECIBOLUZ_SOCIO_LEC_FIN}.intValue()) - 
+($F{SISGAP_RECIBOLUZ_SOCIO_LEC_INI}.intValue()) 
+)]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="153"
+						width="37"
+						height="11"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new java.lang.Double(  
+($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) +
+($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) +
+($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue())
+)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="165"
+						width="37"
+						height="11"
+						key="textField-4"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double( 
+(
+ (
+  (($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+  ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+  ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) ) * 
+  (18.00)
+ ) / (100.00) 
+)
+)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="177"
+						width="37"
+						height="11"
+						key="textField-5"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double( 
+ ( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) +
+ (( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) * (18.00)) / (100.00) 
+)]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="11"
+						y="249"
+						width="135"
+						height="11"
+						key="staticText-44"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[DEUDA ANTERIOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="147"
+						y="249"
+						width="8"
+						height="11"
+						key="staticText-45"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[:]]></text>
+				</staticText>
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="190"
-						y="153"
-						width="36"
+						x="156"
+						y="237"
+						width="37"
+						height="11"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_REDONDE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="155"
+						y="282"
+						width="75"
+						height="15"
+						key="textField-6"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double( 
+ (
+ ((($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) +
+ (( ($F{SISGAP_RECIBOLUZ_SOCIO_CAGOFIJ}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_ALUPUBL}.doubleValue()) + 
+ ($F{SISGAP_RECIBOLUZ_SOCIO_CARGOEN}.doubleValue()) 
+ ) * (18.00)) / (100.00) 
+ ) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_USOEQUI}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_SERVMAN}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_APORTEL}.doubleValue()) +
+ ($F{SISGAP_RECIBOLUZ_SOCIO_RECARGO}.doubleValue())
+ ) - ($F{SISGAP_RECIBOLUZ_SOCIO_REDONDE}.doubleValue())
+)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="88"
+						y="15"
+						width="143"
 						height="11"
 						key="textField"/>
 					<box></box>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{V_SUBTOTAL_MES}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["SECTOR " + $F{SISGAP_PADRON_MMH_SECTOR}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="140"
+						y="282"
+						width="15"
+						height="15"
+						key="staticText-46"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[S/.]]></text>
+				</staticText>
 			</band>
 		</pageHeader>
 		<columnHeader>
