@@ -9,7 +9,9 @@
     <form-bean name="gestionarSociosActionForm" type="pe.com.mmh.sisgap.administracion.action.form.GestionarSociosActionForm"/>
     <form-bean name="gestionarItemCobranzaActionForm" type="pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionForm"/>
     <form-bean name="facturacionActionForm" type="pe.com.mmh.sisgap.administracion.action.form.FacturacionActionForm"/>
-    <form-bean name="SuministroLuzActionForm" type="pe.com.mmh.sisgap.administracion.action.form.SuministroLuzActionForm"/>                                                          
+    <form-bean name="SuministroLuzActionForm" type="pe.com.mmh.sisgap.administracion.action.form.SuministroLuzActionForm"/> 
+    <form-bean name="ReporteItemsCobranzaForm" type="pe.com.mmh.sisgap.administracion.action.form.ReporteItemsCobranzaForm"/> 
+                                                           
 <!--     
     <form-bean name="gestionarConceptosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarConceptosActionForm"/>
     <form-bean name="gestionarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarModelosActionForm"/>
@@ -83,7 +85,7 @@
      
    </action>
    
-   <action name="ReportesItemCobranzaActionForm" path="/reporteItemsCobranza"
+   <action name="ReporteItemsCobranzaForm" path="/reporteItemsCobranza"
    scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesItemCobranzaAction">
      <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteItemCob.jsp"/>
      <forward name="success" path="/index.jsp"/>
