@@ -41,8 +41,8 @@ import pe.com.mmh.sisgap.domain.SumistroLuzDet;
 @Stateless
 public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	
-	private static final String SP_INS_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_INS_RECIBOORILUZ(?,?,?,?,?,?,?)}";
-	private static final String SP_UPD_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_UPD_RECIBOORILUZ(?,?,?,?,?,?,?,?)}";
+	private static final String SP_INS_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_INS_RECIBOORILUZ(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_UPD_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_UPD_RECIBOORILUZ(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_DEL_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_DEL_RECIBOORILUZ(?)}";
 	private static final String SP_LST_RECIBOORILUZ = "{call PKG_ADMINISTRACION.SP_LST_RECIBOORILUZ(?)}";
 	private static final String SP_UPD_SUMISTROLUZ = "{call PKG_ADMINISTRACION.SP_UPD_SUMISTROLUZ(?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -82,6 +82,64 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst.setBigDecimal("p_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
 			cst.setBigDecimal("p_NUM_ESTADO", sumistro.getNumEstado());
 			
+			cst.setBigDecimal("p_REPOMANCNX",sumistro.getRepomancnx());
+			cst.setBigDecimal("p_CARGOFIJO",sumistro.getCargofijo());
+			cst.setBigDecimal("p_ALUMPUBLIC",sumistro.getAlumpublic());
+			cst.setBigDecimal("p_SUBTOTALMES",sumistro.getSubtotalmes());
+			cst.setBigDecimal("p_IGV",sumistro.getIgv());
+			cst.setBigDecimal("p_TOTALMESACT",sumistro.getTotalmesact());
+			cst.setBigDecimal("p_APORTELEY",sumistro.getAporteley());
+			cst.setBigDecimal("p_CUOTACONV",sumistro.getCuotaconv());
+			cst.setBigDecimal("p_REDONMESACT",sumistro.getRedonmesact());
+			cst.setBigDecimal("p_REDONMESANT",sumistro.getRedonmesant());
+			cst.setBigDecimal("p_INTERESCONVENIO",sumistro.getInteresconvenio());
+			cst.setBigDecimal("p_ENERGACTFRAPTAACTUAL",sumistro.getEnergactfraptaactual());
+			cst.setBigDecimal("p_ENERGACTFRAPTAANTERI",sumistro.getEnergactfraptaanteri());
+			cst.setBigDecimal("p_ENERGACTFRAPTADIFER",sumistro.getEnergactfraptadifer());
+			cst.setBigDecimal("p_ENERGACTFRAPTAFACTOR",sumistro.getEnergactfraptafactor());
+			cst.setBigDecimal("p_ENERGACTFRAPTACONSU",sumistro.getEnergactfraptaconsu());
+			cst.setBigDecimal("p_ENERGACTFRAPTACONFA",sumistro.getEnergactfraptaconfa());
+			cst.setBigDecimal("p_ENERGACTFRAPTAPREUNI",sumistro.getEnergactfraptapreuni());
+			cst.setBigDecimal("p_ENERGACTFRAPTATOTAL",sumistro.getEnergactfraptatotal());
+			cst.setBigDecimal("p_ENERGACTHORPTAACTU",sumistro.getEnergacthorptaactu());
+			cst.setBigDecimal("p_ENERGACTHORPTAANT",sumistro.getEnergacthorptaant());
+			cst.setBigDecimal("p_ENERGACTHORPTADIF",sumistro.getEnergacthorptadif());
+			cst.setBigDecimal("p_ENERGACTHORPTAFAC",sumistro.getEnergacthorptafac());
+			cst.setBigDecimal("p_ENERGACTHORPTACONS",sumistro.getEnergacthorptacons());
+			cst.setBigDecimal("p_ENERGACTHORPTACONFAC",sumistro.getEnergacthorptaconfac());
+			cst.setBigDecimal("p_ENERGACTHORPTAPREUNI",sumistro.getEnergacthorptapreuni());
+			cst.setBigDecimal("p_ENERGACTHORPTATOTAL",sumistro.getEnergacthorptatotal());
+			cst.setBigDecimal("p_ENERGREACINICIAL",sumistro.getEnergreacinicial());
+			cst.setBigDecimal("p_ENERGREACANTERI",sumistro.getEnergreacanteri());
+			cst.setBigDecimal("p_ENERGREACDIFERE",sumistro.getEnergreacdifere());
+			cst.setBigDecimal("p_ENERGREACFACTOR",sumistro.getEnergreacfactor());
+			cst.setBigDecimal("p_ENERGREACCONSU",sumistro.getEnergreacconsu());
+			cst.setBigDecimal("p_ENERGREACFACCONS",sumistro.getEnergreacfaccons());
+			cst.setBigDecimal("p_ENERGREACPREUNI",sumistro.getEnergreacpreuni());
+			cst.setBigDecimal("p_ENERGREACTOTAL",sumistro.getEnergreactotal());
+			cst.setBigDecimal("p_POTENCIAFPINI",sumistro.getPotenciafpini());
+			cst.setBigDecimal("p_POTENCIAFPANTE",sumistro.getPotenciafpante());
+			cst.setBigDecimal("p_POTENCIAFPDIF",sumistro.getPotenciafpdif());
+			cst.setBigDecimal("p_POTENCIAFPFAC",sumistro.getPotenciafpfac());
+			cst.setBigDecimal("p_POTENCIAFPCONS",sumistro.getPotenciafpcons());
+			cst.setBigDecimal("p_POTENCIAHPACT",sumistro.getPotenciahpact());
+			cst.setBigDecimal("p_POTENCIAHPANT",sumistro.getPotenciahpant());
+			cst.setBigDecimal("p_POTENCIAHPDIF",sumistro.getPotenciahpdif());
+			cst.setBigDecimal("p_POTENCIAHPFAC",sumistro.getPotenciahpfac());
+			cst.setBigDecimal("p_POTENCIAHPCONS",sumistro.getPotenciahpcons());
+			cst.setBigDecimal("p_POTUSOREDDISTCONFAC",sumistro.getPotusoreddistconfac());
+			cst.setBigDecimal("p_POTUSOREDDISTPREUNI",sumistro.getPotusoreddistpreuni());
+			cst.setBigDecimal("p_POTGENFPCONFAC",sumistro.getPotgenfpconfac());
+			cst.setBigDecimal("p_POTGENFPPREUNI",sumistro.getPotgenfppreuni());
+			cst.setBigDecimal("p_POTUSOREDDISTTOTAL",sumistro.getPotusoreddisttotal());
+			cst.setBigDecimal("p_POTGENFPTOTAL",sumistro.getPotgenfptotal());
+			
+			
+			cst.setDate("p_FECVENCIMIENTO", new Date(sumistro.getFecVencimiento().getTime()));
+			cst.setDate("p_FECEMISION", new Date(sumistro.getFecEmision().getTime()));
+			
+			
+			
 			cst.execute();
 			
 			
@@ -120,6 +178,61 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst.setDate("p_FEC_PERIODO", new Date(sumistro.getFecPeriodo().getTime()));
 			cst.setBigDecimal("p_NUM_PENDIENTE_FAC", sumistro.getNumPendienteFac());
 			cst.setBigDecimal("p_NUM_ESTADO", sumistro.getNumEstado());
+			
+			cst.setBigDecimal("p_REPOMANCNX",sumistro.getRepomancnx());
+			cst.setBigDecimal("p_CARGOFIJO",sumistro.getCargofijo());
+			cst.setBigDecimal("p_ALUMPUBLIC",sumistro.getAlumpublic());
+			cst.setBigDecimal("p_SUBTOTALMES",sumistro.getSubtotalmes());
+			cst.setBigDecimal("p_IGV",sumistro.getIgv());
+			cst.setBigDecimal("p_TOTALMESACT",sumistro.getTotalmesact());
+			cst.setBigDecimal("p_APORTELEY",sumistro.getAporteley());
+			cst.setBigDecimal("p_CUOTACONV",sumistro.getCuotaconv());
+			cst.setBigDecimal("p_REDONMESACT",sumistro.getRedonmesact());
+			cst.setBigDecimal("p_REDONMESANT",sumistro.getRedonmesant());
+			cst.setBigDecimal("p_INTERESCONVENIO",sumistro.getInteresconvenio());
+			cst.setBigDecimal("p_ENERGACTFRAPTAACTUAL",sumistro.getEnergactfraptaactual());
+			cst.setBigDecimal("p_ENERGACTFRAPTAANTERI",sumistro.getEnergactfraptaanteri());
+			cst.setBigDecimal("p_ENERGACTFRAPTADIFER",sumistro.getEnergactfraptadifer());
+			cst.setBigDecimal("p_ENERGACTFRAPTAFACTOR",sumistro.getEnergactfraptafactor());
+			cst.setBigDecimal("p_ENERGACTFRAPTACONSU",sumistro.getEnergactfraptaconsu());
+			cst.setBigDecimal("p_ENERGACTFRAPTACONFA",sumistro.getEnergactfraptaconfa());
+			cst.setBigDecimal("p_ENERGACTFRAPTAPREUNI",sumistro.getEnergactfraptapreuni());
+			cst.setBigDecimal("p_ENERGACTFRAPTATOTAL",sumistro.getEnergactfraptatotal());
+			cst.setBigDecimal("p_ENERGACTHORPTAACTU",sumistro.getEnergacthorptaactu());
+			cst.setBigDecimal("p_ENERGACTHORPTAANT",sumistro.getEnergacthorptaant());
+			cst.setBigDecimal("p_ENERGACTHORPTADIF",sumistro.getEnergacthorptadif());
+			cst.setBigDecimal("p_ENERGACTHORPTAFAC",sumistro.getEnergacthorptafac());
+			cst.setBigDecimal("p_ENERGACTHORPTACONS",sumistro.getEnergacthorptacons());
+			cst.setBigDecimal("p_ENERGACTHORPTACONFAC",sumistro.getEnergacthorptaconfac());
+			cst.setBigDecimal("p_ENERGACTHORPTAPREUNI",sumistro.getEnergacthorptapreuni());
+			cst.setBigDecimal("p_ENERGACTHORPTATOTAL",sumistro.getEnergacthorptatotal());
+			cst.setBigDecimal("p_ENERGREACINICIAL",sumistro.getEnergreacinicial());
+			cst.setBigDecimal("p_ENERGREACANTERI",sumistro.getEnergreacanteri());
+			cst.setBigDecimal("p_ENERGREACDIFERE",sumistro.getEnergreacdifere());
+			cst.setBigDecimal("p_ENERGREACFACTOR",sumistro.getEnergreacfactor());
+			cst.setBigDecimal("p_ENERGREACCONSU",sumistro.getEnergreacconsu());
+			cst.setBigDecimal("p_ENERGREACFACCONS",sumistro.getEnergreacfaccons());
+			cst.setBigDecimal("p_ENERGREACPREUNI",sumistro.getEnergreacpreuni());
+			cst.setBigDecimal("p_ENERGREACTOTAL",sumistro.getEnergreactotal());
+			cst.setBigDecimal("p_POTENCIAFPINI",sumistro.getPotenciafpini());
+			cst.setBigDecimal("p_POTENCIAFPANTE",sumistro.getPotenciafpante());
+			cst.setBigDecimal("p_POTENCIAFPDIF",sumistro.getPotenciafpdif());
+			cst.setBigDecimal("p_POTENCIAFPFAC",sumistro.getPotenciafpfac());
+			cst.setBigDecimal("p_POTENCIAFPCONS",sumistro.getPotenciafpcons());
+			cst.setBigDecimal("p_POTENCIAHPACT",sumistro.getPotenciahpact());
+			cst.setBigDecimal("p_POTENCIAHPANT",sumistro.getPotenciahpant());
+			cst.setBigDecimal("p_POTENCIAHPDIF",sumistro.getPotenciahpdif());
+			cst.setBigDecimal("p_POTENCIAHPFAC",sumistro.getPotenciahpfac());
+			cst.setBigDecimal("p_POTENCIAHPCONS",sumistro.getPotenciahpcons());
+			cst.setBigDecimal("p_POTUSOREDDISTCONFAC",sumistro.getPotusoreddistconfac());
+			cst.setBigDecimal("p_POTUSOREDDISTPREUNI",sumistro.getPotusoreddistpreuni());
+			cst.setBigDecimal("p_POTGENFPCONFAC",sumistro.getPotgenfpconfac());
+			cst.setBigDecimal("p_POTGENFPPREUNI",sumistro.getPotgenfppreuni());
+			cst.setBigDecimal("p_POTUSOREDDISTTOTAL",sumistro.getPotusoreddisttotal());
+			cst.setBigDecimal("p_POTGENFPTOTAL",sumistro.getPotgenfptotal());
+
+			cst.setDate("p_FECVENCIMIENTO", new Date(sumistro.getFecVencimiento().getTime()));
+			cst.setDate("p_FECEMISION", new Date(sumistro.getFecEmision().getTime()));
 			
 			cst.execute();
 			
@@ -198,7 +311,64 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				res.setFecPeriodo(rs.getDate("FEC_PERIODO"));
 				res.setNumPendienteFac(rs.getBigDecimal("NUM_PENDIENTE_FAC"));
 				res.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
+				
+				res.setRepomancnx(rs.getBigDecimal("REPOMANCNX"));
+				res.setCargofijo(rs.getBigDecimal("CARGOFIJO"));
+				res.setAlumpublic(rs.getBigDecimal("ALUMPUBLIC"));
+				res.setSubtotalmes(rs.getBigDecimal("SUBTOTALMES"));
+				res.setIgv(rs.getBigDecimal("IGV"));
+				res.setTotalmesact(rs.getBigDecimal("TOTALMESACT"));
+				res.setAporteley(rs.getBigDecimal("APORTELEY"));
+				res.setCuotaconv(rs.getBigDecimal("CUOTACONV"));
+				res.setRedonmesact(rs.getBigDecimal("REDONMESACT"));
+				res.setRedonmesant(rs.getBigDecimal("REDONMESANT"));
+				res.setInteresconvenio(rs.getBigDecimal("INTERESCONVENIO"));
+				res.setEnergactfraptaactual(rs.getBigDecimal("ENERGACTFRAPTAACTUAL"));
+				res.setEnergactfraptaanteri(rs.getBigDecimal("ENERGACTFRAPTAANTERI"));
+				res.setEnergactfraptadifer(rs.getBigDecimal("ENERGACTFRAPTADIFER"));
+				res.setEnergactfraptafactor(rs.getBigDecimal("ENERGACTFRAPTAFACTOR"));
+				res.setEnergactfraptaconsu(rs.getBigDecimal("ENERGACTFRAPTACONSU"));
+				res.setEnergactfraptaconfa(rs.getBigDecimal("ENERGACTFRAPTACONFA"));
+				res.setEnergactfraptapreuni(rs.getBigDecimal("ENERGACTFRAPTAPREUNI"));
+				res.setEnergactfraptatotal(rs.getBigDecimal("ENERGACTFRAPTATOTAL"));
+				res.setEnergacthorptaactu(rs.getBigDecimal("ENERGACTHORPTAACTU"));
+				res.setEnergacthorptaant(rs.getBigDecimal("ENERGACTHORPTAANT"));
+				res.setEnergacthorptadif(rs.getBigDecimal("ENERGACTHORPTADIF"));
+				res.setEnergacthorptafac(rs.getBigDecimal("ENERGACTHORPTAFAC"));
+				res.setEnergacthorptacons(rs.getBigDecimal("ENERGACTHORPTACONS"));
+				res.setEnergacthorptaconfac(rs.getBigDecimal("ENERGACTHORPTACONFAC"));
+				res.setEnergacthorptapreuni(rs.getBigDecimal("ENERGACTHORPTAPREUNI"));
+				res.setEnergacthorptatotal(rs.getBigDecimal("ENERGACTHORPTATOTAL"));
+				res.setEnergreacinicial(rs.getBigDecimal("ENERGREACINICIAL"));
+				res.setEnergreacanteri(rs.getBigDecimal("ENERGREACANTERI"));
+				res.setEnergreacdifere(rs.getBigDecimal("ENERGREACDIFERE"));
+				res.setEnergreacfactor(rs.getBigDecimal("ENERGREACFACTOR"));
+				res.setEnergreacconsu(rs.getBigDecimal("ENERGREACCONSU"));
+				res.setEnergreacfaccons(rs.getBigDecimal("ENERGREACFACCONS"));
+				res.setEnergreacpreuni(rs.getBigDecimal("ENERGREACPREUNI"));
+				res.setEnergreactotal(rs.getBigDecimal("ENERGREACTOTAL"));
+				res.setPotenciafpini(rs.getBigDecimal("POTENCIAFPINI"));
+				res.setPotenciafpante(rs.getBigDecimal("POTENCIAFPANTE"));
+				res.setPotenciafpdif(rs.getBigDecimal("POTENCIAFPDIF"));
+				res.setPotenciafpfac(rs.getBigDecimal("POTENCIAFPFAC"));
+				res.setPotenciafpcons(rs.getBigDecimal("POTENCIAFPCONS"));
+				res.setPotenciahpact(rs.getBigDecimal("POTENCIAHPACT"));
+				res.setPotenciahpant(rs.getBigDecimal("POTENCIAHPANT"));
+				res.setPotenciahpdif(rs.getBigDecimal("POTENCIAHPDIF"));
+				res.setPotenciahpfac(rs.getBigDecimal("POTENCIAHPFAC"));
+				res.setPotenciahpcons(rs.getBigDecimal("POTENCIAHPCONS"));
+				res.setPotusoreddistconfac(rs.getBigDecimal("POTUSOREDDISTCONFAC"));
+				res.setPotusoreddistpreuni(rs.getBigDecimal("POTUSOREDDISTPREUNI"));
+				res.setPotusoreddisttotal(rs.getBigDecimal("POTUSOREDDISTTOTAL"));
+				res.setPotgenfpconfac(rs.getBigDecimal("POTGENFPCONFAC"));
+				res.setPotgenfppreuni(rs.getBigDecimal("POTGENFPPREUNI"));
+				res.setPotgenfptotal(rs.getBigDecimal("POTGENFPTOTAL"));
+
+				res.setFecVencimiento(rs.getDate("FECVENCIMIENTO"));
+				res.setFecEmision(rs.getDate("FECEMISION"));
+
 				lstReciboluzOrg.add(res);
+				
 			}
 
 		} catch (SQLException e) {
