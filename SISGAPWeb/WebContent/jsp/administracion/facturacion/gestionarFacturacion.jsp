@@ -219,7 +219,7 @@
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.numEstado==1}">Pendiente</c:when>
-						<c:when test="${row.numEstado==2}">Cancelada</c:when>
+						<c:when test="${row.numEstado==2}">Pagada</c:when>
 						<c:when test="${row.numEstado==3}">Anulada</c:when>
 					</c:choose>
 				</display:column>

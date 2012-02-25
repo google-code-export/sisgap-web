@@ -99,7 +99,7 @@ var codMon = "";
 	$(function() {
 		$("#nuevo-sl").button();
 
-		
+		$("#btnpagar").button();
 
 		$("#grabar-form").dialog({
 			autoOpen : false,
@@ -130,6 +130,8 @@ var codMon = "";
 			$("#txtTotalh").val("");
 			
 			$("#grabar-form").dialog("open");
+			$("#btnpagar").hide();
+			
      		return false;
 
 		});
@@ -230,7 +232,27 @@ var codMon = "";
 				        	$("#tablesocios").html(datos);
 				      }
 				});
-		});		
+		});	
+
+		$("#eliminar-form").dialog({
+			autoOpen : false,
+			height : 0,
+			width : 300,
+			modal : true,
+			buttons : {
+				Eliminar : function() {
+					var frm = document.gestionarFacturacion;								
+					frm.submit();
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+		
+
 	});
 
 	function grabar() {
@@ -274,7 +296,7 @@ var codMon = "";
 
 		$("#metodo").val("eliminarItemReciboLuz");
 
-		frm.submit();
+		$("#eliminar-form").dialog("open");
 	}
 	
 	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
@@ -326,7 +348,7 @@ var codMon = "";
 		$("#txtTotalh").val(total);
 		
 		$("#grabar-form").dialog("open");
-		
+		$("#btnpagar").show();
 	}
 	
 	function calcularTotal(){
@@ -388,6 +410,12 @@ var codMon = "";
 		decimales = (!decimales? 2 : decimales);
 		
 		return Math.round(cantidad*Math.pow(10, decimales))/Math.pow(10,decimales);		
+	}
+
+	function pagar(){
+		var frm = document.gestionarFacturacion;
+		$("#metodo").val("pagarItemReciboLuzSocio");
+		frm.submit();
 	}
 	
 </script>
@@ -502,6 +530,12 @@ var codMon = "";
 			<display:column title="Lectura Final" property="lecturafin" sortable="true"></display:column>
 			<display:column title="Carpo por Energia" property="cargoener" sortable="true"></display:column>
 			<display:column title="Total" property="total" sortable="true"></display:column>
+				<display:column title="Estado" sortable="true">
+					<c:choose>
+						<c:when test="${row.estado==1}">Pendiente</c:when>
+						<c:when test="${row.estado==2}">Pagado</c:when>
+					</c:choose>
+			</display:column>
 	</display:table>
 	<div id="buscarsocio-form" title="Buscar Socio">		
 		<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
@@ -566,8 +600,12 @@ var codMon = "";
 				</table>
 			<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
 			<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
+			<button name="btnpagar" id="btnpagar" onclick="pagar();" >Pagar</button>
 	</div>
-
+	<div id="eliminar-form" title="Esta seguro que desea eliminar...?">
+		<div align="center">
+		</div>
+	</div>
 </html:form>
 </body>
 </html:html>

@@ -539,7 +539,7 @@ var codMon = "";
 					<c:when test="${isDetalle==1}">
 						<button id="regresar-f">Regresar</button>
 						<button id="imprimir-f">Imprimir</button>
-						<button id="cancelar-f">Cancelar</button>
+						<button id="cancelar-f">Pagar</button>
 					</c:when>					
 				</c:choose>	
 			</span>

@@ -91,7 +91,24 @@ $(function() {
      
 
 		});
-		
+
+		$("#eliminar-form").dialog({
+			autoOpen : false,
+			height : 0,
+			width : 300,
+			modal : true,
+			buttons : {
+				Eliminar : function() {
+					var frm = document.formFacturacion;								
+					frm.submit();
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
 		
 	});
 	
@@ -111,7 +128,7 @@ $(function() {
 		var frm = document.formFacturacion;
 		$("#codigoModi").val(cod);
 		frm.metodo.value = 'eliminarReciboLuz';
-		frm.submit();
+		$("#eliminar-form").dialog("open");
 		//$("#anulardoc-form").dialog("open");
 	}
 
@@ -759,6 +776,10 @@ $(function() {
 			</table>
 				<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
 				<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
+		</div>
+		<div id="eliminar-form" title="Esta seguro que desea eliminar...?">
+			<div align="center">
+			</div>
 		</div>
 	</html:form>
 
