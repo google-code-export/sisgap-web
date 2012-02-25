@@ -515,6 +515,29 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		return mapping.findForward("agrebarSuministroluz");
 	}
 	
+	
+	public ActionForward pagarItemReciboLuzSocio(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[SuministroLuzAction] eliminarItemReciboLuz");
+		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);
+		
+		String codigoModi = request.getParameter("codigoModi");
+		String codigoSocio = request.getParameter("codigoide");
+		String correlativo = request.getParameter("correlativo");
+		
+		facadeLocal.pagarItemReciboLuzSocio(new Long(correlativo),new Long(codigoSocio),new Long(codigoModi));
+		List<SuministroLusReciboSocio> lstSum = facadeLocal.listarItemReciboLuzSocio(new Long(codigoModi));
+		
+		ReciboluzOrg res= new ReciboluzOrg();		
+		res.setCodOrgreciboLuz(new Long(codigoModi));
+		ReciboluzOrg res2 = facadeLocal.buscarRecibo(res); 
+		
+		request.setAttribute("resori", res2);
+		
+		request.setAttribute("ListaSuministroLuz", lstSum);
+		
+		return mapping.findForward("agrebarSuministroluz");
+	}
+	
 	public Object lookup(String JNDIName){
 		try {
 			return new InitialContext().lookup(JNDIName);
