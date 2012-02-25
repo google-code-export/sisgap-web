@@ -55,7 +55,8 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_LIST_SUMINISTROLUZSOCIOS = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_LIST_SUMINISTROLUZSOCIOS(?,?)}";
 	private static final String SP_DEL_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_DEL_SUMINISTROLUZSOCIO(?,?,?)}";
 	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-
+	private static final String SP_SUMINISTROLUZSOCIOPAGAR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOPAGAR(?,?,?)}";
+	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 	
@@ -750,6 +751,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setCorrelativo(rs.getLong("CORRELATIVO"));
 				srs.setCodigosocio(rs.getLong("CODIGOSOCIO"));
 				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
+				srs.setEstado(rs.getBigDecimal("ESTADO"));
 				lstSuministroLusReciboSocio.add(srs);
 			}
 
@@ -856,6 +858,43 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 					e.printStackTrace();
 				}
 		}	
+	}
+
+	@Override
+	public void pagarItemReciboLuzSocio(Long correlativo, Long codigoSocio, Long codigoRecibo) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_SUMINISTROLUZSOCIOPAGAR);
+			
+			cst.setLong("p_CORRELATIVO", correlativo);
+			cst.setLong("p_CODIGOSOCIO", codigoSocio);
+			cst.setLong("p_CODIGORECIBO", codigoRecibo);
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 	}
 
 
