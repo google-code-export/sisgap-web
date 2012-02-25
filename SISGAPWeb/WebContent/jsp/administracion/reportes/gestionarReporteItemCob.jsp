@@ -8,7 +8,6 @@
 <html:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
 <%		
 	if (request.getAttribute("total") == null) {
 			request.setAttribute("total", 0);
@@ -16,17 +15,54 @@
 
 %>
 
+<style type="text/css">
+	#info{
+	    border: 1px solid;
+	    margin: 10px 0px;
+	    padding:15px 10px 15px 50px;
+	    background-repeat: no-repeat;
+	    background-position: 10px center;
+	    position:relative;
+	    color: #00529B;
+	    background-color: #BDE5F8;
+	    background-image: url('info.png');
+	} 
+
+</style>
+
+
 <script type="text/javascript">
 
 	$(function() {
 
-		$("#buscar-r").button();
-		$("#pdf-r").button();
-		$("#imprimir-r").button();
-		$("#salir-r").button();
-		$("#nuevo-r").button();
+		$("#buscar-ic").button();
+		$("#pdf-ic").button();
+		$("#imprimir-ic").button();
+		//$("#salir-r").button();
+		$("#nuevo-ic").button();
+
 		
+		//Botón Imprimir
+		$('#imprimir-ic').click(function() { 
+			if ($('#cbItemCob option:selected').text() == "Seleccione") {
+				//alert($('#cbItemCob option:selected').text());
+				alert("Seleccione un Item de Cobranza a Buscar");
+				//$("#info").fadeOut(800).fadeIn(800).fadeOut(400).fadeIn(400).fadeOut(400).fadeIn(400);
+			} else {
+				var itmCob = $('#cbItemCob option:selected').val();
+				var tipDoc = $("#tipDocx").val();
+				var estDoc = $("#estDocx").val();
+				var estCan = $("#estCanc").val();
+				var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
+		        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTOS_FILTRO_ITEM&tipDoc='+tipDoc+'&estDoc='+estDoc+'&itmCob='+itmCob+'&estCan='+estCan, 'Popup', caracteristicas);
+			} 			
+		});
 	});
+
+	$(".close").click(function(){
+        $("#info").animate({left:"+=10px"}).animate({left:"-5000px"});
+    });
+
 
 	function eliminar(codigo){
 		
@@ -122,31 +158,67 @@
 		<fieldset>
 			<legend>
 				<span class="titulo">Seleccione Item de Cobranza
-				<table>
+				<table border="0" cellpadding="2" cellspacing="2">
 					<tr>
 						<td>
 						Item :
-							<select>
-								<option value="0" selected>Todos los campos</option>
-								<option value="1">Id</option>
-								<option value="2">Descripción</option>
-								<option value="3">Costo</option>
-								<option value="4">Moneda</option>
-								<option value="5">U/M</option>
-								<option value="6">Tipo cobranza</option>
+							<select id="cbItemCob" name="cbItemCob" style="width: 150px">
+								<option value="0" selected>Seleccione</option>
+								<c:forEach items="${lstCob}" var="row">
+									<option value="${row.codItemcobranza}">${row.strDescripcion}</option>										
+								</c:forEach>
 							</select>
 						</td>
 						<td align="center"><input type="text" maxlength="6" size="16" /></td>
-						<td align="center"><input type="button" id="buscar-s" name="buscar-s" value="Busqueda Rápida" onclick="lstBuscar()" /></td>						
-						<td align="left"><input type="button" id="pdf-s" name="pdf-s"	value="PDF" onclick="lstPdf()" /></td>
-						<td align="left"><input type="button" id="imprimir-s" name="imprimir-s" value="Imprimir" onclick="lstImprimir()" /></td>
-						<td align="left"><input type="button"	id="salir-s" name="salir-s" value="Salir" onclick="lstSalir()" /></td>
-						<td align="left"><input type="button" id="nuevo-s" name="nuevo-s"	value="Nuevo" onclick="lstNuevo()" /></td>
+						<td align="center"><input type="button" id="buscar-ic" name="buscar-ic" value="Busqueda Rápida" onclick="lstBuscar()" /></td>						
+						<td align="left"><input type="button" id="pdf-ic" name="pdf-ic"	value="PDF" onclick="lstPdf()" /></td>
+						<td align="left"><input type="button" id="imprimir-ic" name="imprimir-ic" value="Imprimir" onclick="lstImprimir()" /></td>
+						<td align="left"><input type="button" id="nuevo-ic" name="nuevo-ic"	value="Nuevo" onclick="lstNuevo()" /></td>
 					</tr>
 				</table>
 				</span>
 			</legend>
 		</fieldset>        
+
+		<fieldset>
+			<legend>
+				<span class="titulo">Seleccione Filtro para el Reporte 
+					<table border="0" cellpadding="4" cellspacing="4">
+						<tr>
+							<td>Tipos de Documentos :
+								<select name="tipDocx" id="tipDocx" style="width: 150px">
+									<option value="T" selected>-- Todos --</option>
+									<option value="R">Recibos</option>
+									<option value="B">Boletas</option>
+								</select>
+							</td>
+							<td>&nbsp;</td>
+							<td>Estado de Documentos :
+								<select name="estDocx" id="estDocx" style="width: 150px">
+									<option value="T" selected>-- Todos --</option>
+									<option value="P">Pendiente</option>
+									<option value="C">Cancelada</option>
+									<option value="A">Anulada</option>
+								</select>
+							</td>
+							<td>&nbsp;</td>
+							<td>¿Cancelaron?
+								<select name="estCanc" id="estCanc" style="width: 150px">
+									<option value="S" selected>Si</option>
+									<option value="N">No</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</span>
+			</legend>
+		</fieldset>
+		
+		<div id="info" style="display: none">
+    		¿Seleccione un Item de Cobranza...?<br> <a href="#" class="close">Cerrar</a>
+		</div> 
+
+		
 
 	</html:form>
 
