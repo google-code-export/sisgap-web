@@ -109,6 +109,39 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_CODIGO_RECIBO", codRec);
 				parametros.put("P_CODIGO_SOCIOS", codSoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz.jrxml");
+			}else if(reporte.equals("REPORTE_DOCUMENTOS_FILTRO_ITEM")){
+				String itmCob = request.getParameter("itmCob");
+				String tipDoc = request.getParameter("tipDoc");
+				String estDoc = request.getParameter("estDoc");
+				String estCan = request.getParameter("estCan");
+				System.out.println("[REPORTE_DOCUMENTOS_FILTRO_ITEM]Parametro itmCob : "+itmCob);
+				System.out.println("[REPORTE_DOCUMENTOS_FILTRO_ITEM]Parametro tipDoc : "+tipDoc);
+				System.out.println("[REPORTE_DOCUMENTOS_FILTRO_ITEM]Parametro estDoc : "+estDoc);
+				System.out.println("[REPORTE_DOCUMENTOS_FILTRO_ITEM]Parametro estDoc : "+estCan);
+				if (estCan.equals("S")) {
+					if(tipDoc.equals("T")){
+						tipDoc = "%%";
+					}
+					
+					if(estDoc.equals("T")){
+						estDoc = "%%";
+						
+					}else if(estDoc.equals("P")){
+						estDoc = "1";
+					}else if(estDoc.equals("C")){
+						estDoc = "2";
+					}else if(estDoc.equals("A")){
+						estDoc = "3";
+					}
+					parametros.put("P_TIPO_DOCUMENTOS", tipDoc);
+					parametros.put("P_ESTADO", estDoc);
+					parametros.put("P_CODIGO_COBRANZA", itmCob);
+					
+					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro Item.jrxml");
+				} else {
+					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro Item Impago.jrxml");	
+				}
+				
 			}
 			generateReport(request, response, ruta, parametros);
 		}		
