@@ -488,7 +488,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		srs.setCagofijo(new BigDecimal(txtCagofijo));
 		srs.setAlupublic(new BigDecimal(txtAlupublic));
 		srs.setCargoener(new BigDecimal(txtCargoener));
-		srs.setTotalmes(new BigDecimal(txtSubTotalMes));
+		srs.setSubtotalmes(new BigDecimal(txtSubTotalMes));
 		srs.setIgv(new BigDecimal(txtIgv));
 		srs.setTotalmes(new BigDecimal(txtTotalMes));
 		srs.setUsoequipo(new BigDecimal(txtUsoEquipo));
