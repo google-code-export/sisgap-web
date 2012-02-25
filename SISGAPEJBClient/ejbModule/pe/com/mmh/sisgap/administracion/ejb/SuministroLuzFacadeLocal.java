@@ -53,4 +53,6 @@ public interface SuministroLuzFacadeLocal {
 			Long codigoRecibo);
 
 	void actualizarItemReciboLuzSocio(SuministroLusReciboSocio srs);
+
+	void pagarItemReciboLuzSocio(Long long1, Long long2, Long long3);
 }
