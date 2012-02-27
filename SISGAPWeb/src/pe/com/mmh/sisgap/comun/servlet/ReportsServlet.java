@@ -109,6 +109,20 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_CODIGO_RECIBO", codRec);
 				parametros.put("P_CODIGO_SOCIOS", codSoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz.jrxml");
+			}else if(reporte.equals("RECIBO_LUZ_DOBLE")){
+				String codRec = request.getParameter("codRec");
+				String codSoc = request.getParameter("codSoc");
+				System.out.println("[RECIBO_LUZ_DOBLE]Parámetro Recibo : " + codRec + " Parámetro Socio : " + codSoc);
+				parametros.put("P_CODIGO_RECIBO", codRec);
+				parametros.put("P_CODIGO_SOCIOS", codSoc);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz Doble.jrxml");
+			}else if(reporte.equals("RECIBO_LUZ_DOBLE_A4")){
+				String codRec = request.getParameter("codRec");
+				String codSoc = request.getParameter("codSoc");
+				System.out.println("[RECIBO_LUZ_DOBLE_A4]Parámetro Recibo : " + codRec + " Parámetro Socio : " + codSoc);
+				parametros.put("P_CODIGO_RECIBO", codRec);
+				parametros.put("P_CODIGO_SOCIOS", codSoc);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz Doble A4.jrxml");
 			}else if(reporte.equals("REPORTE_DOCUMENTOS_FILTRO_ITEM")){
 				String itmCob = request.getParameter("itmCob");
 				String tipDoc = request.getParameter("tipDoc");

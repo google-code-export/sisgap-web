@@ -98,12 +98,13 @@ var codMon = "";
 
 	$(function() {
 		$("#nuevo-sl").button();
-
+		$("#btngrabar").button();
+		$("#btncerrar").button();
 		$("#btnpagar").button();
 
 		$("#grabar-form").dialog({
 			autoOpen : false,
-			height : 350,
+			height : 380,
 			width : 600,
 			modal : true,		
 			close : function() {
@@ -111,28 +112,34 @@ var codMon = "";
 			}
 	     });
 
-		$('#nuevo-sl').click(function() { 
-			$("#correlativo").val("");
-			$("#txtLecturaInih").val("");
-			$("#txtLecturaFinh").val("");
-			$("#txtConsumomesh").val("");
-			$("#txtCagofijoh").val("");
-			$("#txtAlupublich").val("");
-			$("#txtCargoenerh").val("");
-			$("#txtSubTotalMesh").val("");
-			$("#txtIgvh").val("");
-			$("#txtTotalMesh").val("");
-			$("#txtUsoEquipoh").val("");
-			$("#txtServmantoh").val("");
-			$("#txtAporteleyh").val("");
-			$("#txtRecargoh").val("");
-			$("#txtRedondeoh").val("");
-			$("#txtTotalh").val("");
-			
-			$("#grabar-form").dialog("open");
-			$("#btnpagar").hide();
-			
-     		return false;
+		$('#nuevo-sl').click(function() {
+			if ($("#codigo-sl").val()=="" || $("#socio-sl").val()=="" || $("#direccion-sl").val()=="" ){
+				alert("Debe buscar y seleccionar el Socio antes de ingresar los datos del recibo de luz");
+				return false;
+			}else{ 
+				$("#correlativo").val("");
+				$("#txtLecturaInih").val("");
+				$("#txtLecturaFinh").val("");
+				$("#txtConsumomesh").val("");
+				$("#txtCagofijoh").val("");
+				$("#txtAlupublich").val("");
+				$("#txtCargoenerh").val("");
+				$("#txtSubTotalMesh").val("");
+				$("#txtIgvh").val("");
+				$("#txtTotalMesh").val("");
+				$("#txtUsoEquipoh").val("");
+				$("#txtServmantoh").val("");
+				$("#txtAporteleyh").val("");
+				$("#txtRecargoh").val("");
+				$("#txtRedondeoh").val("");
+				$("#txtTotalh").val("");
+				$("#txtDeudaAnth").val("");
+				
+				$("#grabar-form").dialog("open");
+				$("#btnpagar").hide();
+				
+	     		return false;
+			}
 
 		});
 		
@@ -160,6 +167,29 @@ var codMon = "";
 			$(this).removeClass('ui-state-hover');
 		});
 
+		$(document).ready(
+			function(){/* Aqui podria filtrar que controles necesitará manejar,
+						* en el caso de incluir un dropbox $('input,select');
+					   */
+				   tb=$('input');
+				   if($.browser.mozilla){
+					   $(tb).keypress(enter2tab);
+				   } else {
+					   $(tb).keydown(enter2tab);
+				   }
+			});
+
+		function enter2tab(e){
+			if(e.keyCode==13){				
+				cb=parseInt($(this).attr('tabindex'));
+				if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
+					$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
+					$(':input[tabindex=\''+ (cb + 1) +'\']').select();
+					e.preventDefault();
+					return false;
+				}
+			}
+		}
 	});
 
 
@@ -273,11 +303,14 @@ var codMon = "";
 		$("#txtRecargo").val($("#txtRecargoh").val());
 		$("#txtRedondeo").val($("#txtRedondeoh").val());
 		$("#txtTotal").val($("#txtTotalh").val());
+		$("#txtDeudaAnt").val($("#txtDeudaAnth").val());
 
 			
 		if($("#correlativo").val()==''){
+			alert("Grabará la información...");
 			$("#metodo").val("grabarItemReciboLuzSocio");
 		}else{
+			alert("Actualizará la información...");
 			$("#metodo").val("actualizarItemReciboLuzSocio");
 		}
 
@@ -325,7 +358,8 @@ var codMon = "";
 			aporteley,
 			recargo,
 			redondeo,
-			total
+			total,
+			deudaant
 	){
 		$("#codigoide").val(codigosocio);
 		$("#correlativo").val(correlativo);
@@ -346,6 +380,7 @@ var codMon = "";
 		$("#txtRecargoh").val(recargo);
 		$("#txtRedondeoh").val(redondeo);
 		$("#txtTotalh").val(total);
+		$("#txtDeudaAnth").val(deudaant);
 		
 		$("#grabar-form").dialog("open");
 		$("#btnpagar").show();
@@ -365,12 +400,50 @@ var codMon = "";
 		$("#grabar-form").dialog("close");
 	}
 
-	// Funciones generadas - Johan Muñoz 
-	function mostrarRep(codRec, codSoc) {
-		//alert("Codigo recibo: "+codRec+" - Codigo socio: "+codSoc);
-		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
-        return false;
+	// Funciones generadas - Johan Muñoz
+	// llamará a DIV para seleccionar el reporte... 
+	function mostrarRep(valor1, valor2) {
+		var codRec = 0;
+		codRec = valor1;
+		var codSoc = 0;
+		codSoc = valor2;
+		
+		$("#reciboLuz-form")
+		.dialog({
+					autoOpen : true,
+					height : 200,
+					width : 550,
+					modal : true,
+					buttons : {
+						Aceptar : function() {
+							//var frm = document.gestionarFacturacion;								
+							//frm.submit();							
+							if ($('input:radio[name=recluz]:checked').val()=="1"){
+								//alert("Reporte Luz 1");
+								var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+						        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+						        return false;
+							}else if ($('input:radio[name=recluz]:checked').val()=="2"){
+								//alert("Reporte Luz 2");
+								var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+						        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ_DOBLE&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+						        return false;
+							}else if ($('input:radio[name=recluz]:checked').val()=="3"){
+								//alert("Reporte Luz 3");
+								var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+						        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ_DOBLE_A4&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+						        return false;
+							}
+							$(this).dialog("close");
+						},
+						Cancelar : function() {
+							$(this).dialog("close");
+						}},
+					close : function() {
+						allFields.val("").removeClass("ui-state-error");
+					}
+			});
+        
 		//var frm = document.formFacturacion;
 		//frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
 		//frm.metodo.value = 'mostrarItemsSuministro';
@@ -378,10 +451,31 @@ var codMon = "";
 	}
 
 	function calculaConsumoMes(dato1, dato2) {
-		var lecIni = 0; var lecFin = 0; var total = 0;
+		var total = 0; 
+		var carEne = 0;
 		total = $("#txtLecturaFinh").val() - $("#txtLecturaInih").val();
 
-		$("#txtConsumomesh").val(total);
+		//alert("LecturaIni: "+$("#txtLecturaInih").val()+"\nLecturaFin: "+$("#txtLecturaFinh").val());
+		if ($("#txtLecturaInih").val()=="" || $("#txtLecturaFinh").val()=="") {
+			$("#txtConsumomesh").val(0);
+			$("#txtCargoenerh").val(0);	
+		}else{
+			$("#txtConsumomesh").val(total);
+			carEne = total * 0.5;		
+			$("#txtCargoenerh").val(carEne);			
+		}
+
+		//Valores temporales por defecto
+		$("#txtCagofijoh").val("2.50");
+		$("#txtAlupublich").val("1.00");
+		$("#txtUsoEquipoh").val("1.50");
+		$("#txtServmantoh").val("2.30");
+		$("#txtAporteleyh").val("0.20");
+		$("#txtRecargoh").val("0.10");
+		$("#txtRedondeoh").val("0");
+		$("#txtDeudaAnth").val("0");
+		calculaTotalMes();
+		calculaTotal();				
 	}
 
 	function calculaTotalMes() {
@@ -393,15 +487,20 @@ var codMon = "";
 		$("#txtSubTotalMesh").val(subTotalMes);
 		$("#txtIgvh").val(igv);
 		$("#txtTotalMesh").val(totalMes);
+		calculaTotal();
 	}
 
 	function calculaTotal() {
-		//calculoTotalMes();
 		var totalMes = 0;
 		totalMes = parseFloat($("#txtTotalMesh").val()) + parseFloat($("#txtUsoEquipoh").val()) + parseFloat($("#txtServmantoh").val()) + parseFloat($("#txtAporteleyh").val()) + parseFloat($("#txtRecargoh").val());
-		totalMes = parseFloat(totalMes) - parseFloat($("#txtRedondeoh").val()); 
-		
-		$("#txtTotalh").val(totalMes);
+		totalMes = redondear(parseFloat(totalMes) + parseFloat($("#txtRedondeoh").val())); 
+
+		if ($("#txtDeudaAnth").val()=="" || ($("#txtDeudaAnth").val())==0){
+			$("#txtTotalh").val(totalMes);
+		}else{
+			totalMes = redondear(totalMes + + parseFloat($("#txtDeudaAnth").val())); 
+			$("#txtTotalh").val(totalMes);
+		}
 	}
 
 	function redondear(cantidad, decimales) {
@@ -417,7 +516,23 @@ var codMon = "";
 		$("#metodo").val("pagarItemReciboLuzSocio");
 		frm.submit();
 	}
-	
+
+	/*function Enter(Evento,Campo){
+		var keyCode = Evento.keyCode? Evento.keyCode : Evento.which? Evento.which: Evento.charCode;
+		if (keyCode == 13){
+			var i;
+			for(i=0; i<Campo.form.elements.length; i++)
+				break;
+			i=Campo.form.elements[i].tabIndex + 1;
+			for(j=0; j<Campo.form.elements.length; j++){
+				if(Campo.form.elements[j].tabindex == i)
+					break;
+			}
+			Campo.form.elements[j].focus();
+			return false;
+		} else
+			return true;
+	}*/
 </script>
 </head>
 <body>
@@ -442,6 +557,7 @@ var codMon = "";
 		<input type="hidden" name="txtRecargo" id="txtRecargo" />
 		<input type="hidden" name="txtRedondeo" id="txtRedondeo" />
 		<input type="hidden" name="txtTotal" id="txtTotal" />
+		<input type="hidden" name="txtDeudaAnt" id="txtDeudaAnt" />
 
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
@@ -526,7 +642,7 @@ var codMon = "";
 				</c:when>
 				<c:otherwise>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
-					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total},${row.deudaant});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio});"/>
 				</c:otherwise>
 			</c:choose>
@@ -552,57 +668,64 @@ var codMon = "";
 				<table width="500px">
 					<tr>
 						<td width="200px"><label>Lectura Inicial:</label></td>
-						<td width="200px"><input type='text' name='txtLecturaInih' id='txtLecturaInih' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaConsumoMes(this,txtLecturaFinh)" /></td>
+						<td width="200px"><input type='text' name='txtLecturaInih' id='txtLecturaInih' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaConsumoMes(this,txtLecturaFinh)" tabindex="1"/></td>
 						<td>&nbsp;</td>
 						<td width="200px"><label>Lectura Final:</label></td>
-						<td width="200px"><input type='text' name='txtLecturaFinh' id='txtLecturaFinh' class='text ui-widget-content ui-corner-all'  size="30" onchange="calculaConsumoMes(txtLecturaInih,this)" /></td>
+						<td width="200px"><input type='text' name='txtLecturaFinh' id='txtLecturaFinh' class='text ui-widget-content ui-corner-all'  size="30" onchange="calculaConsumoMes(txtLecturaInih,this)" tabindex="2" /></td>
 					</tr>
 					<tr>
 						<td><label>Consumo del Mes:</label></td>
-						<td><input type='text' name='txtConsumomesh' id='txtConsumomesh' class='text ui-widget-content ui-corner-all' size="30" readonly /></td>
+						<td><input type='text' name='txtConsumomesh' id='txtConsumomesh' class='text ui-widget-content ui-corner-all' size="30" readonly="readonly"tabindex="3" /></td>
 						<td>&nbsp;</td>
 						<td><label>Cargo Fijo:</label></td>
-						<td><input type='text' name='txtCagofijoh' id='txtCagofijoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotalMes()" /></td>
+						<td><input type='text' name='txtCagofijoh' id='txtCagofijoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotalMes()" tabindex="4"/></td>
 					</tr>
 					<tr>
 						<td><label>Alumbrado Público:</label></td>
-						<td><input type='text' name='txtAlupublich' id='txtAlupublich' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotalMes()" /></td>
+						<td><input type='text' name='txtAlupublich' id='txtAlupublich' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotalMes()" tabindex="5"/></td>
 						<td>&nbsp;</td>
 						<td><label>Cargo Por Energia:</label></td>
-						<td><input type='text' name='txtCargoenerh' id='txtCargoenerh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotalMes()" /></td>
+						<td><input type='text' name='txtCargoenerh' id='txtCargoenerh' class='text ui-widget-content ui-corner-all' size="20" readonly="readonly" tabindex="6" /></td>
 					</tr>
 					<tr>
 						<td><label><b>Sub Total del Mes:</b></label></td>
-						<td><input type='text' name='txtSubTotalMesh' id='txtSubTotalMesh' class='text ui-widget-content ui-corner-all' size="20" readonly/></td>
+						<td><input type='text' name='txtSubTotalMesh' id='txtSubTotalMesh' class='text ui-widget-content ui-corner-all' size="20" readonly="readonly" tabindex="7"/></td>
 						<td>&nbsp;</td>
 						<td><label><b>Igv:</b></label></td>
-						<td><input type='text' name='txtIgvh' id='txtIgvh' class='text ui-widget-content ui-corner-all' size="20" readonly/></td>
+						<td><input type='text' name='txtIgvh' id='txtIgvh' class='text ui-widget-content ui-corner-all' size="20" readonly="readonly"tabindex="8"/></td>
 					</tr>
 					<tr>
 						<td><label><b>Total del Mes:</b></label></td>
-						<td><input type='text' name='txtTotalMesh' id='txtTotalMesh' class='text ui-widget-content ui-corner-all' size="20" readonly/></td>
+						<td><input type='text' name='txtTotalMesh' id='txtTotalMesh' class='text ui-widget-content ui-corner-all' size="20" readonly="readonly" tabindex="9"/></td>
 						<td>&nbsp;</td>
 						<td><label>Cargo por uso de Equipo:</label></td>
-						<td><input type='text' name='txtUsoEquipoh' id='txtUsoEquipoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" /></td>
+						<td><input type='text' name='txtUsoEquipoh' id='txtUsoEquipoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" tabindex="10"/></td>
 					</tr>
 					<tr>
 						<td><label>Reposic., Mant. y Servicio Tecnico:</label></td>
-						<td><input type='text' name='txtServmantoh' id='txtServmantoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" /></td>
+						<td><input type='text' name='txtServmantoh' id='txtServmantoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" tabindex="11"/></td>
 						<td>&nbsp;</td>
 						<td><label>Aporte Ley Nro 284449:</label></td>
-						<td><input type='text' name='txtAporteleyh' id='txtAporteleyh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" /></td>
+						<td><input type='text' name='txtAporteleyh' id='txtAporteleyh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" tabindex="12"/></td>
 					</tr>
 					<tr>
 						<td><label>Recargo:</label></td>
-						<td><input type='text' name='txtRecargoh' id='txtRecargoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" /></td>
+						<td><input type='text' name='txtRecargoh' id='txtRecargoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" tabindex="13"/></td>
 						<td>&nbsp;</td>
 						<td><label>Redondeo del Mes:</label></td>
-						<td><input type='text' name='txtRedondeoh' id='txtRedondeoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" /></td>
+						<td><input type='text' name='txtRedondeoh' id='txtRedondeoh' class='text ui-widget-content ui-corner-all' size="20" onchange="calculaTotal()" tabindex="14"/></td>
 					</tr>
 					<tr>
-						<td width="200px"><label><b>Total:</b></label></td>
-						<td colspan="3"><input type='text' name='txtTotalh' id='txtTotalh' class='text ui-widget-content ui-corner-all' size="10" readonly/></td>
-					</tr>							
+						<td><label>Deuda Anterior:</label></td>
+						<td><input type='text' name='txtDeudaAnth' id='txtDeudaAnth' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaTotal()" tabindex="15"/></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td><label><b>Total:</b></label></td>
+						<td colspan="3"><input type='text' name='txtTotalh' id='txtTotalh' class='text ui-widget-content ui-corner-all' size="10" readonly tabindex="16"/></td>
+					</tr>
 				</table>
 			<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
 			<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
@@ -611,6 +734,14 @@ var codMon = "";
 	<div id="eliminar-form" title="Esta seguro que desea eliminar...?">
 		<div align="center">
 		</div>
+	</div>
+	
+	<div id="reciboLuz-form" title="Seleccione el recibo a imprimir..." style="display: none">
+		<table border="1" cellpadding="0" cellspacing="0" width="400px">
+			<tr><td><input type="radio" id="recluz" name="recluz" value="1">Recibo de Luz Pequeño</td></tr>
+			<tr><td><input type="radio" id="recluz" name="recluz" value="2" checked="checked">Recibo de Luz Mediano</td></tr>
+			<tr><td><input type="radio" id="recluz" name="recluz" value="3">Recibo de Luz A4</td></tr>
+		</table>
 	</div>
 </html:form>
 </body>

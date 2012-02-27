@@ -8,6 +8,7 @@
 <html:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="jquery.js" type="text/javascript"></script> <script src="jquery.validate.js" type="text/javascript"></script>
 <%		
 	if (request.getAttribute("total") == null) {
 			request.setAttribute("total", 0);
@@ -31,7 +32,8 @@
 </style>
 
 
-<script type="text/javascript">
+<script type="text/javascript">        
+
 
 	$(function() {
 
@@ -56,7 +58,7 @@
 				var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
 		        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTOS_FILTRO_ITEM&tipDoc='+tipDoc+'&estDoc='+estDoc+'&itmCob='+itmCob+'&estCan='+estCan, 'Popup', caracteristicas);
 			} 			
-		});
+		});		
 	});
 
 	$(".close").click(function(){

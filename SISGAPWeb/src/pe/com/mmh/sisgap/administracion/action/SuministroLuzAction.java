@@ -392,6 +392,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		String txtRecargo = request.getParameter("txtRecargo");
 		String txtRedondeo = request.getParameter("txtRedondeo");
 		String txtTotal = request.getParameter("txtTotal");
+		String txtDeudaAnt = request.getParameter("txtDeudaAnt");
 		
 		srs.setCodigorecibo(new Long(codigoModi));
 		srs.setCodigosocio(new Long(codigoSocio));
@@ -410,6 +411,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		srs.setRecargo(new BigDecimal(txtRecargo));
 		srs.setRedondeo(new BigDecimal(txtRedondeo));
 		srs.setTotal(new BigDecimal(txtTotal));
+		srs.setDeudaant(new BigDecimal(txtDeudaAnt));
 
 		
 		facadeLocal.grabarItemReciboLuzSocio(srs);
@@ -478,6 +480,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		String txtRecargo = request.getParameter("txtRecargo");
 		String txtRedondeo = request.getParameter("txtRedondeo");
 		String txtTotal = request.getParameter("txtTotal");
+		String txtDeudaAnt = request.getParameter("txtDeudaAnt");
 		
 		srs.setCorrelativo(new Long(correlativo));
 		srs.setCodigorecibo(new Long(codigoModi));
@@ -497,6 +500,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		srs.setRecargo(new BigDecimal(txtRecargo));
 		srs.setRedondeo(new BigDecimal(txtRedondeo));
 		srs.setTotal(new BigDecimal(txtTotal));
+		srs.setDeudaant(new BigDecimal(txtDeudaAnt));
 
 		
 		facadeLocal.actualizarItemReciboLuzSocio(srs);
