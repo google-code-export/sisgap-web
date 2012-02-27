@@ -25,6 +25,7 @@ public class SuministroLusReciboSocio {
 	
 	private String nombres;
 	private BigDecimal estado; 
+	private BigDecimal deudaant;
 	
 	public long getCodigorecibo() {
 		return codigorecibo;
@@ -184,6 +185,14 @@ public class SuministroLusReciboSocio {
 
 	public void setEstado(BigDecimal estado) {
 		this.estado = estado;
+	}
+
+	public BigDecimal getDeudaant() {
+		return deudaant;
+	}
+
+	public void setDeudaant(BigDecimal deudaant) {
+		this.deudaant = deudaant;
 	}
 	
 	
