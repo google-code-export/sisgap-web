@@ -51,10 +51,10 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_LST_SUMISTROLUZ = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZ(?,?)}";
 	private static final String SP_FIN_SUMISTROLUZORI = "{call PKG_ADMINISTRACION.SP_FIN_SUMISTROLUZORI(?,?)}";
 	
-	private static final String SP_INS_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_INS_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_INS_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_INS_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_LIST_SUMINISTROLUZSOCIOS = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_LIST_SUMINISTROLUZSOCIOS(?,?)}";
 	private static final String SP_DEL_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_DEL_SUMINISTROLUZSOCIO(?,?,?)}";
-	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_SUMINISTROLUZSOCIOPAGAR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOPAGAR(?,?,?)}";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
@@ -691,6 +691,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst.setBigDecimal("p_RECARGO",srs.getRecargo());
 			cst.setBigDecimal("p_REDONDEO",srs.getRedondeo());
 			cst.setBigDecimal("p_TOTAL",srs.getTotal());
+			cst.setBigDecimal("P_DEUDAANT",srs.getDeudaant());
 			
 			cst.execute();
 			
@@ -752,6 +753,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setCodigosocio(rs.getLong("CODIGOSOCIO"));
 				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
 				srs.setEstado(rs.getBigDecimal("ESTADO"));
+				srs.setDeudaant(rs.getBigDecimal("DEUDAANT"));
 				lstSuministroLusReciboSocio.add(srs);
 			}
 
@@ -839,7 +841,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst.setBigDecimal("p_RECARGO",srs.getRecargo());
 			cst.setBigDecimal("p_REDONDEO",srs.getRedondeo());
 			cst.setBigDecimal("p_TOTAL",srs.getTotal());
-			
+			cst.setBigDecimal("p_DEUDAANT",srs.getDeudaant());
 			cst.execute();
 			
 			
