@@ -1225,7 +1225,42 @@ WHERE
 			</band>
 		</lastPageFooter>
 		<summary>
-			<band height="1"  isSplitAllowed="true" >
+			<band height="100"  isSplitAllowed="true" >
+				<bar3DChart>
+					<chart  hyperlinkTarget="Self" >
+					<reportElement
+						x="63"
+						y="22"
+						width="194"
+						height="70"
+						key="element-1"/>
+					<box></box>
+						<chartLegend textColor="#000000" backgroundColor="#FFFFFF" >
+					</chartLegend>
+					</chart>
+					<categoryDataset>
+						<dataset >
+						</dataset>
+						<categorySeries>
+							<seriesExpression><![CDATA["Enero"]]></seriesExpression>
+							<categoryExpression><![CDATA["Meses"]]></categoryExpression>
+							<valueExpression><![CDATA[$F{SISGAP_RECIBOLUZ_SOCIO_CONSUMO}]]></valueExpression>
+				<itemHyperlink >
+				</itemHyperlink>
+						</categorySeries>
+					</categoryDataset>
+					<bar3DPlot >
+						<plot />
+						<categoryAxisFormat>
+							<axisFormat >
+							</axisFormat>
+						</categoryAxisFormat>
+						<valueAxisFormat>
+							<axisFormat >
+							</axisFormat>
+						</valueAxisFormat>
+					</bar3DPlot>
+				</bar3DChart>
 			</band>
 		</summary>
 </jasperReport>
