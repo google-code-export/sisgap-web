@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss 7.0 Runtime"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap/SISGAPWeb/WebContent/WEB-INF/lib/jcommon-1.0.12.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
