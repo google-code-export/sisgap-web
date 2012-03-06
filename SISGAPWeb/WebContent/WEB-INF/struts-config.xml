@@ -11,7 +11,7 @@
     <form-bean name="facturacionActionForm" type="pe.com.mmh.sisgap.administracion.action.form.FacturacionActionForm"/>
     <form-bean name="SuministroLuzActionForm" type="pe.com.mmh.sisgap.administracion.action.form.SuministroLuzActionForm"/> 
     <form-bean name="ReporteItemsCobranzaForm" type="pe.com.mmh.sisgap.administracion.action.form.ReporteItemsCobranzaForm"/> 
-                                                           
+    <form-bean name="RegistroSisasForm" type="pe.com.mmh.sisgap.administracion.action.form.RegistroSisasForm"/>                                                        
 <!--     
     <form-bean name="gestionarConceptosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarConceptosActionForm"/>
     <form-bean name="gestionarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarModelosActionForm"/>
@@ -91,7 +91,13 @@
      <forward name="success" path="/index.jsp"/>
      
    </action>
-       
+
+   <action name="RegistroSisasForm" path="/registrosisas"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisasAction">
+     <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarSisasx.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+     
+   </action>
   <!-- ejecutor -->  
 <!--   <action input="/jsp/ejecutor/seleccionarConceptosAtributos.jsp" name="seleccionarConceptosAtributosActionForm" path="/selConAtr"
    scope="request" type="pe.com.equifax.paramweb.ejecutor.action.SeleccionarConceptosAtributosAction">

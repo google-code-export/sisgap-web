@@ -252,6 +252,7 @@
 				  
 			</div>
 			</li>
+
 		</ul>
 		</div>
 		</div>
@@ -290,6 +291,16 @@
 								         Suministro de Luz 
 		       </a>	  
 				  
+			</div>
+			</li>
+			<li>
+			<div class="botonDelMenu">		
+			<a href="<%=request.getContextPath()%>/registrosisas.do?metodo=cargarAction" target="FraMain">						
+								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
+								         Sisas
+		    </a>	
+				
+				
 			</div>
 			</li>
 		</ul>

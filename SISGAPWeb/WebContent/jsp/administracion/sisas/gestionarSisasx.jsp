@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<%@include file="../../../taglibs.jsp"%>
+
+<html:html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
+/*demo page css*/
+body {
+	font: 62.5% "Trebuchet MS", sans-serif;
+}
+
+label,input {
+	display: block;
+}
+
+input.text {
+	margin-bottom: 5px;
+	width: 95%;
+	padding: .4em;
+}
+
+.demoHeaders {
+	margin-top: 2em;
+}
+
+#dialog_link {
+	padding: .4em 1em .4em 20px;
+	text-decoration: none;
+	position: relative;
+}
+
+#dialog_link span.ui-icon {
+	margin: 0 5px 0 0;
+	position: absolute;
+	left: .2em;
+	top: 50%;
+	margin-top: -8px;
+}
+
+ul#icons {
+	margin: 0;
+	padding: 0;
+}
+
+ul#icons li {
+	margin: 2px;
+	position: relative;
+	padding: 4px 0;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+}
+
+ul#icons span.ui-icon {
+	float: left;
+	margin: 0 4px;
+}
+
+
+h1 {
+	font-size: 1.2em;
+	margin: .6em 0;
+}
+
+div#users-contain {
+	width: 70%;
+	margin: 20px 0;
+}
+
+div#users-contain table {
+	margin: 1em 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+div#users-contain table td,div#users-contain table th {
+	border: 1px solid #eee;
+	padding: .6em 10px;
+	text-align: left;
+}
+
+.ui-dialog .ui-state-error {
+	padding: .3em;
+}
+
+.validateTips {
+	border: 1px solid transparent;
+	padding: 0.3em;
+}
+
+</style>
+<script type="text/javascript">
+
+var codTipCob = "";
+var codMon = "";
+
+	$(function() {
+
+		$('#dialog').dialog({
+			autoOpen : false,
+			width : 600,
+			buttons : {
+				"Ok" : function() {
+					$(this).dialog("close");
+				},
+				"Cancel" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		$('#dialog_link').click(function() {
+			$('#dialog').dialog('open');
+			return false;
+		});
+
+		$('#dialog_link, ul#icons li').hover(function() {
+			$(this).addClass('ui-state-hover');
+		}, function() {
+			$(this).removeClass('ui-state-hover');
+		});
+
+	});
+
+
+	$(function() {
+
+		$("#btn-aceptar-item").button();
+		$("#btn-cancelar").button();
+		$("#registra-f").button();
+		$("#regresar-f").button();
+		$("#imprimir-f").button();
+		$("#cancelar-f").button();
+		
+		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+		$("#dialog:ui-dialog").dialog("destroy");
+
+		var name = $("#name"), email = $("#email"), password = $("#password"), allFields = $(
+				[]).add(name).add(email).add(password), tips = $(".validateTips");
+
+		function updateTips(t) {
+			tips.text(t).addClass("ui-state-highlight");
+			setTimeout(function() {
+				tips.removeClass("ui-state-highlight", 1500);
+			}, 500);
+		}
+
+		$('#imprimir-f').click(function() {  
+			var nroDocu =  $('[name=numerodocumento]').val();    
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);  
+	        return false;  
+		});
+
+		$('#cancelar-f').click(function() {  
+			$('[name=metodo]').val('cancelarFactura');
+		});
+		
+		function checkLength(o, n, min, max) {
+			if (o.val().length > max || o.val().length < min) {
+				o.addClass("ui-state-error");
+				updateTips("Length of " + n + " must be between " + min
+						+ " and " + max + ".");
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function checkRegexp(o, regexp, n) {
+			if (!(regexp.test(o.val()))) {
+				o.addClass("ui-state-error");
+				updateTips(n);
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+
+		$("#buscarsocio-form").dialog({
+			autoOpen : false,
+			height : 300,
+			width : 550,
+			modal : true,
+			buttons : {
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+
+		$("#dialog-form-item").dialog(
+		{
+			autoOpen : false,
+			height : 450,
+			width : 350,
+			modal : true
+		});
+
+		
+		$("#dialog-form").dialog(
+		{
+			autoOpen : false,
+			height : 520,
+			width : 550,
+			modal : true,
+			buttons : {
+											 
+				/*
+				"Create an account" : function() {
+					var bValid = true;
+					allFields.removeClass("ui-state-error");
+
+					bValid = bValid
+							&& checkLength(name, "username", 3,
+									16);
+					bValid = bValid
+							&& checkLength(email, "email", 6,
+									80);
+					bValid = bValid
+							&& checkLength(password,
+									"password", 5, 16);
+
+					bValid = bValid
+							&& checkRegexp(name,
+									/^[a-z]([0-9a-z_])+$/i,
+									"Username may consist of a-z, 0-9, underscores, begin with a letter.");
+					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+					bValid = bValid
+							&& checkRegexp(
+									email,
+									/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
+									"eg. ui@jquery.com");
+					bValid = bValid
+							&& checkRegexp(password,
+									/^([0-9a-zA-Z])+$/,
+									"Password field only allow : a-z 0-9");
+
+					if (bValid) {
+						$("#users tbody").append(
+								"<tr>" + "<td>" + name.val()
+										+ "</td>" + "<td>"
+										+ email.val() + "</td>"
+										+ "<td>"
+										+ password.val()
+										+ "</td>" + "</tr>");
+						$(this).dialog("close");
+						
+						$("#dialog-form-item").dialog("open");
+					} }*/									
+				
+				/*
+				Cancel : function() {
+					$(this).dialog("close");
+				}*/
+		
+			/*close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}*/
+
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		}});
+
+		$("#create-user").button().click(function() {
+			$("#dialog-form").dialog("open");
+			return false;
+		});
+
+		$("#buscar-socio").button().click(function() {
+			$("#buscarsocio-form").dialog("open");
+			return false;
+		});
+
+		$("#btn-buscar-socio").button().click(function() {
+			var nombre =  $('[name=nombresocio]').val();
+				$.ajax({
+			        type: "POST",
+			        url: "/SISGAPWeb/AjaxServlet",
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre,
+			        success: function(datos){
+			        	$("#tablesocios").html(datos);
+			      }
+			});
+		});
+
+		$("#btn-aceptar-item").button().click(function() {
+			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
+			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();;
+					
+					$.ajax({
+				        type: "POST",
+				        url: "/SISGAPWeb/AjaxServlet",
+				        data: "action=AGREGAR_ITEM&"+campos,
+				        success: function(datos){					        
+				        	$("#tableDetalle").html(datos);
+				      }
+				});
+			$("#dialog-form-item").dialog("close");
+		});
+		
+
+		$("#btn-buscar-producto").button().click(function() {
+			var nombre =  $('#nombreProducto').val();
+					$.ajax({
+				        type: "POST",
+				        url: "/SISGAPWeb/AjaxServlet",
+				        data: "action=BUSCAR_PRODUCTO&nombre="+nombre,
+				        success: function(datos){					        
+				        	$("#tableProducto").html(datos);
+				      }
+				});
+		});
+
+		
+		$("#registra-f").button().click(function() {
+			$('[name=metodo]').val('grabar');
+			$('#gestionarFacturacion').submit();
+			
+		});
+
+		$("#regresar-f").button().click(function() {
+			$('[name=metodo]').val('cargarAction');
+			$('#gestionarFacturacion').submit();
+		});
+		
+
+		$("btn-cancelar").button().click(function() {
+			$("#dialog-form-item").dialog("close");
+			$('#gestionarFacturacion').submit();
+		});
+		
+		
+	});
+
+
+	function agregarItem(codigo, descrip, codTipCobranza, codMoneda , costo, desCodTipCobranza, desCodMoneda) {
+
+		codTipCob = codTipCobranza;
+		codMon = codMoneda;
+		
+		$("#dialog-form").dialog("close");
+		$("#codigo-p").val(codigo);
+		$("#descrip-p").val(descrip);
+		$("#tipoCobranza-p").val(desCodTipCobranza);
+		$("#moneda-p").val(desCodMoneda);
+		$("#costo-p").val(costo);
+		$("#total-p").val(0);
+		$("#acuenta-p").val(0);
+		$("#cantidad-p").val(0);
+		$("#dialog-form-item").dialog("open");
+		$("#cantidad-p").focus();
+		
+	} 
+
+	function eliminarDetalle(codigo) {
+
+		$.ajax({
+	        type: "POST",
+	        url: "/SISGAPWeb/AjaxServlet",
+	        data: "action=ELIMINAR_ITEM&codigoItem="+codigo,
+	        success: function(datos){					        
+	        	$("#tableDetalle").html(datos);
+	      }
+		});		
+		
+	} 
+
+	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
+		
+		$("#codigo-f").val(codigo);
+		$("#socio-f").val(razonSocial);
+		$("#direccion-f").val(puesto);
+		$("#codigoide-f").val(codigoIde);
+		$("#buscarsocio-form").dialog("close");
+	}
+
+	function calcularTotal(){
+
+		var total = 0;
+		var costo = $("#costo-p").val();
+		var cant =  $("#cantidad-p").val();
+		total = costo*cant;
+
+		$("#total-p").val( total );
+	}
+	
+</script>
+</head>
+<body>
+<html:form action="/registrosisas.do" styleId="gestionarFacturacion">
+		<input type="hidden" name="metodo" />
+		<input type="hidden" name="codigoide" id="codigoide-f" />
+		
+		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
+			<tr bgcolor="#EFF3F9">
+				<td width=885 align="left" class="titulo">Ingresos/Sisas</td>
+			</tr>
+		</table>
+		<table align="center">
+			<tr>
+				<td id="mensaje" align="center" valign="middle"	style="display: none"></td>
+				<td id="error" align="center" valign="middle" class="mensajeError"	style="display: none"></td>
+			</tr>
+		</table>
+
+		<fieldset>
+			<legend>Nuevo registro</legend>		
+			<table border="0" cellpadding="0" cellspacing="0" width="75%">
+				<tr>
+					<td>Socio</td>
+					<td colspan="3" ><input type='text' name="socio-f" id="socio-f" size=30 class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+					<td width="15px">
+								<button id="buscar-socio">...</button>
+					</td>
+					<td width="20px">Código</td>
+					<td><input type="text" name="codigo-f" id="codigo-f" size="10" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td>Puesto</td>
+					<td colspan="3"><input type="text" name="direccion-f" id="direccion-f" size="10"  class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/></td>
+					<td width="15px"></td>
+					<td width="80px">Tipo Documento</td>
+					<td>
+					</td>
+				</tr>
+			</table> 
+		</fieldset>
+			${lstPlan}
+		<div id="buscarsocio-form" title="Buscar Socio">		
+			<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
+			<button id="btn-buscar-socio">Buscar Socio</button>
+			<div id="tablesocios"></div>
+		</div>
+		</html:form>
+</body>
+</html:html>
