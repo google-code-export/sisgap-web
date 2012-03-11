@@ -52,6 +52,15 @@ public class Factura implements Serializable {
 	@JoinColumn(name="TRAN_IDE")
 	private Socio sisgapSocio; 
 
+	@Transient
+	private String actiTranNombre;
+	
+	@Transient
+	private String tranPuesto;
+	
+	@Transient
+	private String nombresocio;
+	
 	public Factura() {
     }
 
@@ -133,6 +142,32 @@ public class Factura implements Serializable {
 
 	public void setStrDescanulada(String strDescanulada) {
 		this.strDescanulada = strDescanulada;
+	}
+
+
+
+	public String getActiTranNombre() {
+		return actiTranNombre;
+	}
+
+	public void setActiTranNombre(String actiTranNombre) {
+		this.actiTranNombre = actiTranNombre;
+	}
+
+	public String getTranPuesto() {
+		return tranPuesto;
+	}
+
+	public void setTranPuesto(String tranPuesto) {
+		this.tranPuesto = tranPuesto;
+	}
+
+	public String getNombresocio() {
+		return nombresocio;
+	}
+
+	public void setNombresocio(String nombresocio) {
+		this.nombresocio = nombresocio;
 	}
 	
 	

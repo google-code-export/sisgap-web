@@ -76,7 +76,6 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
 
-
 /**
  * <p>Minimal implementation of the <code>DynaBean</code> interface.  Can be
  * used as a convenience base class for more sophisticated implementations.</p>
