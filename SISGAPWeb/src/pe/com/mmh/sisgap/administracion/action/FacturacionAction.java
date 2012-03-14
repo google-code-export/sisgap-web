@@ -18,6 +18,7 @@ import pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionF
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.UnidadmedidaFacadeLocal;
+import pe.com.mmh.sisgap.comun.BaseDispatchAction;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Detallefactura;
@@ -25,7 +26,7 @@ import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.Unidadmedida;
 
-public class FacturacionAction extends GrandActionAbstract{
+public class FacturacionAction extends BaseDispatchAction{
 	
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 //		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);

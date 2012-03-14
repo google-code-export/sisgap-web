@@ -9,6 +9,7 @@ public class LoginActionForm extends ActionForm {
 	private String txtNuevoPassword;
 	private String txtNuevoPassword2;
 	
+	private String metodo;
 
 	public String getTxtNuevoPassword2() {
 		return txtNuevoPassword2;
@@ -33,6 +34,12 @@ public class LoginActionForm extends ActionForm {
 	}
 	public void setTxtPassword(String txtPassword) {
 		this.txtPassword = txtPassword;
+	}
+	public String getMetodo() {
+		return metodo;
+	}
+	public void setMetodo(String metodo) {
+		this.metodo = metodo;
 	}
 
 

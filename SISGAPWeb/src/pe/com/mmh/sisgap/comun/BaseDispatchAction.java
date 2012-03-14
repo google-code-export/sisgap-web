@@ -244,5 +244,15 @@ public class BaseDispatchAction extends DispatchAction{
     {
         return Integer.parseInt(request.getSession().getServletContext().getInitParameter("SISTEMA_ID"));
     }
+    
+	public Object lookup(String JNDIName){
+		try {
+			return new InitialContext().lookup(JNDIName);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return JNDIName;
+	}
    
 }

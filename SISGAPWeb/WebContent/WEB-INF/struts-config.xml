@@ -44,7 +44,7 @@
  <action-mappings>
  
   <!-- seguridad -->  
-  <action input="/login.jsp" name="loginActionForm" path="/login"
+  <action input="/login.jsp" name="loginActionForm" path="/login" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.seguridad.action.LoginAction">
    <forward name="cargarAction" path="/login.jsp"/>
    <forward name="ingresarSistema" path="/login.jsp"/>
@@ -52,14 +52,14 @@
    <forward name="inicio" path="/jsp/inicio.jsp"/>   
   </action>
   
-  <action name="gestionarSociosActionForm" path="/gestionarSocios"
+  <action name="gestionarSociosActionForm" path="/gestionarSocios" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.GestionarSociosAction">
      <forward name="cargarAction" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
      <forward name="success" path="/index.jsp"/>
      <forward name="gestionarClientes" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
    </action>
    
-  <action name="gestionarItemCobranzaActionForm" path="/gestionarItemCobranza"
+  <action name="gestionarItemCobranzaActionForm" path="/gestionarItemCobranza" parameter="metodo"
    scope="session" type="pe.com.mmh.sisgap.administracion.action.GestionarItemCobranzaAction">
      <forward name="cargarAction" path="/jsp/administracion/itemcobranza/gestionarItemCob.jsp"/>
      <forward name="success" path="/index.jsp"/>
@@ -67,7 +67,7 @@
 	 <forward name="editarItem" path="/jsp/administracion/itemcobranza/editarItemCob.jsp"/>
    </action>   
  
-   <action name="facturacionActionForm" path="/gestionarFacturacion"
+   <action name="facturacionActionForm" path="/gestionarFacturacion" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.FacturacionAction">
      <forward name="cargarAction" path="/jsp/administracion/facturacion/gestionarFacturacion.jsp"/>
      <forward name="success" path="/index.jsp"/>
@@ -76,7 +76,7 @@
      
    </action> 
 
-   <action name="SuministroLuzActionForm" path="/suministroLuz"
+   <action name="SuministroLuzActionForm" path="/suministroLuz" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.SuministroLuzAction">
      <forward name="cargarAction" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="success" path="/index.jsp"/>
@@ -85,14 +85,14 @@
      
    </action>
    
-   <action name="ReporteItemsCobranzaForm" path="/reporteItemsCobranza"
+   <action name="ReporteItemsCobranzaForm" path="/reporteItemsCobranza" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesItemCobranzaAction">
      <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteItemCob.jsp"/>
      <forward name="success" path="/index.jsp"/>
      
    </action>
 
-   <action name="RegistroSisasForm" path="/registrosisas"
+   <action name="RegistroSisasForm" path="/registrosisas" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisasAction">
      <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarSisasx.jsp"/>
      <forward name="success" path="/index.jsp"/>

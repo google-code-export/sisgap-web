@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pe.com.mmh.sisgap.comun.BaseDispatchAction;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.seguridad.action.form.LoginActionForm;
 
@@ -24,7 +25,7 @@ import com.infocorp.segap.negocio.LoginException;
 //import pe.com.equifax.paramweb.seguridad.domain.UserInfo;
 //import pe.com.equifax.paramweb.util.SeguridadUtil;
 
-public class LoginAction extends GrandActionAbstract{
+public class LoginAction extends BaseDispatchAction{
 
   /**
    * Permite Ingresar al Sistema
