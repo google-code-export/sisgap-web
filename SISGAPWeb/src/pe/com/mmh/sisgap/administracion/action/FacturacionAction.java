@@ -18,7 +18,6 @@ import pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionF
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.UnidadmedidaFacadeLocal;
-import pe.com.mmh.sisgap.comun.BaseDispatchAction;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Detallefactura;
@@ -26,11 +25,11 @@ import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.Unidadmedida;
 
-public class FacturacionAction extends BaseDispatchAction{
+public class FacturacionAction extends GrandActionAbstract{
 	
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 //		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
-		
+		System.out.println("ACTION");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
 		List<Factura> lstCob = facadeLocal.findAll();
 		request.setAttribute("lstFac", lstCob);
@@ -80,6 +79,29 @@ public class FacturacionAction extends BaseDispatchAction{
 	}
 	
 	public ActionForward irGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		
+		BigDecimal numerodocumento = new BigDecimal(0);
+		
+		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
+		
+		Factura facturaBolsa = new Factura();
+		facturaBolsa.setSisgapDetallefacturas((Set<Detallefactura>) new HashSet<Detallefactura>());
+		HttpSession session = request.getSession(true);
+		//Detalle Factura en session
+		Set<Detallefactura> listDetallefactura = new HashSet<Detallefactura>();
+		
+		
+		String tipodocumento = request.getParameter("tipodocumento");
+		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento);
+		
+		session.setAttribute("listDetallefactura", listDetallefactura);
+		session.setAttribute("facturaBolsa", facturaBolsa);	
+		request.setAttribute("numerodocumento", numerodocumento);
+		request.setAttribute("tipodocumento", tipodocumento);
+		return mapping.findForward("agregarFacturacion");
+	}
+	
+	public ActionForward selectGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		
 		BigDecimal numerodocumento = new BigDecimal(0);
 		
