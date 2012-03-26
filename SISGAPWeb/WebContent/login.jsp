@@ -62,7 +62,7 @@ function login(){
 <table border="0" cellspacing="0" cellpadding="0" width="769" height="91" bgcolor="#FFFFFF" style="padding-top:5px" class=noprint>
   <tr align="left" valign="top">
     <td rowspan="3" width="229" height="44">
-		<img src="imagenes/escudo.gif" width="180" height="50" border="0" alt="Home" hspace="10" vspace=3>
+		<img src="imagenes/Logo_Reporte_MMH.png" width="91" height="50" border="0" alt="Home" hspace="10" vspace=3>
     </td>
     <td width="476" height="17" valign="bottom" align="right"></td>
     <td rowspan="2" width="43" height="20"></td>
