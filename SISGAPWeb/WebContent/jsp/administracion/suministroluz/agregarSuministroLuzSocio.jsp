@@ -650,14 +650,15 @@ var codMon = "";
 			<display:column title="Nombres" property="nombres" sortable="true"></display:column>	
 			<display:column title="Lectura Inicial" property="lecturaini" sortable="true"></display:column>
 			<display:column title="Lectura Final" property="lecturafin" sortable="true"></display:column>
-			<display:column title="Carpo por Energia" property="cargoener" sortable="true"></display:column>
-			<display:column title="Total" property="total" sortable="true"></display:column>
+			<display:column title="Cargo por Energia" property="cargoener" sortable="true"></display:column>
+			<display:column title="Total" property="total"></display:column>
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.estado==1}">Pendiente</c:when>
 						<c:when test="${row.estado==2}">Pagado</c:when>
 					</c:choose>
 			</display:column>
+			<display:column title="Fecha" property="fechacarga" sortable="true"></display:column>
 	</display:table>
 	<div id="buscarsocio-form" title="Buscar Socio">		
 		<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
