@@ -6,6 +6,7 @@
 		<project>SISGAPEJB</project>
 		<project>SISGAPWeb</project>
 		<project>SISGAPEJBClient</project>
+		<project>Servers</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

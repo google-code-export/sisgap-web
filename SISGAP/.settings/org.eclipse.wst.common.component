@@ -13,5 +13,8 @@
         <dependent-module archiveName="SISGAPEJBClient.jar" deploy-path="/lib" handle="module:/resource/SISGAPEJBClient/SISGAPEJBClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="Servers.jar" deploy-path="/lib" handle="module:/resource/Servers/Servers">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
