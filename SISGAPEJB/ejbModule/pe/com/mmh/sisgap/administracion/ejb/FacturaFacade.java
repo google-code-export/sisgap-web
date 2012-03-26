@@ -8,8 +8,10 @@ package pe.com.mmh.sisgap.administracion.ejb;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +20,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
+
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
+import oracle.jdbc.driver.OracleTypes;
+import oracle.jdbc.oracore.OracleType;
 
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
@@ -35,6 +42,8 @@ public class FacturaFacade implements FacturaFacadeLocal {
 	private static final String SP_LST_GENERARNRODOC = "{call PKG_ADMINISTRACION.SP_LST_GENERARNRODOC(?,?)}";
 	private static final String SP_UPD_FACTURAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURAANULADA(?,?)}";
 	private static final String SP_UPD_FACTURACANCELADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURACANCELADA(?)}";
+	private static final String SP_LST_FACTURA = "{call PKG_ADMINISTRACION.SP_LST_FACTURA(?)}";
+
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -79,7 +88,49 @@ public class FacturaFacade implements FacturaFacadeLocal {
     }
 
     public List<Factura> findAll() {
+    	
+//    	Connection connection = null;
+//    	CallableStatement cst = null;
+//    	List<Factura> facturas = new ArrayList<Factura>();
+//    	try {
+//    		
+//    		connection = getConnection();    		
+//			cst = connection.prepareCall(SP_LST_FACTURA);	
+//			cst.registerOutParameter(1, OracleTypes.CURSOR);
+//			cst.execute();
+//			ResultSet rs = (ResultSet) cst.getObject(1);
+//			while (rs.next()) {
+//				Factura f = new Factura();
+//				f.setCodFactura(rs.getLong("COD_FACTURA"));
+//				f.setCodFactura(rs.getLong("NRO_FACTURA"));
+//				f.setNumTotal(rs.getBigDecimal("NUM_TOTAL"));
+//				f.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
+//				f.setStrTipodoc(rs.getString("STR_TIPODOC"));
+//				f.setNumNrodoc(rs.getBigDecimal("NUM_NRODOC"));
+//				f.setStrDescanulada(rs.getString("STR_DESC_ANULADA"));
+//				f.setDatFechacred(rs.getDate("DAT_FECHACRED"));
+//				f.setActiTranNombre(rs.getString("ACTITRANNOMBRE"));
+//				f.setTranPuesto(rs.getString("TRANPUESTO"));
+//				f.setNombresocio(rs.getString("NOMBRESOCIO"));
+//				facturas.add(f);
+//			}
+//			
+//			System.out.println("ORACLE");
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally{			
+//				try {
+//					if(cst!=null){cst.close();}
+//					if(connection!=null){connection.close();}					
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//		}
+    	
+    	
         return em.createQuery("select object(o) from Factura as o").getResultList();
+//    	return facturas;
     }
 
 	@Override

@@ -754,6 +754,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
 				srs.setEstado(rs.getBigDecimal("ESTADO"));
 				srs.setDeudaant(rs.getBigDecimal("DEUDAANT"));
+				srs.setFechacarga(rs.getTimestamp("FECHACARGA"));
 				lstSuministroLusReciboSocio.add(srs);
 			}
 
