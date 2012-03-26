@@ -1,4 +1,3 @@
-
 <html>
 <head>
 <title>Mercado Modelo de Huaral - SISGAP </title>
@@ -23,7 +22,7 @@ a:hover        {font: normal 11px Tahoma, Arial; color: #003399; text-transform:
 <table border="0" cellspacing="0" cellpadding="0" width="885" style="padding-top: 3px" class=noprint>
   <tr align="left" valign="top" bgcolor="#E8F4FF">
     <td rowspan="5" width="229" height="44" bgcolor="#FFFFFF">
-      <img src="../imagenes/escudo.gif" width="180" height="50" border="0" alt="Home" hspace="10" vspace=3>     
+      <img src="../imagenes/Logo_Reporte_MMH.png" width="91" height="50" border="0" alt="Home" hspace="10" vspace=3>     
     </td>
     <td height="17" valign="top">
       <table border="0" cellpadding="0" cellspacing="0" width="100%" height="17">
