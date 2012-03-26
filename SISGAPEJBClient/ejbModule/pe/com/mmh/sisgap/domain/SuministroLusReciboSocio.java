@@ -1,6 +1,7 @@
 package pe.com.mmh.sisgap.domain;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class SuministroLusReciboSocio {
 
@@ -26,6 +27,8 @@ public class SuministroLusReciboSocio {
 	private String nombres;
 	private BigDecimal estado; 
 	private BigDecimal deudaant;
+	
+	private Timestamp fechacarga;
 	
 	public long getCodigorecibo() {
 		return codigorecibo;
@@ -193,6 +196,14 @@ public class SuministroLusReciboSocio {
 
 	public void setDeudaant(BigDecimal deudaant) {
 		this.deudaant = deudaant;
+	}
+
+	public Timestamp getFechacarga() {
+		return fechacarga;
+	}
+
+	public void setFechacarga(Timestamp fechacarga) {
+		this.fechacarga = fechacarga;
 	}
 	
 	
