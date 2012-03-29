@@ -604,6 +604,10 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				res.setFecPeriodo(rs.getDate("FEC_PERIODO"));
 				res.setNumPendienteFac(rs.getBigDecimal("NUM_PENDIENTE_FAC"));
 				res.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
+				res.setRepomancnx(rs.getBigDecimal("REPOMANCNX"));
+				res.setCargofijo(rs.getBigDecimal("CARGOFIJO"));
+				res.setEnergactfraptatotal(rs.getBigDecimal("ENERGACTFRAPTATOTAL"));
+				res.setEnergacthorptatotal(rs.getBigDecimal("ENERGACTHORPTATOTAL"));
 			}
 			
 			
