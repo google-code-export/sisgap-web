@@ -97,7 +97,7 @@ var codTipCob = "";
 var codMon = "";
 
 	$(function() {
-		$("#nuevo-sl").button();
+		$("#nuevo-sls").button();
 		$("#btngrabar").button();
 		$("#btncerrar").button();
 		$("#btnpagar").button();
@@ -112,8 +112,8 @@ var codMon = "";
 			}
 	     });
 
-		$('#nuevo-sl').click(function() {
-			if ($("#codigo-sl").val()=="" || $("#socio-sl").val()=="" || $("#direccion-sl").val()=="" ){
+		$('#nuevo-sls').click(function() {
+			if ($("#codigo-sls").val()=="" || $("#socio-sls").val()=="" || $("#direccion-sls").val()=="" ){
 				alert("Debe buscar y seleccionar el Socio antes de ingresar los datos del recibo de luz");
 				return false;
 			}else{ 
@@ -334,9 +334,9 @@ var codMon = "";
 	
 	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
 		
-		$("#codigo-sl").val(codigo);
-		$("#socio-sl").val(razonSocial);
-		$("#direccion-sl").val(puesto);
+		$("#codigo-sls").val(codigo);
+		$("#socio-sls").val(razonSocial);
+		$("#direccion-sls").val(puesto);
 		$("#codigoide").val(codigoIde);
 		$("#buscarsocio-form").dialog("close");
 	}
@@ -575,28 +575,34 @@ var codMon = "";
 
 		<fieldset>
 			<legend>Datos del Recibo Original</legend>
-			<table border="0" cellpadding="2" cellspacing="2" width="75%">
+			<table border="1" cellpadding="2" cellspacing="2" width="75%">
 				<tr>
-					<td width="50px">&nbsp;</td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td width="50px">&nbsp;</td>
-					<td width="120px"><b>Cod. Recibo</b></td>
-					<td colspan="3">${resori.codOrgreciboLuz}</td>
+					<td width="120px" align="right"><b>Cod. Recibo</b></td>
+					<td colspan="7">${resori.codOrgreciboLuz}</td>
 				</tr>
-				<tr>
-					<td width="50px">&nbsp;</td>
+				<!-- tr>
 					<td><b>Lectura Inicial</b></td>
 					<td>${resori.numLecturaInicial}</td>
 					<td width="120px"><b>Lectura Final</b></td>
 					<td>${resori.numLecturaFinal}</td>
+				</tr -->
+				<tr>
+					<td align="right"><b>Reposic. y Manto. Conexion</b></td>
+					<td>${resori.repomancnx}</td>
+					<td align="right"><b>Cargo Fijo</b></td>
+					<td>${resori.cargofijo}</td>
+					<td align="right"><b>Energ.Act.Fuer.Hor.Pta.</b></td>
+					<td>${resori.energactfraptatotal}</td>
+					<td align="right"><b>Energ.Act.Hor.Pta.</b></td>
+					<td>${resori.energacthorptatotal}</td>
 				</tr>
 				<tr>
-					<td width="50px">&nbsp;</td>
-					<td><b>Total Monto Recibo</b></td>
+					<td align="right"><b>Total Monto Recibo</b></td>
 					<td>${resori.numMonto}</td>
-					<td><b>Pendiente Cancelación</b></td>
+					<td align="right"><b>Pendiente Cancelación</b></td>
 					<td>${resori.numMonto-resori.numPendienteFac}</td>
 				</tr>
 			</table> 
@@ -607,7 +613,7 @@ var codMon = "";
 			<table border="0" cellpadding="0" cellspacing="0" width="75%">
 				<tr>
 					<td>Socio</td>
-					<td colspan="3" ><input type='text' name="socio-sl" id="socio-sl" size=30 value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+					<td colspan="3" ><input type='text' name="socio-sls" id="socio-sls" size=30 value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
 					<td width="15px"><c:choose>
 						<c:when test="${isDetalle!=1 }">
 							<button id="buscar-socio">...</button>
@@ -616,14 +622,14 @@ var codMon = "";
 						
 					</td>
 					<td width="20px">Código</td>
-					<td><input type="text" name="codigo-sl" id="codigo-sl" size="10" value="" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td><input type="text" name="codigo-sls" id="codigo-sls" size="10" value="" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
 					<td colspan="3">
-						<input type="text" name="direccion-sl" id="direccion-sl" size="10" value="" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/>						
+						<input type="text" name="direccion-sls" id="direccion-sls" size="10" value="" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/>						
 					</td>
-					<td width="20px"><button id="nuevo-sl">Agregar</button></td>
+					<td width="20px"><button id="nuevo-sls">Agregar</button></td>
 					<td width="80px"> </td>
 					<td>&nbsp;</td>
 				</tr>
@@ -632,7 +638,7 @@ var codMon = "";
 	<display:table name="ListaSuministroLuz" 
 				class="consultanormal"
 				excludedParams="metodo" 
-				requestURI="/suministroLuz.do"		
+				requestURI="/suministroLuz.do?metodo=mostrarItemsSuministro"		
 				id="row"
 				export="false">
 			<display:column title="" style="width:60px;">
@@ -651,7 +657,7 @@ var codMon = "";
 			<display:column title="Lectura Inicial" property="lecturaini" sortable="true"></display:column>
 			<display:column title="Lectura Final" property="lecturafin" sortable="true"></display:column>
 			<display:column title="Cargo por Energia" property="cargoener" sortable="true"></display:column>
-			<display:column title="Total" property="total"></display:column>
+			<display:column title="Total" property="total" sortable="true"></display:column>
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.estado==1}">Pendiente</c:when>
