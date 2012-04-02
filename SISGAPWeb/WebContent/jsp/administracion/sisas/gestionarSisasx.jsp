@@ -133,6 +133,26 @@ var codMon = "";
 		$("#regresar-f").button();
 		$("#imprimir-f").button();
 		$("#cancelar-f").button();
+
+
+	    $('.date-picker').datepicker( {
+	        changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: true,
+	        dateFormat: 'MM yy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+ 	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+ 	                    'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+      	                    'May', 'Jun', 'Jul', 'Ago',
+      	                    'Sep', 'Oct', 'Nov', 'Dic'],
+	        onClose: function(dateText, inst) { 
+	            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	            $(this).datepicker('setDate', new Date(year, month, 1));
+	        }
+	    });
+		
 		
 		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 		$("#dialog:ui-dialog").dialog("destroy");
@@ -195,6 +215,21 @@ var codMon = "";
 			}
 		});
 
+
+		$("#calendar-form").dialog({
+			autoOpen : false,
+			height : 400,
+			width : 300,
+			modal : true,
+			buttons : {
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+		
 		$("#dialog-form-item").dialog(
 		{
 			autoOpen : false,
@@ -336,7 +371,8 @@ var codMon = "";
 			$("#dialog-form-item").dialog("close");
 			$('#gestionarFacturacion').submit();
 		});
-		
+
+
 		
 	});
 
@@ -391,13 +427,52 @@ var codMon = "";
 
 		$("#total-p").val( total );
 	}
+
+	function buscarCalendar(){
+		var frm = document.gestionarFacturacion;
+		frm.metodo.value = 'findGenerator';
+		frm.submit();
+	}
+
+	function ver(xperiodo,xcodigo){
+		$("#codigoide-f").val(xcodigo);
+		$("#periodo-f").val(xperiodo);
+
+		$.ajax({
+	        type: "POST",
+	        url: "/SISGAPWeb/registrosisas.do",
+	        data: "metodo=findGenerator&periodo="+xperiodo+"&codigoide="+xcodigo,
+	        success: function(datos){					        
+	        	$("#dataCalendar").html(datos);
+	      }
+		});	
+		
+		$("#calendar-form").dialog("open");
+	}
+
+	function updateSisa(){
+		
+		var frm = document.gestionarFacturacion;
+		frm.metodo.value = 'updateSisa';
+		$("#valuess").val($("#calendar-form input[name=fechadia]:checked").map(
+			     function () {return this.value;}).get().join(","));		
+		frm.submit();
+		
+	}
 	
 </script>
+<style type="text/css">
+.ui-datepicker-calendar {
+    display: none;
+    }
+</style>
 </head>
 <body>
 <html:form action="/registrosisas.do" styleId="gestionarFacturacion">
 		<input type="hidden" name="metodo" />
-		<input type="hidden" name="codigoide" id="codigoide-f" />
+		<input type="hidden" name="codigoide" id="codigoide-f"/>
+		<input type="hidden" name="periodo" id="periodo-f" />
+		<input type="hidden" name="valuess" id="valuess" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
@@ -427,13 +502,33 @@ var codMon = "";
 					<td>Puesto</td>
 					<td colspan="3"><input type="text" name="direccion-f" id="direccion-f" size="10"  class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/></td>
 					<td width="15px"></td>
-					<td width="80px">Tipo Documento</td>
+					<td width="80px">Periodo</td>
 					<td>
+					<input name="startDate" id="startDate" class="date-picker" value="${fecha}"/>(mes/año)					
 					</td>
 				</tr>
-			</table> 
+			</table>
+			<button type="button" onclick="buscarCalendar();">Buscar</button> 
 		</fieldset>
-			${lstPlan}
+			
+		<display:table name="lstSisa" 
+						class="consultanormal"
+						excludedParams="metodo" 
+						requestURI="/registrosisas.do?metodo=cargarAction"		
+						id="row"
+						export="false">
+				<display:column title="" style="width:60px;">
+					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver('<fmt:formatDate pattern="dd-MM-yyyy" value="${row.perido}" />',${row.codigo});"/>
+				</display:column>
+				<display:column title="Puesto" property="puesto" sortable="true"/>
+				<display:column title="Periodo" property="perido" sortable="true"/>
+				<display:column title="Nombre" property="nombre" sortable="true"/>				
+		</display:table>	
+		
+		<div id="calendar-form" title="Calendario">		
+			<div id='dataCalendar'></div>
+			<button type="button"  onclick="updateSisa();">Grabar</button>
+		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		
 			<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
 			<button id="btn-buscar-socio">Buscar Socio</button>

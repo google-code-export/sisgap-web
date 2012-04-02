@@ -95,6 +95,7 @@
    <action name="RegistroSisasForm" path="/registrosisas" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisasAction">
      <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarSisasx.jsp"/>
+     <forward name="blankpage" path="/jsp/administracion/sisas/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
      
    </action>
