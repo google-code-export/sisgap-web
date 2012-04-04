@@ -23,6 +23,7 @@ import pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
 import pe.com.mmh.sisgap.comun.constantes.Constantes;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Detallefactura;
@@ -30,6 +31,7 @@ import pe.com.mmh.sisgap.domain.DetallefacturaPK;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.Socio;
+import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
 /**
  * Servlet implementation class AjaxServlet
@@ -72,6 +74,7 @@ public class AjaxServlet extends HttpServlet {
 			if(action.equals("BUSCAR_SOCIO")){
 
 				String nombre = request.getParameter("nombre");
+				String codRec = request.getParameter("codigoModi");
 				try {
 					SocioFacadeLocal facadeLocal = (SocioFacadeLocal) context.lookup(ConstantesJNDI.SOCIOFACADE);
 					List<Socio> lstSocio = facadeLocal.buscarxNombre(nombre);
@@ -81,7 +84,9 @@ public class AjaxServlet extends HttpServlet {
 					out.print("	<th>Codigo</th>");
 					out.print("	<th>Nombres</th>");
 					out.print("	<th>Puesto</th>");
-					out.print("	<th>Action</th>");
+					out.print("	<th>Accion</th>");
+					out.print("	<th>Estado</th>");
+					out.print("	<th>Deuda</th>");
 					out.print("</tr>");
 					out.print("</thead>");
 					out.print("<tbody>");
@@ -90,13 +95,32 @@ public class AjaxServlet extends HttpServlet {
 						out.print("<td>"+socio.getTranCodigo()+"</td>");
 						out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
 						out.print("<td>"+socio.getTranPuesto()+"</td>");
+
+						//Listado que trae Datos de los recibos de Suministro de Luz
+						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+						
+						
+						List<SuministroLusReciboSocio> lsSuministroLuzSocio = (List<SuministroLusReciboSocio>) suministrofacadeLocal.buscarReciboxCodigo("7120","321");//socio.getTranCodigo(), codRec);
+						System.out.println(lsSuministroLuzSocio.get(0));
+						System.out.println(lsSuministroLuzSocio.get(1));
+						
 						String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
-								+ "'," + socio.getTranPuesto() +","+socio.getTranIde()+" )";
+								+ "','" + socio.getTranPuesto() +"','1','50.00',"+socio.getTranIde()+")";
 						out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");
+						out.print("<td>1</td>");
+						out.print("<td>50.00</td>");
 						out.print("</tr>");
 					}
 					out.print("</tbody>");
 					out.print("</table>");
+					
+					/*if (valor.equals("luz")) {
+						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+						List<SuministroLusReciboSocio> lstSocioLuz = (List<SuministroLusReciboSocio>) suministrofacadeLocal.buscarReciboxCodigo(new BigDecimal(7201), new BigDecimal(261));
+						
+						System.out.println(lstSocioLuz.get(0));
+						System.out.println(lstSocioLuz.get(1));
+					}*/
 				} catch (NamingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -344,6 +368,15 @@ public class AjaxServlet extends HttpServlet {
 					out.print("</table>");
 					out.print("<input type='hidden' name='txttotal' id='txttotal' value='"+total+"'/>");
 					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else if (action.equals("BUSCAR_PAGO_LUZ")){
+				String codSocio = request.getParameter("codSocio");
+				String codRecibo = request.getParameter("codRecibo");
+				try {
+					System.out.println("CodigoSocio: "+codSocio);
+					System.out.println("CodigoRecibo: "+codRecibo);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
