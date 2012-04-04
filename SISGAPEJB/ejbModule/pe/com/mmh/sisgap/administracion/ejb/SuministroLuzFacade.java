@@ -30,6 +30,7 @@ import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
+import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
@@ -56,6 +57,10 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_DEL_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_DEL_SUMINISTROLUZSOCIO(?,?,?)}";
 	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_SUMINISTROLUZSOCIOPAGAR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOPAGAR(?,?,?)}";
+	
+	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
+	
+	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where codigosocio =  %s ";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -904,5 +909,40 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		}
 	}
 
+    public SuministroLusReciboSocio buscarReciboxCodigo(String codSocio, String codRecibo) {
+    	Connection connection = null;
+    	PreparedStatement pst = null;
+    	ResultSet rs = null;
+    	List<SuministroLusReciboSocio> lsSuministroLuzSocio = null;
+    	SuministroLusReciboSocio reciboSocio = null;
+		try {
+			connection = getConnection();
+			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
+			pst=connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+codSocio+"'"));
+			rs = pst.executeQuery();
+			
+			while(rs.next()){
+				reciboSocio = new SuministroLusReciboSocio();
+				reciboSocio.setDeudaant(new BigDecimal(rs.getString("deudaant")));
+				reciboSocio.setEstado(new BigDecimal(rs.getString("estado")));
+				lsSuministroLuzSocio.add(reciboSocio);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return (SuministroLusReciboSocio) lsSuministroLuzSocio;
+		
+	}
 
+	
 }
