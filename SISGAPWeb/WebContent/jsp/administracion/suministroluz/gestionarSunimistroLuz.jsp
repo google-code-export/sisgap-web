@@ -413,18 +413,24 @@ $(function() {
 	}
 
 
-	function calculaSubTotal() {
+	function calculaCampos() {
 		var subTotaldelMes = 0;
 		var igvTotaldelMes = 0;
 		var TotaldelMes = 0;
+		var montoTotal = 0;
+
 		//alert( redondear( parseFloat($('#repomancnx').val()) + parseFloat($('#cargofijo').val()) ) );
 		//subTotaldelMes = redondear( parseFloat($('#repomancnx').val()) + parseFloat($('#cargofijo').val()) );
 		subTotaldelMes = redondear( parseFloat($('#repomancnx').val()) + parseFloat($('#cargofijo').val()) + parseFloat($('#energactfraptatotal').val()) + parseFloat($('#energacthorptatotal').val()) + parseFloat($('#energreactotal').val()) + parseFloat($('#interesconvenio').val()) + parseFloat($('#potusoreddisttotal').val()) + parseFloat($('#potgenfptotal').val()) + parseFloat($('#alumpublic').val()) ); 
 		$("#subtotalmes").val(subTotaldelMes);
-		igvTotaldelMes = redondear( ( parseFloat(subTotaldelMes) * 1.18 ) / 100 );
+		igvTotaldelMes = redondear( ( parseFloat(subTotaldelMes) * 18 ) / 100 );
 		$("#igv").val(igvTotaldelMes);
-		TotaldelMes = redondear( parseFloat(subTotaldelMes) + parseFloat(igvTotaldelMes) );
+		TotaldelMes = redondear( parseFloat($("#subtotalmes").val()) + parseFloat($("#igv").val()) );
 		$("#totalmesact").val(TotaldelMes);
+
+		//Monto Total
+		montoTotal = redondear( parseFloat($("#totalmesact").val()) + parseFloat($("#aporteley").val()) + parseFloat($("#cuotaconv").val()) + parseFloat($("#redonmesant").val()) + parseFloat($("#redonmesact").val()) );
+		$("#monto").val(montoTotal);
 	}
 	
 </script>
@@ -604,7 +610,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRepMan' id='ConsumosRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRepMan' id='ConsFactRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRepMan' id='PrecUnitRepMan' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='repomancnx' id='repomancnx' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="6"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='repomancnx' id='repomancnx' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="6"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Cargo Fijo</font></td>
@@ -615,7 +621,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosCarFij' id='ConsumosCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactCarFij' id='ConsFactCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitCarFij' id='PrecUnitCarFij' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cargofijo' id='cargofijo' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="7"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cargofijo' id='cargofijo' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="7"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energ. Activa Fuera Punta (kwh)</font></td>
@@ -626,7 +632,7 @@ $(function() {
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaconsu' id='energactfraptaconsu' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="12"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptaconfa' id='energactfraptaconfa' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="13"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptapreuni' id='energactfraptapreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="14"/></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptatotal' id='energactfraptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="15"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energactfraptatotal' id='energactfraptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="15"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energ. Activa Horas Punta (kwh)</font></td>
@@ -637,7 +643,7 @@ $(function() {
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptacons' id='energacthorptacons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="20"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptaconfac' id='energacthorptaconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="21"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptapreuni' id='energacthorptapreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="22"/></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptatotal' id='energacthorptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="23"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energacthorptatotal' id='energacthorptatotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="23"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Energía Reactiva (kVARh)</font></td>
@@ -648,7 +654,7 @@ $(function() {
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacconsu' id='energreacconsu' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="28"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacfaccons' id='energreacfaccons' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="29"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreacpreuni' id='energreacpreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="30"/></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreactotal' id='energreactotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="31"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='energreactotal' id='energreactotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="31"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Interés Convenio</font></td>
@@ -659,7 +665,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosIntCon' id='ConsumosIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactIntCon' id='ConsFactIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitIntCon' id='PrecUnitIntCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='interesconvenio' id='interesconvenio' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="32"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='interesconvenio' id='interesconvenio' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="32"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Potencia FP (KW)</font></td>
@@ -692,7 +698,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotDis' id='ConsumosPotDis' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddistconfac' id='potusoreddistconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="43"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddistpreuni' id='potusoreddistpreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="44"/></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddisttotal' id='potusoreddisttotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="45"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potusoreddisttotal' id='potusoreddisttotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="45"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Potencia de Generación FP (KW)</font></td>
@@ -703,7 +709,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosPotGen' id='ConsumosPotGen' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfpconfac' id='potgenfpconfac' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="46"/></td>
 					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfppreuni' id='potgenfppreuni' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="47"/></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfptotal' id='potgenfptotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="48"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='potgenfptotal' id='potgenfptotal' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="48"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Alumbrado Público</font></td>
@@ -714,7 +720,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosAluPub' id='ConsumosAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactAluPub' id='ConsFactAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitAluPub' id='PrecUnitAluPub' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='alumpublic' id='alumpublic' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaSubTotal()" tabindex="49"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='alumpublic' id='alumpublic' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="49"/></td>
 				</tr>
 				<tr>
 					<td><font size="1"><b>SUBTOTAL Mes Actual</b></font></td>
@@ -758,7 +764,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosApoLey' id='ConsumosApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactApoLey' id='ConsFactApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitApoLey' id='PrecUnitApoLey' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='aporteley' id='aporteley' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="53"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='aporteley' id='aporteley' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="53"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Cuota Convenio (10 cuotas)</font></td>
@@ -769,7 +775,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosCuoCon' id='ConsumosCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactCuoCon' id='ConsFactCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitCuoCon' id='PrecUnitCuoCon' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cuotaconv' id='cuotaconv' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="54"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='cuotaconv' id='cuotaconv' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="54"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Redondeo Mes Anterior</font></td>
@@ -780,7 +786,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRedAnt' id='ConsumosRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRedAnt' id='ConsFactRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRedAnt' id='PrecUnitRedAnt' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesant' id='redonmesant' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="55"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesant' id='redonmesant' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="55"/></td>
 				</tr>
 				<tr>
 					<td><font size="1">Redondeo Mes Actual</font></td>
@@ -791,7 +797,7 @@ $(function() {
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsumosRedAct' id='ConsumosRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='ConsFactRedAct' id='ConsFactRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
 					<td align="center">&nbsp;<!-- input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='PrecUnitRedAct' id='PrecUnitRedAct' class='text ui-widget-content ui-corner-all' size="10" maxlength="10" /--></td>
-					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesact' id='redonmesact' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" tabindex="56"/></td>
+					<td align='center'><input type='text' class='texto' style='font-family:verdana;font-size:8px;' name='redonmesact' id='redonmesact' class='text ui-widget-content ui-corner-all' size='10' maxlength='10' value="0" onChange="calculaCampos()" tabindex="56"/></td>
 				</tr>
 				<tr>
 					<td><label>Total:</label></td>

@@ -249,19 +249,33 @@ var codMon = "";
 
 		$("#buscar-socio").button().click(function() {
 			$("#buscarsocio-form").dialog("open");
+			//var codSocio =  $('[name=nombresocio]').val();
+/*			alert("Pruebas...");
+			var codSocio = '7201';
+			var codRecibo = '261';
+			$.ajax({
+		        type: "POST",
+		        url: "/SISGAPWeb/AjaxServlet",
+		        data: "action=BUSCAR_PAGO_LUZ&codSocio="+codSocio+"&codRecibo="+codRecibo,
+		        success: function(datos){
+		        	$("#tablesocios").html(datos);
+		      	}
+			});*/
 			return false;
 		});
 
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
-					$.ajax({
-				        type: "POST",
-				        url: "/SISGAPWeb/AjaxServlet",
-				        data: "action=BUSCAR_SOCIO&nombre="+nombre,
-				        success: function(datos){
-				        	$("#tablesocios").html(datos);
-				      }
-				});
+			var codRec = $("#codigoModi").val();
+			alert(codRec);
+				$.ajax({
+			        type: "POST",
+			        url: "/SISGAPWeb/AjaxServlet",
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&codigoModi="+codRec,
+			        success: function(datos){
+			        	$("#tablesocios").html(datos);
+			      }
+			});
 		});	
 
 		$("#eliminar-form").dialog({
@@ -332,11 +346,19 @@ var codMon = "";
 		$("#eliminar-form").dialog("open");
 	}
 	
-	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
+	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde) {
 		
 		$("#codigo-sls").val(codigo);
 		$("#socio-sls").val(razonSocial);
 		$("#direccion-sls").val(puesto);
+		if (estado == 1){
+			$("#estado-sls").val("PENDIENTE");
+		}else if (estado == 2){
+			$("#estado-sls").val("PAGADO");
+		}else{
+			$("#estado-sls").val("-----");
+		}
+		$("#deudaant-sls").val(deudaant);
 		$("#codigoide").val(codigoIde);
 		$("#buscarsocio-form").dialog("close");
 	}
@@ -575,7 +597,7 @@ var codMon = "";
 
 		<fieldset>
 			<legend>Datos del Recibo Original</legend>
-			<table border="1" cellpadding="2" cellspacing="2" width="75%">
+			<table border="0" cellpadding="2" cellspacing="2" width="75%">
 				<tr>
 					<td>&nbsp;</td>
 				</tr>
@@ -610,27 +632,31 @@ var codMon = "";
 		<br>
 		<fieldset>
 			<legend>Datos del Socio</legend>
-			<table border="0" cellpadding="0" cellspacing="0" width="75%">
+			<table border="0" cellpadding="0" cellspacing="0" width="80%">
 				<tr>
-					<td>Socio</td>
-					<td colspan="3" ><input type='text' name="socio-sls" id="socio-sls" size=30 value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
-					<td width="15px"><c:choose>
-						<c:when test="${isDetalle!=1 }">
-							<button id="buscar-socio">...</button>
-						</c:when>
-					</c:choose>
-						
+					<td width="5%">Socio</td>
+					<td width="20%"><input type='text' name="socio-sls" id="socio-sls" size=30 value="" style="width:200px;" readonly="readonly"/></td>
+					<td width="10%">
+						<c:choose>
+							<c:when test="${isDetalle!=1 }">
+								<button id="buscar-socio">...</button>
+							</c:when>
+						</c:choose>	
 					</td>
-					<td width="20px">Código</td>
-					<td><input type="text" name="codigo-sls" id="codigo-sls" size="10" value="" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td width="5%">Código</td>
+					<td width="20%"><input type="text" name="codigo-sls" id="codigo-sls" size="10" value="" style="width:100px;" readonly="readonly" /></td>
+					<td width="5%">Puesto</td>
+					<td width="20%"><input type="text" name="direccion-sls" id="direccion-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>					
 				</tr>
 				<tr>
-					<td>Puesto</td>
-					<td colspan="3">
-						<input type="text" name="direccion-sls" id="direccion-sls" size="10" value="" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/>						
-					</td>
-					<td width="20px"><button id="nuevo-sls">Agregar</button></td>
-					<td width="80px"> </td>
+					<td>Estado</td>
+					<td><input type="text" name="estado-sls" id="estado-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
+					<td>&nbsp;</td>
+					<td>Deuda Anterior</td>
+					<td><input type="text" name="deudaant-sls" id="deudaant-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
 					<td>&nbsp;</td>
 				</tr>
 			</table> 
