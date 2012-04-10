@@ -116,9 +116,13 @@ var codMon = "";
 			if ($("#codigo-sls").val()=="" || $("#socio-sls").val()=="" || $("#direccion-sls").val()=="" ){
 				alert("Debe buscar y seleccionar el Socio antes de ingresar los datos del recibo de luz");
 				return false;
-			}else{ 
+			}else{
 				$("#correlativo").val("");
-				$("#txtLecturaInih").val("");
+				if ($("#lecfin-sls").val() > 0){
+					$("#txtLecturaInih").val($("#lecfin-sls").val());
+				} else {
+					$("#txtLecturaInih").val("");
+				}
 				$("#txtLecturaFinh").val("");
 				$("#txtConsumomesh").val("");
 				$("#txtCagofijoh").val("");
@@ -249,29 +253,15 @@ var codMon = "";
 
 		$("#buscar-socio").button().click(function() {
 			$("#buscarsocio-form").dialog("open");
-			//var codSocio =  $('[name=nombresocio]').val();
-/*			alert("Pruebas...");
-			var codSocio = '7201';
-			var codRecibo = '261';
-			$.ajax({
-		        type: "POST",
-		        url: "/SISGAPWeb/AjaxServlet",
-		        data: "action=BUSCAR_PAGO_LUZ&codSocio="+codSocio+"&codRecibo="+codRecibo,
-		        success: function(datos){
-		        	$("#tablesocios").html(datos);
-		      	}
-			});*/
 			return false;
 		});
 
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
-			var codRec = $("#codigoModi").val();
-			alert(codRec);
 				$.ajax({
 			        type: "POST",
 			        url: "/SISGAPWeb/AjaxServlet",
-			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&codigoModi="+codRec,
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre,
 			        success: function(datos){
 			        	$("#tablesocios").html(datos);
 			      }
@@ -346,8 +336,7 @@ var codMon = "";
 		$("#eliminar-form").dialog("open");
 	}
 	
-	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde) {
-		
+	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde, lecFin) {
 		$("#codigo-sls").val(codigo);
 		$("#socio-sls").val(razonSocial);
 		$("#direccion-sls").val(puesto);
@@ -360,6 +349,7 @@ var codMon = "";
 		}
 		$("#deudaant-sls").val(deudaant);
 		$("#codigoide").val(codigoIde);
+		$("#lecfin-sls").val(lecFin);
 		$("#buscarsocio-form").dialog("close");
 	}
 
@@ -475,7 +465,10 @@ var codMon = "";
 	function calculaConsumoMes(dato1, dato2) {
 		var total = 0; 
 		var carEne = 0;
+		var deuda_sls = 0;
 		total = $("#txtLecturaFinh").val() - $("#txtLecturaInih").val();
+		deuda_sls = $("#deudaant-sls").val();
+
 
 		//alert("LecturaIni: "+$("#txtLecturaInih").val()+"\nLecturaFin: "+$("#txtLecturaFinh").val());
 		if ($("#txtLecturaInih").val()=="" || $("#txtLecturaFinh").val()=="") {
@@ -495,7 +488,8 @@ var codMon = "";
 		$("#txtAporteleyh").val("0.20");
 		$("#txtRecargoh").val("0.10");
 		$("#txtRedondeoh").val("0");
-		$("#txtDeudaAnth").val("0");
+		$("#txtDeudaAnth").val(deuda_sls);
+		
 		calculaTotalMes();
 		calculaTotal();				
 	}
@@ -646,7 +640,7 @@ var codMon = "";
 					<td width="5%">Código</td>
 					<td width="20%"><input type="text" name="codigo-sls" id="codigo-sls" size="10" value="" style="width:100px;" readonly="readonly" /></td>
 					<td width="5%">Puesto</td>
-					<td width="20%"><input type="text" name="direccion-sls" id="direccion-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>					
+					<td width="20%"><input type="text" name="direccion-sls" id="direccion-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
 				</tr>
 				<tr>
 					<td>Estado</td>
@@ -654,6 +648,8 @@ var codMon = "";
 					<td>&nbsp;</td>
 					<td>Deuda Anterior</td>
 					<td><input type="text" name="deudaant-sls" id="deudaant-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
+					<td>Lectura Anterior</td>
+					<td><input type="text" name="lecfin-sls" id="lecfin-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
 				</tr>
 				<tr>
 					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
@@ -750,7 +746,7 @@ var codMon = "";
 					</tr>
 					<tr>
 						<td><label>Deuda Anterior:</label></td>
-						<td><input type='text' name='txtDeudaAnth' id='txtDeudaAnth' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaTotal()" tabindex="15"/></td>
+						<td><input type='text' name='txtDeudaAnth' id='txtDeudaAnth' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaTotal()" readonly style="color:red; font-style: bold" tabindex="15"/></td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
