@@ -60,7 +60,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	
 	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
 	
-	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where codigosocio =  %s ";
+	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where tran_codigo = %s ";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -909,7 +909,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		}
 	}
 
-    public SuministroLusReciboSocio buscarReciboxCodigo(String codSocio, String codRecibo) {
+    public List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio) {
     	Connection connection = null;
     	PreparedStatement pst = null;
     	ResultSet rs = null;
@@ -918,13 +918,20 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		try {
 			connection = getConnection();
 			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
-			pst=connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+codSocio+"'"));
+			pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+"'")); //Integer.parseInt(codSocio.trim())+"'"));
 			rs = pst.executeQuery();
 			
 			while(rs.next()){
 				reciboSocio = new SuministroLusReciboSocio();
-				reciboSocio.setDeudaant(new BigDecimal(rs.getString("deudaant")));
+				reciboSocio.setCodigosocio(rs.getLong("codigosocio"));
+				reciboSocio.setCodigorecibo(rs.getLong("codigorecibo"));
+				reciboSocio.setLecturaini(new BigDecimal(rs.getString("lecturaini")));
+				reciboSocio.setLecturafin(new BigDecimal(rs.getString("lecturafin")));
+				reciboSocio.setTotal(new BigDecimal(rs.getString("total")));
 				reciboSocio.setEstado(new BigDecimal(rs.getString("estado")));
+				reciboSocio.setDeudaant(new BigDecimal(rs.getString("deudaant")));
+				reciboSocio.setFechacarga(rs.getTimestamp("fechacarga"));
+				
 				lsSuministroLuzSocio.add(reciboSocio);
 			}
 			
@@ -940,7 +947,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			}
 		}
 		
-		return (SuministroLusReciboSocio) lsSuministroLuzSocio;
+		return lsSuministroLuzSocio;
 		
 	}
 
