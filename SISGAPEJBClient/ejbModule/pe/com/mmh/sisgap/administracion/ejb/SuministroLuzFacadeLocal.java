@@ -10,6 +10,7 @@ import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
+import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
@@ -56,5 +57,5 @@ public interface SuministroLuzFacadeLocal {
 
 	void pagarItemReciboLuzSocio(Long long1, Long long2, Long long3);
 	
-	SuministroLusReciboSocio buscarReciboxCodigo(String codSocio, String codRecibo);
+	List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio);
 }
