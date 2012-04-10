@@ -69,18 +69,21 @@ public class AjaxServlet extends HttpServlet {
 		}
 		
 		String action = request.getParameter("action");
+		String colLin = "";
+		String estLin = "";
 		
 		if (action != null) {
 			if(action.equals("BUSCAR_SOCIO")){
 
 				String nombre = request.getParameter("nombre");
-				String codRec = request.getParameter("codigoModi");
+				//String codRec = request.getParameter("codigoModi");
 				try {
 					SocioFacadeLocal facadeLocal = (SocioFacadeLocal) context.lookup(ConstantesJNDI.SOCIOFACADE);
 					List<Socio> lstSocio = facadeLocal.buscarxNombre(nombre);
 					out.print("<table id='users' class='ui-widget ui-widget-content'   width='100%'>");
 					out.print("<thead>");
 					out.print("<tr class='ui-widget-header'>");
+					out.print(" <th>Id</th>");
 					out.print("	<th>Codigo</th>");
 					out.print("	<th>Nombres</th>");
 					out.print("	<th>Puesto</th>");
@@ -91,36 +94,54 @@ public class AjaxServlet extends HttpServlet {
 					out.print("</thead>");
 					out.print("<tbody>");
 					for (Socio socio : lstSocio) {
-						out.print("<tr>");
-						out.print("<td>"+socio.getTranCodigo()+"</td>");
-						out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
-						out.print("<td>"+socio.getTranPuesto()+"</td>");
-
 						//Listado que trae Datos de los recibos de Suministro de Luz
 						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+						List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboxCodigo(socio.getTranCodigo().trim());
 						
-						
-						List<SuministroLusReciboSocio> lsSuministroLuzSocio = (List<SuministroLusReciboSocio>) suministrofacadeLocal.buscarReciboxCodigo("7120","321");//socio.getTranCodigo(), codRec);
-						System.out.println(lsSuministroLuzSocio.get(0));
-						System.out.println(lsSuministroLuzSocio.get(1));
-						
-						String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
-								+ "','" + socio.getTranPuesto() +"','1','50.00',"+socio.getTranIde()+")";
-						out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");
-						out.print("<td>1</td>");
-						out.print("<td>50.00</td>");
+						/*System.out.println("Cant.Registros "+lsSuministroLuzSocio.size());
+						System.out.println("Deuda Anterior "+lsSuministroLuzSocio.get(0).getDeudaant());
+						System.out.println("Estado "+lsSuministroLuzSocio.get(0).getEstado());
+						System.out.println("Total "+lsSuministroLuzSocio.get(0).getTotal());
+						System.out.println("Lectura Inicial "+lsSuministroLuzSocio.get(0).getLecturaini());
+						System.out.println("Lectura Final "+lsSuministroLuzSocio.get(0).getLecturafin());*/
+						if (lsSuministroLuzSocio.isEmpty()){
+							out.print("<tr>");
+							out.print("<td>"+socio.getTranIde()+"</td>");
+							out.print("<td>"+socio.getTranCodigo()+"</td>");
+							out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
+							out.print("<td>"+socio.getTranPuesto()+"</td>");
+							String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
+									+ "','" + socio.getTranPuesto() +"','---','---','"+socio.getTranIde()+"','---')";
+							out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");
+							out.print("<td align='center'>---</td>");
+							out.print("<td align='center'>---</td>");							
+						} else {
+							if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 1){
+								colLin = "'color:#FF0000'"; //Color Rojo
+								estLin = "Pend.";
+							} else if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 2){
+								colLin = "'color:#0000FF'"; //Color Verde
+								estLin = "Paga.";
+							}
+							out.print("<tr>");
+							out.print("<td style="+colLin+">"+socio.getTranIde()+"</td>");
+							out.print("<td style="+colLin+">"+socio.getTranCodigo()+"</td>");
+							out.print("<td style="+colLin+">"+socio.getTranRazonSocial().trim()+"</td>");
+							out.print("<td style="+colLin+">"+socio.getTranPuesto()+"</td>");
+							String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
+									+ "','" + socio.getTranPuesto() +"','" + lsSuministroLuzSocio.get(0).getEstado() +"','" 
+									+ lsSuministroLuzSocio.get(0).getTotal() +"','"+socio.getTranIde()+"','"+lsSuministroLuzSocio.get(0).getLecturafin()+"')";
+							out.print("<td><a href='#' style="+colLin+
+									" onMouseOver='this.style.cssText="+colLin+
+									" onMouseOut='this.style.cssText="+colLin+
+									" onclick=\""+function+"\">Agregar</a></td>");
+							out.print("<td align='center' style="+colLin+">"+estLin+"</td>");
+							out.print("<td align='center' style="+colLin+">"+lsSuministroLuzSocio.get(0).getTotal()+"</td>");
+						}
 						out.print("</tr>");
 					}
 					out.print("</tbody>");
 					out.print("</table>");
-					
-					/*if (valor.equals("luz")) {
-						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
-						List<SuministroLusReciboSocio> lstSocioLuz = (List<SuministroLusReciboSocio>) suministrofacadeLocal.buscarReciboxCodigo(new BigDecimal(7201), new BigDecimal(261));
-						
-						System.out.println(lstSocioLuz.get(0));
-						System.out.println(lstSocioLuz.get(1));
-					}*/
 				} catch (NamingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -371,17 +392,7 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}else if (action.equals("BUSCAR_PAGO_LUZ")){
-				String codSocio = request.getParameter("codSocio");
-				String codRecibo = request.getParameter("codRecibo");
-				try {
-					System.out.println("CodigoSocio: "+codSocio);
-					System.out.println("CodigoRecibo: "+codRecibo);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 			}
-			
 			
 		}
 		
