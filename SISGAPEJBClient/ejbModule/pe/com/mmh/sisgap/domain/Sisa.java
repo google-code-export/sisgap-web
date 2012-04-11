@@ -9,6 +9,8 @@ public class Sisa {
 	Date perido;
 	String puesto;
 	Integer cantidad;
+	Integer totalpagos;
+	Integer totaldias;
 	
 	public String getNombre() {
 		return nombre;
@@ -39,6 +41,18 @@ public class Sisa {
 	}
 	public void setCodigo(long codigo) {
 		this.codigo = codigo;
+	}
+	public Integer getTotalpagos() {
+		return totalpagos;
+	}
+	public void setTotalpagos(Integer totalpagos) {
+		this.totalpagos = totalpagos;
+	}
+	public Integer getTotaldias() {
+		return totaldias;
+	}
+	public void setTotaldias(Integer totaldias) {
+		this.totaldias = totaldias;
 	}
 
 }

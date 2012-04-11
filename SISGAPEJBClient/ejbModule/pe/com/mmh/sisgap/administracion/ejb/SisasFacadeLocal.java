@@ -21,4 +21,6 @@ public interface SisasFacadeLocal {
 	public List<Sisa> findAll();
 
 	public void updateSisa(String periodo, String codigo, String valuess);
+
+	public List<Sisa> findSisa(String date, Long long1);
 }
