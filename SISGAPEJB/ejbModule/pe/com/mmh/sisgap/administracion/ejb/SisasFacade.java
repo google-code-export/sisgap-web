@@ -28,6 +28,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	private static final String SP_GET_SISA = "{call PKG_ADMINISTRACION.SP_GET_SISA(?,?,?)}";
 	private static final String SP_GET_SISA_ALL = "{call PKG_ADMINISTRACION.SP_GET_SISA_ALL(?)}";
 	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?)}";
+	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -52,7 +53,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	
     	return rsdcPlatilla;
     }
-    
+    	
 	public void registrarSisa(String periodo,long codigoSocio) {
     	Connection connection = null;
     	Object objParams[]   = {codigoSocio,periodo};
@@ -127,6 +128,8 @@ public class SisasFacade implements SisasFacadeLocal {
 				sisa.setPerido(rs.getDate("periodo"));
 				sisa.setPuesto(rs.getString("tran_puesto"));
 				sisa.setCodigo(rs.getLong("tran_ide"));
+				sisa.setTotaldias(rs.getInt("totaldias"));
+				sisa.setTotalpagos(rs.getInt("totalpagos"));
 				lst.add(sisa);
 			}
 		} catch (Exception e) {
@@ -171,6 +174,38 @@ public class SisasFacade implements SisasFacadeLocal {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Sisa> findSisa(String date, Long long1) {
+    	Connection connection = null;
+    	Object objParams[]   = {long1,date};
+    	List<Sisa> lst = new  ArrayList<Sisa>();
+    	try {			
+    		connection = getConnection();
+			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_GET_SISA_ID,objParams);
+			Sisa sisa= null;
+			while (rs.next()) {
+				sisa= new Sisa();
+				sisa.setNombre(rs.getString("tran_razon_social"));
+				sisa.setPerido(rs.getDate("periodo"));
+				sisa.setPuesto(rs.getString("tran_puesto"));
+				sisa.setCodigo(rs.getLong("tran_ide"));
+				sisa.setTotaldias(rs.getInt("totaldias"));
+				sisa.setTotalpagos(rs.getInt("totalpagos"));
+				lst.add(sisa);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+    
+    	return lst;
 	}
 
 
