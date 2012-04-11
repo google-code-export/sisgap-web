@@ -441,7 +441,7 @@ var codMon = "";
 		$.ajax({
 	        type: "POST",
 	        url: "/SISGAPWeb/registrosisas.do",
-	        data: "metodo=findGenerator&periodo="+xperiodo+"&codigoide="+xcodigo,
+	        data: "metodo=findGenerator&periodo="+xperiodo+"&codigoide="+xcodigo+"&ajax=true",
 	        success: function(datos){					        
 	        	$("#dataCalendar").html(datos);
 	      }
@@ -454,8 +454,12 @@ var codMon = "";
 		
 		var frm = document.gestionarFacturacion;
 		frm.metodo.value = 'updateSisa';
+		$("#valuess").val("");
 		$("#valuess").val($("#calendar-form input[name=fechadia]:checked").map(
-			     function () {return this.value;}).get().join(","));		
+			     function () {return this.value;}).get().join(","));	
+	    if($("#valuess").val()==''){
+	    	$("#valuess").val('-1');
+		}	
 		frm.submit();
 		
 	}
@@ -522,7 +526,20 @@ var codMon = "";
 				</display:column>
 				<display:column title="Puesto" property="puesto" sortable="true"/>
 				<display:column title="Periodo" property="perido" sortable="true"/>
-				<display:column title="Nombre" property="nombre" sortable="true"/>				
+				<display:column title="Nombre" property="nombre" sortable="true"/>
+				<display:column title="Estado" style="width:150px;">
+					<c:choose>
+						<c:when test="${row.totaldias==row.totalpagos}">
+							<div style="background-color: #33CC33;width: 150px;">&nbsp;</div>
+						</c:when>
+						<c:when test="${row.totalpagos>0 && row.totaldias!=row.totalpagos}">
+							<div style="background-color: orange;width: 150px;">&nbsp;</div>
+						</c:when>
+						<c:when test="${row.totalpagos==0}">
+							<div style="background-color: red;width: 150px;">&nbsp;</div>
+						</c:when>
+					</c:choose>
+				</display:column>			
 		</display:table>	
 		
 		<div id="calendar-form" title="Calendario">		
