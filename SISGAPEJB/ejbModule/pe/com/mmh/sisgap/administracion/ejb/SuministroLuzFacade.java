@@ -60,7 +60,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	
 	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
 	
-	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where tran_codigo = %s ";
+	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where tran_codigo = %s order by fechacarga desc ";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
