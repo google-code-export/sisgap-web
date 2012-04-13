@@ -347,7 +347,11 @@ var codMon = "";
 		}else{
 			$("#estado-sls").val("-----");
 		}
-		$("#deudaant-sls").val(deudaant);
+		if (deudaant=="---"){
+			$("#deudaant-sls").val(0);
+		} else {
+			$("#deudaant-sls").val(deudaant);
+		}
 		$("#codigoide").val(codigoIde);
 		$("#lecfin-sls").val(lecFin);
 		$("#buscarsocio-form").dialog("close");
@@ -746,7 +750,7 @@ var codMon = "";
 					</tr>
 					<tr>
 						<td><label>Deuda Anterior:</label></td>
-						<td><input type='text' name='txtDeudaAnth' id='txtDeudaAnth' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaTotal()" readonly style="color:red; font-style: bold" tabindex="15"/></td>
+						<td><input type='text' name='txtDeudaAnth' id='txtDeudaAnth' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaTotal()" style="color:red; font-style: bold" tabindex="15"/></td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
