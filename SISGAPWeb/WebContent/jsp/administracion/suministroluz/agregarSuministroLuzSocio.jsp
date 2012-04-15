@@ -101,16 +101,7 @@ var codMon = "";
 		$("#btngrabar").button();
 		$("#btncerrar").button();
 		$("#btnpagar").button();
-
-		$("#grabar-form").dialog({
-			autoOpen : false,
-			height : 380,
-			width : 600,
-			modal : true,		
-			close : function() {
-				allFields.val("").removeClass("ui-state-error");
-			}
-	     });
+		$("#imprimir-sls").button();
 
 		$('#nuevo-sls').click(function() {
 			if ($("#codigo-sls").val()=="" || $("#socio-sls").val()=="" || $("#direccion-sls").val()=="" ){
@@ -146,7 +137,27 @@ var codMon = "";
 			}
 
 		});
+
 		
+		$("#grabar-form").dialog({
+			autoOpen : false,
+			height : 380,
+			width : 600,
+			modal : true,		
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+	     });
+
+
+		$('#imprimir-sls').click(function() {
+			var valor='${resori.codOrgreciboLuz}';
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor, 'Popup', caracteristicas);
+	        return false;
+		});
+
+
 		$('#dialog').dialog({
 			autoOpen : false,
 			width : 600,
@@ -160,16 +171,19 @@ var codMon = "";
 			}
 		});
 
+
 		$('#dialog_link').click(function() {
 			$('#dialog').dialog('open');
 			return false;
 		});
+
 
 		$('#dialog_link, ul#icons li').hover(function() {
 			$(this).addClass('ui-state-hover');
 		}, function() {
 			$(this).removeClass('ui-state-hover');
 		});
+
 
 		$(document).ready(
 			function(){/* Aqui podria filtrar que controles necesitará manejar,
@@ -183,23 +197,21 @@ var codMon = "";
 				   }
 			});
 
-		function enter2tab(e){
-			if(e.keyCode==13){				
-				cb=parseInt($(this).attr('tabindex'));
-				if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
-					$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
-					$(':input[tabindex=\''+ (cb + 1) +'\']').select();
-					e.preventDefault();
-					return false;
+			function enter2tab(e){
+				if(e.keyCode==13){				
+					cb=parseInt($(this).attr('tabindex'));
+					if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
+						$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
+						$(':input[tabindex=\''+ (cb + 1) +'\']').select();
+						e.preventDefault();
+						return false;
+					}
 				}
 			}
-		}
-	});
+		});
 
 
-	$(function() {
-
-		
+	$(function() {		
 		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 		$("#dialog:ui-dialog").dialog("destroy");
 
@@ -236,25 +248,26 @@ var codMon = "";
 
 
 		$("#buscarsocio-form")
-				.dialog({
-							autoOpen : false,
-							height : 300,
-							width : 550,
-							modal : true,
-							buttons : {
-								Cancel : function() {
-									$(this).dialog("close");
-								}},
-							close : function() {
-								allFields.val("").removeClass("ui-state-error");
-							}
-					});
+			.dialog({
+				autoOpen : false,
+				height : 300,
+				width : 550,
+				modal : true,
+				buttons : {
+					Cancel : function() {
+						$(this).dialog("close");
+					}},
+				close : function() {
+					allFields.val("").removeClass("ui-state-error");
+			}
+		});
 
 
 		$("#buscar-socio").button().click(function() {
 			$("#buscarsocio-form").dialog("open");
 			return false;
 		});
+
 
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
@@ -267,6 +280,7 @@ var codMon = "";
 			      }
 			});
 		});	
+
 
 		$("#eliminar-form").dialog({
 			autoOpen : false,
@@ -284,11 +298,11 @@ var codMon = "";
 			close : function() {
 				allFields.val("").removeClass("ui-state-error");
 			}
-		});
-		
+		});		
 
 	});
 
+	
 	function grabar() {
 		var frm = document.gestionarFacturacion;
 		
@@ -423,7 +437,7 @@ var codMon = "";
 		codRec = valor1;
 		var codSoc = 0;
 		codSoc = valor2;
-		
+
 		$("#reciboLuz-form")
 		.dialog({
 					autoOpen : true,
@@ -459,7 +473,7 @@ var codMon = "";
 						allFields.val("").removeClass("ui-state-error");
 					}
 			});
-        
+
 		//var frm = document.formFacturacion;
 		//frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
 		//frm.metodo.value = 'mostrarItemsSuministro';
@@ -657,7 +671,7 @@ var codMon = "";
 				</tr>
 				<tr>
 					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
-					<td>&nbsp;</td>
+					<td><button id="imprimir-sls">Imprimir</button></td>
 				</tr>
 			</table> 
 	</fieldset>
