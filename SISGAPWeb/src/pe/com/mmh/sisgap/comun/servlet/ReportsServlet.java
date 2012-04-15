@@ -123,7 +123,7 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_CODIGO_RECIBO", codRec);
 				parametros.put("P_CODIGO_SOCIOS", codSoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz Doble A4.jrxml");
-			}else if(reporte.equals("REPORTE_DOCUMENTOS_FILTRO_ITEM")){
+			}else if (reporte.equals("REPORTE_DOCUMENTOS_FILTRO_ITEM")){
 				String itmCob = request.getParameter("itmCob");
 				String tipDoc = request.getParameter("tipDoc");
 				String estDoc = request.getParameter("estDoc");
@@ -156,6 +156,11 @@ public class ReportsServlet extends HttpServlet {
 					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro Item Impago.jrxml");	
 				}
 				
+			}else if (reporte.equals("LISTADO_RECIBOS_SOCIOS")){				
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz.jrxml");
+				
+				String codRec = request.getParameter("codRec");
+				parametros.put("P_CODIGO_RECIBO", codRec);
 			}
 			generateReport(request, response, ruta, parametros);
 		}		

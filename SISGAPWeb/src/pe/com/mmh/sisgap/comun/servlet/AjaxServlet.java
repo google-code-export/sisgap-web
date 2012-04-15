@@ -71,6 +71,7 @@ public class AjaxServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String colLin = "";
 		String estLin = "";
+		BigDecimal totales = new BigDecimal(0 );
 		
 		if (action != null) {
 			if(action.equals("BUSCAR_SOCIO")){
@@ -119,9 +120,11 @@ public class AjaxServlet extends HttpServlet {
 							if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 1){
 								colLin = "'color:#FF0000'"; //Color Rojo
 								estLin = "Pend.";
+								totales = lsSuministroLuzSocio.get(0).getTotal();
 							} else if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 2){
-								colLin = "'color:#0000FF'"; //Color Verde
+								colLin = "'color:#0000FF'"; //Color Azul
 								estLin = "Paga.";
+								totales = new BigDecimal(0);
 							}
 							out.print("<tr>");
 							out.print("<td style="+colLin+">"+socio.getTranIde()+"</td>");
@@ -130,13 +133,13 @@ public class AjaxServlet extends HttpServlet {
 							out.print("<td style="+colLin+">"+socio.getTranPuesto()+"</td>");
 							String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
 									+ "','" + socio.getTranPuesto() +"','" + lsSuministroLuzSocio.get(0).getEstado() +"','" 
-									+ lsSuministroLuzSocio.get(0).getTotal() +"','"+socio.getTranIde()+"','"+lsSuministroLuzSocio.get(0).getLecturafin()+"')";
+									+ totales /*lsSuministroLuzSocio.get(0).getTotal()*/ +"','"+socio.getTranIde()+"','"+lsSuministroLuzSocio.get(0).getLecturafin()+"')";
 							out.print("<td><a href='#' style="+colLin+
 									" onMouseOver='this.style.cssText="+colLin+
 									" onMouseOut='this.style.cssText="+colLin+
 									" onclick=\""+function+"\">Agregar</a></td>");
 							out.print("<td align='center' style="+colLin+">"+estLin+"</td>");
-							out.print("<td align='center' style="+colLin+">"+lsSuministroLuzSocio.get(0).getTotal()+"</td>");
+							out.print("<td align='center' style="+colLin+">"+ totales /*lsSuministroLuzSocio.get(0).getTotal()*/+"</td>");
 						}
 						out.print("</tr>");
 					}
