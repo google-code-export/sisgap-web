@@ -41,8 +41,7 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
-		List<Sisa> list = facadeLocal.findAll();
-		request.setAttribute("lstSisa", list);
+
 		
 		String codigo = request.getParameter("codigoide");
 		String periodo = request.getParameter("periodo");
@@ -53,7 +52,8 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			periodo = fecha[2] + "-" + fecha[1] + "-" + fecha[0];
 			facadeLocal.updateSisa(periodo,codigo,valuess);
 		}
-		
+		List<Sisa> list = facadeLocal.findAll();
+		request.setAttribute("lstSisa", list);
 		return mapping.findForward("cargarAction");
 	}
 	
@@ -97,21 +97,29 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			
 			if(valor==1){
 				
-				String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
-				String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));
+				String ajax = request.getParameter("ajax");
 				
-				request.setAttribute("lstPlan", getTable(ls,fecha,lss));
-				return mapping.findForward("blankpage");
+				if(ajax!=null){
+					
+					String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
+					String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));				
+					request.setAttribute("lstPlan", getTable(ls,fecha,lss));
+					return mapping.findForward("blankpage");
+					
+				}
 				
 			}else{
 				System.out.println(fecha);
 				facadeLocal.registrarSisa(getDate(fecha), new Long(codigo));
 //				String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
 //				String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));
-				List<Sisa> list = facadeLocal.findAll();
-				request.setAttribute("lstSisa", list);
+//				List<Sisa> list = facadeLocal.findAll();
+//				request.setAttribute("lstSisa", list);
 //				request.setAttribute("lstPlan", getTable(ls,fecha,lss));
 			}
+			
+			List<Sisa> list = facadeLocal.findSisa(getDate(fecha), new Long(codigo));
+			request.setAttribute("lstSisa", list);
 			
 		}else if(codigo!=null && !codigo.trim().equals("")){
 			
@@ -169,14 +177,14 @@ public class RegistroSisasAction extends GrandActionAbstract {
 					}
 				}
 				if(flag){
-					columnas += "<td><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "' checked='checked'></span></td>";				
+					columnas += "<td style='background-color: #33CC33;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "' checked='checked'></span></td>";				
 					if(count==size){
 						columnas += "</tr><tr>";
 						count = 0;
 					}
 					count++;
 				}else{
-					columnas += "<td><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "'></span></td>";				
+					columnas += "<td style='background-color: red;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "'></span></td>";				
 					if(count==size){
 						columnas += "</tr><tr>";
 						count = 0;
