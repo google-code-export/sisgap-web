@@ -98,6 +98,22 @@ var codMon = "";
 
 	$(function() {
 
+		$("#nuevo-ls").button();
+		$("#salir-ls").button();
+		$("#pdf-ls").button();
+		$("#imprimir-ls").button();
+		$("#buscarR-ls").button();
+		$("#buscar-ls").button();
+		$("#btngrabar").button();
+		$("#btncerrar").button();
+	
+		$('#imprimir-ls').click(function() {      
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_SISAS', 'Popup', caracteristicas);  
+	        return false;
+		});
+		
+
 		$('#dialog').dialog({
 			autoOpen : false,
 			width : 600,
@@ -483,6 +499,31 @@ var codMon = "";
 				<td width=885 align="left" class="titulo">Ingresos/Sisas</td>
 			</tr>
 		</table>
+		<fieldset>
+			<legend>
+				<span class="titulo">Listado de Sisas
+				<table border="0">
+					<tr>
+						<td>
+							<select>
+								<option value="0" selected>Todos los campos</option>
+								<option value="1">Nro Factura</option>
+								<option value="2">Codigo Socio</option>
+								<option value="3">Monto</option>
+								<option value="4">Moneda</option>
+								<option value="5">Estado</option>
+							</select>
+						</td>
+						<td align="center"><input type="text" maxlength="6" size="16" /></td>
+						<td align="center"><input type="button" id="buscarR-ls" name="buscarR-ls" value="Busqueda Rápida" onclick="lstBuscar()" /></td>
+						<td align="center"><input type="button" id="pdf-ls" name="pdf-ls" value="PDF" onclick="lstPdf()" /></td>
+						<td align="center"><input type="button" id="imprimir-ls" name="imprimir-ls" value="Imprimir" onclick="lstImprimir()" /></td>
+						<td align="center"><input type="button" id="nuevo-ls" name="nuevo-ls" value="Nuevo" /></td>
+					</tr>
+				</table>
+				</span>
+			</legend>
+		</fieldset>
 		<table align="center">
 			<tr>
 				<td id="mensaje" align="center" valign="middle"	style="display: none"></td>
@@ -512,7 +553,7 @@ var codMon = "";
 					</td>
 				</tr>
 			</table>
-			<button type="button" onclick="buscarCalendar();">Buscar</button> 
+			<button type="button" id="buscar-ls" name="buscar-ls" onclick="buscarCalendar();">Buscar</button> 
 		</fieldset>
 			
 		<display:table name="lstSisa" 
@@ -527,6 +568,8 @@ var codMon = "";
 				<display:column title="Puesto" property="puesto" sortable="true"/>
 				<display:column title="Periodo" property="perido" sortable="true"/>
 				<display:column title="Nombre" property="nombre" sortable="true"/>
+				<display:column title="Total Dias" sortable="true"><center>${row.totaldias}</center></display:column>
+				<display:column title="Total Pagos" sortable="true"><center>${row.totalpagos}</center></display:column>
 				<display:column title="Estado" style="width:150px;">
 					<c:choose>
 						<c:when test="${row.totaldias==row.totalpagos}">
