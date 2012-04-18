@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport
+		 name="Listado de Sisas"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="P_ORDEN_COLUMNA" isForPrompting="false" class="java.math.BigDecimal">
+		<defaultValueExpression ><![CDATA[new BigDecimal("2")]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+     SISGAP_SISAS."CODIGO" AS SISGAP_SISAS_CODIGO,
+     SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
+     SISGAP_SISAS."PERIODO" AS SISGAP_SISAS_PERIODO,
+     SUM(SISGAP_SISAS."MONTO") AS SISGAP_SISAS_MONTO,
+     (SELECT MAX(SSD.DIA) FROM SISGAP_SISAS_DETA SSD),
+     SUM(SISGAP_SISAS_DETA."VALOR") AS SISGAP_SISAS_DETA_VALOR,
+     SISGAP_SISAS."ESTADO" AS SISGAP_SISAS_ESTADO
+FROM 
+     "SISGAP"."SISGAP_SISAS" SISGAP_SISAS INNER JOIN "SISGAP"."SISGAP_SISAS_DETA" SISGAP_SISAS_DETA ON SISGAP_SISAS."CODIGO" = SISGAP_SISAS_DETA."CODIGOSISA"
+     INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_SISAS."CODIGOSOCIO" = SISGAP_SOCIO."TRAN_IDE"
+GROUP BY 
+     SISGAP_SISAS."CODIGO",
+     SISGAP_SOCIO."TRAN_RAZON_SOCIAL",
+     SISGAP_SISAS."PERIODO",
+     SISGAP_SISAS."MONTO",
+     --SISGAP_SISAS_DETA."DIA",
+     SISGAP_SISAS_DETA."CODIGOSISA",
+     SISGAP_SISAS."ESTADO"
+ORDER BY
+     2]]></queryString>
+
+	<field name="SISGAP_SISAS_CODIGO" class="java.math.BigDecimal"/>
+	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="SISGAP_SISAS_PERIODO" class="java.sql.Timestamp"/>
+	<field name="SISGAP_SISAS_MONTO" class="java.math.BigDecimal"/>
+	<field name="(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)" class="java.math.BigDecimal"/>
+	<field name="SISGAP_SISAS_DETA_VALOR" class="java.math.BigDecimal"/>
+	<field name="SISGAP_SISAS_ESTADO" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="50"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="-10"
+						y="4"
+						width="555"
+						height="1"
+						forecolor="#0000FF"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="-10"
+						y="47"
+						width="555"
+						height="1"
+						forecolor="#0000FF"
+						key="line-2"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="-9"
+						y="8"
+						width="352"
+						height="35"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="26" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Listado de Sisas]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="20"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="2"
+						width="32"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[Nro.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="33"
+						y="2"
+						width="235"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-3"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[APELLIDOS Y NOMBRES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="268"
+						y="2"
+						width="77"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-4"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[PERIOD.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="345"
+						y="2"
+						width="57"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-5"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[DIAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="402"
+						y="2"
+						width="47"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-6"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[PAG.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="449"
+						y="2"
+						width="85"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-7"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[ESTADO]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="19"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="1"
+						width="33"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="39"
+						y="1"
+						width="229"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_RAZON_SOCIAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="275"
+						y="1"
+						width="70"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{SISGAP_SISAS_PERIODO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="351"
+						y="1"
+						width="51"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="406"
+						y="1"
+						width="43"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_SISAS_DETA_VALOR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="454"
+						y="1"
+						width="80"
+						height="18"
+						key="textField-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String(
+    ($F{(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)}.intValue()==$F{SISGAP_SISAS_DETA_VALOR}.intValue())? 
+    "Verde" : 
+    ($F{SISGAP_SISAS_DETA_VALOR}.intValue()==0)?
+        "Rojo" :
+        "Ambar"
+)]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="499"
+						y="1"
+						width="36"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="325"
+						y="1"
+						width="170"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="EEE, d MMM yyyy      HH:mm:ss" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="299"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
