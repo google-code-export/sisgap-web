@@ -30,6 +30,9 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import org.jfree.chart.plot.CategoryPlot;
 
+//Funcion EJB
+import pe.com.mmh.sisgap.administracion.action.FacturacionAction;
+
 /**
  * Servlet implementation class ReportsServlet
  */
@@ -77,6 +80,10 @@ public class ReportsServlet extends HttpServlet {
 				String nroDocumento = request.getParameter("nroDoc");
 				System.out.println("[REPORTE_DOCUMENTO_DETALLE]Parametro nroDoc : "+nroDocumento);
 				parametros.put("P_NRO_DOCUMENTO", nroDocumento);
+				
+				//Debe Actualizar campo impreso en la tabla factura
+				//impresaFactura(nroDocumento, 0.0);
+				
 			}else if(reporte.equals("REPORTE_DOCUMENTO_X_GRUPO")){
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro x grupo.jrxml");
 			}else if(reporte.equals("REPORTE_DOCUMENTOS_FILTRO")){
@@ -161,11 +168,15 @@ public class ReportsServlet extends HttpServlet {
 				
 				String codRec = request.getParameter("codRec");
 				parametros.put("P_CODIGO_RECIBO", codRec);
+				
+			}else if (reporte.equals("LISTADO_SISAS")){				
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Sisas.jrxml");
 			}
+			
 			generateReport(request, response, ruta, parametros);
 		}		
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void generateReport(HttpServletRequest request,
 			HttpServletResponse response,String ruta,HashMap<String, String> parametros) throws IOException{

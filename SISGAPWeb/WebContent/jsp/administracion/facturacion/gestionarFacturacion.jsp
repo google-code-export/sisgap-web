@@ -18,6 +18,9 @@
 		$("#imprimir-f").button();
 		$("#buscar-f").button();
 
+		$("#impdoc-f").button();
+		$("#cancel-f").button();
+
 		//Botón Nuevo		
 		$('#nuevo-f').click(function() { 
 			$("#selectdoc-form").dialog("open");
@@ -72,7 +75,24 @@
 		});
 
 
-		$('#imprimir-f').click(function() {    
+		$('#imprimir-f').click(function() {
+			/*$("#selectImp-form").dialog({
+				autoOpen : false,
+				height : 150,
+				width : 350,
+				modal : true,
+				buttons : {
+					Generar : function() {
+						var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
+				        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
+					},
+					Cancel : function() {
+						$(this).dialog("close");
+					}},
+				close : function() {
+					allFields.val("").removeClass("ui-state-error");
+				}
+			});*/
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
 	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
 	        return false;  
@@ -210,7 +230,8 @@
 						<c:when test="${row.strTipodoc=='B'}">Boleta</c:when>
 					</c:choose>
 				</display:column>
-				<display:column title="Nro Documento" property="numNrodoc" sortable="true"></display:column>
+				<display:column title="Nro.Doc.Interno" property="numNrodoc" sortable="true"></display:column>
+				<display:column title="Nro.Doc.Impreso" sortable="true"></display:column>
 				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
 				<display:column title="Puesto" sortable="true">${row.sisgapSocio.tranPuesto}</display:column>
 				<display:column title="Actividad" sortable="true">${row.sisgapSocio.sisgapActividadSocio.actiTranNombre}</display:column>
@@ -221,6 +242,7 @@
 						<c:when test="${row.numEstado==1}">Pendiente</c:when>
 						<c:when test="${row.numEstado==2}">Pagada</c:when>
 						<c:when test="${row.numEstado==3}">Anulada</c:when>
+						<c:when test="${row.numEstado==4}">Impresa</c:when>
 					</c:choose>
 				</display:column>
 		</display:table>
@@ -257,6 +279,20 @@
 							<option value="A">Anulada</option>
 						</select>
 					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div id="selectImp-form" title="Ingrese el número del documento a imprimir...">
+		<div align="center">
+			<table>
+				<tr>
+					<td><input type="text" name="txtNroDoc" id="txtNroDoc" size="250px"></td>
+				</tr>
+				<tr>
+					<td><button id="impdoc-f" name="impdoc-f">Imprimir</button></td>
+					<td><button id="cancel-f" name="cancel-f">Cancelar</button></td>
 				</tr>
 			</table>
 		</div>
