@@ -33,11 +33,13 @@ public interface FacturaFacadeLocal {
 
     List<Factura> findAll();
     
-    void grebarFactura(Long numerodocumento,String totalfac,	String codigoide, String cbtipodoc,Set<Detallefactura> detallefactura);
+    void grebarFactura(Long numerodocumento,String totalfac, String codigoide, String cbtipodoc,Set<Detallefactura> detallefactura);
 
     BigDecimal generarNrodocumento(String tipodoc);
 
 	void anularFactura(String codigoFactura, String descripanulada);
 	
 	void cancelarFactura(String codigoFactura);
+	
+	void impresaFactura(String codigoFactura, Long nroFactura);
 }
