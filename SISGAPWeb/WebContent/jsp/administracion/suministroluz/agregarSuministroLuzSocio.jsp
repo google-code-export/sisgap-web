@@ -438,7 +438,12 @@ var codMon = "";
 		var codSoc = 0;
 		codSoc = valor2;
 
-		$("#reciboLuz-form")
+		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ_DOBLE&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+        return false;
+
+		
+/*		$("#reciboLuz-form")
 		.dialog({
 					autoOpen : true,
 					height : 200,
@@ -472,7 +477,7 @@ var codMon = "";
 					close : function() {
 						allFields.val("").removeClass("ui-state-error");
 					}
-			});
+			});*/
 
 		//var frm = document.formFacturacion;
 		//frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
@@ -574,6 +579,7 @@ var codMon = "";
 		<input type="hidden" name="metodo" id="metodo"/>
 		<input type="hidden" name="codigoModi" id="codigoModi" value="${resori.codOrgreciboLuz}"/>
 		<input type="hidden" name="codigoide" id="codigoide"/>
+		<input type="hidden" name="codigocod" id="codigocod" />
 		<input type="hidden" name="correlativo" id="correlativo"/>
 		
 		<input type="hidden" name="txtLecturaIni" id="txtLecturaIni" />

@@ -297,7 +297,7 @@
 			<div class="botonDelMenu">		
 			<a href="<%=request.getContextPath()%>/registrosisas.do?metodo=cargarAction" target="FraMain">						
 								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
-								         Sisas
+								         Vigilancia
 		    </a>	
 				
 				

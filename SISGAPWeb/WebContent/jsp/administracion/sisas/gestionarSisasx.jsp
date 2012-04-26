@@ -106,6 +106,8 @@ var codMon = "";
 		$("#buscar-ls").button();
 		$("#btngrabar").button();
 		$("#btncerrar").button();
+		$("#imprime-ls").button();
+		$("#btn-buscar-periodo").button();
 	
 		$('#imprimir-ls').click(function() {      
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
@@ -138,19 +140,7 @@ var codMon = "";
 			$(this).removeClass('ui-state-hover');
 		});
 
-	});
-
-
-	$(function() {
-
-		$("#btn-aceptar-item").button();
-		$("#btn-cancelar").button();
-		$("#registra-f").button();
-		$("#regresar-f").button();
-		$("#imprimir-f").button();
-		$("#cancelar-f").button();
-
-
+		
 	    $('.date-picker').datepicker( {
 	        changeMonth: true,
 	        changeYear: true,
@@ -182,18 +172,6 @@ var codMon = "";
 				tips.removeClass("ui-state-highlight", 1500);
 			}, 500);
 		}
-
-		$('#imprimir-f').click(function() {  
-			var nroDocu =  $('[name=numerodocumento]').val();    
-			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);  
-	        return false;  
-		});
-
-		$('#cancelar-f').click(function() {  
-			$('[name=metodo]').val('cancelarFactura');
-		});
 		
 		function checkLength(o, n, min, max) {
 			if (o.val().length > max || o.val().length < min) {
@@ -231,7 +209,27 @@ var codMon = "";
 			}
 		});
 
-
+		$("#imprime-form").dialog({
+			autoOpen : false,
+			height : 200,
+			width : 250,
+			modal : true,
+			buttons : {
+				Ok : function() {
+					alert("Pruebas...");
+					var cadena1 = $("#startDateBusca").val();
+					var cadena2 = $("#codigoide-f").val();
+					alert(cadena1+"\n"+cadena2);
+					$(this).dialog("close");
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+		
 		$("#calendar-form").dialog({
 			autoOpen : false,
 			height : 400,
@@ -330,6 +328,11 @@ var codMon = "";
 			return false;
 		});
 
+		$("#imprime-ls").button().click(function() {
+			$("#imprime-form").dialog("open");
+			return false;
+		});
+		
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
 				$.ajax({
@@ -425,14 +428,32 @@ var codMon = "";
 		
 	} 
 
-	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
-		
+/* Se modifico 25/04/2012 para Luz */
+	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde, lecFin) {
+
+		/*alert("codigo: "+codigo+"\nrazonSocial: "+razonSocial+"\npuesto: "+puesto+"\nestado: "+estado+"\ndeudaant: "+deudaant+"\ncodigoIde: "+codigoIde+"\nlecFin: "+lecFin);
+		return true;*/		
 		$("#codigo-f").val(codigo);
 		$("#socio-f").val(razonSocial);
 		$("#direccion-f").val(puesto);
+		//Solo para Luz
+		/*if (estado == 1){
+			$("#estado-f").val("PENDIENTE");
+		}else if (estado == 2){
+			$("#estado-f").val("PAGADO");
+		}else{
+			$("#estado-f").val("-----");
+		}
+		if (deudaant=="---"){
+			$("#deudaant-f").val(0);
+		} else {
+			$("#deudaant-f").val(deudaant);
+		}
+		$("#lecfin-f").val(lecFin);*/
 		$("#codigoide-f").val(codigoIde);
 		$("#buscarsocio-form").dialog("close");
 	}
+	
 
 	function calcularTotal(){
 
@@ -496,12 +517,12 @@ var codMon = "";
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Ingresos/Sisas</td>
+				<td width=885 align="left" class="titulo">Ingresos/Vigilancia</td>
 			</tr>
 		</table>
 		<fieldset>
 			<legend>
-				<span class="titulo">Listado de Sisas
+				<span class="titulo">Listado de Vigilancia
 				<table border="0">
 					<tr>
 						<td>
@@ -542,6 +563,8 @@ var codMon = "";
 					</td>
 					<td width="20px">Código</td>
 					<td><input type="text" name="codigo-f" id="codigo-f" size="10" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td width="20px">Ide</td>
+					<td><input type="text" name="codigoide-f" id="codigoide-f" size="10" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
@@ -553,7 +576,8 @@ var codMon = "";
 					</td>
 				</tr>
 			</table>
-			<button type="button" id="buscar-ls" name="buscar-ls" onclick="buscarCalendar();">Buscar</button> 
+			<button type="button" id="buscar-ls" name="buscar-ls" onclick="buscarCalendar();">Buscar</button>
+			<button type="button" id="imprime-ls" name="imprime-ls">Imprime Reporte</button> 
 		</fieldset>
 			
 		<display:table name="lstSisa" 
@@ -593,6 +617,11 @@ var codMon = "";
 			<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
 			<button id="btn-buscar-socio">Buscar Socio</button>
 			<div id="tablesocios"></div>
+		</div>
+		<div id="imprime-form" title="Seleccionar periodo a buscar...">		 
+			<input name="startDateBusca" id="startDateBusca" class="date-picker" value="${fecha}"/>(mes/año)
+			<br><br>
+			<button id="btn-buscar-periodo">Buscar Periodo</button>
 		</div>
 		</html:form>
 </body>

@@ -373,14 +373,40 @@ var codMon = "";
 		
 	} 
 
-	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
-		
+	//function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
+	//	$("#codigo-f").val(codigo);
+	//	$("#socio-f").val(razonSocial);
+	//	$("#direccion-f").val(puesto);
+	//	$("#codigoide-f").val(codigoIde);
+	//	$("#buscarsocio-form").dialog("close");
+	//}
+
+	/* Se modifico 25/04/2012 para Luz */
+	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde, lecFin) {
+
+		/*alert("codigo: "+codigo+"\nrazonSocial: "+razonSocial+"\npuesto: "+puesto+"\nestado: "+estado+"\ndeudaant: "+deudaant+"\ncodigoIde: "+codigoIde+"\nlecFin: "+lecFin);
+		return true;*/		
 		$("#codigo-f").val(codigo);
 		$("#socio-f").val(razonSocial);
 		$("#direccion-f").val(puesto);
+		//Solo para Luz
+		/*if (estado == 1){
+			$("#estado-f").val("PENDIENTE");
+		}else if (estado == 2){
+			$("#estado-f").val("PAGADO");
+		}else{
+			$("#estado-f").val("-----");
+		}
+		if (deudaant=="---"){
+			$("#deudaant-f").val(0);
+		} else {
+			$("#deudaant-f").val(deudaant);
+		}
+		$("#lecfin-f").val(lecFin);*/
 		$("#codigoide-f").val(codigoIde);
 		$("#buscarsocio-form").dialog("close");
 	}
+	
 
 	function calcularTotal(){
 
