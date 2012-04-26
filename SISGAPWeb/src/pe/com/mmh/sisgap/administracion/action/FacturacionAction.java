@@ -157,6 +157,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		
 		if(listDetallefactura!=null && codigoide!=null){
 			facadeLocal.grebarFactura(new Long(numerodocumento),totalfac, codigoide, cbtipodoc, listDetallefactura);
+			//facadeLocal.grebarFactura(numerodocumento, totalfac, codigoide, cbtipodoc, listDetallefactura);
 		}
 		
 		List<Factura> lstCob = facadeLocal.findAll();
