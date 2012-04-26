@@ -149,6 +149,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			cst = connection.prepareCall(SP_INS_FACTURA);
 			
 			cst.setLong("NUMERO_FAC", new Long(numerodocumento));
+			//cst.setString("NUMERO_FAC", numerodocumento);
 			cst.setBigDecimal("P_TRAN_IDE", new BigDecimal(codigoide));
 			cst.setBigDecimal("P_NUM_TOTAL", new BigDecimal(totalfac));
 			cst.setString("P_STR_TIPODOC", cbtipodoc);

@@ -54,9 +54,9 @@ public class SisasFacade implements SisasFacadeLocal {
     	return rsdcPlatilla;
     }
     	
-	public void registrarSisa(String periodo,long codigoSocio) {
+	public void registrarSisa(String periodo, long codigoSocio) {
     	Connection connection = null;
-    	Object objParams[]   = {codigoSocio,periodo};
+    	Object objParams[]   = {codigoSocio, periodo};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
