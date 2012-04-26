@@ -11,7 +11,6 @@
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/ajaxtags-1.5.6-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/aopalliance.jar"/>
-	<classpathentry kind="lib" path="C:/tools/jboss7/standalone/deployments/SISGAP.ear/SISGAPWeb.war/WEB-INF/lib/barbecue-1.5-beta1.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/commons-digester.jar"/>
@@ -27,8 +26,8 @@
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/iReport.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/itext-1.3.1.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/jakarta-oro.jar"/>
-	<classpathentry kind="lib" path="C:/tools/jboss7/standalone/deployments/SISGAP.ear/SISGAPWeb.war/WEB-INF/lib/jasperreports-2.0.5.jar"/>
-	<classpathentry kind="lib" path="C:/tools/jboss7/standalone/deployments/SISGAP.ear/SISGAPWeb.war/WEB-INF/lib/jasperreports-4.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap/SISGAPWeb/WebContent/WEB-INF/lib/jasperreports-2.0.5.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap/SISGAPWeb/WebContent/WEB-INF/lib/jasperreports-4.0.0.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/javassist-3.4.GA.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/jfreechart-1.0.0.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/jstl-1.1.2.jar"/>
