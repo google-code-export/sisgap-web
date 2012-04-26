@@ -22,7 +22,9 @@ import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -32,6 +34,18 @@ import org.jfree.chart.plot.CategoryPlot;
 
 //Funcion EJB
 import pe.com.mmh.sisgap.administracion.action.FacturacionAction;
+
+
+//Imports de prueba para impresion directamente a la impresora...
+//----- Inicio -----
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+//----- Fin -----
 
 /**
  * Servlet implementation class ReportsServlet
@@ -43,8 +57,6 @@ public class ReportsServlet extends HttpServlet {
 	private DataSource dataSource;
 	
 	private static final long serialVersionUID = 1L;
-	
-	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -64,7 +76,7 @@ public class ReportsServlet extends HttpServlet {
 		String ruta = "";
 		HashMap<String, String> parametros = new HashMap<String, String>();		
 		String reporte = request.getParameter("reporte");
-
+		
 		if(reporte!=null){
 			
 			if(reporte.equals("REPORTE_SOCIO")){
@@ -78,11 +90,34 @@ public class ReportsServlet extends HttpServlet {
 				String nrodoc = request.getParameter("nrodoc");
 				parametros.put("P_NRO_DOCUMENTO", nrodoc);
 				String nroDocumento = request.getParameter("nroDoc");
-				System.out.println("[REPORTE_DOCUMENTO_DETALLE]Parametro nroDoc : "+nroDocumento);
+				System.out.println("[REPORTE_DOCUMENTO_DETALLE]Parametro nroDoc : "+nrodoc);
 				parametros.put("P_NRO_DOCUMENTO", nroDocumento);
-				
+				System.out.println("Ruta del reporte : "+ruta); 
 				//Debe Actualizar campo impreso en la tabla factura
 				//impresaFactura(nroDocumento, 0.0);
+				
+				/*if (nroDocumento!=null || nrodoc!=null){
+					PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+					DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+					//DocPrintJob docPrintJob = printService.createPrintJob();
+				}*/
+				
+				/*PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+				DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+				DocPrintJob docPrintJob = printService.createPrintJob(); 
+				String string="Texo que se imprime\n";
+				string+="en la impresora predeterminada\n";
+				string+="fin del ejemplo\n"; 
+				Doc doc=new SimpleDoc(string.getBytes(),flavor,null); 
+				try {
+					docPrintJob.print(doc, null);
+					System.out.println("imprimiendo...");
+				}
+				catch (PrintException e) {
+					System.out.println("Error al imprimir: "+e.getMessage());
+				} 
+				System.out.println("FIN DE IMPRESION");*/
+				
 				
 			}else if(reporte.equals("REPORTE_DOCUMENTO_X_GRUPO")){
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte de Documentos Filtro x grupo.jrxml");
@@ -188,12 +223,18 @@ public class ReportsServlet extends HttpServlet {
 
 		try {
 			Connection cnn = getConnection();
-			masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
-			bytes = JasperRunManager.runReportToPdf(masterReport,parametros, cnn);
+			/*if (ruta.equals("C:\\tools\\jboss7\\standalone\\deployments\\SISGAP.ear\\SISGAPWeb.war\\WEB-INF\\reportes\\Documento por Detalle.jrxml")){
+				JasperPrint	jasperPrint=JasperFillManager.fillReport(masterReport,parametros,cnn); 
+				JasperPrintManager.printReport(jasperPrint, true);  
+			} else {*/
+				masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
+				
+				bytes = JasperRunManager.runReportToPdf(masterReport,parametros, cnn);
+				
+				response.setContentType("application/pdf");
+				response.setContentLength(bytes.length);
 
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-
+			//}
 			servletOutputStream.write(bytes, 0, bytes.length);
 			servletOutputStream.flush();
 			servletOutputStream.close();
