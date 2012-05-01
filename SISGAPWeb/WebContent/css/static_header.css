@@ -1,0 +1,54 @@
+table.staticheader {
+	text-decoration: none;
+	border: 1px solid #CCC;
+	width: 98%;
+}
+
+table.staticheader th {
+	padding: 3px 3px 3px 3px !important;
+	text-align:center;
+}
+
+table.staticheader td {
+	padding: 3px 3px 3px 3px !important;
+}
+
+table.staticheader thead tr {
+	position: relative;
+	height: 10px;
+	background-color: #D7E5F3;
+}
+
+table.staticheader tbody {
+	height:150px;
+	overflow-x:hidden;
+	overflow-y: auto; 
+	overflow:scroll;
+}
+
+table.staticheader tbody tr {
+	height: auto;
+	white-space: nowrap;
+}
+
+table.staticheader tbody tr.odd {
+	background-color: #eee
+}
+
+table.staticheader tbody tr.tableRowEven,tr.even {
+	background-color: #ddd
+}
+
+table.staticheader tbody tr td:last-child {
+	padding-right: 20px;
+}
+
+table.staticheader tbody td {
+	padding: 2px 4px 2px 4px !important;            
+}
+
+div.TableContainer {
+	height: 150px; 
+	overflow-x:hidden; 
+	overflow-y:auto;
+}
