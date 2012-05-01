@@ -23,12 +23,12 @@ public class SuministroLusReciboSocio {
 	private BigDecimal recargo;
 	private BigDecimal redondeo;
 	private BigDecimal total;
-	
 	private String nombres;
 	private BigDecimal estado; 
 	private BigDecimal deudaant;
-	
 	private Timestamp fechacarga;
+	private String puesto;
+	private BigDecimal impreso;
 	
 	public long getCodigorecibo() {
 		return codigorecibo;
@@ -205,7 +205,21 @@ public class SuministroLusReciboSocio {
 	public void setFechacarga(Timestamp fechacarga) {
 		this.fechacarga = fechacarga;
 	}
-	
-	
+
+	public String getPuesto() {
+		return puesto;
+	}
+
+	public void setPuesto(String puesto) {
+		this.puesto = puesto;
+	}
+
+	public BigDecimal getImpreso() {
+		return impreso;
+	}
+
+	public void setImpreso(BigDecimal impreso) {
+		this.impreso = impreso;
+	}
 
 }
