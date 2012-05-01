@@ -27,5 +27,7 @@ public interface SocioFacadeLocal {
     List<Socio> findAll();
     
     List<Socio> buscarxNombre(String nombre);
+    
+    List<Socio> buscarxPuesto(String puesto);
 
 }

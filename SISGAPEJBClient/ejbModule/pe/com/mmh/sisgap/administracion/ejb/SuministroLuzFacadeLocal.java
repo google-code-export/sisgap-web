@@ -57,5 +57,7 @@ public interface SuministroLuzFacadeLocal {
 
 	void pagarItemReciboLuzSocio(Long long1, Long long2, Long long3);
 	
+	void imprimirItemReciboLuzSocio(Long long1, Long long2, Long long3);
+	
 	List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio);
 }
