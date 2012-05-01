@@ -90,7 +90,67 @@ div#users-contain table td,div#users-contain table th {
 	padding: 0.3em;
 }
 
+
+
+
+table.staticheader {
+	text-decoration: none;
+	border: 1px solid #CCC;
+	width: 98%;
+}
+
+table.staticheader th {
+	padding: 3px 3px 3px 3px !important;
+	text-align:center;
+}
+
+table.staticheader td {
+	padding: 3px 3px 3px 3px !important;
+}
+
+table.staticheader thead tr {
+	position: relative;
+	height: 10px;
+	background-color: #D7E5F3;
+}
+
+table.staticheader tbody {
+	height:150px;
+	overflow-x:hidden;
+	overflow-y: auto; 
+	overflow:scroll;
+}
+
+table.staticheader tbody tr {
+	height: auto;
+	white-space: nowrap;
+}
+
+table.staticheader tbody tr.odd {
+	background-color: #eee
+}
+
+table.staticheader tbody tr.tableRowEven,tr.even {
+	background-color: #ddd
+}
+
+table.staticheader tbody tr td:last-child {
+	padding-right: 20px;
+}
+
+table.staticheader tbody td {
+	padding: 2px 4px 2px 4px !important;            
+}
+
+div.TableContainer {
+	height: 250px; 
+	overflow-x:hidden; 
+	overflow-y:auto;
+}
+ 
 </style>
+
+
 <script type="text/javascript">
 
 var codTipCob = "";
@@ -271,10 +331,11 @@ var codMon = "";
 
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
+			var nropto =  $('[name=numeropuesto]').val();
 				$.ajax({
 			        type: "POST",
 			        url: "/SISGAPWeb/AjaxServlet",
-			        data: "action=BUSCAR_SOCIO&nombre="+nombre,
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&opcion=reciboluz&nropto="+nropto,
 			        success: function(datos){
 			        	$("#tablesocios").html(datos);
 			      }
@@ -298,7 +359,13 @@ var codMon = "";
 			close : function() {
 				allFields.val("").removeClass("ui-state-error");
 			}
-		});		
+		});
+
+		$("table#person").createScrollableTable({  
+			width: '800px',  
+			height: '400px' 
+		}); 
+					
 
 	});
 
@@ -432,14 +499,16 @@ var codMon = "";
 
 	// Funciones generadas - Johan Muñoz
 	// llamará a DIV para seleccionar el reporte... 
-	function mostrarRep(valor1, valor2) {
+	function mostrarRep(valor1, valor2, valor3) {
 		var codRec = 0;
 		codRec = valor1;
 		var codSoc = 0;
 		codSoc = valor2;
+		var correl = 0;
+		correl = valor3;
 
 		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ_DOBLE&codRec='+ codRec +'&codSoc='+ codSoc , 'Popup', caracteristicas);  
+        nueva=window.open('ReportsServlet?reporte=RECIBO_LUZ_DOBLE&codRec='+ codRec +'&codSoc='+ codSoc +'&correl='+ correl , 'Popup', caracteristicas);  
         return false;
 
 		
@@ -681,39 +750,71 @@ var codMon = "";
 				</tr>
 			</table> 
 	</fieldset>
+	<div>
+	<table border="1" cellpadding="2" cellspacing="2">
+		<th width="60px">Accion</th>
+		<th width="395px">Nombres</th>
+		<th width="55px">Puesto</th>
+		<th width="80px">Lect. Inicial</th>
+		<th width="80px">Lect. Final</th>
+		<th width="80px">Carg. x Energ.</th>
+		<th width="55px">Total</th>
+		<th width="100px">Estado</th>
+		<th width="210px">Fecha</th>
+	</table>
+	</div>
+	<div class="TableContainer" style="">
+	 
 	<display:table name="ListaSuministroLuz" 
-				class="consultanormal"
+				class="staticheader"
 				excludedParams="metodo" 
 				requestURI="/suministroLuz.do?metodo=mostrarItemsSuministro"		
 				id="row"
 				export="false">
+			<display:setProperty name="basic.empty.showtable" value="true" />
 			<display:column title="" style="width:60px;">
 			<c:choose>
 				<c:when test="${row.estado==2}">
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
 				</c:when>
 				<c:otherwise>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total},${row.deudaant});"/>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
 				</c:otherwise>
 			</c:choose>
 			</display:column>
-			<display:column title="Nombres" property="nombres" sortable="true"></display:column>	
-			<display:column title="Lectura Inicial" property="lecturaini" sortable="true"></display:column>
-			<display:column title="Lectura Final" property="lecturafin" sortable="true"></display:column>
-			<display:column title="Cargo por Energia" property="cargoener" sortable="true"></display:column>
-			<display:column title="Total" property="total" sortable="true"></display:column>
-				<display:column title="Estado" sortable="true">
-					<c:choose>
-						<c:when test="${row.estado==1}">Pendiente</c:when>
-						<c:when test="${row.estado==2}">Pagado</c:when>
-					</c:choose>
+			<display:column title="Nombres" property="nombres" sortable="true"></display:column>
+			<display:column title="Puesto" property="puesto" sortable="true" style="width:50px; text-align:center"></display:column>
+			<display:column title="Lect. Inicial" property="lecturaini" sortable="true" style="width:80px; text-align:center"></display:column>
+			<display:column title="Lect. Final" property="lecturafin" sortable="true" style="width:80px; text-align:center"></display:column>
+			<display:column title="Carg. x Energ." property="cargoener" sortable="true" style="width:80px; text-align:center"></display:column>
+			<display:column title="Total" property="total" sortable="true" style="width:50px; text-align:center"></display:column>
+			<c:if test="${row.impreso==0}">
+			<display:column title="Estado" sortable="true" style="width:100px; text-align:center;">
+				<c:choose>
+					<c:when test="${row.estado==1}"><font color="red">Pendiente</font></c:when>
+					<c:when test="${row.estado==2}"><font color="blue"><b>Pagado</b></font></c:when>
+				</c:choose>
 			</display:column>
+			</c:if>
+			<c:if test="${row.impreso==1}">
+			<display:column title="Estado" sortable="true" style="width:100px; text-align:center; background-color:#7ACAFF">
+				<c:choose>
+					<c:when test="${row.estado==1}"><font color="red">Pendiente</font></c:when>
+					<c:when test="${row.estado==2}"><font color="blue"><b>Pagado</b></font></c:when>
+				</c:choose>
+			</display:column>
+			</c:if>
 			<display:column title="Fecha" property="fechacarga" sortable="true"></display:column>
 	</display:table>
+	
+	</div>
+	
 	<div id="buscarsocio-form" title="Buscar Socio">		
-		<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
+		Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" />
+		Ingrese Numero Puesto:<input type="text" name="numeropuesto" id="numeropuesto" style="width: 100px" />
+		<br> 
 		<button id="btn-buscar-socio">Buscar Socio</button>
 		<div id="tablesocios"></div>
 	</div>

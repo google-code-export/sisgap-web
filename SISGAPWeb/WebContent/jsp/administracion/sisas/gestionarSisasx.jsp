@@ -335,10 +335,11 @@ var codMon = "";
 		
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
+			var nropto =  $('[name=numeropuesto]').val();
 				$.ajax({
 			        type: "POST",
 			        url: "/SISGAPWeb/AjaxServlet",
-			        data: "action=BUSCAR_SOCIO&nombre="+nombre,
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&opcion=vigilancia&nropto="+nropto,
 			        success: function(datos){
 			        	$("#tablesocios").html(datos);
 			      }
@@ -428,31 +429,13 @@ var codMon = "";
 		
 	} 
 
-/* Se modifico 25/04/2012 para Luz */
-	function agregarSocio(codigo, razonSocial , puesto, estado, deudaant, codigoIde, lecFin) {
-
-		/*alert("codigo: "+codigo+"\nrazonSocial: "+razonSocial+"\npuesto: "+puesto+"\nestado: "+estado+"\ndeudaant: "+deudaant+"\ncodigoIde: "+codigoIde+"\nlecFin: "+lecFin);
-		return true;*/		
+	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
 		$("#codigo-f").val(codigo);
 		$("#socio-f").val(razonSocial);
 		$("#direccion-f").val(puesto);
-		//Solo para Luz
-		/*if (estado == 1){
-			$("#estado-f").val("PENDIENTE");
-		}else if (estado == 2){
-			$("#estado-f").val("PAGADO");
-		}else{
-			$("#estado-f").val("-----");
-		}
-		if (deudaant=="---"){
-			$("#deudaant-f").val(0);
-		} else {
-			$("#deudaant-f").val(deudaant);
-		}
-		$("#lecfin-f").val(lecFin);*/
 		$("#codigoide-f").val(codigoIde);
 		$("#buscarsocio-form").dialog("close");
-	}
+	}	
 	
 
 	function calcularTotal(){
@@ -614,7 +597,9 @@ var codMon = "";
 			<button type="button"  onclick="updateSisa();">Grabar</button>
 		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		
-			<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" /> 
+			Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" />
+			Ingrese Numero Puesto:<input type="text" name="numeropuesto" id="numeropuesto" style="width: 100px" />
+			<br>
 			<button id="btn-buscar-socio">Buscar Socio</button>
 			<div id="tablesocios"></div>
 		</div>
