@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_DEL_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_DEL_SUMINISTROLUZSOCIO(?,?,?)}";
 	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_SUMINISTROLUZSOCIOPAGAR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOPAGAR(?,?,?)}";
+	private static final String SP_SUMINISTROLUZSOCIOIMPRIMIR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOIMPRIMIR(?,?,?)}";
 	
 	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
 	
@@ -739,6 +741,8 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			cst.execute();
 			rs = (ResultSet) cst.getObject(1);
 			
+			DecimalFormat df = new DecimalFormat("#####.00");
+			
 			while(rs.next()){
 				
 				srs = new SuministroLusReciboSocio();
@@ -748,22 +752,25 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setConsumomes(rs.getBigDecimal("CONSUMOMES"));
 				srs.setCagofijo(rs.getBigDecimal("CAGOFIJO"));
 				srs.setAlupublic(rs.getBigDecimal("ALUPUBLIC"));
-				srs.setCargoener(rs.getBigDecimal("CARGOENER"));
-				srs.setTotalmes(rs.getBigDecimal("TOTALMES"));
-				srs.setIgv(rs.getBigDecimal("IGV"));
-				srs.setSubtotalmes(rs.getBigDecimal("SUBTOTALMES"));
-				srs.setUsoequipo(rs.getBigDecimal("USOEQUIPO"));
-				srs.setServmanto(rs.getBigDecimal("SERVMANTO"));
-				srs.setAporteley(rs.getBigDecimal("APORTELEY"));
-				srs.setRecargo(rs.getBigDecimal("RECARGO"));
-				srs.setRedondeo(rs.getBigDecimal("REDONDEO"));
-				srs.setTotal(rs.getBigDecimal("TOTAL"));
+				srs.setCargoener(new BigDecimal(df.format(rs.getBigDecimal("CARGOENER"))));
+				//srs.setCargoener(rs.getBigDecimal("CARGOENER")); //Es como se presentaba anteriormente, sin decimales
+				srs.setTotalmes(new BigDecimal(df.format(rs.getBigDecimal("TOTALMES"))));
+				srs.setIgv(new BigDecimal(df.format(rs.getBigDecimal("IGV"))));
+				srs.setSubtotalmes(new BigDecimal(df.format(rs.getBigDecimal("SUBTOTALMES"))));
+				srs.setUsoequipo(new BigDecimal(df.format(rs.getBigDecimal("USOEQUIPO"))));
+				srs.setServmanto(new BigDecimal(df.format(rs.getBigDecimal("SERVMANTO"))));
+				srs.setAporteley(new BigDecimal(df.format(rs.getBigDecimal("APORTELEY"))));
+				srs.setRecargo(new BigDecimal(df.format(rs.getBigDecimal("RECARGO"))));
+				srs.setRedondeo(new BigDecimal(df.format(rs.getBigDecimal("REDONDEO"))));
+				srs.setTotal(new BigDecimal(df.format(rs.getBigDecimal("TOTAL"))));
 				srs.setCorrelativo(rs.getLong("CORRELATIVO"));
 				srs.setCodigosocio(rs.getLong("CODIGOSOCIO"));
 				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
 				srs.setEstado(rs.getBigDecimal("ESTADO"));
-				srs.setDeudaant(rs.getBigDecimal("DEUDAANT"));
+				srs.setDeudaant(new BigDecimal(df.format(rs.getBigDecimal("DEUDAANT"))));
 				srs.setFechacarga(rs.getTimestamp("FECHACARGA"));
+				srs.setPuesto(rs.getString("TRAN_PUESTO"));
+				srs.setImpreso(rs.getBigDecimal("IMPRESO"));
 				lstSuministroLusReciboSocio.add(srs);
 			}
 
@@ -909,7 +916,45 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		}
 	}
 
-    public List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio) {
+	@Override
+	public void imprimirItemReciboLuzSocio(Long correlativo, Long codigoSocio, Long codigoRecibo) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_SUMINISTROLUZSOCIOIMPRIMIR);
+			
+			cst.setLong("p_CORRELATIVO", correlativo);
+			cst.setLong("p_CODIGOSOCIO", codigoSocio);
+			cst.setLong("p_CODIGORECIBO", codigoRecibo);
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	
+	public List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio) {
     	Connection connection = null;
     	PreparedStatement pst = null;
     	ResultSet rs = null;

@@ -27,7 +27,9 @@ import pe.com.mmh.sisgap.domain.Socio;
 @Stateless
 public class SocioFacade implements SocioFacadeLocal {
 	
-	private static final String view_bucar_socio = "select * from view_bucar_socio where tran_razon_social like %s ";
+	//private static final String view_bucar_socio = "select * from view_bucar_socio where tran_razon_social like %s ";
+	private static final String view_bucar_socio_nombre = "select * from view_bucar_socio where tran_razon_social like %s ";
+	private static final String view_bucar_socio_puesto = "select * from view_bucar_socio where tran_puesto like %s ";
 	
 	
 	@Resource(name="java:/jdbc/sisgapDS")
@@ -67,7 +69,47 @@ public class SocioFacade implements SocioFacadeLocal {
 		try {
 			connection = getConnection();
 			lsSocios = new ArrayList<Socio>();
-			pst=connection.prepareStatement(String.format(view_bucar_socio, "'"+nombre.toUpperCase()+"%'"));
+			pst=connection.prepareStatement(String.format(view_bucar_socio_nombre, "'"+nombre.toUpperCase()+"%'"));
+			rs = pst.executeQuery();
+			
+			while(rs.next()){
+				
+				socio = new Socio();
+				socio.setTranIde(rs.getLong("tran_ide"));
+				socio.setTranCodigo(rs.getString("tran_codigo"));
+				socio.setTranPuesto(rs.getString("tran_puesto"));
+				socio.setTranRazonSocial(rs.getString("tran_razon_social"));
+				lsSocios.add(socio);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return lsSocios;
+	}
+	
+	@Override
+	public List<Socio> buscarxPuesto(String puesto) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement pst;
+		ResultSet rs;
+		List<Socio> lsSocios = null;
+		Socio socio = null;
+		try {
+			connection = getConnection();
+			lsSocios = new ArrayList<Socio>();
+			pst=connection.prepareStatement(String.format(view_bucar_socio_puesto, "'"+puesto.toUpperCase()+"%'"));
 			rs = pst.executeQuery();
 			
 			while(rs.next()){
