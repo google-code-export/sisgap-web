@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.administracion.ejb;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -23,4 +24,6 @@ public interface SisasFacadeLocal {
 	public void updateSisa(String periodo, String codigo, String valuess);
 
 	public List<Sisa> findSisa(String date, Long long1);
+	
+	public ResultSet getTempSisa(String periodo,Integer codigo);
 }
