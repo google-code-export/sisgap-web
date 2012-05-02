@@ -159,7 +159,7 @@ WHERE
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\MercadoModelo\\cuh.jpg"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["..\\..\\imagenes\\cuh.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement
@@ -217,7 +217,7 @@ WHERE
 						key="image-3"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\MercadoModelo\\Sello_Agua_MMH.png"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["..\\..\\imagenes\\Sello_Agua_MMH.png"]]></imageExpression>
 				</image>
 				<rectangle radius="1" >
 					<reportElement
@@ -967,7 +967,7 @@ WHERE
 						key="image-2"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\MercadoModelo\\al_dia_2.jpg"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["..\\..\\imagenes\\al_dia_2.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement

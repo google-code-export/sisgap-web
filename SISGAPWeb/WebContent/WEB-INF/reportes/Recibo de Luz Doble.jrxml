@@ -25,6 +25,7 @@
 
 	<parameter name="P_CODIGO_SOCIOS" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="P_CODIGO_RECIBO" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="P_MENSAJE_PIE" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[SELECT
      SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" AS SISGAP_RECIBOLUZ_SOCIO_CODIGOS,
      SISGAP_RECIBOLUZ_SOCIO."CODIGORECIBO" AS SISGAP_RECIBOLUZ_SOCIO_CODIGOR,
@@ -51,7 +52,8 @@
      TO_CHAR(SISGAP_RECIBOLUZ_ORG."FEC_PERIODO",'MONTH yyyy') AS SISGAP_RECIBOLUZ_PERIODO,
      SISGAP_RECIBOLUZ_ORG."FECVENCIMIENTO" AS SISGAP_RECIBOLUZ_VENCIMIENTO,
      --SISGAP_PADRON_MMH."SECTOR" AS SISGAP_PADRON_MMH_SECTOR,
-     SISGAP_SOCIO."TRAN_CODIGO" AS SISGAP_SOCIO_TRAN_CODIGO
+     SISGAP_SOCIO."TRAN_CODIGO" AS SISGAP_SOCIO_TRAN_CODIGO,
+     SISGAP_RECIBOLUZ_SOCIO."IMPRESO" AS SISGAP_RECIBOLUZ_SOCIO_IMPRESO
 FROM
      "SISGAP"."SISGAP_RECIBOLUZ_SOCIO" SISGAP_RECIBOLUZ_SOCIO INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_RECIBOLUZ_SOCIO."CODIGOSOCIO" = SISGAP_SOCIO."TRAN_IDE"
      INNER JOIN "SISGAP"."SISGAP_SECTOR_SOCIO" SISGAP_SECTOR_SOCIO ON SISGAP_SOCIO."SECT_TRAN_IDE" = SISGAP_SECTOR_SOCIO."SECT_TRAN_IDE"
@@ -87,6 +89,7 @@ WHERE
 	<field name="SISGAP_RECIBOLUZ_PERIODO" class="java.lang.String"/>
 	<field name="SISGAP_RECIBOLUZ_VENCIMIENTO" class="java.sql.Timestamp"/>
 	<field name="SISGAP_SOCIO_TRAN_CODIGO" class="java.lang.String"/>
+	<field name="SISGAP_RECIBOLUZ_SOCIO_IMPRESO" class="java.math.BigDecimal"/>
 
 	<variable name="V_CONSUMO_MES" class="java.lang.Integer" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new java.lang.Integer(  
@@ -752,19 +755,6 @@ WHERE
 					<graphicElement stretchType="NoStretch"/>
 					<imageExpression class="java.lang.String"><![CDATA["..\\..\\imagenes\\al_dia_2.jpg"]]></imageExpression>
 				</image>
-				<staticText>
-					<reportElement
-						x="47"
-						y="386"
-						width="301"
-						height="35"
-						key="staticText-41"/>
-					<box></box>
-					<textElement verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<text><![CDATA[Mercado Modelo de Huaral donde da gusto comprar.]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="232"
@@ -1183,6 +1173,32 @@ WHERE
 						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
 					</textElement>
 				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{SISGAP_RECIBOLUZ_VENCIMIENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="48"
+						y="386"
+						width="300"
+						height="35"
+						key="textField-21"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{P_MENSAJE_PIE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="44"
+						y="199"
+						width="202"
+						height="23"
+						key="textField-22"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{SISGAP_RECIBOLUZ_SOCIO_IMPRESO}).intValue()==1? "COPIA FIEL DEL ORIGINAL" : ""]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
