@@ -29,6 +29,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	private static final String SP_GET_SISA_ALL = "{call PKG_ADMINISTRACION.SP_GET_SISA_ALL(?)}";
 	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?)}";
 	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
+	private static final String SP_MUESTRA_TEMP = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP(?,?,?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -54,9 +55,9 @@ public class SisasFacade implements SisasFacadeLocal {
     	return rsdcPlatilla;
     }
     	
-	public void registrarSisa(String periodo, long codigoSocio) {
+	public void registrarSisa(String periodo,long codigoSocio) {
     	Connection connection = null;
-    	Object objParams[]   = {codigoSocio, periodo};
+    	Object objParams[]   = {codigoSocio,periodo};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
@@ -206,6 +207,26 @@ public class SisasFacade implements SisasFacadeLocal {
 		}
     
     	return lst;
+	}
+	
+	public ResultSet getTempSisa(String periodo,Integer codigo){
+		
+    	Connection connection = null;
+    	Object objParams[]   = {periodo,codigo};		
+		connection = getConnection();
+		ResultSet rs = null;
+		
+		try {
+			
+			rs =  JDBCUtil.callSQLProcRS(connection,SP_MUESTRA_TEMP,objParams);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		return rs;
+		
 	}
 
 
