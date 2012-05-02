@@ -147,11 +147,14 @@ var codMon = "";
 			}, 500);
 		}
 
-		$('#imprimir-f').click(function() {  
+		$('#imprimir-f').click(function() {
+			alert("imprimiendo...");
 			var nroDocu =  $('[name=numerodocumento]').val();    
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);  
+	        /*nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
+	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);*/
+	        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,'Popup', caracteristicas);
+	        //window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,"","height=400,width=680,top=120,left=180,scrollbars=yes,resizable=no,toolbar=no,menubar=no,location=no,status=yes");
 	        return false;  
 		});
 

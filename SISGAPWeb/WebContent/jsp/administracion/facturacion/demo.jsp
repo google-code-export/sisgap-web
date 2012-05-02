@@ -52,15 +52,6 @@
 	</head>
 	<body>
 	<h1>Welcome to jQuery UI!</h1>
-
-		<h2 class="demoHeaders">Dialog</h2>
-		<p><a href="#" id="dialog_link" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-newwin"></span>Open Dialog</a></p>
-
-		<!-- ui-dialog -->
-		<div id="dialog" title="Dialog Title">
-			<p>Lorem ipsum dolor sssssssssssssssssssssssit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		</div>
-
 	</body>
 </html>
 
