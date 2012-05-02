@@ -78,20 +78,18 @@ public class FacturacionAction extends GrandActionAbstract{
 		return mapping.findForward("cargarAction");
 	}
 
-	public ActionForward impresaFactura(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward imprimirFactura(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 //		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
-		
+		//impresaFactura
 
 		String codigoFactura = request.getParameter("nrodocumento");
-		Long nroFactura = new Long(request.getParameter("nrofactura"));
+		/*Long nroFactura = new Long(request.getParameter("nrofactura"));
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		facadeLocal.impresaFactura(codigoFactura,nroFactura);
 		List<Factura> lstCob = facadeLocal.findAll();
-		request.setAttribute("lstFac", lstCob);
+		request.setAttribute("lstFac", lstCob);*/
 		
-		
-		
-		return mapping.findForward("cargarAction");
+		return mapping.findForward("imprimirFacturacion");
 	}
 
 	
