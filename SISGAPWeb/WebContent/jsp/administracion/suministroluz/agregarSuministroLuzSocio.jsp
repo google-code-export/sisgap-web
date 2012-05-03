@@ -162,6 +162,7 @@ var codMon = "";
 		$("#btncerrar").button();
 		$("#btnpagar").button();
 		$("#imprimir-sls").button();
+		$("#imprimirPend-sls").button();
 
 		$('#nuevo-sls').click(function() {
 			if ($("#codigo-sls").val()=="" || $("#socio-sls").val()=="" || $("#direccion-sls").val()=="" ){
@@ -213,10 +214,17 @@ var codMon = "";
 		$('#imprimir-sls').click(function() {
 			var valor='${resori.codOrgreciboLuz}';
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor, 'Popup', caracteristicas);
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor+'&estado=0', 'Popup', caracteristicas);
 	        return false;
 		});
 
+		$('#imprimirPend-sls').click(function() {
+			var valor='${resori.codOrgreciboLuz}';
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor+'&estado=1', 'Popup', caracteristicas);
+	        return false;
+		});
+		
 
 		$('#dialog').dialog({
 			autoOpen : false,
@@ -746,7 +754,8 @@ var codMon = "";
 				</tr>
 				<tr>
 					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
-					<td><button id="imprimir-sls">Imprimir</button></td>
+					<td><button id="imprimir-sls">Imprimir Todo</button></td>
+					<td><button id="imprimirPend-sls">Imprimir Pendientes</button></td>
 				</tr>
 			</table> 
 	</fieldset>
