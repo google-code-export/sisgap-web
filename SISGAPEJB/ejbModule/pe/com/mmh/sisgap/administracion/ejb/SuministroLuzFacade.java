@@ -585,6 +585,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	}
 
     public ReciboluzOrg buscarRecibo(ReciboluzOrg sumistro) {
+    	System.out.println("[SuministroLuzFacade] Inicio - buscarRecibo");
     	Connection connection = null;
     	CallableStatement cst = null;
     	ResultSet rs = null;
@@ -634,6 +635,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				}
 		}
     	
+    	System.out.println("[SuministroLuzFacade] Final - buscarRecibo");
     	return res;
 	}
     
@@ -727,6 +729,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	@Override
 	public List<SuministroLusReciboSocio> listarItemReciboLuzSocio(Long codigo) {
 		// TODO Auto-generated method stub SP_LIST_SUMINISTROLUZSOCIOS
+		System.out.println("[SuministroLuzFacade] Inicio - listarItemReciboLuzSocio");
     	Connection connection = null;
     	CallableStatement cst = null;
 		ResultSet rs;
@@ -786,6 +789,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			}
 		}
 		
+		System.out.println("[SuministroLuzFacade] Final - listarItemReciboLuzSocio");
 		return lstSuministroLusReciboSocio; 
 	}
 
