@@ -79,10 +79,15 @@ public class FacturacionAction extends GrandActionAbstract{
 	}
 
 	public ActionForward imprimirFactura(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
+		System.out.println("[FacturacionAction] imprimirFactura");
+		System.out.println("Pruebas");
+		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		//impresaFactura
 
 		String codigoFactura = request.getParameter("nrodocumento");
+		String socio = request.getParameter("socio");
+		String direccion = request.getParameter("direccion");
+		//String socio = request.getParameter("socio");
 		/*Long nroFactura = new Long(request.getParameter("nrofactura"));
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		facadeLocal.impresaFactura(codigoFactura,nroFactura);
