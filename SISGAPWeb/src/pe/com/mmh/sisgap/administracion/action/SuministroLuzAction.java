@@ -342,7 +342,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	}
 	
 	public ActionForward mostrarItemsSuministro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-		System.out.println("[SuministroLuzAction] mostrarItemsSuministro");
+		System.out.println("[SuministroLuzAction] Inicio - mostrarItemsSuministro");
 		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal)lookup(ConstantesJNDI.SUMINISTROLUZ);		
 		String codigoModi = request.getParameter("codigoModi");
 		
@@ -355,6 +355,9 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		
 		request.setAttribute("resori", res2);
 		request.setAttribute("ListaSuministroLuz", lstSum);
+		
+		System.out.println("[SuministroLuzAction] Final - mostrarItemsSuministro");
+		
 		return mapping.findForward("agrebarSuministroluz");
 	}
 	
