@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>jQuery UI Example Page</title>
+		<title>Impresión de Documento...</title>
 		<link type="text/css" rel="stylesheet"  href="<%=request.getContextPath()%>/css/cupertino/jquery-ui-1.8.16.custom.css"  />	
 			
 		<!--  JavaScript  -->
@@ -116,9 +116,9 @@
 		   </tr>
 		   <tr>
 		      <td colspan="3">
-		         <table class="font11n" border="0">
+		         <table class="font11n" border="1">
 		            <tr>
-		               <td width="60"><b>Señor(es): </b></td>
+		               <td width="80"><b>Señor(es): </b></td>
 		               <td width="400">LUNA TRANCA CARLOTA MAGNA</td>
 		               <td width="60"><b>Puesto: </b></td>
 		               <td width="50">0005</td>

@@ -149,11 +149,15 @@ var codMon = "";
 
 		$('#imprimir-f').click(function() {
 			//alert("imprimiendo...");
-			var nroDocu =  $('[name=numerodocumento]').val();    
+			var nroDocu =  $('[name=numerodocumento]').val();
+			var socio = $('[name=socio-f]').val();
+			var direccion = $(['name=direccion-f']).val();
+
+			
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
 	        //nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
 	        //nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);
-	        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,'Popup', caracteristicas);
+	        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu/*+"&socio="+socio+"&direccion="+direccion*/,'Popup', caracteristicas);
 	        //window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,"","height=400,width=680,top=120,left=180,scrollbars=yes,resizable=no,toolbar=no,menubar=no,location=no,status=yes");
 	        return false;  
 		});
@@ -403,6 +407,10 @@ var codMon = "";
 		<input type="hidden" name="codigoide" id="codigoide-f" />
 		<input type="hidden" name="cbtipodoc" value="${tipodocumento}" />
 		<input type="hidden" name="nrodocumento" value="${numerodocumento}" />
+		<input type="hidden" name="socio" value="${socio-f}" />
+		<input type="hidden" name="direccion" value="${direccion-f}" />
+		<input type="hidden" name="detfactura" value="${lstDetFac}" />
+
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
