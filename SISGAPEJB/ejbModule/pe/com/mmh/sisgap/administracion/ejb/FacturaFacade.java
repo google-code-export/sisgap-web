@@ -44,6 +44,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 	private static final String SP_UPD_FACTURACANCELADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURACANCELADA(?)}";
 	private static final String SP_LST_FACTURA = "{call PKG_ADMINISTRACION.SP_LST_FACTURA(?)}";
 	private static final String SP_UPD_FACTURAIMPRESA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURAIMPRESA(?,?)}";
+	private static final String SP_UPD_NROFACTURASOCIO = "{call PKG_ADMINISTRACION.SP_UPD_NROFACTURASOCIO(?,?)}";
 
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
@@ -162,8 +163,6 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			
 			for (Detallefactura det : detallefactura) {
 				
-			
-				
 				cst.setLong("P_COD_ITEMCOBRANZA", det.getId().getCodItemcobranza());
 				cst.setBigDecimal("P_COD_FACTURA", codigo);				
 				cst.setBigDecimal("P_NUM_COSTO", det.getNumCosto());				
@@ -173,11 +172,9 @@ public class FacturaFacade implements FacturaFacadeLocal {
 				cst.setBigDecimal("P_NUM_CANTIDAD", det.getNumCantidad());
 				cst.setBigDecimal("P_NUM_ACUENTA", det.getNumAcuenta());		
 				
-				
 				cst.execute();
 				
 			}
-		
 			
 		} catch (Exception e) {
 			try {
@@ -196,6 +193,42 @@ public class FacturaFacade implements FacturaFacadeLocal {
 		}
 	}
 
+
+	@Override
+	public void actualizaNroFactura(String nroDocReal, String nroDocInte) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+    		
+    		connection = getConnection();
+//    		connection.setAutoCommit(false);
+    		
+			cst = connection.prepareCall(SP_UPD_NROFACTURASOCIO);
+			
+			cst.setString("p_NROREAL", nroDocReal);
+			cst.setString("p_NROINTE", nroDocInte);
+			cst.execute();
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
+	
 	private Connection getConnection(){
 		try {
 			return dataSource.getConnection();
