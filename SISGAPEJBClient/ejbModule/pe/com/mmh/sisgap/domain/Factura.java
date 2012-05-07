@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -46,7 +47,7 @@ public class Factura implements Serializable {
 	//bi-directional many-to-one association to SisgapDetallefactura
 	@OneToMany(mappedBy="sisgapFactura", fetch=FetchType.EAGER)
 	private Set<Detallefactura> sisgapDetallefacturas;
-
+	
 	//bi-directional many-to-one association to SisgapSocio
 	@ManyToOne( fetch=FetchType.EAGER)
 	@JoinColumn(name="TRAN_IDE")
@@ -116,8 +117,8 @@ public class Factura implements Serializable {
 		return this.sisgapDetallefacturas;
 	}
 
-	public void setSisgapDetallefacturas(Set<Detallefactura> sisgapDetallefacturas) {
-		this.sisgapDetallefacturas = sisgapDetallefacturas;
+	public void setSisgapDetallefacturas(Set<Detallefactura> listDetallefactura) {
+		this.sisgapDetallefacturas = listDetallefactura;
 	}
 	
 	public Socio getSisgapSocio() {

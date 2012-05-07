@@ -81,6 +81,9 @@ public class Socio implements Serializable {
 	@Column(precision=10)
 	private BigDecimal veces;
 
+	@Column(name="STR_SECTOR", length=2)
+	private String strSector;
+	
 	//bi-directional many-to-one association to SisgapFactura
 	@OneToMany(mappedBy="sisgapSocio", cascade={CascadeType.ALL})
 	private Set<Factura> sisgapFacturas;
@@ -299,6 +302,13 @@ public class Socio implements Serializable {
 		return getTranRazonSocial();
 	}
 	
+	public String getStrSector() {
+		return strSector;
+	}
+
+	public void setStrSector(String strSector) {
+		this.strSector = strSector;
+	}
 	
 	
 }
