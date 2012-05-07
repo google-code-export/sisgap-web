@@ -35,6 +35,8 @@ public interface FacturaFacadeLocal {
     
     void grebarFactura(Long numerodocumento,String totalfac, String codigoide, String cbtipodoc,Set<Detallefactura> detallefactura);
 
+    void actualizaNroFactura(String nroDocReal, String nroDocInte);
+    
     BigDecimal generarNrodocumento(String tipodoc);
 
 	void anularFactura(String codigoFactura, String descripanulada);
