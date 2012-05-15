@@ -143,7 +143,7 @@ table.staticheader tbody td {
 }
 
 div.TableContainer {
-	height: 250px; 
+	height: 300px; 
 	overflow-x:hidden; 
 	overflow-y:auto;
 }
@@ -169,31 +169,51 @@ var codMon = "";
 				alert("Debe buscar y seleccionar el Socio antes de ingresar los datos del recibo de luz");
 				return false;
 			}else{
-				$("#correlativo").val("");
-				if ($("#lecfin-sls").val() > 0){
-					$("#txtLecturaInih").val($("#lecfin-sls").val());
-				} else {
-					$("#txtLecturaInih").val("");
-				}
-				$("#txtLecturaFinh").val("");
-				$("#txtConsumomesh").val("");
-				$("#txtCagofijoh").val("");
-				$("#txtAlupublich").val("");
-				$("#txtCargoenerh").val("");
-				$("#txtSubTotalMesh").val("");
-				$("#txtIgvh").val("");
-				$("#txtTotalMesh").val("");
-				$("#txtUsoEquipoh").val("");
-				$("#txtServmantoh").val("");
-				$("#txtAporteleyh").val("");
-				$("#txtRecargoh").val("");
-				$("#txtRedondeoh").val("");
-				$("#txtTotalh").val("");
-				$("#txtDeudaAnth").val("");
+				var recibo =  ${resori.codOrgreciboLuz};
+				var socio =  $('[name=codigo-sls]').val();//codigo-sls //socio-sls
+				var puesto =  $('[name=direccion-sls]').val();
+				//alert("recibo "+recibo+"\nsocio "+socio+"\npuesto "+puesto);
 				
-				$("#grabar-form").dialog("open");
-				$("#btnpagar").hide();
-				
+				$.ajax({
+			        type: "POST",
+			        url: "/SISGAPWeb/AjaxServlet",
+			        data: "action=BUSCAR_EXISTE_SOCIO&recibo="+recibo+"&socio="+socio/*+"&puesto="+puesto*/,
+					success: function(datos){
+			        	//$("#tablesocios").html(datos);
+			        //	$("#respuesta").val();
+			        	//alert("La respuesta es "+datos);
+			        	if(datos=="true"){
+							alert("El Socio que intenta ingresar, ya fue registrado");
+							return false;
+						}else{
+							$("#correlativo").val("");
+							if ($("#lecfin-sls").val() > 0){
+								$("#txtLecturaInih").val($("#lecfin-sls").val());
+							} else {
+								$("#txtLecturaInih").val("");
+							}
+							$("#txtLecturaFinh").val("");
+							$("#txtConsumomesh").val("");
+							$("#txtCagofijoh").val("");
+							$("#txtAlupublich").val("");
+							$("#txtCargoenerh").val("");
+							$("#txtSubTotalMesh").val("");
+							$("#txtIgvh").val("");
+							$("#txtTotalMesh").val("");
+							$("#txtUsoEquipoh").val("");
+							$("#txtServmantoh").val("");
+							$("#txtAporteleyh").val("");
+							$("#txtRecargoh").val("");
+							$("#txtRedondeoh").val("");
+							$("#txtTotalh").val("");
+							$("#txtDeudaAnth").val("");
+							
+							$("#grabar-form").dialog("open");
+							$("#btnpagar").hide();
+							
+						}
+				    }
+				});
 	     		return false;
 			}
 
@@ -252,8 +272,10 @@ var codMon = "";
 			$(this).removeClass('ui-state-hover');
 		});
 
+	});
 
-		$(document).ready(
+
+	$(document).ready(
 			function(){/* Aqui podria filtrar que controles necesitará manejar,
 						* en el caso de incluir un dropbox $('input,select');
 					   */
@@ -276,11 +298,10 @@ var codMon = "";
 					}
 				}
 			}
-		});
 
-
-	$(function() {		
-		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+	
+	$(function() {
+		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore
 		$("#dialog:ui-dialog").dialog("destroy");
 
 		var name = $("#name"), email = $("#email"), password = $("#password"), allFields = $(
@@ -413,7 +434,7 @@ var codMon = "";
 
 
 	function eliminarRes(corr,soc,res){
-		
+		alert("eliminando...");
 		var frm = document.gestionarFacturacion;
 		
 		$("#codigoModi").val(res);
@@ -446,6 +467,12 @@ var codMon = "";
 		$("#buscarsocio-form").dialog("close");
 	}
 
+	/*function editarRes1(codigorecibo,codigosocio,correlativo,lecturaini,lecturafin,consumomes,cagofijo,alupublic,cargoener,totalmes,igv,subtotalmes,usoequipo,servmanto,aporteley,recargo,redondeo,total,deudaant)
+	{
+alert("codigorecibo "+codigorecibo+"\ncodigosocio "+codigosocio+"\ncorrelativo "+correlativo+"\nlecturaini "+lecturaini+"\nlecturafin "+lecturafin+"\nconsumomes "+consumomes+
+		"\ncagofijo "+cagofijo+"\nalupublic "+alupublic+"\ncargoener "+cargoener+"\ntotalmes "+totalmes+"\nigv "+igv+"\nsubtotalmes "+subtotalmes+"\nusoequipo "+usoequipo+
+		"\nservmanto "+servmanto+"\naporteley "+aporteley+"\nrecargo "+recargo+"\nredondeo "+redondeo+"\ntotal "+total+"\ndeudaant "+deudaant);
+return true;*/
 	function editarRes(codigorecibo,
 			codigosocio,
 			correlativo,
@@ -508,6 +535,7 @@ var codMon = "";
 	// Funciones generadas - Johan Muñoz
 	// llamará a DIV para seleccionar el reporte... 
 	function mostrarRep(valor1, valor2, valor3) {
+		alert("mostrando...");
 		var codRec = 0;
 		codRec = valor1;
 		var codSoc = 0;
@@ -633,22 +661,6 @@ var codMon = "";
 		frm.submit();
 	}
 
-	/*function Enter(Evento,Campo){
-		var keyCode = Evento.keyCode? Evento.keyCode : Evento.which? Evento.which: Evento.charCode;
-		if (keyCode == 13){
-			var i;
-			for(i=0; i<Campo.form.elements.length; i++)
-				break;
-			i=Campo.form.elements[i].tabIndex + 1;
-			for(j=0; j<Campo.form.elements.length; j++){
-				if(Campo.form.elements[j].tabindex == i)
-					break;
-			}
-			Campo.form.elements[j].focus();
-			return false;
-		} else
-			return true;
-	}*/
 </script>
 </head>
 <body>
@@ -759,21 +771,8 @@ var codMon = "";
 				</tr>
 			</table> 
 	</fieldset>
-	<div>
-	<table border="1" cellpadding="2" cellspacing="2">
-		<th width="60px">Accion</th>
-		<th width="395px">Nombres</th>
-		<th width="55px">Puesto</th>
-		<th width="80px">Lect. Inicial</th>
-		<th width="80px">Lect. Final</th>
-		<th width="80px">Carg. x Energ.</th>
-		<th width="55px">Total</th>
-		<th width="100px">Estado</th>
-		<th width="210px">Fecha</th>
-	</table>
-	</div>
-	<div class="TableContainer" style="">
-	 
+
+	<div class="TableContainer" style="">	 
 	<display:table name="ListaSuministroLuz" 
 				class="staticheader"
 				excludedParams="metodo" 
@@ -787,7 +786,7 @@ var codMon = "";
 					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
 				</c:when>
 				<c:otherwise>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total},${row.deudaant});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
 				</c:otherwise>
@@ -831,10 +830,10 @@ var codMon = "";
 				<table width="500px">
 					<tr>
 						<td width="200px"><label>Lectura Inicial:</label></td>
-						<td width="200px"><input type='text' name='txtLecturaInih' id='txtLecturaInih' class='text ui-widget-content ui-corner-all' size="10" onchange="calculaConsumoMes(this,txtLecturaFinh)" tabindex="1"/></td>
+						<td width="200px"><input type='text' name='txtLecturaInih' id='txtLecturaInih' class='text ui-widget-content ui-corner-all' size="10" tabindex="1" onchange="calculaConsumoMes(this,txtLecturaFinh)"/></td>
 						<td>&nbsp;</td>
 						<td width="200px"><label>Lectura Final:</label></td>
-						<td width="200px"><input type='text' name='txtLecturaFinh' id='txtLecturaFinh' class='text ui-widget-content ui-corner-all'  size="30" onchange="calculaConsumoMes(txtLecturaInih,this)" tabindex="2" /></td>
+						<td width="200px"><input type='text' name='txtLecturaFinh' id='txtLecturaFinh' class='text ui-widget-content ui-corner-all'  size="30"  tabindex="2" onchange="calculaConsumoMes(txtLecturaInih,this)"/></td>
 					</tr>
 					<tr>
 						<td><label>Consumo del Mes:</label></td>
@@ -889,10 +888,12 @@ var codMon = "";
 						<td><label><b>Total:</b></label></td>
 						<td colspan="3"><input type='text' name='txtTotalh' id='txtTotalh' class='text ui-widget-content ui-corner-all' size="10" readonly tabindex="16"/></td>
 					</tr>
+					<tr>
+						<td><button name="btngrabar" id="btngrabar" onclick="grabar();" tabindex="17">Grabar</button></td>
+						<td><button name="btncerrar" id="btncerrar" onclick="cerrarPop();" tabindex="18">Cancelar</button></td>
+						<td><button name="btnpagar" id="btnpagar" onclick="pagar();" tabindex="19">Pagar</button></td>
+					</tr>
 				</table>
-			<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>
-			<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
-			<button name="btnpagar" id="btnpagar" onclick="pagar();" >Pagar</button>
 	</div>
 	<div id="eliminar-form" title="Esta seguro que desea eliminar...?">
 		<div align="center">

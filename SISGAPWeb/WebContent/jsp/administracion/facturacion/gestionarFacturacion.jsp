@@ -283,20 +283,6 @@
 			</table>
 		</div>
 	</div>
-	
-	<div id="selectImp-form" title="Ingrese el número del documento a imprimir...">
-		<div align="center">
-			<table>
-				<tr>
-					<td><input type="text" name="txtNroDoc" id="txtNroDoc" size="250px"></td>
-				</tr>
-				<tr>
-					<td><button id="impdoc-f" name="impdoc-f">Imprimir</button></td>
-					<td><button id="cancel-f" name="cancel-f">Cancelar</button></td>
-				</tr>
-			</table>
-		</div>
-	</div>
 	</html:form>
 
 </body>

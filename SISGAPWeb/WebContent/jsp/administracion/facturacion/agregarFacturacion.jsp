@@ -90,6 +90,14 @@ div#users-contain table td,div#users-contain table th {
 	padding: 0.3em;
 }
 
+
+
+.texto {
+	background-color:rgb(189,252,152);
+	color:rgb(0,0,0);
+}
+
+
 </style>
 <script type="text/javascript">
 
@@ -149,22 +157,49 @@ var codMon = "";
 
 		$('#imprimir-f').click(function() {
 			//alert("imprimiendo...");
-			var nroDocu =  $('[name=numerodocumento]').val();
-			var socio = $('[name=socio-f]').val();
-			var direccion = $(['name=direccion-f']).val();
-
-			
-			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        //nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nrodoc=${numerodocumento}', 'Popup', caracteristicas);  
-	        //nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_DETALLE&nroDoc='+ nroDocu , 'Popup', caracteristicas);
-	        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu/*+"&socio="+socio+"&direccion="+direccion*/,'Popup', caracteristicas);
-	        //window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,"","height=400,width=680,top=120,left=180,scrollbars=yes,resizable=no,toolbar=no,menubar=no,location=no,status=yes");
-	        return false;  
+			$("#selectImp-form").dialog("open");
+			return false;
 		});
 
-		$('#cancelar-f').click(function() {  
-			$('[name=metodo]').val('cancelarFactura');
-		});
+
+		$("#selectImp-form").dialog({
+			autoOpen : false,
+			height : 120,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var nroDocReal =  $('[name=txtNroDoc]').val();
+					var nroDocInterno = $('[name=numerodocumento]').val();
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+			        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+			        //return false;
+			        $(this).dialog("close"); 
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		}); //window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,"","height=400,width=680,top=120,left=180,scrollbars=yes,resizable=no,toolbar=no,menubar=no,location=no,status=yes");
+
+		$("#fechadocumento").datepicker({   
+            changeMonth: true,
+            changeYear: false,
+            numberOfMonths: 1,
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+                'Junio', 'Julio', 'Agosto', 'Septiembre',
+                'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+                'May', 'Jun', 'Jul', 'Ago',
+                'Sep', 'Oct', 'Nov', 'Dic'] 
+        }); 
+
+		//$('#cancelar-f').click(function() {  
+		//	$('[name=metodo]').val('cancelarFactura');
+		//});
 		
 		function checkLength(o, n, min, max) {
 			if (o.val().length > max || o.val().length < min) {
@@ -205,8 +240,8 @@ var codMon = "";
 		$("#dialog-form-item").dialog(
 		{
 			autoOpen : false,
-			height : 450,
-			width : 350,
+			height : 400,
+			width : 360,
 			modal : true
 		});
 
@@ -217,59 +252,7 @@ var codMon = "";
 			height : 520,
 			width : 550,
 			modal : true,
-			buttons : {
-											 
-				/*
-				"Create an account" : function() {
-					var bValid = true;
-					allFields.removeClass("ui-state-error");
-
-					bValid = bValid
-							&& checkLength(name, "username", 3,
-									16);
-					bValid = bValid
-							&& checkLength(email, "email", 6,
-									80);
-					bValid = bValid
-							&& checkLength(password,
-									"password", 5, 16);
-
-					bValid = bValid
-							&& checkRegexp(name,
-									/^[a-z]([0-9a-z_])+$/i,
-									"Username may consist of a-z, 0-9, underscores, begin with a letter.");
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid
-							&& checkRegexp(
-									email,
-									/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
-									"eg. ui@jquery.com");
-					bValid = bValid
-							&& checkRegexp(password,
-									/^([0-9a-zA-Z])+$/,
-									"Password field only allow : a-z 0-9");
-
-					if (bValid) {
-						$("#users tbody").append(
-								"<tr>" + "<td>" + name.val()
-										+ "</td>" + "<td>"
-										+ email.val() + "</td>"
-										+ "<td>"
-										+ password.val()
-										+ "</td>" + "</tr>");
-						$(this).dialog("close");
-						
-						$("#dialog-form-item").dialog("open");
-					} }*/									
-				
-				/*
-				Cancel : function() {
-					$(this).dialog("close");
-				}*/
-		
-			/*close : function() {
-				allFields.val("").removeClass("ui-state-error");
-			}*/
+			buttons : {											 
 
 			Cancel : function() {
 				$(this).dialog("close");
@@ -344,8 +327,32 @@ var codMon = "";
 			$("#dialog-form-item").dialog("close");
 			$('#gestionarFacturacion').submit();
 		});
-		
-		
+
+
+		$(document).ready(
+			function(){/* Aqui podria filtrar que controles necesitará manejar,
+						* en el caso de incluir un dropbox $('input,select');
+					   */
+				   tb=$('input');
+				   if($.browser.mozilla){
+					   $(tb).keypress(enter2tab);
+				   } else {
+					   $(tb).keydown(enter2tab);
+				   }
+			});
+
+			function enter2tab(e){
+				if(e.keyCode==13){				
+					cb=parseInt($(this).attr('tabindex'));
+					if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
+						$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
+						$(':input[tabindex=\''+ (cb + 1) +'\']').select();
+						e.preventDefault();
+						return false;
+					}
+				}
+			}
+					
 	});
 
 
@@ -398,6 +405,11 @@ var codMon = "";
 
 		$("#total-p").val( total );
 	}
+
+	function pagar(){
+		$('[name=metodo]').val('cancelarFactura');	
+		$('#gestionarFacturacion').submit();
+	}
 	
 </script>
 </head>
@@ -407,6 +419,7 @@ var codMon = "";
 		<input type="hidden" name="codigoide" id="codigoide-f" />
 		<input type="hidden" name="cbtipodoc" value="${tipodocumento}" />
 		<input type="hidden" name="nrodocumento" value="${numerodocumento}" />
+		<input type="hidden" name="fecdocumento" value="${fechadocumento}" />
 		<input type="hidden" name="socio" value="${socio-f}" />
 		<input type="hidden" name="direccion" value="${direccion-f}" />
 		<input type="hidden" name="detfactura" value="${lstDetFac}" />
@@ -440,32 +453,38 @@ var codMon = "";
 		</logic:notEmpty>
 
 		<fieldset>
-			<legend>Nuevo registro</legend>		
+			<legend><b>Nuevo registro</b></legend>		
 			<table border="0" cellpadding="0" cellspacing="0" width="75%">
 				<tr>
-					<td width="40px">Nro. Doc</td>
+					<td width="100px">Nro. Doc</td>
 					<td width="40%"><input type="text" name="numerodocumento" readonly="readonly" size="10" value="${numerodocumento}" class="text ui-widget-content ui-corner-all" style=" width : 155px;"/></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td width="100px">Fecha Documento</td>
+					<td><input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 50px;" tabindex="21"/>(mes/dia/año)</td>
 				</tr>
 				<tr>
 					<td>Socio</td>
-					<td colspan="3" ><input type='text' name="socio-f" id="socio-f" size=30 value="${fac.sisgapSocio}" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+					<td><input type='text' name="socio-f" id="socio-f" size=30 value="${fac.sisgapSocio}" class="text ui-widget-content ui-corner-all" readonly="readonly" tabindex="22"/></td>
 					<td width="15px">
 						<c:choose>
 							<c:when test="${isDetalle!=1 }">
-								<button id="buscar-socio">...</button>
+								<button id="buscar-socio" tabindex="23">...</button>
 							</c:when>
 						</c:choose>
 					</td>
-					<td width="20px">Código</td>
-					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${fac.sisgapSocio.tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td>&nbsp;</td>
+					<td>Código</td>
+					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${fac.sisgapSocio.tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" tabindex="24"/></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
-					<td colspan="3"><input type="text" name="direccion-f" id="direccion-f" size="10" value="${fac.sisgapSocio.tranPuesto}" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/></td>
-					<td width="15px"></td>
-					<td width="80px">Tipo Documento</td>
+					<td><input type="text" name="direccion-f" id="direccion-f" size="10" value="${fac.sisgapSocio.tranPuesto}" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly" tabindex="25"/></td>
+					<td>&nbsp;</td>
+					<td></td>
+					<td>Tipo Documento</td>
 					<td>
-						<select name="cbtipodocx" id="cbtipodoc" class="text ui-widget-content ui-corner-all" disabled="disabled">
+						<select name="cbtipodocx" id="cbtipodoc" class="text ui-widget-content ui-corner-all" disabled="disabled" style=" width : 100px;">
 							<c:choose>
 								<c:when test="${tipodocumento =='R'}">
 									<option value="R" selected="selected">Recibo</option>
@@ -487,7 +506,7 @@ var codMon = "";
 				<div id="users-contain" class="ui-widget" width="100%">
 					<c:choose>
 						<c:when test="${isDetalle!=1 }">
-							<button id="create-user">Agregar Item</button>
+							<button id="create-user" tabindex="6">Agregar Item</button>
 						</c:when>
 					</c:choose>					
 					<div id="tableDetalle">
@@ -550,7 +569,7 @@ var codMon = "";
 					<c:when test="${isDetalle==1}">
 						<button id="regresar-f">Regresar</button>
 						<button id="imprimir-f">Imprimir</button>
-						<button id="cancelar-f">Pagar</button>
+						<button id="cancelar-f" onclick="pagar();">Pagar</button>
 					</c:when>					
 				</c:choose>	
 			</span>
@@ -565,42 +584,42 @@ var codMon = "";
 				<fieldset>					
 						<!--legend>Registro</legend-->
 						<br>
-						<table width="300px" border="1">
+						<table width="350px" border="0">
 							<tr>
 								<td><label>Codigo:</label></td>
-								<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
+								<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" style=" width : 50px;" tabindex="1"/></td>
 							</tr>
 							<tr>
 								<td><label>Descripcion:</label></td>
-								<td><input type='text' name='descrip-p' id='descrip-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
+								<td><input type='text' name='descrip-p' id='descrip-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" style=" width : 190px;" tabindex="2"/></td>
 							</tr>
 							<tr>
 								<td><label>Tipo de Cobranza:</label></td>
-								<td><input type='text' name='tipoCobranza-p' id='tipoCobranza-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" /></td>
+								<td><input type='text' name='tipoCobranza-p' id='tipoCobranza-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="30" style=" width : 50px;" tabindex="3"/></td>
 							</tr>
 							<tr>
 								<td><label>Moneda:</label></td>
-								<td><input type='text' name='moneda-p' id='moneda-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" /></td>
+								<td><input type='text' name='moneda-p' id='moneda-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" style=" width : 50px;" tabindex="4"/></td>
 							</tr>
 							<tr>
 								<td><label>Costo:</label></td>
-								<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10"/></td>
+								<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10" style=" width : 50px;" tabindex="5"/></td>
 							</tr>
 							<tr>
 								<td><label>Cantidad:</label></td>
-								<td><input type='text' name='cantidad-p' id='cantidad-p' class='text ui-widget-content ui-corner-all' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" /></td>
+								<td><input type='text' name='cantidad-p' id='cantidad-p' class='texto' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" style=" width : 50px;" tabindex="6"/></td>
 							</tr>
 							<tr>
 								<td><label>Total:</label></td>
-								<td><input type='text' name='total-p' id='total-p' class='text ui-widget-content ui-corner-all' size="10" readonly='readonly'/></td>
+								<td><input type='text' name='total-p' id='total-p' class='text ui-widget-content ui-corner-all' size="10" readonly='readonly' style=" width : 50px;" tabindex="7"/></td>
 							</tr>
 							<tr>
 								<td><label>A Cuenta:</label></td>
-								<td><input type='text' name='acuenta-p' id='acuenta-p' class='text ui-widget-content ui-corner-all' size="10" /></td>
+								<td><input type='text' name='acuenta-p' id='acuenta-p' class='texto' size="10" tabindex="8"/></td>
 							</tr>
 							<tr>
-								<td><button id="btn-aceptar-item">Agregar</button></td>
-								<td><button id="btn-cancelar">Cancelar</button></td>
+								<td><button id="btn-aceptar-item" tabindex="9">Agregar</button></td>
+								<td><button id="btn-cancelar" tabindex="10">Cancelar</button></td>
 							</tr>
 						</table>
 																										
@@ -614,6 +633,17 @@ var codMon = "";
 			<button id="btn-buscar-socio">Buscar Socio</button>
 			<div id="tablesocios"></div>
 		</div>
+		
+		<div id="selectImp-form" title="Ingrese el número del documento a imprimir...">
+		<div align="center">
+			<table>
+				<tr>
+					<td>Nro. Documento Real:</td>
+					<td><input type="text" name="txtNroDoc" id="txtNroDoc" size="250px"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 		</html:form>
 </body>
 </html:html>

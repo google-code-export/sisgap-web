@@ -177,14 +177,14 @@ public class RegistroSisasAction extends GrandActionAbstract {
 					}
 				}
 				if(flag){
-					columnas += "<td style='background-color: #33CC33;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "' checked='checked'></span></td>";				
+					columnas += "<td style='background-color: #33CC33;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' class='cb-element' name='fechadia' value='" + fec + "' checked='checked'></span></td>";				
 					if(count==size){
 						columnas += "</tr><tr>";
 						count = 0;
 					}
 					count++;
 				}else{
-					columnas += "<td style='background-color: red;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' name='fechadia' value='" + fec + "'></span></td>";				
+					columnas += "<td style='background-color: red;'><span id='s" + fec + "'>" + fec + "<input type='checkbox' class='cb-element' name='fechadia' value='" + fec + "'></span></td>";				
 					if(count==size){
 						columnas += "</tr><tr>";
 						count = 0;

@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<%@page import="java.text.Format"%>
+<%@page import="oracle.sql.DATE"%>
+<%@include file="../../../taglibs.jsp"%>
+<%@page import="pe.com.mmh.sisgap.util.NumberToLeterConverter"%>
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -39,7 +44,20 @@
 					function() { $(this).addClass('ui-state-hover'); }, 
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
-				
+
+				$("#btnPrint").button().click(function() {
+					alert("Pruebas");
+					var nrodocReal =  ${nroDocReal};
+					var nrodocInte =  ${nroDocInte};
+					//var nrodocReal =  $("{#nroDocReal}").val();
+					//var nrodocInte =  $("{#nroDocInte}").val();
+					$.ajax({
+					        type: "POST",
+					        url: "/SISGAPWeb/AjaxServlet",
+					        //data: "action=ACTUALIZA_NRO_DOCUMENTO&nrodocReal="+nrodocReal+"&opcion=factura&nrodocInte="+nrodocInte,
+					        data: "action=ACTUALIZA_NRO_DOCUMENTO&nrodocReal="+nrodocReal+"&nrodocInte="+nrodocInte
+					});
+				});
 			});
 		</script>
 		<style type="text/css">
@@ -69,20 +87,15 @@
 		
 	</head>
 	<body>
-		<table width="720" class="font12n" border="0" cellspacing="0">
+		<c-rt:set var="now" value="<%= new java.util.Date() %>" />
+		<table width="650" class="font12n" border="0" cellspacing="0">
 		   <tr>
-		      <td colspan="3"><hr size="1" color="#003399" /></td>
-		   </tr>
-		   <tr>
-		      <td colspan="3" align="center" style="font-size:24px">Mercado Modelo Huaral</td>
-		   </tr>
-		   <tr>
-		      <td colspan="3"><hr size="1" color="#003399" /></td>
-		   </tr>
-		   <tr>
-		      <td width="150"><img src="imagenes/Logo_Reporte_MMH.png" width="94" height="66" alt="" /></td>
-		      <td width="350" align="center">Av. Camino viejo a Jesús del Valle s/n<br />Huaral</td>
-		      <td width="220" align="right">
+		      <td width="100" align="center" valign="center" class="noprint"><img src="imagenes/Logo_Reporte_MMH.png" width="94" height="66" alt="" /></td>
+		      <td width="350" align="center">
+		      	<font face="arial" size="3"><b>ASOCIACION DE COMERCIANTES<br />DEL MERCADO MODELO DE HUARAL</b></font><br /><br />
+		      	<font face="arial" size="1">Fundado el 13 de Noviembre de 1996<br />Ficha Registral Nº 7214</font>
+		      </td>
+		      <td width="220" align="center">
 		         <table cellspacing="0" cellpadding="0" border="0">
 		            <tr>
 		               <td><img src="imagenes/b11.gif" width="6" height="6" alt="" align="bottom" /></td>
@@ -94,13 +107,13 @@
 		               <td>
 		                  <table width="100%" class="font16b" cellpadding="1" cellspacing="0">
 		                     <tr>
-		                        <td align="center">R.U.C. 20265681299</td>
+		                        <td colspan="2" align="center"><b>R.U.C. Nº 20530606334</b></td>
 		                     </tr>
 		                     <tr>
-		                        <td align="center">R E C I B O</td>
+		                        <td colspan="2" align="center" bgcolor="black"><font color="white"><b>RECIBO DE INGRESO</b></font></td>
 		                     </tr>
 		                     <tr>
-		                        <td align="center">N° 0004 - 00123</td>
+		                        <td align="Right">Nº 001-</td><td align="left" id="txtnroReal" name="txtnroReal">${nroDocReal}</td>
 		                     </tr>
 		                  </table>
 		               </td>
@@ -116,27 +129,29 @@
 		   </tr>
 		   <tr>
 		      <td colspan="3">
-		         <table class="font11n" border="1">
+		         <table class="font11n" border="0" width="550">
 		            <tr>
-		               <td width="80"><b>Señor(es): </b></td>
-		               <td width="400">LUNA TRANCA CARLOTA MAGNA</td>
-		               <td width="60"><b>Puesto: </b></td>
-		               <td width="50">0005</td>
-		               <td width="50"><b>Fecha: </b></td>
-		               <td width="100">02/05/2012 15:32</td>
+		               <td width="80"><b>Asociado(a): </b></td>
+		               <td colspan="5">${fac.sisgapSocio}</td>
 		            </tr>
 		            <tr>
-		               <td><b>Dirección: </b></td>
-		               <td>Calle Chinchón 180 - Piso 13 - San Isidro</td>
-		               <td><b>Actividad: </b></td>
-		               <td colspan="3">GRANOS SECOS</td>
+		               <td><b>Sector Nº: </b></td>
+		               <td width="100">${fac.sisgapSocio.strSector}</td>
+		               <td align="right" width="80"><b>Giro: </b></td>
+		               <td width="100" colspan="2">${fac.sisgapSocio.sisgapActividadSocio.actiTranNombre}</td>
+		            </tr>
+		            <tr>
+		               <td><b>Nº de Puesto: </b></td>
+		               <td colspan="2">${fac.sisgapSocio.tranPuesto}</td>
+		               <td>&nbsp;</td>
+		               <td><b>Huaral, <fmt:formatDate value="${now}" type="both" timeStyle="long" dateStyle="long"/></b></td>
 		            </tr>
 		         </table>
 		      </td>
 		   </tr>
 		   <tr>
 		      <td colspan="3">
-		        <table width="100%" class="font12n" cellspacing="1">
+		        <table width="100%" class="font12n" cellspacing="1" border="0">
 		            <tr style="background-color:#999999; height:20px">
 		               <th class="font13t" width="40">ITEM</th>
 		               <th class="font13t" width="50">CANT.</th>
@@ -144,27 +159,41 @@
 		               <th class="font13t" width="80">P.UNIT.</th>
 		               <th class="font13t" width="80">IMPORTE</th>
 		            </tr>
+		            <c:set var="i" value="1" />
+		            <c:set var="total" value="0" />
+					<c:forEach var="det" items="${lstDetFac}">
+						<tr>					
+							<td>|&nbsp;<c:out value="${i}"/></td>
+							<!-- td>${det.id.codItemcobranza}</td -->
+							<!-- td>${det.strTipocobranzaDescrip}</td -->
+							<!-- td>${det.strMonedaDescrip}</td -->
+							<!-- td>${det.numAcuenta}</td -->
+							<td align="center">${det.numCantidad}</td>
+							<td>${det.strDescripcion}</td>
+							<td align="center">${det.numCosto}</td>								
+							<td align="center">${det.numTotal}</td>
+							<td>|</td>
+						</tr>
+						<tr><td>|</td><td colspan="4">&nbsp;</td><td>|</td></tr>
+						<tr><td>|</td><td colspan="4">&nbsp;</td><td>|</td></tr>
+						<tr><td>|</td><td colspan="4">&nbsp;</td><td>|</td></tr>
+						<tr><td>|</td><td colspan="4">&nbsp;</td><td>|</td></tr>
+						<tr><td>|</td><td colspan="4">&nbsp;</td><td>|</td></tr>
+						<c:set var="total" value="${total+det.numTotal}" />
+						<c:set var="i" value="${i+1}" />
+					</c:forEach>
 		            <tr>
-		                <td align="center">1</td>
-		                <td align="center">01</td>
-		                <td style="padding-left:4px">AUTOVALUO</td>
-		                <td align="right" style="padding-right:4px">$ 140.00</td>
-		                <td align="right" style="padding-right:4px">$ 140.00</td>
-		            </tr>
-		            <tr>
-		                <td align="center">2</td>
-		                <td align="center">01</td>
-		                <td style="padding-left:4px">PREDIAL</td>
-		                <td align="right" style="padding-right:4px">$ 120.00</td>
-		                <td align="right" style="padding-right:4px">$ 120.00</td>
+		               <td colspan="5"><b>Son: </b>${texto}</td>
 		            </tr>
 		            <tr>
 		               <td colspan="5"><hr size="1" color="#999999" /></td>
 		            </tr>
 		            <tr>
-		               <td colspan="3"></td>
-		               <td align="center">TOTAL <font face="Courier New">==></font></td>
-		               <td align="right" class="font14n">$ 260.00</td>
+		            	<td colspan="3"></td>
+		                <td align="center">TOTAL <font face="Courier New">==></font></td>
+		        		<fmt:formatNumber value="${total}" type="currency" var="total" />
+					    <td><c:out value="${total}" /></td>
+		                <td align="right" class="font14n"></td>
 		            </tr>
 		         </table>
 		      </td>

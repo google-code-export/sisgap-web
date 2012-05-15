@@ -252,6 +252,46 @@ var codMon = "";
 			modal : true
 		});
 
+
+
+		$("#selectdate-form").dialog({
+			autoOpen : false,
+			height : 130,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+				    nueva=window.open('ReportsServlet?reporte=REPORTE_SISAS&periodo='+$("#startDate2").val()+'&codigo=0&provider=other', 'Popup', caracteristicas); 
+				    $(this).dialog("close");
+				    return false;
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});	
+
+	    $('.date-picker2').datepicker( {
+	        changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: false,
+	        dateFormat: 'mm/yy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+ 	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+ 	                    'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+      	                    'May', 'Jun', 'Jul', 'Ago',
+      	                    'Sep', 'Oct', 'Nov', 'Dic'],
+	        onClose: function(dateText, inst) { 
+	            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	            $(this).datepicker('setDate', new Date(year, month, 1));
+	        }
+	    });
+
 		
 		$("#dialog-form").dialog(
 		{
@@ -329,7 +369,7 @@ var codMon = "";
 		});
 
 		$("#imprime-ls").button().click(function() {
-			$("#imprime-form").dialog("open");
+			$("#selectdate-form").dialog("open");
 			return false;
 		});
 		
@@ -392,7 +432,22 @@ var codMon = "";
 			$('#gestionarFacturacion').submit();
 		});
 
+		$( function() {
+			$( '.checkAll' ).live( 'change', function() {
+				$( '.cb-element' ).attr( 'checked', $( this ).is( ':checked' ) ? false : true );
+				//$( this ).next().text( $( this ).is( ':checked' ) ? 'Uncheck All' : 'Check All' );
+			});
+			$( '.invertSelection' ).live( 'click', function() {
+				$( '.cb-element' ).each( function() {
+					$( this ).attr( 'checked', $( this ).is( ':checked' ) ? '' : 'checked' );
+				}).trigger( 'change' );
 
+			});
+			$( '.cb-element' ).live( 'change', function() {
+				//$( '.cb-element' ).length == $( '.cb-element:checked' ).length ? $( '.checkAll' ).attr( 'checked', 'checked' ).next().text( 'Uncheck All' ) : $( '.checkAll' ).attr( 'checked', '' ).next().text( 'Check All' );
+
+			});
+		});
 		
 	});
 
@@ -483,7 +538,11 @@ var codMon = "";
 		frm.submit();
 		
 	}
-	
+
+	function OpenWindows(){
+		$("#selectdate-form").dialog("open"); 
+	}
+		
 </script>
 <style type="text/css">
 .ui-datepicker-calendar {
@@ -592,7 +651,11 @@ var codMon = "";
 				</display:column>			
 		</display:table>	
 		
-		<div id="calendar-form" title="Calendario">		
+		<div id="calendar-form" title="Calendario">
+			<div class="controls">
+				<span><a href="javascript:void(0);" class="invertSelection"></a></span>
+				<span><b>Seleccinar Todos</b><input type="checkbox" class="checkAll" /><span>				
+			</div>
 			<div id='dataCalendar'></div>
 			<button type="button"  onclick="updateSisa();">Grabar</button>
 		</div>
@@ -603,11 +666,11 @@ var codMon = "";
 			<button id="btn-buscar-socio">Buscar Socio</button>
 			<div id="tablesocios"></div>
 		</div>
-		<div id="imprime-form" title="Seleccionar periodo a buscar...">		 
-			<input name="startDateBusca" id="startDateBusca" class="date-picker" value="${fecha}"/>(mes/año)
+		<div id="selectdate-form" title="Seleccionar periodo a buscar...">		 
+			<input name="startDate2" id="startDate2" class="date-picker2" />(mes/año)
 			<br><br>
 			<button id="btn-buscar-periodo">Buscar Periodo</button>
-		</div>
+		</div>	
 		</html:form>
 </body>
 </html:html>

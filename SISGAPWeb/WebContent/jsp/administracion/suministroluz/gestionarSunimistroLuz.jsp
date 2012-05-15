@@ -111,16 +111,16 @@ $(function() {
 		});
 
 		$(document).ready(
-				function(){/* Aqui podria filtrar que controles necesitará manejar,
-							* en el caso de incluir un dropbox $('input,select');
-						   */
-					   tb=$('input');
-					   if($.browser.mozilla){
-						   $(tb).keypress(enter2tab);
-					   } else {
-						   $(tb).keydown(enter2tab);
-					   }
-				});
+			function(){/* Aqui podria filtrar que controles necesitará manejar,
+						* en el caso de incluir un dropbox $('input,select');
+					   */
+				   tb=$('input');
+				   if($.browser.mozilla){
+					   $(tb).keypress(enter2tab);
+				   } else {
+					   $(tb).keydown(enter2tab);
+				   }
+			});
 
 			function enter2tab(e){
 				if(e.keyCode==13){				

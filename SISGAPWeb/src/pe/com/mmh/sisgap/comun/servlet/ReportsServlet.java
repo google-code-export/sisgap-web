@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -286,6 +287,7 @@ public class ReportsServlet extends HttpServlet {
 
 		try {
 			Connection cnn = getConnection();
+			//Connection cnn = getConnectionDirect();
 			if (!correl.equals("")){        //ruta.equals("C:\\tools\\jboss7\\standalone\\deployments\\SISGAP.ear\\SISGAPWeb.war\\WEB-INF\\reportes\\Recibo de Luz Doble.jrxml")){
 				masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
 				
@@ -375,5 +377,32 @@ public class ReportsServlet extends HttpServlet {
 			response.getOutputStream().print(stringWriter.toString());
 		}
 
+	}
+	
+	private Connection getConnectionDirect(){
+		Connection connection = null;
+		try {
+		    // Load the JDBC driver
+		    String driverName = "oracle.jdbc.driver.OracleDriver";
+		    Class.forName(driverName);
+
+		    // Create a connection to the database
+		    String serverName = "localhost";
+		    String portNumber = "1521";
+		    String sid = "xe";
+		    String url = "jdbc:oracle:thin:@" + serverName + ":" + portNumber + ":" + sid;
+		    String username = "sisgap";
+		    String password = "sisgap";
+		    connection = DriverManager.getConnection(url, username, password);
+		    
+		    return connection;
+		    
+		} catch (ClassNotFoundException e) {
+		    e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

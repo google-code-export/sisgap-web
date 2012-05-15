@@ -332,7 +332,7 @@ public class AjaxServlet extends HttpServlet {
 					
 					factura.setNumTotal(total);
 					
-					factura.setSisgapDetallefacturas(listDetallefactura);
+					factura.setSisgapDetallefacturas((List<Detallefactura>) listDetallefactura);
 					
 					
 					facadeLocal.create(factura);
@@ -342,7 +342,47 @@ public class AjaxServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			
-				
+			}else if(action.equals("ACTUALIZA_NRO_DOCUMENTO")){
+
+				String nroDocReal = request.getParameter("nrodocReal");
+				String nroDocInte = request.getParameter("nrodocInte");				
+				try {
+					FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal) context.lookup(ConstantesJNDI.FACTURAFACADE);
+					facadeLocal.actualizaNroFactura(nroDocReal, nroDocInte);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else if(action.equals("BUSCAR_EXISTE_SOCIO")){
+				String recibo = request.getParameter("recibo");
+				String socio = request.getParameter("socio");
+				int respuesta = 0;
+				try {
+					//Listado que trae Datos de los recibos de Suministro de Luz
+					SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+					respuesta = suministrofacadeLocal.buscarReciboxCodigoxSocio(recibo.trim(), socio.trim());
+					
+					if (respuesta==1){
+						/*
+						out.print("<table id='detalle-f' class='ui-widget ui-widget-content' width='100%'>");
+						out.print("   <thead>");
+						out.print("      <tr class='ui-widget-header'>");
+						out.print("	        <td>Mensaje:</td>");
+						out.print("      </tr>");
+						out.print("   </thead>");
+						out.print("   <tbody>");
+						out.print("      <tr>");
+						out.print("         <td>El Socio que intenta ingresar, ya fue registrado</td>");
+						out.print("      </tr>");
+						out.print("   </tbody>");
+						out.print("</table>");
+					*/
+						out.print("true");
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}else if(action.equals("ELIMINAR_ITEM")){
 				
 				try {
