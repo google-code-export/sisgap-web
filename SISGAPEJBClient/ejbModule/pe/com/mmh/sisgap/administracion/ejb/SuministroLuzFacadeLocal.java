@@ -60,4 +60,6 @@ public interface SuministroLuzFacadeLocal {
 	void imprimirItemReciboLuzSocio(Long long1, Long long2, Long long3);
 	
 	List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio);
+	
+	int buscarReciboxCodigoxSocio(String codSocio, String codRecibo);
 }

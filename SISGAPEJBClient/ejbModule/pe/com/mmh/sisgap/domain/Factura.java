@@ -42,11 +42,15 @@ public class Factura implements Serializable {
 	@Column(name="DAT_FECHACRED")
 	private Date datFechacred;
     
+    @Temporal( TemporalType.DATE)
+	@Column(name="DAT_FECHAFAC")
+	private Date datFechafac;
+    
 	@Column(name="STR_DESC_ANULADA", length=2000)
 	private String strDescanulada;
 	//bi-directional many-to-one association to SisgapDetallefactura
 	@OneToMany(mappedBy="sisgapFactura", fetch=FetchType.EAGER)
-	private Set<Detallefactura> sisgapDetallefacturas;
+	private List<Detallefactura> sisgapDetallefacturas;
 	
 	//bi-directional many-to-one association to SisgapSocio
 	@ManyToOne( fetch=FetchType.EAGER)
@@ -113,11 +117,11 @@ public class Factura implements Serializable {
 		this.strTipodoc = strTipodoc;
 	}
 
-	public Set<Detallefactura> getSisgapDetallefacturas() {
-		return this.sisgapDetallefacturas;
+	public List<Detallefactura> getSisgapDetallefacturas() {
+		return (List<Detallefactura>) this.sisgapDetallefacturas;
 	}
 
-	public void setSisgapDetallefacturas(Set<Detallefactura> listDetallefactura) {
+	public void setSisgapDetallefacturas(List<Detallefactura> listDetallefactura) {
 		this.sisgapDetallefacturas = listDetallefactura;
 	}
 	
@@ -170,6 +174,13 @@ public class Factura implements Serializable {
 	public void setNombresocio(String nombresocio) {
 		this.nombresocio = nombresocio;
 	}
-	
+
+	public Date getDatFechafac() {
+		return datFechafac;
+	}
+
+	public void setDatFechafac(Date datFechafac) {
+		this.datFechafac = datFechafac;
+	}
 	
 }

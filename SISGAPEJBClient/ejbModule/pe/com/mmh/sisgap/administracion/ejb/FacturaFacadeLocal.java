@@ -6,6 +6,7 @@
 package pe.com.mmh.sisgap.administracion.ejb;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public interface FacturaFacadeLocal {
 
     List<Factura> findAll();
     
-    void grebarFactura(Long numerodocumento,String totalfac, String codigoide, String cbtipodoc,Set<Detallefactura> detallefactura);
+    void grebarFactura(Long numerodocumento,String fechadocumento, String totalfac, String codigoide, String cbtipodoc,Set<Detallefactura> detallefactura);
 
     void actualizaNroFactura(String nroDocReal, String nroDocInte);
     
