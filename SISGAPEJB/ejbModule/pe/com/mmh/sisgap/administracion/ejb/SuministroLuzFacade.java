@@ -765,6 +765,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				///srs.setRecargo(new BigDecimal(df.format(rs.getBigDecimal("RECARGO"))));
 				///srs.setRedondeo(new BigDecimal(df.format(rs.getBigDecimal("REDONDEO"))));
 				///srs.setTotal(new BigDecimal(df.format(rs.getBigDecimal("TOTAL"))));
+				///srs.setDeudaant(new BigDecimal(df.format(rs.getBigDecimal("DEUDAANT"))));
 				srs.setCargoener(rs.getBigDecimal("CARGOENER")); //Es como se presentaba anteriormente, sin decimales
 				srs.setTotalmes(rs.getBigDecimal("TOTALMES"));
 				srs.setIgv(rs.getBigDecimal("IGV"));
@@ -779,7 +780,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setCodigosocio(rs.getLong("CODIGOSOCIO"));
 				srs.setCodigorecibo(rs.getLong("CODIGORECIBO"));
 				srs.setEstado(rs.getBigDecimal("ESTADO"));
-				///srs.setDeudaant(new BigDecimal(df.format(rs.getBigDecimal("DEUDAANT"))));
+				srs.setDeudaant(rs.getBigDecimal("DEUDAANT"));
 				srs.setFechacarga(rs.getTimestamp("FECHACARGA"));
 				srs.setPuesto(rs.getString("TRAN_PUESTO"));
 				srs.setImpreso(rs.getBigDecimal("IMPRESO"));
@@ -1009,5 +1010,38 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		
 	}
 
+	
+	public int buscarReciboxCodigoxSocio(String codRecibo, String codSocio) {
+    	Connection connection = null;
+    	PreparedStatement pst = null;
+    	ResultSet rs = null;
+    	
+    	int rpta=0;
+    	
+    	List<SuministroLusReciboSocio> lsSuministroLuzSocio = null;
+    	SuministroLusReciboSocio reciboSocio = null;
+		try {
+			connection = getConnection();
+			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
+			pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim() +"' ")); //Integer.parseInt(codSocio.trim())+"'"));
+			rs = pst.executeQuery();
+			if(rs.next()){
+				rpta = 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return rpta;
+		
+	}
 	
 }

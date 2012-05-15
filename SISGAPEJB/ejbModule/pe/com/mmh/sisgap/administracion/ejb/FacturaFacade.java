@@ -8,6 +8,7 @@ package pe.com.mmh.sisgap.administracion.ejb;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -36,7 +37,7 @@ import pe.com.mmh.sisgap.domain.Factura;
 @Stateless
 public class FacturaFacade implements FacturaFacadeLocal {
 	
-	private static final String SP_INS_FACTURA = "{call PKG_ADMINISTRACION.SP_INS_FACTURA(?,?,?,?,?)}";
+	private static final String SP_INS_FACTURA = "{call PKG_ADMINISTRACION.SP_INS_FACTURA(?,?,?,?,?,?)}";
 	private static final String SP_INS_DETFACTURA = "{call PKG_ADMINISTRACION.SP_INS_DETFACTURA(?,?,?,?,?,?,?,?)}";
 	private static final String SP_DEL_FACTURA = "{call PKG_ADMINISTRACION.SP_DEL_FACTURA(?)}";
 	private static final String SP_LST_GENERARNRODOC = "{call PKG_ADMINISTRACION.SP_LST_GENERARNRODOC(?,?)}";
@@ -136,7 +137,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
     }
 
 	@Override
-	public void grebarFactura(Long numerodocumento, String totalfac, String codigoide,
+	public void grebarFactura(Long numerodocumento, String fechadocumento, String totalfac, String codigoide,
 			String cbtipodoc, Set<Detallefactura> detallefactura) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
@@ -151,6 +152,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			
 			cst.setLong("NUMERO_FAC", new Long(numerodocumento));
 			//cst.setString("NUMERO_FAC", numerodocumento);
+			cst.setString("FECHA_FAC", fechadocumento);
 			cst.setBigDecimal("P_TRAN_IDE", new BigDecimal(codigoide));
 			cst.setBigDecimal("P_NUM_TOTAL", new BigDecimal(totalfac));
 			cst.setString("P_STR_TIPODOC", cbtipodoc);
