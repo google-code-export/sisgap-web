@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -138,7 +137,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 
 	@Override
 	public void grebarFactura(Long numerodocumento, String fechadocumento, String totalfac, String codigoide,
-			String cbtipodoc, Set<Detallefactura> detallefactura) {
+			String cbtipodoc, List<Detallefactura> detallefactura) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	CallableStatement cst = null;
