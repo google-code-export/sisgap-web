@@ -76,23 +76,6 @@
 
 
 		$('#imprimir-f').click(function() {
-			/*$("#selectImp-form").dialog({
-				autoOpen : false,
-				height : 150,
-				width : 350,
-				modal : true,
-				buttons : {
-					Generar : function() {
-						var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
-				        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
-					},
-					Cancel : function() {
-						$(this).dialog("close");
-					}},
-				close : function() {
-					allFields.val("").removeClass("ui-state-error");
-				}
-			});*/
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
 	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
 	        return false;  
@@ -157,7 +140,7 @@
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Administración / Facturación</td>
+				<td width=885 align="left" class="titulo">Administración/Recibo de Ingreso/Boleta de Venta</td>
 			</tr>
 		</table>
 		<table align="center">

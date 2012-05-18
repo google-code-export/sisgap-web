@@ -73,7 +73,8 @@
      <forward name="success" path="/index.jsp"/>
      <forward name="agregarFacturacion" path="/jsp/administracion/facturacion/agregarFacturacion.jsp"/>
      <forward name="editarItem" path="/jsp/administracion/itemcobranza/agregarItemCob.jsp"/>
-     <forward name="imprimirFacturacion" path="/jsp/administracion/facturacion/demo.jsp"/>
+     <forward name="imprimirRecibo" path="/jsp/administracion/facturacion/reciboIngreso.jsp"/>
+     <forward name="imprimirBoleta" path="/jsp/administracion/facturacion/boletaVenta.jsp"/>
    </action> 
 
    <action name="SuministroLuzActionForm" path="/suministroLuz" parameter="metodo"

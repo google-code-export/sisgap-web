@@ -57,7 +57,7 @@ public class AjaxServlet extends HttpServlet {
 		Context context = null;
 		ServletOutputStream out = response.getOutputStream();
 		HttpSession session = request.getSession(true);
-		Set<Detallefactura> listDetallefactura =  null;
+		List<Detallefactura> listDetallefactura =  null;
 		
 		try {
 			
@@ -213,7 +213,7 @@ public class AjaxServlet extends HttpServlet {
 			
 				Detallefactura detallefactura = null;				
 				
-				listDetallefactura = (Set<Detallefactura>) session.getAttribute("listDetallefactura");
+				listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
 				
 				String codigoItem = request.getParameter("codigo");
 				String var2 = request.getParameter("descrip");
@@ -271,10 +271,11 @@ public class AjaxServlet extends HttpServlet {
 					
 					for (Detallefactura det : listDetallefactura) {
 						out.print("<tr>");
-						String function="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";						
+						String functionEli="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";
+						String functionEdi="editarDetalle("+det.getId().getCodItemcobranza() + ")";						
 						out.print("<td>");
-						out.print("<a href='#' onclick=\""+function+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
-						out.print("<a href='#' onclick=\""+function+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
+						out.print("<a href='#' onclick=\""+functionEli+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
+						out.print("<a href='#' onclick=\""+functionEdi+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
 						out.print("</td>");
 						out.print("<td>"+det.getId().getCodItemcobranza()+"</td>");
 						out.print("<td>"+det.getStrDescripcion()+"</td>");
@@ -316,7 +317,7 @@ public class AjaxServlet extends HttpServlet {
 				BigDecimal total = new BigDecimal(0);
 				
 				try {
-					listDetallefactura = (Set<Detallefactura>) session.getAttribute("listDetallefactura");
+					listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
 					FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal) context.lookup(ConstantesJNDI.FACTURAFACADE);
 					
 					factura = new Factura();
@@ -387,7 +388,7 @@ public class AjaxServlet extends HttpServlet {
 				
 				try {
 					
-					listDetallefactura = (Set<Detallefactura>) session.getAttribute("listDetallefactura");
+					listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
 					
 					String codigoItem = request.getParameter("codigoItem");
 					
@@ -421,10 +422,11 @@ public class AjaxServlet extends HttpServlet {
 					
 					for (Detallefactura det : listDetallefactura) {
 						out.print("<tr>");
-						String function="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";						
+						String functionEli="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";
+						String functionEdi="editarDetalle("+det.getId().getCodItemcobranza() + ")";
 						out.print("<td>");
-						out.print("<a href='#' onclick=\""+function+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
-						out.print("<a href='#' onclick=\""+function+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
+						out.print("<a href='#' onclick=\""+functionEli+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
+						out.print("<a href='#' onclick=\""+functionEdi+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
 						out.print("</td>");
 						out.print("<td>"+det.getId().getCodItemcobranza()+"</td>");
 						out.print("<td>"+det.getStrDescripcion()+"</td>");
@@ -463,7 +465,7 @@ public class AjaxServlet extends HttpServlet {
 		
 	}
 	
-	public void validarProducto(Set<Detallefactura> listDetallefactura, Detallefactura det) {
+	public void validarProducto(List<Detallefactura> listDetallefactura, Detallefactura det) {
 		Integer nuevaCantidad = 0;
 		Double nuevoTotal = 0.0;
 		Boolean flag = false;

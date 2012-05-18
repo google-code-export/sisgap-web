@@ -171,8 +171,15 @@ var codMon = "";
 				Generar : function() {
 					var nroDocReal =  $('[name=txtNroDoc]').val();
 					var nroDocInterno = $('[name=numerodocumento]').val();
-					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-			        nueva=window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+					var tipDocumento = $('[name=cbtipodocx]').val();
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";
+					alert("Tipo Doc. "+tipDocumento);
+					if(tipDocumento=='R'){  
+			        	nueva=window.open("gestionarFacturacion.do?metodo=imprimirRecibo&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+					}
+					if(tipDocumento=='B'){  
+			        	nueva=window.open("gestionarFacturacion.do?metodo=imprimirBoleta&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+					}
 			        //return false;
 			        $(this).dialog("close"); 
 				},
@@ -182,9 +189,10 @@ var codMon = "";
 			close : function() {
 				allFields.val("").removeClass("ui-state-error");
 			}
-		}); //window.open("gestionarFacturacion.do?metodo=imprimirFactura&nrodocumento="+nroDocu,"","height=400,width=680,top=120,left=180,scrollbars=yes,resizable=no,toolbar=no,menubar=no,location=no,status=yes");
+		});
 
-		$("#fechadocumento").datepicker({   
+		$("#fechadocumento").datepicker({  
+			dateFormat: 'dd/mm/yy', 
             changeMonth: true,
             changeYear: false,
             numberOfMonths: 1,
@@ -427,7 +435,7 @@ var codMon = "";
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Administración/Facturación</td>
+				<td width=885 align="left" class="titulo">Administración/Recibo de Ingreso/Boleta de Venta</td>
 			</tr>
 		</table>
 		<table align="center">
@@ -461,7 +469,12 @@ var codMon = "";
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td width="100px">Fecha Documento</td>
-					<td><input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 50px;" tabindex="21"/>(mes/dia/año)</td>
+					<td><input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 50px;" 
+					<% if(request.getAttribute("estadoCampos").equals("true")){ 
+						System.out.println("Estado: "+request.getAttribute("estadoCampos"));
+					%>
+					disabled="disabled"
+					<%} %> tabindex="21"/>(mes/dia/año)</td>
 				</tr>
 				<tr>
 					<td>Socio</td>
@@ -534,10 +547,19 @@ var codMon = "";
 											<td>${det.strDescripcion}</td>
 											<td>${det.strTipocobranzaDescrip}</td>
 											<td>${det.strMonedaDescrip}</td>
-											<td>${det.numCosto}</td>
+											<td align="right">
+												<fmt:formatNumber value="${det.numCosto}" type="number" maxFractionDigits="2" minFractionDigits="2" var="nCosto" />
+												<c:out value="${nCosto}" />
+											</td>
 											<td>${det.numCantidad}</td>
-											<td>${det.numTotal}</td>
-											<td>${det.numAcuenta}</td>
+											<td align="right">
+												<fmt:formatNumber value="${det.numTotal}" type="number" maxFractionDigits="2" minFractionDigits="2" var="nTotal" />
+												<c:out value="${nTotal}" />
+											</td>
+											<td align="right">
+												<fmt:formatNumber value="${det.numAcuenta}" type="number" maxFractionDigits="2" minFractionDigits="2" var="nAcuenta" />
+												<c:out value="${nAcuenta}" />
+											</td>
 										</tr>
 									</c:forEach>
 									<tr>
@@ -547,8 +569,13 @@ var codMon = "";
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>Total</td>
-									<td>${fac.numTotal}</td>
+									<td><font size="4"><b>Total</b></font></td>
+									<td align="right">
+										<font size="4">
+										<fmt:formatNumber value="${fac.numTotal}" type="currency" maxFractionDigits="2" minFractionDigits="2" var="numTotal" />
+										<c:out value="${numTotal}" />
+										</font>
+									</td>
 									<td></td>
 									</tr>
 								</tbody>

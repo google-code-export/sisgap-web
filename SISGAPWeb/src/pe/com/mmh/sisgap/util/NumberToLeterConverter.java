@@ -116,7 +116,7 @@ public abstract class NumberToLeterConverter {
 		if (cientos > 1)
 			converted += convertNumber(String.valueOf(cientos));
 	
-		converted += "SOLES";
+		converted += "NUEVOS SOLES";
 	
 		// Descompone los centimos - Camilo
 		int centimos = Integer.parseInt(String.valueOf(getDigitAt(
