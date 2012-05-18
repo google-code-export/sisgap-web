@@ -83,9 +83,10 @@
 			.font13t   {font:bold   13px Arial; color:#FFFFFF}
 			.font14n   {font:normal 14px Arial;}
 			.boton     {font:normal 11px Arial; width:80px}
+			.noprint  {display:none}
 		</style -->
 		<style type="text/css" media="print">
-			.noprint  {display:none}
+			.noprint {visibility:hidden;}
 		</style>
 		
 	</head>
@@ -93,7 +94,7 @@
 		<c-rt:set var="now" value="<%= new java.util.Date() %>" />
 		<table width="550" border="0" cellspacing="0">
 		   <tr>
-		      <td width="100" align="center" valign="center" class="noprint">
+		      <td width="100" align="center" valign="center">
 		      	<img src="imagenes/Logo_Reporte_MMH.png" width="94" height="66" alt="" />
 		      </td>
 		      <td width="300" align="center">
@@ -101,6 +102,9 @@
 		      	<font face="arial" size="1">Fundado el 13 de Noviembre de 1996<br />Ficha Registral Nº 7214</font>
 		      </td>
 		      <td width="220" align="center">
+		      	 <div style="display: none;">
+		      	 	<img src="imagenes/b21_w.gif" width="6" height="72" alt="" />
+		      	 </div>
 		         <table cellspacing="0" cellpadding="0" border="0">
 		            <tr>
 		               <td><img src="imagenes/b11.gif" width="6" height="6" alt="" align="bottom" /></td>
@@ -135,25 +139,25 @@
 		         		<td width="70">&nbsp;</td>
 		         		<td width="140">&nbsp;</td>
 		         		<td rowspan="3" width="150" align="right">
-		         			<fmt:formatNumber value="${total}" type="currency" var="total1"/> 
-		         			<font face="Courier New,Courier" size="5"><b><c:out value="${total1}"/>&nbsp;&nbsp;</b></font>
+		         			<!-- fmt:formatNumber value="${total}" type="currency" var="total1"/> 
+		         			<font face="Courier New,Courier" size="5"><b><c:out value="${total1}"/>&nbsp;&nbsp;</b></font-->
 		         		</td>
 		         	</tr>
 		            <tr>
-		               <td><b>Asociado(a): </b></td>
+		               <td><b>Señor(es): </b></td>
 		               <td align="left" colspan="3"><font face="Courier New,Courier">${fac.sisgapSocio}</font></td>
 		            </tr>
 		            <tr>
-		               <td><b>Sector Nº: </b></td>
-		               <td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.strSector}</font></td>
+		               <td colspan="4">&nbsp;<!--b>Sector Nº: </b --></td>
+		               <!-- td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.strSector}</font></td>
 		               <td align="right"><b>Giro: </b></td>
-		               <td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.sisgapActividadSocio.actiTranNombre}</font></td>
+		               <td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.sisgapActividadSocio.actiTranNombre}</font></td -->
 		            </tr>
 		            <tr>
-		               <td><b>Nº de Puesto: </b></td>
-		               <td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.tranPuesto}</font></td>
-		               <td>&nbsp;</td>
-		               <td colspan="2" align="right"><font face="Courier New,Courier" size="2"><b>Huaral,<fmt:formatDate value="${now}" type="both" timeStyle="short" dateStyle="long"/></b></font></td>
+		               <td colspan="2"><b>Dirección: </b></td>
+		               <!-- td align="left"><font face="Courier New,Courier">${fac.sisgapSocio.tranPuesto}</font></td>
+		               <td>&nbsp;</td -->
+		               <td colspan="3" align="right"><font face="Courier New,Courier" size="2"><b>Huaral,<fmt:formatDate value="${now}" type="both" timeStyle="short" dateStyle="long"/></b></font></td>
 		            </tr>
 		         </table>
 		      </td>
