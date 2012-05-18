@@ -51,5 +51,6 @@
 	<classpathentry kind="lib" path="/SISGAPWeb/WebContent/WEB-INF/lib/org.springframework.web-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/SISGAPWeb/WebContent/WEB-INF/lib/oswego.jar"/>
 	<classpathentry kind="lib" path="/SISGAPWeb/WebContent/WEB-INF/lib/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="C:/tools/jboss7/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
