@@ -12,18 +12,31 @@ import org.apache.struts.action.ActionMapping;
 
 import pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionForm;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.UnidadmedidaFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
+import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.Unidadmedida;
 
 public class GestionarItemCobranzaAction extends GrandActionAbstract{
 	
-	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[GestionarItemCobranzaAction] Inicio - cargarAction");
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
+		SuministroLuzFacadeLocal luzfacadeLocal = (SuministroLuzFacadeLocal) lookup(ConstantesJNDI.SUMINISTROLUZ);
 		List<Itemcobranza> lstCob = facadeLocal.findAll();
+		List<ReciboluzOrg> lstOrg = luzfacadeLocal.ListReciboluzOrg(); 
 		request.setAttribute("lstCob", lstCob);
+		request.setAttribute("lstOrg", lstOrg);
+		
+		for(int i=0; i<lstOrg.size(); i++){
+			System.out.println(lstOrg.get(i).getCodOrgreciboLuz());
+			System.out.println(lstOrg.get(i).getFecPeriodo());
+		}
+		
+		System.out.println("[GestionarItemCobranzaAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
 	
