@@ -10,14 +10,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <script type="text/javascript">
+$(function() {
+
+	$("#btn-Grabar").button();
+	$("#btn-Cancelar").button();
+});
+
 function grabar() {
-	var frm = document.agragarItem;
+	var frm = document.agregarItem;
 	frm.metodo.value = 'actualizar';
 	frm.submit();
 
 }
 function lstCancelar() {
-	var frm = document.agragarItem;
+	var frm = document.agregarItem;
 	frm.metodo.value = 'cargarAction';
 	frm.submit();
 
@@ -26,7 +32,7 @@ function lstCancelar() {
 </head>
 <body>
 
-	<html:form action="/gestionarItemCobranza.do" method="post" styleId="agragarItem">
+	<html:form action="/gestionarItemCobranza.do" method="post" styleId="agregarItem">
 		<input type="hidden" name="metodo" value="grabar"/>
 
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
@@ -70,13 +76,13 @@ function lstCancelar() {
 				<span class="titulo">Nuevo Registro
 				<table border="0" cellpadding="2" cellspacing="2" width="80%">
 					<tr>
-						<td width="30%" align="right">Concepto</td>
+						<td width="200" align="right">Concepto</td>
 						<td><input type="text"  size="50" name="txtconcepto" value="${objItem.strDescripcion}"/></td>
 					</tr>
 					<tr>
-						<td width="30%" align="right">Concepto Padre</td>
+						<td align="right">Concepto Padre</td>
 						<td>
-							<select id="cbConceptPadre" name="cbConceptPadre">
+							<select id="cbConceptPadre" name="cbConceptPadre" style="width: 300px">
 								<option value="0" selected>Seleccione</option>
 								<c:forEach items="${lstCob}" var="row">
 									<c:choose>
@@ -91,15 +97,26 @@ function lstCancelar() {
 								</c:forEach>
 							</select>
 						</td>
+					</tr>
+					<tr>
+						<td align="right">Recibo de Luz</td>
+						<td>
+							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 300px">
+								<option value="0" selected="selected">Seleccione</option>
+								<c:forEach items="${lstOrg}" var="row">
+									<option value="${row.codOrgreciboLuz}">${row.codOrgreciboLuz}</option>										
+								</c:forEach>
+							</select>
+						</td>
 					</tr>					
 					<tr>
-						<td width="30%" align="right">Costo</td>
+						<td align="right">Costo</td>
 						<td><input type="text" size="10" name="txtcosto" value="${objItem.numCosto}"/></td>
 					</tr>
 					<tr>
-						<td width="30%" align="right">Moneda</td>
+						<td align="right">Moneda</td>
 						<td>
-							<select id="selMoneda" name="txtmoneda">
+							<select id="selMoneda" name="txtmoneda" style="width: 300px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.strMoneda =='S' }">
@@ -111,15 +128,13 @@ function lstCancelar() {
 										<option value="D" selected >Dolares</option>
 									</c:when>																
 								</c:choose>
-								
-								
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td width="30%" align="right">U/M</td>
+						<td align="right">U/M</td>
 						<td>
-							<select id="selUM" name="cbmedida">
+							<select id="selUM" name="cbmedida" style="width: 300px">
 								<option value="">Seleccione</option>
 								<c:forEach items="${lstMedidas}" var="row">
 									<c:choose>
@@ -135,9 +150,9 @@ function lstCancelar() {
 						</td>
 					</tr>
 					<tr>
-						<td width="30%" align="right">Tipo de Cobranza</td>
+						<td align="right">Tipo de Cobranza</td>
 						<td>
-							<select id="selCobranza" name="cbtipocob">
+							<select id="selCobranza" name="cbtipocob" style="width: 300px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.strTipocobranza =='C ' }">
@@ -153,9 +168,9 @@ function lstCancelar() {
 						</td>
 					</tr>
 					<tr>
-						<td width="30%" align="right">Estado</td>
+						<td align="right">Estado</td>
 						<td>
-							<select id="selEstado" name="cbestado">
+							<select id="selEstado" name="cbestado" style="width: 300px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.numEstado == 1 }">
@@ -171,8 +186,8 @@ function lstCancelar() {
 						</td>
 					</tr>
 					<tr>
-						<td align="center"><input type="button"	value="Grabar" onclick="grabar()" /></td>
-						<td align="center"><input type="button"	value="Cancelar" onclick="lstCancelar()" /></td>
+						<td align="center"><input type="button"	id="btn-Grabar" value="Grabar" onclick="grabar()" /></td>
+						<td align="center"><input type="button"	id="btn-Cancelar" value="Cancelar" onclick="lstCancelar()" /></td>
 					</tr>
 				</table>
 				</span>
