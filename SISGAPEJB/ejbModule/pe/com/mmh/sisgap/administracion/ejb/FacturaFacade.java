@@ -208,8 +208,8 @@ public class FacturaFacade implements FacturaFacadeLocal {
     		
 			cst = connection.prepareCall(SP_UPD_NROFACTURASOCIO);
 			
-			cst.setString("p_NROREAL", nroDocReal);
-			cst.setString("p_NROINTE", nroDocInte);
+			cst.setInt("P_NRO_REAL", Integer.parseInt(nroDocReal));
+			cst.setInt("P_COD_FACTURA", Integer.parseInt(nroDocInte));
 			cst.execute();
 			
 		} catch (Exception e) {

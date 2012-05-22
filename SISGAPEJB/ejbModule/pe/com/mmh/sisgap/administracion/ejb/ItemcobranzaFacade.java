@@ -31,7 +31,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 	
 	private static final String view_buscar_item = "select * from view_buscar_item where str_descripcion like %s ";
 	private static final String SP_DEL_ITEMCOB = "{call PKG_ADMINISTRACION.SP_DEL_ITEMCOB(?)}";
-	private static final String SP_UPD_ITEMCOB = "{call PKG_ADMINISTRACION.SP_UPD_ITEMCOB(?,?,?,?,?,?,?,?)}";
+	private static final String SP_UPD_ITEMCOB = "{call PKG_ADMINISTRACION.SP_UPD_ITEMCOB(?,?,?,?,?,?,?,?,?)}";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -58,6 +58,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 			cst.setString("P_STR_DESCRIPCION", ic.getStrDescripcion());
 			cst.setInt("P_COD_UNIMEDIDA", ic.getUnidadmedida().getCodUnimedida().intValue());
 			cst.setLong("P_COD_ITEMPADRE", ic.getNumCodItemPadre());
+			cst.setInt("P_COD_LUZORIG", ic.getCodReciboLuz().intValue());
 			cst.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +125,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 				itemcobranza.setStrMoneda(rs.getString("STR_MONEDA"));
 				itemcobranza.setStrTipocobranza(rs.getString("STR_TIPOCOBRANZA"));
 				itemcobranza.setStrDescripcion(rs.getString("STR_DESCRIPCION"));
+				itemcobranza.setCodReciboLuz(rs.getBigDecimal("COD_RECIBOLUZ"));
 				lsItemCobranza.add(itemcobranza);
 			}
 			

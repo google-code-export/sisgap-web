@@ -63,6 +63,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
 	
 	private static final String view_buscar_recibo_socio = "select * from view_buscar_recibo_socio where tran_codigo = %s order by fechacarga desc ";
+	private static final String view_buscar_recibo_luzsocio = "select * from view_buscar_recibo_socio where codigosocio = %s order by fechacarga desc ";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -1023,7 +1024,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		try {
 			connection = getConnection();
 			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
-			pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim() +"' ")); //Integer.parseInt(codSocio.trim())+"'"));
+			pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim() +"' "));
 			rs = pst.executeQuery();
 			if(rs.next()){
 				rpta = 1;
@@ -1041,6 +1042,50 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		}
 		
 		return rpta;
+		
+	}
+
+	
+	public List<SuministroLusReciboSocio> buscarReciboLuzxCodigoSocio(String codSocio, String codRecibo) {
+    	Connection connection = null;
+    	PreparedStatement pst = null;
+    	ResultSet rs = null;
+    	List<SuministroLusReciboSocio> lsSuministroLuzSocio = null;
+    	SuministroLusReciboSocio reciboSocio = null;
+		try {
+			connection = getConnection();
+			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
+			//pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+"'")); //Integer.parseInt(codSocio.trim())+"'"));
+			pst = connection.prepareStatement(String.format(view_buscar_recibo_luzsocio, "'"+ codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim() +"' "));
+			rs = pst.executeQuery();
+			
+			while(rs.next()){
+				reciboSocio = new SuministroLusReciboSocio();
+				reciboSocio.setCodigosocio(rs.getLong("codigosocio"));
+				reciboSocio.setCodigorecibo(rs.getLong("codigorecibo"));
+				reciboSocio.setLecturaini(new BigDecimal(rs.getString("lecturaini")));
+				reciboSocio.setLecturafin(new BigDecimal(rs.getString("lecturafin")));
+				reciboSocio.setTotal(new BigDecimal(rs.getString("total")));
+				reciboSocio.setEstado(new BigDecimal(rs.getString("estado")));
+				reciboSocio.setDeudaant(new BigDecimal(rs.getString("deudaant")));
+				reciboSocio.setFechacarga(rs.getTimestamp("fechacarga"));
+				
+				lsSuministroLuzSocio.add(reciboSocio);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return lsSuministroLuzSocio;
 		
 	}
 	
