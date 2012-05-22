@@ -46,9 +46,9 @@
 				);
 
 				$("#btnPrint").button().click(function() {
-					alert("Pruebas");
-					var nrodocReal =  ${nroDocReal};
-					var nrodocInte =  ${nroDocInte};
+					$('[name=metodo]').val('cancelarFactura');
+					var nrodocReal = $("#docreal").val();
+					var nrodocInte = $("#docinte").val();
 					$.ajax({
 					        type: "POST",
 					        url: "/SISGAPWeb/AjaxServlet",
@@ -74,6 +74,8 @@
 		
 	</head>
 	<body>
+		<input type="hidden" name="docreal" id=docreal value="${nroDocReal}" />
+		<input type="hidden" name="docinte" id="docinte" value="${nroDocInte}" />
 		<c-rt:set var="now" value="<%= new java.util.Date() %>" />
 		<table width="550" border="0" cellspacing="0">
 		   <tr>

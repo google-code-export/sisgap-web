@@ -101,14 +101,19 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Recibo de Luz</td>
 						<td>
-							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 300px">
+							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 150px">
 								<option value="0" selected="selected">Seleccione</option>
-								<c:forEach items="${lstOrg}" var="row">
-									<option value="${row.codOrgreciboLuz}">${row.codOrgreciboLuz}</option>										
+								<c:forEach items="${lstOrg}" var="reg">
+									<c:when test="${objItem.codOrgreciboLuz == reg.codOrgreciboLuz }">
+										<option value="${reg.codOrgreciboLuz}" selected="selected">${reg.fecPeriodo}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${reg.codOrgreciboLuz}">${reg.fecPeriodo}</option>
+									</c:otherwise>
 								</c:forEach>
 							</select>
 						</td>
-					</tr>					
+					</tr>				
 					<tr>
 						<td align="right">Costo</td>
 						<td><input type="text" size="10" name="txtcosto" value="${objItem.numCosto}"/></td>
@@ -116,7 +121,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Moneda</td>
 						<td>
-							<select id="selMoneda" name="txtmoneda" style="width: 300px">
+							<select id="selMoneda" name="txtmoneda" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.strMoneda =='S' }">
@@ -134,7 +139,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">U/M</td>
 						<td>
-							<select id="selUM" name="cbmedida" style="width: 300px">
+							<select id="selUM" name="cbmedida" style="width: 100px">
 								<option value="">Seleccione</option>
 								<c:forEach items="${lstMedidas}" var="row">
 									<c:choose>
@@ -152,7 +157,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Tipo de Cobranza</td>
 						<td>
-							<select id="selCobranza" name="cbtipocob" style="width: 300px">
+							<select id="selCobranza" name="cbtipocob" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.strTipocobranza =='C ' }">
@@ -170,7 +175,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Estado</td>
 						<td>
-							<select id="selEstado" name="cbestado" style="width: 300px">
+							<select id="selEstado" name="cbestado" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.numEstado == 1 }">

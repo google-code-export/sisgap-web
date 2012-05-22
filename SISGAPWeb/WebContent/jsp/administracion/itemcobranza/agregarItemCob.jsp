@@ -95,12 +95,12 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Recibo de Luz</td>
 						<td>
-							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 300px">
+							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 150px">
 								<option value="0" selected="selected">Seleccione</option>
-								<c:forEach items="${lstOrg}" var="row1">
-									<option value="${row1.codOrgreciboLuz}">${row1.codOrgreciboLuz}</option>										
+								<c:forEach items="${lstOrg}" var="reg">
+									<option value="${reg.codOrgreciboLuz}">${reg.fecPeriodo}</option>										
 								</c:forEach>
-							</select>
+							</select> (*) Solo para crear el item de cobranza de los Recibos de Luz
 						</td>
 					</tr>
 					<tr>
@@ -110,7 +110,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Moneda</td>
 						<td>
-							<select id="selMoneda" name="txtmoneda" style="width: 300px">
+							<select id="selMoneda" name="txtmoneda" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<option value="S">Soles</option>
 								<option value="D">Dolares</option>
@@ -120,7 +120,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">U/M</td>
 						<td>
-							<select id="selUM" name="cbmedida" style="width: 300px">
+							<select id="selUM" name="cbmedida" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:forEach items="${lstMedidas}" var="row">
 									<option value="${row.codUnimedida}">${row.strNombre}</option>										
@@ -131,7 +131,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Tipo de Cobranza</td>
 						<td>
-							<select id="selCobranza" name="cbtipocob" style="width: 300px">
+							<select id="selCobranza" name="cbtipocob" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<option value="C">Contable</option>
 								<option value="N">No Contable</option>
@@ -141,7 +141,7 @@ function lstCancelar() {
 					<tr>
 						<td align="right">Estado</td>
 						<td>
-							<select id="selEstado" name="cbestado" style="width: 300px">
+							<select id="selEstado" name="cbestado" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<option value="1">Activo</option>
 								<option value="0">Inactivo</option>

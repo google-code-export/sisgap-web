@@ -58,12 +58,9 @@
 			buttons : {
 				Generar : function() {
 					var tipDoc = $("#tipDocx").val();
-					//alert("Tipo de documento: "+tipDoc);
 					var estDoc = $("#estDocx").val();
-					//alert("Estado de documento: "+estDoc);
 					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
 			        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTOS_FILTRO&tipDoc='+tipDoc+'&estDoc='+estDoc, 'Popup', caracteristicas);  
-			        //$(this).dialog("close");
 					//return false; 
 				},
 				Cancel : function() {
@@ -76,10 +73,32 @@
 
 
 		$('#imprimir-f').click(function() {
-			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
-	        nueva=window.open('ReportsServlet?reporte=REPORTE_DOCUMENTO_X_GRUPO', 'Popup', caracteristicas);  
-	        return false;  
+			$("#selerepodia-form").dialog("open");
 		});				
+
+		$("#selerepodia-form").dialog({
+			autoOpen : false,
+			height : 150,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var fecDoc = $("#fechadocumento").val();
+					var tipDoc = $("#tipDocY").val();
+					var estDoc = $("#estDocY").val();
+					//alert("FecDoc: "+fecDoc+"\nTipDoc: "+tipDoc+"\nEstDoc: "+estDoc);
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";    
+			        nueva=window.open('ReportsServlet?reporte=REPORTE_DIARIO_DOCUMENTOS&fecDoc='+fecDoc+'&tipDoc='+tipDoc+'&estDoc='+estDoc, 'Popup', caracteristicas);  
+					//return false; 
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+
 
 		
 		//Imagen Anular
@@ -101,6 +120,20 @@
 				allFields.val("").removeClass("ui-state-error");
 			}
 		});
+
+		$("#fechadocumento").datepicker({  
+			dateFormat: 'dd/mm/yy', 
+            changeMonth: true,
+            changeYear: false,
+            numberOfMonths: 1,
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+                'Junio', 'Julio', 'Agosto', 'Septiembre',
+                'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+                'May', 'Jun', 'Jul', 'Ago',
+                'Sep', 'Oct', 'Nov', 'Dic'] 
+        }); 
 		
 	});
 
@@ -135,6 +168,7 @@
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoFactura" id="codigoFactura"/>
 		<input type="hidden" name="descripanulada" id="descripanulada"/>
+		<input type="hidden" name="fecdocumento" value="${fechadocumento}" />
 		<input type="hidden" name="tipodocumento" id="tipodocumento" value="R"/>
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
@@ -214,7 +248,7 @@
 					</c:choose>
 				</display:column>
 				<display:column title="Nro.Doc.Interno" property="numNrodoc" sortable="true"></display:column>
-				<display:column title="Nro.Doc.Impreso" sortable="true"></display:column>
+				<display:column title="Nro.Doc.Impreso" property="nroFactura" sortable="true"></display:column>
 				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
 				<display:column title="Puesto" sortable="true">${row.sisgapSocio.tranPuesto}</display:column>
 				<display:column title="Actividad" sortable="true">${row.sisgapSocio.sisgapActividadSocio.actiTranNombre}</display:column>
@@ -249,7 +283,7 @@
 					<td>Tipos de Documentos :
 						<select name="tipDocx" id="tipDocx">
 							<option value="T" selected>-- Todos --</option>
-							<option value="R">Recibos</option>
+							<option value="R" selected="selected">Recibos</option>
 							<option value="B">Boletas</option>
 						</select>
 					</td>
@@ -266,7 +300,32 @@
 			</table>
 		</div>
 	</div>
+	<div id="selerepodia-form" title="Seleccione Tipo de Reporte diario a mostrar...">
+		<div align="center">
+			<table border="1">
+				<tr>
+					<td>
+						<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;"/>(mes/dia/año)
+					</td>
+					<td>Tipos de Documentos :
+						<select name="tipDocY" id="tipDocY">
+							<option value="R">Recibos</option>
+							<option value="B">Boletas</option>
+						</select>
+					</td>
+					<td>&nbsp;</td>
+					<td>Estado de Documentos :
+						<select name="estDocY" id="estDocY">
+							<option value="T" selected>-- Todos --</option>
+							<option value="P">Pendiente</option>
+							<option value="C">Cancelada</option>
+							<option value="A">Anulada</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	</html:form>
-
 </body>
 </html>
