@@ -56,6 +56,8 @@ public class Itemcobranza implements Serializable {
     private Short numEstado;
     @Column(name = "STR_DESCRIPCION")
     private String strDescripcion;
+    @Column(name = "COD_RECIBOLUZ")
+    private BigDecimal codReciboLuz;
     
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="COD_UNIMEDIDA")
@@ -125,7 +127,14 @@ public class Itemcobranza implements Serializable {
         this.numEstado = numEstado;
     }
 
+	public BigDecimal getCodReciboLuz() {
+		return codReciboLuz;
+	}
 
+	public void setCodReciboLuz(BigDecimal codReciboLuz) {
+		this.codReciboLuz = codReciboLuz;
+	}
+    
     public Unidadmedida getUnidadmedida() {
 		return unidadmedida;
 	}
@@ -178,8 +187,6 @@ public class Itemcobranza implements Serializable {
 		this.tipocobdes = tipocobdes;
 	}
 
-	
-	
 	public String getTipomondes() {
 		
 		String valor = "";

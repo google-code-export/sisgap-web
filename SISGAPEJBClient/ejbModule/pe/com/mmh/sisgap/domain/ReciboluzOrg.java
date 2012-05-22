@@ -2,6 +2,7 @@ package pe.com.mmh.sisgap.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
@@ -12,11 +13,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "SISGAP_RECIBOLUZ_ORG")
+@NamedQueries({
+	@NamedQuery(name = "ReciboluzOrg.ListReciboluzOrg", query = "SELECT i FROM ReciboluzOrg i") })
+
 public class ReciboluzOrg implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name = "SISGAP_RECIBOLUZ_ORG_CODORGRECIBOLUZ_GENERATOR", sequenceName = "SQ_GENERAL")
+	@Id	@SequenceGenerator(name = "SISGAP_RECIBOLUZ_ORG_CODORGRECIBOLUZ_GENERATOR", sequenceName = "SQ_GENERAL")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SISGAP_RECIBOLUZ_ORG_CODORGRECIBOLUZ_GENERATOR")
 	@Column(name = "COD_ORGRECIBO_LUZ")
 	private long codOrgreciboLuz;

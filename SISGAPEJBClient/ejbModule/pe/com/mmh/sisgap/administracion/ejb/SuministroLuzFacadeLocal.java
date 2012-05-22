@@ -62,4 +62,7 @@ public interface SuministroLuzFacadeLocal {
 	List<SuministroLusReciboSocio> buscarReciboxCodigo(String codSocio);
 	
 	int buscarReciboxCodigoxSocio(String codSocio, String codRecibo);
+
+	List<SuministroLusReciboSocio> buscarReciboLuzxCodigoSocio(String codSocio, String codRecibo);
+	
 }
