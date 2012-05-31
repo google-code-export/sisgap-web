@@ -2,7 +2,7 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
-		 name="Reporte de Socios"
+		 name="Listado Diario de Recibos"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -27,7 +27,7 @@
 		<defaultValueExpression ><![CDATA["R"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FECHA_DOC" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["01/02/2012"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["25/02/2012"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_EST_PENDIENTE" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["1"]]></defaultValueExpression>
@@ -306,7 +306,7 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_PUESTO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="Â¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="417"
 						y="2"
@@ -427,7 +427,7 @@ ORDER BY
 		</pageFooter>
 		<summary>
 			<band height="20"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="Â¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="405"
 						y="0"

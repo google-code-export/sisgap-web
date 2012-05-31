@@ -269,7 +269,13 @@ var codMon = "";
 		}});
 
 		$("#create-user").button().click(function() {
-			$("#dialog-form").dialog("open");
+			var fecdoc = $('[name=fechadocumento]').val();
+			if (fecdoc==""){
+				alert("debe ingresar la fecha del documento...");
+				$('[name=fechadocumento]').focus();
+			}else{
+				$("#dialog-form").dialog("open");
+			}
 			return false;
 		});
 
@@ -290,10 +296,10 @@ var codMon = "";
 			      }
 			});
 		});
-
+		
 		$("#btn-aceptar-item").button().click(function() {
-			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
-			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();;
+			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + "(" +$("#especif-p").val() + ")" + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
+			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();
 					
 					$.ajax({
 				        type: "POST",
@@ -303,6 +309,11 @@ var codMon = "";
 				        	$("#tableDetalle").html(datos);
 				      }
 				});
+
+			$("#cantidad-p").val(redondea(0,2));
+			$("#total-p").val(redondea(0,2));
+			$("#acuenta-p").val(redondea(0,2));
+			$("#especif-p").val("");					
 			$("#dialog-form-item").dialog("close");
 		});
 		
@@ -334,9 +345,12 @@ var codMon = "";
 		});
 		
 
-		$("btn-cancelar").button().click(function() {
+		$("#btn-cancelar").button().click(function() {
+    		$("#cantidad-p").val(redondea(0,2));
+    		$("#total-p").val(redondea(0,2));
+    		$("#acuenta-p").val(redondea(0,2));
+    		$("#especif-p").val("");
 			$("#dialog-form-item").dialog("close");
-			//$('#gestionarFacturacion').submit();
 		});
 
 
@@ -371,25 +385,22 @@ var codMon = "";
 		codTipCob = codTipCobranza;
 		codMon = codMoneda;
 		var codide = $("#codigoide-f").val();
-		if(codReciboLuz!='--.--'){
-			/*alert("Codigo Socio... "+codide);
-			alert("Nro Recibo Luz... "+codReciboLuz);*/
-			$.ajax({
-		        type: "POST",
-		        url: "/SISGAPWeb/AjaxServlet",
-		        data: "action=BUSCAR_RECIBO_LUZ_SOCIO&codide="+codide+"&codReciboLuz="+codReciboLuz,
-		        success: function(datos){
-		        	if(datos==""){
-						alert("El Socio no tiene recibo de luz generado.");
-						return false;
-		        	}else{
-		        		$("#cantidad-p").val(redondea(datos,2));
-		        		$("#total-p").val(redondea(datos,2));
-		        		$("#acuenta-p").val(redondea(datos,2));	        	
-			        }
-		      	}
-			});
-		}
+		
+		$.ajax({
+	        type: "POST",
+	        url: "/SISGAPWeb/AjaxServlet",
+	        data: "action=BUSCAR_RECIBO_LUZ_SOCIO&codide="+codide+"&codReciboLuz="+codReciboLuz,
+	        success: function(datos){
+	        	if(datos==""){
+					alert("El Socio no tiene recibo de luz generado.");
+					return false;
+	        	}else{
+	        		$("#cantidad-p").val(redondea(datos,2));
+	        		$("#total-p").val(redondea(datos,2));
+	        		$("#acuenta-p").val(redondea(datos,2));	        	
+		        }
+	      	}
+		});
 		
 		$("#dialog-form").dialog("close");
 		$("#codigo-p").val(codigo);
@@ -677,10 +688,14 @@ var codMon = "";
 						<td><label>A Cuenta:</label></td>
 						<td><input type='text' name='acuenta-p' id='acuenta-p' class='texto' size="10" tabindex="8"/></td>
 					</tr>
+					<tr>
+						<td><label>Especificar:</label></td>
+						<td><input type='text' name='especif-p' id='especif-p' class='texto' size="20" style=" width : 200px;" tabindex="9"/></td>
+					</tr>
 				</table>
 				<br>
-				<button id="btn-aceptar-item" tabindex="9">Agregar</button>
-				<button id="btn-cancelar" tabindex="10">Cancelar</button>
+				<button id="btn-aceptar-item" tabindex="10">Agregar</button>
+				<button id="btn-cancelar" tabindex="11">Cancelar</button>
 			</fieldset>
 		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		

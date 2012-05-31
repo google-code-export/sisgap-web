@@ -302,7 +302,7 @@
 	</div>
 	<div id="selerepodia-form" title="Seleccione Tipo de Reporte diario a mostrar...">
 		<div align="center">
-			<table border="1">
+			<table border="0">
 				<tr>
 					<td>
 						<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;"/>(mes/dia/año)
