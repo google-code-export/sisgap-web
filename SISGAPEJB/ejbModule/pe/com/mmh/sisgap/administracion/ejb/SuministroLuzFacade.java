@@ -1047,7 +1047,8 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 
 	
 	public List<SuministroLusReciboSocio> buscarReciboLuzxCodigoSocio(String codSocio, String codRecibo) {
-    	Connection connection = null;
+		System.out.println("[SuministroLuzFacade] Inicio - buscarReciboLuzxCodigoSocio");
+		Connection connection = null;
     	PreparedStatement pst = null;
     	ResultSet rs = null;
     	List<SuministroLusReciboSocio> lsSuministroLuzSocio = null;
@@ -1058,6 +1059,8 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			//pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+"'")); //Integer.parseInt(codSocio.trim())+"'"));
 			pst = connection.prepareStatement(String.format(view_buscar_recibo_luzsocio, "'"+ codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim() +"' "));
 			rs = pst.executeQuery();
+			
+			System.out.println("[SuministroLuzFacade] QUERY : " + view_buscar_recibo_luzsocio + " " + codSocio.trim()+ "' AND codigorecibo = '"+ codRecibo.trim());
 			
 			while(rs.next()){
 				reciboSocio = new SuministroLusReciboSocio();
@@ -1085,6 +1088,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			}
 		}
 		
+		System.out.println("[SuministroLuzFacade] Final - buscarReciboLuzxCodigoSocio");
 		return lsSuministroLuzSocio;
 		
 	}

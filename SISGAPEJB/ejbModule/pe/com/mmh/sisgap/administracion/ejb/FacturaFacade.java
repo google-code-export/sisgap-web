@@ -90,8 +90,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
     }
 
     public List<Factura> findAll() {
-    	
-//    	Connection connection = null;
+    	//    	Connection connection = null;
 //    	CallableStatement cst = null;
 //    	List<Factura> facturas = new ArrayList<Factura>();
 //    	try {
@@ -130,8 +129,15 @@ public class FacturaFacade implements FacturaFacadeLocal {
 //				}
 //		}
     	
-    	
-        return em.createQuery("select object(o) from Factura as o").getResultList();
+    	// Ordenando por tipo documento (1).
+    	// Ordenando por nro doc interno (2).
+    	// Ordenando por socio (3).
+    	// Ordenando por puesto (4).
+    	// Ordenando por actividad (5).
+    	// Ordenando por fecha de creacion (6).
+    	// Ordenando por total (7).
+    	// Ordenando por estado (8).
+        return em.createQuery("select object(o) from Factura as o order by 6 desc").getResultList();
 //    	return facturas;
     }
 
@@ -197,6 +203,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 
 	@Override
 	public void actualizaNroFactura(String nroDocReal, String nroDocInte) {
+		System.out.println("[FacturaFacade] Inicio - actualizaNroFactura");
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	CallableStatement cst = null;
@@ -211,7 +218,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			cst.setInt("P_NRO_REAL", Integer.parseInt(nroDocReal));
 			cst.setInt("P_COD_FACTURA", Integer.parseInt(nroDocInte));
 			cst.execute();
-			
+			System.out.println("[FacturaFacade] P_Nro_Real : "+nroDocReal+" - P_COD_FACTURA : "+nroDocInte);
 		} catch (Exception e) {
 			try {
 				connection.rollback();
@@ -227,6 +234,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 					e.printStackTrace();
 				}
 		}
+		System.out.println("[FacturaFacade] Final - actualizaNroFactura");
 	}
 	
 	
