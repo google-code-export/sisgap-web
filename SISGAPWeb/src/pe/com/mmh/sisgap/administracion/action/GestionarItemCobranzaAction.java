@@ -18,6 +18,7 @@ import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
+import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.Unidadmedida;
 
 public class GestionarItemCobranzaAction extends GrandActionAbstract{
@@ -25,23 +26,22 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[GestionarItemCobranzaAction] Inicio - cargarAction");
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
-		SuministroLuzFacadeLocal luzfacadeLocal = (SuministroLuzFacadeLocal) lookup(ConstantesJNDI.SUMINISTROLUZ);
-		List<Itemcobranza> lstCob = facadeLocal.findAll();
-		List<ReciboluzOrg> lstOrg = luzfacadeLocal.ListReciboluzOrg(); 
+		List<Itemcobranza> lstCob = facadeLocal.findAll(); 
 		request.setAttribute("lstCob", lstCob);
-		request.setAttribute("lstOrg", lstOrg);
+		//request.setAttribute("lstOrg", lstOrg);
 		
-		for(int i=0; i<lstOrg.size(); i++){
+		/*for(int i=0; i<lstOrg.size(); i++){
 			System.out.println(lstOrg.get(i).getCodOrgreciboLuz());
 			System.out.println(lstOrg.get(i).getFecPeriodo());
-		}
+		}*/
 		
 		System.out.println("[GestionarItemCobranzaAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
 	
 	
-	public ActionForward irGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward irGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[GestionarItemCobranzaAction] Inicio - irGrabar");
 		UnidadmedidaFacadeLocal facadeLocal=(UnidadmedidaFacadeLocal) lookup(ConstantesJNDI.UNIDADMEDIDAFACADE);
 		List<Unidadmedida> lstMedidas = facadeLocal.findAll();
 		request.setAttribute("lstMedidas", lstMedidas);
@@ -49,12 +49,17 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		ItemcobranzaFacadeLocal facadeLocalCob = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		List<Itemcobranza> lstCob = facadeLocalCob.findAll();
 		request.setAttribute("lstCob", lstCob);		
+
+		SuministroLuzFacadeLocal luzfacadeLocal = (SuministroLuzFacadeLocal) lookup(ConstantesJNDI.SUMINISTROLUZ);
+		List<ReciboluzOrg> lstOrg = luzfacadeLocal.ListReciboluzOrg();
+		request.setAttribute("lstOrg", lstOrg);
 		
+		System.out.println("[GestionarItemCobranzaAction] Final - irGrabar");
 		return mapping.findForward("agregarCobranzas");
 	}
 	
 	public ActionForward grabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		
+		System.out.println("[GestionarItemCobranzaAction] Inicio - grabar");
 		String cbtipocob = request.getParameter("cbtipocob");
 		String txtmoneda = request.getParameter("txtmoneda");
 		String txtcosto = request.getParameter("txtcosto");
@@ -62,6 +67,7 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		String cbestado = request.getParameter("cbestado");
 		String cbmedida = request.getParameter("cbmedida");
 		String  cbconceptpadre = request.getParameter("cbConceptPadre");
+		String cbReciboLuz = request.getParameter("cbReciboLuz");
 		
 		Itemcobranza ic = new Itemcobranza();
 		ic.setNumCosto(new BigDecimal(txtcosto));
@@ -69,6 +75,7 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		ic.setStrDescripcion(txtconcepto);
 		ic.setStrTipocobranza(cbtipocob);
 		ic.setNumCodItemPadre(new Long(cbconceptpadre));
+		ic.setCodReciboLuz(new BigDecimal(cbReciboLuz));
 		char a= txtmoneda.charAt(0);
 		ic.setStrMoneda(txtmoneda.trim());
 
@@ -80,21 +87,24 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		facadeLocal.create(ic);
 		List<Itemcobranza> lstCob = facadeLocal.findAll();
 		request.setAttribute("lstCob", lstCob);
-		
+		System.out.println("[GestionarItemCobranzaAction] Final - grabar");
 		return mapping.findForward("cargarAction");
 	}
 	
 	
-	public ActionForward eliminar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward eliminar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[GestionarItemCobranzaAction] Inicio - eliminar");
 		GestionarItemCobranzaActionForm frm	= (GestionarItemCobranzaActionForm) form;
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		facadeLocal.remove(new BigDecimal(frm.getCodigo()));		
 		List<Itemcobranza> lstCob = facadeLocal.findAll();
 		request.setAttribute("lstCob", lstCob);
+		System.out.println("[GestionarItemCobranzaAction] Final - eliminar");
 		return mapping.findForward("cargarAction");
 	}
 	
-	public ActionForward irActualizar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+	public ActionForward irActualizar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[GestionarItemCobranzaAction] Inicio - irActualizar");
 		GestionarItemCobranzaActionForm frm=(GestionarItemCobranzaActionForm) form;
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		Itemcobranza obj=facadeLocal.find(new BigDecimal(frm.getCodigo()));
@@ -103,17 +113,21 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		List<Itemcobranza> lstCob = facadeLocalCob.findAll();
 		request.setAttribute("lstCob", lstCob);	
 		
+		SuministroLuzFacadeLocal luzfacadeLocal = (SuministroLuzFacadeLocal) lookup(ConstantesJNDI.SUMINISTROLUZ);
+		List<ReciboluzOrg> lstOrg = luzfacadeLocal.ListReciboluzOrg();
+		request.setAttribute("lstOrg", lstOrg);
+		
 		UnidadmedidaFacadeLocal unimed=(UnidadmedidaFacadeLocal) lookup(ConstantesJNDI.UNIDADMEDIDAFACADE);
 		List<Unidadmedida> lstMedidas = unimed.findAll();
 		request.setAttribute("lstMedidas", lstMedidas);
 		
 		request.setAttribute("objItem", obj);
-		
+		System.out.println("[GestionarItemCobranzaAction] Final - irActualizar");
 		return mapping.findForward("editarItem");
 	}
 
 	public ActionForward actualizar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		
+		System.out.println("[GestionarItemCobranzaAction] Inicio - actualizar");
 		GestionarItemCobranzaActionForm frm=(GestionarItemCobranzaActionForm) form;
 		
 		String cbtipocob = request.getParameter("cbtipocob");
@@ -141,7 +155,7 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		facadeLocal.edit(ic);
 		List<Itemcobranza> lstCob = facadeLocal.findAll();
 		request.setAttribute("lstCob", lstCob);
-		
+		System.out.println("[GestionarItemCobranzaAction] Final - actualizar");
 		return mapping.findForward("cargarAction");
 	}	
 	

@@ -75,6 +75,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		
 		request.setAttribute("tipodocumento", fac.getStrTipodoc().trim());
 		request.setAttribute("numerodocumento", fac.getNumNrodoc());
+		request.setAttribute("numeroreal", fac.getNroFactura());
 		//request.setAttribute("fechadocumento", fac.getDatFechafac());
 		request.setAttribute("fechadocumento", fechaDocumento);
 		request.setAttribute("isDetalle", 1);
@@ -134,6 +135,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		request.setAttribute("total", total);
 		request.setAttribute("tipodocumento", fac.getStrTipodoc().trim());
 		request.setAttribute("numerodocumento", fac.getNumNrodoc());
+		request.setAttribute("numeroreal", fac.getNroFactura());
 		request.setAttribute("isDetalle", 1);
 		request.setAttribute("fac", fac);
 		request.setAttribute("lstDetFac", lstDetFac);
@@ -178,6 +180,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		request.setAttribute("total", total);
 		request.setAttribute("tipodocumento", fac.getStrTipodoc().trim());
 		request.setAttribute("numerodocumento", fac.getNumNrodoc());
+		request.setAttribute("numeroreal", fac.getNroFactura());
 		request.setAttribute("isDetalle", 1);
 		request.setAttribute("fac", fac);
 		request.setAttribute("lstDetFac", lstDetFac);

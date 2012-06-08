@@ -76,8 +76,8 @@ public abstract class NumberToLeterConverter {
 	
 		String splitNumber[] = number.replace(',', '#').split("#");
 		
-		System.out.println(splitNumber[0]);
-		System.out.println(splitNumber[1]);
+		/*System.out.println(splitNumber[0]);
+		System.out.println(splitNumber[1]);*/
 		/*for(int i=0; i<splitNumber.length; i++)
 		{
 			System.out.println(splitNumber[i]);

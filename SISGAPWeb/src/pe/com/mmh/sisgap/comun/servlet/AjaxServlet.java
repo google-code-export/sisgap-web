@@ -175,9 +175,15 @@ public class AjaxServlet extends HttpServlet {
 			}else if(action.equals("BUSCAR_PRODUCTO")){
 
 				String nombre = request.getParameter("nombre");
+				String codigo = request.getParameter("codigo");
+				String codide = request.getParameter("codide");
 				try {
 					ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) context.lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 					List<Itemcobranza> lstItemcobranza = facadeLocal.buscarxNombre(nombre);
+					/*for(int i=0; i<lstItemcobranza.size(); i++){
+						System.out.println("Dato: "+lstItemcobranza.get(i).getCodReciboLuz());
+					}*/
+						
 					out.print("<table id='users' class='ui-widget ui-widget-content' width='100%'>");
 					out.print("<thead>");
 					out.print("<tr class='ui-widget-header'>");
@@ -187,9 +193,11 @@ public class AjaxServlet extends HttpServlet {
 					out.print("	<th>Moneda</th>");
 					out.print("	<th>Costo</th>");
 					out.print("	<th>Action</th>");
+					out.print("	<th>Recibo Luz</th>");
 					out.print("</tr>");
 					out.print("</thead>");
 					out.print("<tbody>");
+					String functionAdd="";
 					for (Itemcobranza item : lstItemcobranza) {
 						out.print("<tr>");
 						out.print("<td>"+item.getCodItemcobranza()+"</td>");
@@ -197,10 +205,16 @@ public class AjaxServlet extends HttpServlet {
 						out.print("<td>"+item.getTipocobdes()+"</td>");
 						out.print("<td>"+item.getTipomondes()+"</td>");
 						out.print("<td>"+item.getNumCosto()+"</td>");
-						String functionAdd="agregarItem("+item.getCodItemcobranza()+ ",'" + item.getStrDescripcion()
-								+ "','" + item.getStrTipocobranza() + "','" + item.getStrMoneda() + "',"+ item.getNumCosto() 
-								+ ",'" + item.getTipocobdes() + "','" + item.getTipomondes() +"' )";
+							functionAdd="agregarItem("+item.getCodItemcobranza()+ ",'" + item.getStrDescripcion()
+									+ "','" + item.getStrTipocobranza() + "','" + item.getStrMoneda() + "',"+ item.getNumCosto() 
+									+ ",'" + item.getTipocobdes() + "','" + item.getTipomondes() +"','" + item.getCodReciboLuz() +"' )";
+						
 						out.print("<td><a href='#' onclick=\""+functionAdd+"\">Agregar</a></td>");
+						if(item.getCodReciboLuz()==null){
+							out.print("<td align='center'>--.--</td>");
+						}else{
+							out.print("<td align='center'>"+item.getCodReciboLuz()+"</td>");
+						}
 					}
 					out.print("</tbody>");
 					out.print("</table>");
@@ -344,12 +358,14 @@ public class AjaxServlet extends HttpServlet {
 				}
 			
 			}else if(action.equals("ACTUALIZA_NRO_DOCUMENTO")){
-
+				System.out.println("[AjaxServlet] Inicio - ACTUALIZA_NRO_DOCUMENTO");
 				String nroDocReal = request.getParameter("nrodocReal");
-				String nroDocInte = request.getParameter("nrodocInte");				
+				String nroDocInte = request.getParameter("nrodocInte");
+				int nDocReal = Integer.parseInt(nroDocReal);
+				int nDocInte = Integer.parseInt(nroDocInte);
 				try {
 					FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal) context.lookup(ConstantesJNDI.FACTURAFACADE);
-					facadeLocal.actualizaNroFactura(nroDocReal, nroDocInte);
+					facadeLocal.actualizaNroFactura(nroDocReal.valueOf(nDocReal).trim(), nroDocInte.valueOf(nDocInte).trim());
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -384,6 +400,7 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				System.out.println("[AjaxServlet] Final - ACTUALIZA_NRO_DOCUMENTO");
 			}else if(action.equals("ELIMINAR_ITEM")){
 				
 				try {
@@ -459,6 +476,29 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}else if(action.equals("BUSCAR_RECIBO_LUZ_SOCIO")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_RECIBO_LUZ_SOCIO");
+				String codide = request.getParameter("codide");
+				String codReciboLuz = request.getParameter("codReciboLuz");
+				if (!codReciboLuz.equals("null")){
+					try {
+						//Listado que trae Datos de los recibos de Suministro de Luz
+						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+						List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboLuzxCodigoSocio(codide.trim(), codReciboLuz.trim());
+						
+						if (!lsSuministroLuzSocio.isEmpty()){
+							out.print(lsSuministroLuzSocio.get(0).getTotal().toString());
+							System.out.println(lsSuministroLuzSocio.get(0).getTotal().toString());
+						}
+						
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					out.print(0);
+				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_LUZ_SOCIO");
 			}
 			
 		}

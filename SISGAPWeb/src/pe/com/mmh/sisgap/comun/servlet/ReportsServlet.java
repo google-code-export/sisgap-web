@@ -215,6 +215,40 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_CODIGO_RECIBO", codRec);
 			}else if (reporte.equals("LISTADO_SISAS")){				
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Sisas.jrxml");
+			}else if (reporte.equals("REPORTE_DIARIO_DOCUMENTOS")){
+				System.out.println("[ReportsServlet] Inicio - REPORTE_DIARIO_DOCUMENTOS");
+				String fecDoc = request.getParameter("fecDoc");
+				String tipDoc = request.getParameter("tipDoc");
+				String estDoc = request.getParameter("estDoc");
+				String pend = "";
+				String paga = "";
+				String canc = "";
+				System.out.println("Fecha Documento:" + fecDoc);
+				parametros.put("P_TIPO_DOC", tipDoc);
+				parametros.put("P_FECHA_DOC", fecDoc);
+				
+				if(estDoc.equals("T")){
+					pend = "1";
+					paga = "2";
+					canc = "3";
+				}else if (estDoc.equals("P")){
+					pend = "1";
+					paga = "1";
+					canc = "1";
+				}else if (estDoc.equals("C")){
+					pend = "2";
+					paga = "2";
+					canc = "2";
+				}else if (estDoc.equals("A")){
+					pend = "3";
+					paga = "3";
+					canc = "3";
+				}
+				parametros.put("P_EST_PENDIENTE", pend);
+				parametros.put("P_EST_PAGADA", paga);
+				parametros.put("P_EST_CANCELADA", canc);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado Diario de Recibos.jrxml");
+				System.out.println("[ReportsServlet] Final - REPORTE_DIARIO_DOCUMENTOS");
 			}else if(reporte.equals("REPORTE_SISAS")){
 
 				try {
