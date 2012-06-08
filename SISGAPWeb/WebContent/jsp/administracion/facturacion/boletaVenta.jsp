@@ -46,7 +46,7 @@
 				);
 
 				$("#btnPrint").button().click(function() {
-					alert("Pruebas");
+					//alert("Pruebas");
 					var nrodocReal =  ${nroDocReal};
 					var nrodocInte =  ${nroDocInte};
 					//var nrodocReal =  $("{#nroDocReal}").val();

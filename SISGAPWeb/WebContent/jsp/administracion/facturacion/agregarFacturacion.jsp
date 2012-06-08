@@ -206,6 +206,8 @@ var codMon = "";
                 'Sep', 'Oct', 'Nov', 'Dic'] 
         }); 
 
+		$.ajaxSetup({cache: false}); 
+
 		//$('#cancelar-f').click(function() {  
 		//	$('[name=metodo]').val('cancelarFactura');
 		//});
@@ -270,9 +272,13 @@ var codMon = "";
 
 		$("#create-user").button().click(function() {
 			var fecdoc = $('[name=fechadocumento]').val();
+			var nomsoc = $('[name=socio-f]').val();
 			if (fecdoc==""){
 				alert("debe ingresar la fecha del documento...");
 				$('[name=fechadocumento]').focus();
+			}else if (nomsoc==""){
+				alert("debe seleccionar el socio...");
+				$('[name=buscar-socio]').focus();
 			}else{
 				$("#dialog-form").dialog("open");
 			}
@@ -298,7 +304,7 @@ var codMon = "";
 		});
 		
 		$("#btn-aceptar-item").button().click(function() {
-			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + "(" +$("#especif-p").val() + ")" + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
+			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + " " + $("#especif-p").val() + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
 			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();
 					
 					$.ajax({
@@ -528,7 +534,7 @@ var codMon = "";
 					<td width="15px">
 						<c:choose>
 							<c:when test="${isDetalle!=1 }">
-								<button id="buscar-socio" tabindex="23">...</button>
+								<button name="buscar-socio" id="buscar-socio" tabindex="23">...</button>
 							</c:when>
 						</c:choose>
 					</td>

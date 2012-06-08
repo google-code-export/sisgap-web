@@ -103,17 +103,19 @@ function lstCancelar() {
 						<td>
 							<select id="cbReciboLuz" name="cbReciboLuz" style="width: 150px">
 								<option value="0" selected="selected">Seleccione</option>
-								<c:forEach items="${lstOrg}" var="reg">
-									<c:when test="${objItem.codOrgreciboLuz == reg.codOrgreciboLuz }">
-										<option value="${reg.codOrgreciboLuz}" selected="selected">${reg.fecPeriodo}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${reg.codOrgreciboLuz}">${reg.fecPeriodo}</option>
-									</c:otherwise>
+								<c:forEach items="${lstOrg}" var="row">
+									<c:choose>
+										<c:when test="${objItem.codReciboLuz == row.codOrgreciboLuz }">
+											<option value="${row.codOrgreciboLuz}" selected="selected">${row.fecPeriodo}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${row.codOrgreciboLuz}">${row.fecPeriodo}</option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</select>
 						</td>
-					</tr>				
+					</tr>	
 					<tr>
 						<td align="right">Costo</td>
 						<td><input type="text" size="10" name="txtcosto" value="${objItem.numCosto}"/></td>

@@ -252,8 +252,8 @@
 				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
 				<display:column title="Puesto" sortable="true">${row.sisgapSocio.tranPuesto}</display:column>
 				<display:column title="Actividad" sortable="true">${row.sisgapSocio.sisgapActividadSocio.actiTranNombre}</display:column>
-				<display:column title="Fecha de Creación" property="datFechacred" sortable="true"></display:column>
-				<display:column title="Total" property="numTotal" sortable="true"></display:column>
+				<display:column title="Fecha de Creación" property="datFechacred" format="{0,date,dd-MM-yyyy}" sortable="true"></display:column>
+				<display:column title="Total" property="numTotal" format="S/. {0,number,###.00}" sortable="true"></display:column>
 				<display:column title="Estado" sortable="true">
 					<c:choose>
 						<c:when test="${row.numEstado==1}">Pendiente</c:when>
