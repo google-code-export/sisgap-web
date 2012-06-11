@@ -282,6 +282,7 @@ public class AjaxServlet extends HttpServlet {
 					out.print("<tbody>");
 					
 					double total = 0;
+					double acuenta = 0;
 					
 					for (Detallefactura det : listDetallefactura) {
 						out.print("<tr>");
@@ -302,6 +303,7 @@ public class AjaxServlet extends HttpServlet {
 						out.print("</tr>");
 						
 						total += det.getNumTotal().doubleValue();
+						acuenta += det.getNumAcuenta().doubleValue();
 					}
 					
 					out.print("<tr>");
@@ -313,12 +315,13 @@ public class AjaxServlet extends HttpServlet {
 					out.print("<td></td>");
 					out.print("<td>Total</td>");
 					out.print("<td>"+total+"</td>");
-					out.print("<td></td>");
+					out.print("<td>"+acuenta+"</td>");
 					out.print("</tr>");
 					
 					out.print("</tbody>");
 					out.print("</table>");
 					out.print("<input type='hidden' name='txttotal' id='txttotal' value='"+total+"'/>");
+					out.print("<input type='hidden' name='txtacuenta' id='txtacuenta' value='"+acuenta+"'/>");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -436,6 +439,7 @@ public class AjaxServlet extends HttpServlet {
 					out.print("<tbody>");
 					
 					double total = 0;
+					double acuenta = 0;
 					
 					for (Detallefactura det : listDetallefactura) {
 						out.print("<tr>");
@@ -456,7 +460,7 @@ public class AjaxServlet extends HttpServlet {
 						out.print("</tr>");
 						
 						total += det.getNumTotal().doubleValue();
-					}
+						acuenta += det.getNumAcuenta().doubleValue();					}
 					
 					out.print("<tr>");
 					out.print("<td></td>");
@@ -467,11 +471,12 @@ public class AjaxServlet extends HttpServlet {
 					out.print("<td></td>");
 					out.print("<td>Total</td>");
 					out.print("<td>"+total+"</td>");
-					out.print("<td></td>");
+					out.print("<td>"+acuenta+"</td>");
 					out.print("</tr>");
 					out.print("</tbody>");
 					out.print("</table>");
 					out.print("<input type='hidden' name='txttotal' id='txttotal' value='"+total+"'/>");
+					out.print("<input type='hidden' name='txtacuenta' id='txtacuenta' value='"+acuenta+"'/>");
 					
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -535,7 +535,7 @@ return true;*/
 	// Funciones generadas - Johan Muñoz
 	// llamará a DIV para seleccionar el reporte... 
 	function mostrarRep(valor1, valor2, valor3) {
-		alert("mostrando...");
+		//alert("mostrando...");
 		var codRec = 0;
 		codRec = valor1;
 		var codSoc = 0;

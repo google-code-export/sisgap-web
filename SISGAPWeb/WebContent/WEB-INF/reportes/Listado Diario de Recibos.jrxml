@@ -27,7 +27,7 @@
 		<defaultValueExpression ><![CDATA["R"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FECHA_DOC" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["25/02/2012"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["05/06/2012"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_EST_PENDIENTE" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["1"]]></defaultValueExpression>
@@ -55,7 +55,7 @@ FROM
      INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_FACTURA."TRAN_IDE" = SISGAP_SOCIO."TRAN_IDE"
 WHERE
      SISGAP_FACTURA."STR_TIPODOC" = $P{P_TIPO_DOC} AND 
-     SISGAP_FACTURA."DAT_FECHAFAC" = TO_DATE($P{P_FECHA_DOC}) AND
+     SISGAP_FACTURA."DAT_FECHACRED" = TO_DATE($P{P_FECHA_DOC}) AND
      SISGAP_FACTURA."NUM_ESTADO" IN ($P{P_EST_PENDIENTE},$P{P_EST_PAGADA},$P{P_EST_CANCELADA})
 ORDER BY
      SISGAP_FACTURA."COD_FACTURA" ASC]]></queryString>
@@ -128,7 +128,8 @@ ORDER BY
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="16" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE INGRESOS DIARIOS - "+ (($F{SISGAP_FACTURA_STR_TIPODOC}).toString().equals("R")? "RECIBO" : "BOLETA")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE INGRESOS DIARIOS - "+ (($F{SISGAP_FACTURA_STR_TIPODOC}).toString().equals("R")? "RECIBO" : "BOLETA")
++ " " +(new SimpleDateFormat("dd/MM/yyyy")).format($F{SISGAP_FACTURA_DAT_FECHACRED})]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -306,7 +307,7 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_PUESTO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="Â¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="417"
 						y="2"
@@ -427,7 +428,7 @@ ORDER BY
 		</pageFooter>
 		<summary>
 			<band height="20"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" pattern="Â¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="405"
 						y="0"

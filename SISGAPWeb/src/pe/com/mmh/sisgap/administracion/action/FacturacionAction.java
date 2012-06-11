@@ -78,6 +78,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		request.setAttribute("numeroreal", fac.getNroFactura());
 		//request.setAttribute("fechadocumento", fac.getDatFechafac());
 		request.setAttribute("fechadocumento", fechaDocumento);
+		request.setAttribute("numAcuenta", fac.getNumAcuenta());
 		request.setAttribute("isDetalle", 1);
 		request.setAttribute("fac", fac);
 		request.setAttribute("lstDetFac", lstDetFac);
@@ -256,6 +257,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		String codigoide = request.getParameter("codigoide");
 		String cbtipodoc = request.getParameter("cbtipodoc");
 		String numerodocumento = request.getParameter("numerodocumento");
+		String montoacuenta = request.getParameter("txtacuenta");
 	
 		// Se procede a preparar el parametro fecha para luego ser convertido a fecha SQL y poder enviarlo a la BD al campo de tipo DATE
 		String fechadocumento = request.getParameter("fechadocumento"); //  dd/mm/yyyy
@@ -264,7 +266,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		
 		if(listDetallefactura!=null && codigoide!=null){
 			//facadeLocal.grebarFactura(new Long(numerodocumento), fecha, totalfac, codigoide, cbtipodoc, listDetallefactura);
-			facadeLocal.grebarFactura(new Long(numerodocumento), fechadocumento, totalfac, codigoide, cbtipodoc, listDetallefactura);
+			facadeLocal.grebarFactura(new Long(numerodocumento), fechadocumento, totalfac, codigoide, cbtipodoc, listDetallefactura, montoacuenta);
 			//facadeLocal.grebarFactura(numerodocumento, totalfac, codigoide, cbtipodoc, listDetallefactura);
 		}
 		

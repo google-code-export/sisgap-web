@@ -483,7 +483,7 @@ var codMon = "";
 		<input type="hidden" name="socio" value="${socio-f}" />
 		<input type="hidden" name="direccion" value="${direccion-f}" />
 		<input type="hidden" name="detfactura" value="${lstDetFac}" />
-
+		<input type="hidden" name="nroacuenta" value="${numeroacuenta}" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
@@ -613,20 +613,25 @@ var codMon = "";
 										</tr>
 									</c:forEach>
 									<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><font size="4"><b>Total</b></font></td>
-									<td align="right">
-										<font size="4">
-										<fmt:formatNumber value="${fac.numTotal}" type="currency" var="numTotal" />
-										<c:out value="${numTotal}" />
-										</font>
-									</td>
-									<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><font size="4"><b>Total</b></font></td>
+										<td align="right">
+											<font size="4">
+												<fmt:formatNumber value="${fac.numTotal}" type="currency" var="numTotal" />
+												<c:out value="${numTotal}" />
+											</font>
+										</td>
+										<td align="right">
+											<font size="3">
+												<fmt:formatNumber value="${fac.numAcuenta}" type="currency" var="numAcuenta" />
+												<c:out value="${numAcuenta}" />
+											</font>
+										</td>
 									</tr>
 								</tbody>
 								</table>

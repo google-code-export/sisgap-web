@@ -414,14 +414,14 @@ public class ReportsServlet extends HttpServlet {
 	}
 	
 	private Connection getConnectionDirect(){
-		Connection connection = null;
-		try {
+		//Connection connection = null;
+		//try {
 		    // Load the JDBC driver
-		    String driverName = "oracle.jdbc.driver.OracleDriver";
-		    Class.forName(driverName);
+		    /*String driverName = "oracle.jdbc.driver.OracleDriver";
+		    Class.forName(driverName);*/
 
 		    // Create a connection to the database
-		    String serverName = "localhost";
+		    /*String serverName = "localhost";
 		    String portNumber = "1521";
 		    String sid = "xe";
 		    String url = "jdbc:oracle:thin:@" + serverName + ":" + portNumber + ":" + sid;
@@ -429,14 +429,35 @@ public class ReportsServlet extends HttpServlet {
 		    String password = "sisgap";
 		    connection = DriverManager.getConnection(url, username, password);
 		    
-		    return connection;
+		    return connection;*/
+
 		    
-		} catch (ClassNotFoundException e) {
+		    String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		    Connection con = null;
+
+		    try{
+		    	Class.forName( "oracle.jdbc.driver.OracleDriver" );
+		    }catch ( Exception e ){
+			    System.out.println( "No se puede cargar el driver" );
+			    e.printStackTrace();
+		    }
+		    try{
+			    con = DriverManager.getConnection(url, "sisgap", "sisgap");
+			    System.out.println( "Conexion establecida");
+		    }catch (SQLException sqle) {
+			    System.out.println( "Error en la conexion a la BD" );
+			    sqle.printStackTrace();
+		    }
+		    
+		    return con;
+		    
+		    
+		/*} catch (ClassNotFoundException e) {
 		    e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return null;*/
 	}
 }

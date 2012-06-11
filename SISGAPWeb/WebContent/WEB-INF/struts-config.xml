@@ -56,6 +56,7 @@
    scope="request" type="pe.com.mmh.sisgap.administracion.action.GestionarSociosAction">
      <forward name="cargarAction" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
      <forward name="success" path="/index.jsp"/>
+     <forward name="agregarClientes" path="/jsp/administracion/socio/agregarSocios.jsp"/>
      <forward name="gestionarClientes" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
    </action>
    

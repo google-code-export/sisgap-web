@@ -55,12 +55,17 @@
 		frm.metodo.value = 'listarClientes';
 		frm.submit();
 	}
-	
+
+	function lstNuevo() {
+		var frm = document.agregarClientesForm;
+		frm.metodo.value = 'irGrabar';
+		frm.submit();
+	}
 </script>
 </head>
 <body>
 
-	<html:form action="/gestionarSocios.do" method="post"
+	<html:form action="/gestionarSocios.do" method="post" styleId="agregarClientesForm"
 		enctype="multipart/form-data">
 		<input type="hidden" name="metodo" />
 
@@ -125,13 +130,14 @@
 			<display:table name="lstSocios" 
 							class="consultanormal"
 							excludedParams="metodo" 
-							requestURI="/gestionarSocios.do"		
+							requestURI="/gestionarSocios.do?metodo=cargarAction"		
 							id="row"
 							export="false">
-				<display:column property="tranCodigo"></display:column>
-				<display:column property="tranRazonSocial"></display:column>
-				<display:column property="tranPuesto"></display:column>
-				<display:column property="tranEstado"></display:column>
+				<display:column title="Codigo" property="tranCodigo" sortable="true"></display:column>
+				<display:column title="Apellidos y Nombres" property="tranRazonSocial" sortable="true"></display:column>
+				<display:column title="Puesto" property="tranPuesto" sortable="true"></display:column>
+				<display:column title="Actividad" property="sisgapActividadSocio.actiTranNombre" sortable="true"></display:column>
+				<display:column title="Estado" property="tranEstado" sortable="true"></display:column>
 			</display:table>
 		</fieldset>
 	</html:form>
