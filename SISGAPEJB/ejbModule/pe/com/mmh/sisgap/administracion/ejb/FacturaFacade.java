@@ -36,7 +36,7 @@ import pe.com.mmh.sisgap.domain.Factura;
 @Stateless
 public class FacturaFacade implements FacturaFacadeLocal {
 	
-	private static final String SP_INS_FACTURA = "{call PKG_ADMINISTRACION.SP_INS_FACTURA(?,?,?,?,?,?)}";
+	private static final String SP_INS_FACTURA = "{call PKG_ADMINISTRACION.SP_INS_FACTURA(?,?,?,?,?,?,?)}";
 	private static final String SP_INS_DETFACTURA = "{call PKG_ADMINISTRACION.SP_INS_DETFACTURA(?,?,?,?,?,?,?,?)}";
 	private static final String SP_DEL_FACTURA = "{call PKG_ADMINISTRACION.SP_DEL_FACTURA(?)}";
 	private static final String SP_LST_GENERARNRODOC = "{call PKG_ADMINISTRACION.SP_LST_GENERARNRODOC(?,?)}";
@@ -143,7 +143,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 
 	@Override
 	public void grebarFactura(Long numerodocumento, String fechadocumento, String totalfac, String codigoide,
-			String cbtipodoc, List<Detallefactura> detallefactura) {
+			String cbtipodoc, List<Detallefactura> detallefactura, String acuenta) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	CallableStatement cst = null;
@@ -161,6 +161,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			cst.setBigDecimal("P_TRAN_IDE", new BigDecimal(codigoide));
 			cst.setBigDecimal("P_NUM_TOTAL", new BigDecimal(totalfac));
 			cst.setString("P_STR_TIPODOC", cbtipodoc);
+			cst.setBigDecimal("P_NRO_ACTA", new BigDecimal(acuenta));
 			cst.registerOutParameter("P_CODIGO_FAC", Types.DECIMAL);
 			cst.execute();
 			

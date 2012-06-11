@@ -5,10 +5,13 @@
 
 package pe.com.mmh.sisgap.administracion.ejb;
 
+import java.math.BigDecimal;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class SocioFacade implements SocioFacadeLocal {
 	//private static final String view_bucar_socio = "select * from view_bucar_socio where tran_razon_social like %s ";
 	private static final String view_bucar_socio_nombre = "select * from view_bucar_socio where tran_razon_social like %s ";
 	private static final String view_bucar_socio_puesto = "select * from view_bucar_socio where tran_puesto like %s ";
-	
+	private static final String SP_LST_GENERARNROCOD = "{call PKG_ADMINISTRACION.SP_LST_GENERARNROCOD(?,?)}";
 	
 	@Resource(name="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -137,6 +140,40 @@ public class SocioFacade implements SocioFacadeLocal {
 		
 		return lsSocios;
 	}
+	
+	@Override
+	public String generarNroCodigo(String tipocod) {
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	String codigo = "";
+    	
+    	try {
+    		connection = getConnection();
+			cst = connection.prepareCall(SP_LST_GENERARNROCOD);
+			
+			cst.setString("P_STR_TIPOCOD", tipocod);
+			cst.registerOutParameter("P_COD_CLIENTE", Types.VARCHAR);
+			cst.execute();
+			
+			codigo = cst.getString("P_COD_CLIENTE");
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		return codigo;
+	}
+
 	
 	public Connection getConnection() throws SQLException{
 		return dataSource.getConnection();
