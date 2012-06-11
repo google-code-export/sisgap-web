@@ -30,4 +30,6 @@ public interface SocioFacadeLocal {
     
     List<Socio> buscarxPuesto(String puesto);
 
+	String generarNroCodigo(String tipocod);
+
 }

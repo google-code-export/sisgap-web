@@ -37,6 +37,9 @@ public class Factura implements Serializable {
 	@Column(name="STR_TIPODOC", length=1)
 	private String strTipodoc;
 	
+	@Column(name="NUM_ACUENTA", precision=22)
+	private BigDecimal numAcuenta;
+	
     @Temporal( TemporalType.DATE)
 	@Column(name="DAT_FECHACRED")
 	private Date datFechacred;
@@ -106,6 +109,14 @@ public class Factura implements Serializable {
 
 	public void setNumTotal(BigDecimal numTotal) {
 		this.numTotal = numTotal;
+	}
+
+	public BigDecimal getNumAcuenta() {
+		return numAcuenta;
+	}
+
+	public void setNumAcuenta(BigDecimal numAcuenta) {
+		this.numAcuenta = numAcuenta;
 	}
 
 	public String getStrTipodoc() {

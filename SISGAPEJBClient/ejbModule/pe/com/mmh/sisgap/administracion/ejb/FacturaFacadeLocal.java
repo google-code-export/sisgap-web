@@ -34,7 +34,7 @@ public interface FacturaFacadeLocal {
 
     List<Factura> findAll();
     
-    void grebarFactura(Long numerodocumento,String fechadocumento, String totalfac, String codigoide, String cbtipodoc,List<Detallefactura> detallefactura);
+    void grebarFactura(Long numerodocumento,String fechadocumento, String totalfac, String codigoide, String cbtipodoc,List<Detallefactura> detallefactura, String acuenta);
 
     void actualizaNroFactura(String nroDocReal, String nroDocInte);
     
