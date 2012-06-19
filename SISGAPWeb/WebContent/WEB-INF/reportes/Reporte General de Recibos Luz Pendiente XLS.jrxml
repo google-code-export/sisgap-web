@@ -2,7 +2,7 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
-		 name="Reporte General de Recibos Luz Pendiente"
+		 name="Reporte General de Recibos Luz Pendiente XLS"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -132,7 +132,7 @@ ORDER BY
 						key="image-1"/>
 					<box></box>
 					<graphicElement stretchType="NoStretch"/>
-					<imageExpression class="java.lang.String"><![CDATA["..\\..\\imagenes\\Logo_Reporte_MMH.png"]]></imageExpression>
+					<imageExpression class="java.lang.String"><![CDATA["C:\\tools\\jboss7\\standalone\\deployments\\SISGAP.ear\\SISGAPWeb.war\\imagenes\\Logo_Reporte_MMH.png"]]></imageExpression>
 				</image>
 			</band>
 		</title>

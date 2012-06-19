@@ -183,23 +183,25 @@
 						<img src="<%=request.getContextPath()%>/imagenes/manto/editar.png" alt="Editar..." border="0" width="16" height="16"/>
 					</a>
 				</display:column>
-				<display:column title="Id"></display:column>
 				<display:column title="Concepto" property="strDescripcion"></display:column>
 				<display:column title="Costo" property="numCosto"></display:column>
+				<display:column title="Tipo">
+					<c:if test="${row.strTipo == 'I'}">Ingresos</c:if>
+					<c:if test="${row.strTipo == 'E'}">Egresos</c:if>
+				</display:column>
 				<display:column title="Moneda">
-							<c:if test="${row.strMoneda == 'S'}">Soles</c:if>
-							<c:if test="${row.strMoneda == 'D'}">Dolares</c:if>
+					<c:if test="${row.strMoneda == 'S'}">Soles</c:if>
+					<c:if test="${row.strMoneda == 'D'}">Dolares</c:if>
 				</display:column>
 				<display:column title="Unidad de Medida">${row.unidadmedida.strNombre}</display:column>
 				<display:column title="Tipo de Cobranza">
-							<c:if test="${row.strTipocobranza == 'C '}">Contable</c:if>
-							<c:if test="${row.strTipocobranza == 'N '}">No Contable</c:if>
+					<c:if test="${row.strTipocobranza == 'C'}">Contable</c:if>
+					<c:if test="${row.strTipocobranza == 'N'}">No Contable</c:if>
 				</display:column>
 				<display:column title="Estado">
-							<c:if test="${row.numEstado == 1}">Activo</c:if>
-							<c:if test="${row.numEstado == 0}">Inactivo</c:if>
+					<c:if test="${row.numEstado == 1}">Activo</c:if>
+					<c:if test="${row.numEstado == 0}">Inactivo</c:if>
 				</display:column>
-								
 		</display:table>
 		</fieldset>
 			</logic:notEmpty>

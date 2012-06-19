@@ -28,6 +28,40 @@ function lstCancelar() {
 	frm.submit();
 
 }
+
+function isNumber(obj){
+	var s=obj.value;
+	flag=true;
+	if(isEmpty(s))
+		if(isNumber.arguments.length==1)
+			return defaultEmptyOK;
+		else
+			return (isNumber.arguments[1]==true);
+
+	for(var i=0;i<s.length;i++){
+		var c=s.charAt(i);
+		if(!isDigit(c)){
+			if(c!="."){
+				alert("Sólo se admiten dígitos");
+				obj.value="";
+				obj.focus();
+				flag=false;
+				return false;			
+			}
+			return false;
+		}
+	}
+	if(flag){
+		if(obj.value<1){
+			alert("Se debe ingresar un monto mayor a cero");
+			obj.value="";
+			return false;
+		}
+	}
+
+	return true;
+}
+
 </script>
 </head>
 <body>
@@ -74,7 +108,7 @@ function lstCancelar() {
 		<fieldset>
 			<legend>
 				<span class="titulo">Nuevo Registro
-				<table border="0" cellpadding="2" cellspacing="2" width="80%">
+				<table border="0" cellpadding="2" cellspacing="2" width="350px">
 					<tr>
 						<td width="200" align="right">Concepto</td>
 						<td><input type="text"  size="50" name="txtconcepto" value="${objItem.strDescripcion}"/></td>
@@ -118,7 +152,7 @@ function lstCancelar() {
 					</tr>	
 					<tr>
 						<td align="right">Costo</td>
-						<td><input type="text" size="10" name="txtcosto" value="${objItem.numCosto}"/></td>
+						<td><input type="text" size="10" name="txtcosto" onchange="isNumber(this)" value="${objItem.numCosto}"/></td>
 					</tr>
 					<tr>
 						<td align="right">Moneda</td>
@@ -172,6 +206,50 @@ function lstCancelar() {
 									</c:when>																
 								</c:choose>								
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">Fecha Caducidad</td>
+						<td><input type="text" size="50" name="fechacaducidad" style="width: 70px;" value="${objItem.datFechaFin }"/></td>
+					</tr>
+					<tr>
+						<td align="right">Cobro Adicional</td>
+						<td><input type="text"  size="50" name="txtcobroadicional" onchange="isNumber(this)" style="width: 50px;" value="${objItem.numCobroAdicional }"/></td>
+					</tr>
+					<tr>
+						<td align="right">Costo Variable</td>
+						<td>
+							<select id="cbcostovariable" name="cbcostovariable" style="width: 100px">
+								<option value="" selected>Seleccione</option>
+								<c:choose>
+									<c:when test="${objItem.strFlgVariable == 'S' }">
+										<option value="S" selected>Si</option>
+										<option value="N">No</option>									
+									</c:when>
+									<c:when test="${objItem.strFlgVariable == 'N' }">
+										<option value="S">Si</option>
+										<option value="N" selected>No</option>									
+									</c:when>
+								</c:choose>
+							</select><font color="red"> * </font>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">Cobro Socio</td>
+						<td>
+							<select id="cbcobrosocio" name="cbcobrosocio" style="width: 100px" tabindex="12">
+								<option value="" selected>Seleccione</option>
+								<c:choose>
+									<c:when test="${objItem.strFlgCobroSocio == 'G' }">
+										<option value="G" selected>General</option>
+										<option value="I">Individual</option>
+									</c:when>
+									<c:when test="${objItem.strFlgCobroSocio == 'I' }">
+										<option value="G">General</option>
+										<option value="I" selected>Individual</option>
+									</c:when>
+								</c:choose>
+							</select><font color="red"> * </font>
 						</td>
 					</tr>
 					<tr>

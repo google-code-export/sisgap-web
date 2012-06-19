@@ -668,8 +668,6 @@ var codMon = "";
 		</div>
 		<div id="selectdate-form" title="Seleccionar periodo a buscar...">		 
 			<input name="startDate2" id="startDate2" class="date-picker2" />(mes/año)
-			<br><br>
-			<button id="btn-buscar-periodo">Buscar Periodo</button>
 		</div>	
 		</html:form>
 </body>

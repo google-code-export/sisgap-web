@@ -2,6 +2,7 @@ package pe.com.mmh.sisgap.comun.servlet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -25,6 +26,7 @@ import javax.sql.DataSource;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperManager;
@@ -32,6 +34,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -46,6 +50,7 @@ import com.itextpdf.text.FontProvider;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
 
 //Funcion EJB
 import pe.com.mmh.sisgap.administracion.action.FacturacionAction;
@@ -206,8 +211,15 @@ public class ReportsServlet extends HttpServlet {
 				
 			}else if (reporte.equals("LISTADO_RECIBOS_SOCIOS")){
 				String estado = request.getParameter("estado");
+				String format = request.getParameter("formato");
 				if (estado.equals("1")){
-					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz Pendiente.jrxml");
+					if (format.equals("XLS")){
+						provider=null;
+						ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz Pendiente XLS.jrxml");
+						generateReportOther(request, response, ruta, parametros);
+					}else{
+						ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz Pendiente.jrxml");
+					}
 				}else{
 					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz.jrxml");
 				}
@@ -250,7 +262,7 @@ public class ReportsServlet extends HttpServlet {
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado Diario de Recibos.jrxml");
 				System.out.println("[ReportsServlet] Final - REPORTE_DIARIO_DOCUMENTOS");
 			}else if(reporte.equals("REPORTE_SISAS")){
-
+				System.out.println("[ReportsServlet] Inicio - REPORTE_SISAS");
 				try {
 					String periodo = request.getParameter("periodo");
 					Integer codigo = new Integer(request.getParameter("codigo"));
@@ -298,13 +310,14 @@ public class ReportsServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
+				System.out.println("[ReportsServlet] Final - REPORTE_SISAS");
 				
 			}
 			
 			if (provider == null) {
 				generateReport(request, response, ruta, parametros);
 			} else {
-				generateReportOther(request, response, ruta, bytes);
+				generateReportOther(request, response, ruta, parametros);
 			}
 		}		
 	}
@@ -385,20 +398,33 @@ public class ReportsServlet extends HttpServlet {
 	
 	@SuppressWarnings("unused")
 	private void generateReportOther(HttpServletRequest request,
-			HttpServletResponse response,String ruta,byte[] bytes) throws IOException{
+			HttpServletResponse response,String ruta,HashMap<String, String> parametros) throws IOException{
 		
 		JasperReport masterReport = null;
 		ServletOutputStream servletOutputStream = response.getOutputStream();
+		String xlsFileName = "demo.xls";
+		File f;
+		InputStream in;
 
 		try {
-//			Connection cnn = getConnection();
+			Connection cnn = getConnection();
+			
+			JasperPrint jasperPrint = JasperFillManager.fillReport(ruta, parametros, cnn);
+			
+			JRXlsExporter exporter = new JRXlsExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, xlsFileName);
+			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+			exporter.exportReport();
+			
 //			masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
 //			bytes = JasperRunManager.runReportToPdf(masterReport,parametros, cnn);
 
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-
-			servletOutputStream.write(bytes, 0, bytes.length);
+			f = new File(xlsFileName);
+			
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment;filename=\"" + xlsFileName + "\"");
+			
 			servletOutputStream.flush();
 			servletOutputStream.close();
 			

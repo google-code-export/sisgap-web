@@ -271,7 +271,7 @@ FROM
 					</textElement>
 				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_RECIBOLUZ_ORG_LEC_FIN}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="Â¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="270"
 						y="2"

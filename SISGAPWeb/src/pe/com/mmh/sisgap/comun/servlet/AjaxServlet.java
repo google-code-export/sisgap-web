@@ -485,29 +485,53 @@ public class AjaxServlet extends HttpServlet {
 				System.out.println("[AjaxServlet] Inicio - BUSCAR_RECIBO_LUZ_SOCIO");
 				String codide = request.getParameter("codide");
 				String codReciboLuz = request.getParameter("codReciboLuz");
-				if (!codReciboLuz.equals("null")){
-					try {
-						//Listado que trae Datos de los recibos de Suministro de Luz
-						SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
-						List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboLuzxCodigoSocio(codide.trim(), codReciboLuz.trim());
-						
-						if (!lsSuministroLuzSocio.isEmpty()){
-							out.print(lsSuministroLuzSocio.get(0).getTotal().toString());
-							System.out.println(lsSuministroLuzSocio.get(0).getTotal().toString());
+				if (!codReciboLuz.trim().equals("0")){
+					if (!codReciboLuz.trim().equals("null")){
+						try {
+							//Listado que trae Datos de los recibos de Suministro de Luz
+							SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+							List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboLuzxCodigoSocio(codide.trim(), codReciboLuz.trim());
+							
+							if (!lsSuministroLuzSocio.isEmpty()){
+								out.print(lsSuministroLuzSocio.get(0).getTotal().toString());
+								System.out.println(lsSuministroLuzSocio.get(0).getTotal().toString());
+							}
+							
+							
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-						
-						
-					} catch (Exception e) {
-						e.printStackTrace();
+					}else{
+						out.print(0);
 					}
 				}else{
 					out.print(0);
 				}
 				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_LUZ_SOCIO");
-			}
-			
+			}else if(action.equals("BUSCAR_RECIBO_ESPECIAL")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_RECIBO_ESPECIAL");
+				String descriCob = request.getParameter("descriCob");
+				try {
+					//Trae Campos Especiales del Item
+					ItemcobranzaFacadeLocal itemFacade = (ItemcobranzaFacadeLocal) context.lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
+					List<Itemcobranza> lsItemCobranza = (List<Itemcobranza>) itemFacade.buscarxNombre(descriCob);
+					
+					if (!lsItemCobranza.isEmpty()){
+						out.print(lsItemCobranza.get(0).getDatFechaFin().toString());
+						out.print(lsItemCobranza.get(0).getStrFlgVariable().toString());
+						out.print(lsItemCobranza.get(0).getNumCobroAdicional().toString());
+						System.out.println(lsItemCobranza.get(0).getDatFechaFin());
+						System.out.println(lsItemCobranza.get(0).getStrFlgVariable());
+						System.out.println(lsItemCobranza.get(0).getNumCobroAdicional());
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_ESPECIAL");
+			}	
 		}
-		
 	}
 	
 	public void validarProducto(List<Detallefactura> listDetallefactura, Detallefactura det) {

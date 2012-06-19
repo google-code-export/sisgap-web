@@ -163,6 +163,7 @@ var codMon = "";
 		$("#btnpagar").button();
 		$("#imprimir-sls").button();
 		$("#imprimirPend-sls").button();
+		$("#imprimirPendXLS-sls").button();
 
 		$('#nuevo-sls').click(function() {
 			if ($("#codigo-sls").val()=="" || $("#socio-sls").val()=="" || $("#direccion-sls").val()=="" ){
@@ -244,7 +245,13 @@ var codMon = "";
 	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor+'&estado=1', 'Popup', caracteristicas);
 	        return false;
 		});
-		
+
+		$('#imprimirPendXLS-sls').click(function() {
+			var valor='${resori.codOrgreciboLuz}';
+			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_RECIBOS_SOCIOS&codRec='+valor+'&estado=1&formato=XLS', 'Popup', caracteristicas);
+	        return false;
+		});
 
 		$('#dialog').dialog({
 			autoOpen : false,
@@ -768,6 +775,7 @@ return true;*/
 					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
 					<td><button id="imprimir-sls">Imprimir Todo</button></td>
 					<td><button id="imprimirPend-sls">Imprimir Pendientes</button></td>
+					<td><button id="imprimirPendXLS-sls">Imprimir Pendientes Excel</button></td>
 				</tr>
 			</table> 
 	</fieldset>

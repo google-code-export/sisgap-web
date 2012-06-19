@@ -193,7 +193,7 @@ var codMon = "";
 		});
 
 		$("#fechadocumento").datepicker({  
-			dateFormat: 'dd/mm/yy', 
+			dateFormat: 'yy/mm/dd', 
             changeMonth: true,
             changeYear: false,
             numberOfMonths: 1,
@@ -251,8 +251,8 @@ var codMon = "";
 		$("#dialog-form-item").dialog(
 		{
 			autoOpen : false,
-			height : 380,
-			width : 430,
+			height : 390,
+			width : 480,
 			modal : true
 		});
 
@@ -389,24 +389,106 @@ var codMon = "";
 
 	function agregarItem(codigo, descrip, codTipCobranza, codMoneda , costo, desCodTipCobranza, desCodMoneda, codReciboLuz) {
 		codTipCob = codTipCobranza;
+		descriCob = descrip;
 		codMon = codMoneda;
 		var codide = $("#codigoide-f").val();
-		
-		$.ajax({
-	        type: "POST",
-	        url: "/SISGAPWeb/AjaxServlet",
-	        data: "action=BUSCAR_RECIBO_LUZ_SOCIO&codide="+codide+"&codReciboLuz="+codReciboLuz,
-	        success: function(datos){
-	        	if(datos==""){
-					alert("El Socio no tiene recibo de luz generado.");
-					return false;
-	        	}else{
-	        		$("#cantidad-p").val(redondea(datos,2));
-	        		$("#total-p").val(redondea(datos,2));
-	        		$("#acuenta-p").val(redondea(datos,2));	        	
+
+		//Verifica Item Seleccionado si es recibo de luz; jala el total del socio
+		//alert("codReciboLuz--> "+codReciboLuz);
+		if (codReciboLuz=="" || codReciboLuz==0){
+			$.ajax({
+		        type: "POST",
+		        url: "/SISGAPWeb/AjaxServlet",
+		        data: "action=BUSCAR_RECIBO_ESPECIAL&descriCob="+descriCob,
+		        success: function(datos){
+			        //alert(datos);
+			        if(datos==""){
+				        alert("Item de generacion especial");
+				        return false;
+				    }else{
+						//alert("Fecha: "+datos.substring(0,10)+"\nFlgVar: "+datos.substring(10,11)+"\nCostoAdd: "+datos.substring(11,12));
+						var costoAD = datos.substring(11,datos.length);
+						//alert("costoAD: "+costoAD);
+						var fechaBD = datos.substring(0,10);
+						temp=""+fechaBD;
+						while (temp.indexOf("-")>-1){
+							pos=temp.indexOf("-");
+							temp=""+(temp.substring(0,pos)+"/"+temp.substring((pos+1),temp.length));
+						}
+						fechaBD=temp;
+						/*var fecha = new Date();
+						var dd = fecha.getDate();
+						var mm = fecha.getMonth()+1;
+						var yy = fecha.getYear();*/
+						var fecha = $("#fechadocumento").val();
+						var dd = fecha.substring(8,10);
+						var mm = fecha.substring(5,7);
+						var yy = fecha.substring(0,4);						
+						var fecha_textual = [yy, mm, dd].join("/");
+						/*var fecha_final = fecha_textual.split("/"); //Cortas en partes la cadena que obtienes del calendario
+						var fecha_textual = $("#fechadocumento").val();
+						var fecha_final = fecha_textual.split("/");
+						var fhcorrecta = fecha_final[0] + "/" + ( (parseInt(fecha_final[1]) < 10) ? ("0" + fecha_final[1]) : fecha_final[1] ) + "/" + ( (parseInt(fecha_final[2]) < 10) ? ("0" + fecha_final[2]) : fecha_final[2] );*/
+						//alert("fechaBD ["+fechaBD+"]\nfecha_textual ["+fecha_textual+"]");
+						var datePat =/^(\d{4})(\/)(\d{1,2})\2(\d{1,2})$/;
+						var matchArray = fechaBD.match(datePat);
+						if (matchArray == null)
+						{
+							return false;
+						}
+						mes = matchArray[3];
+						dia = matchArray[4];
+						ano = matchArray[1];
+						FecIni = ano+mes+dia;
+						
+						var matchArray = fecha_textual.match(datePat);
+						if (matchArray == null)
+						{
+							return false;
+						}
+						mes = matchArray[3];
+						dia = matchArray[4];
+						ano = matchArray[1];
+						FecFin = ano+mes+dia;
+						//alert("valor de FecIni "+FecIni+"\nvalor de FecFin "+FecFin);
+						var total = 0;
+						var costo = parseFloat($("#costo-p").val());
+						var adici = parseFloat(costoAD);
+						if(FecIni<FecFin)
+						{
+							total=costo+adici;
+							$("#costo-p").val(total);	
+							//alert(total);	
+						}
+						
+						if (datos.substring(10,11)=="S"){
+							$("#costo-p").removeAttr("disabled");
+							$("#costo-p").val(0);
+						}else{
+							$("#costo-p").attr("disabled","-1");
+						}
+
+					}
 		        }
-	      	}
-		});
+			});
+		}else{	
+			$.ajax({
+		        type: "POST",
+		        url: "/SISGAPWeb/AjaxServlet",
+		        data: "action=BUSCAR_RECIBO_LUZ_SOCIO&codide="+codide+"&codReciboLuz="+codReciboLuz,
+		        success: function(datos){
+		        	if(datos==""){
+						alert("El Socio no tiene recibo de luz generado.");
+						return false;
+		        	}else{
+		        		$("#cantidad-p").val(redondea(datos,2));
+		        		$("#total-p").val(redondea(datos,2));
+		        		$("#acuenta-p").val(redondea(datos,2));	        	
+			        }
+		      	}
+			});
+		}
+		
 		
 		$("#dialog-form").dialog("close");
 		$("#codigo-p").val(codigo);
@@ -434,6 +516,47 @@ var codMon = "";
 		return s; 
 	}
 	
+	function compara_fechas(fechaBase, fechaComparar)
+	{
+		var valIni=Trim(fechaBase);
+		var valFin=Trim(fechaComparar);
+		alert("validando fechas");
+		if(Trim(valIni)!="" && Trim(valFin)!="")
+		{
+			alert("si tiene datos");
+			var datePat =/^(\d{4})(\/)(\d{1,2})\2(\d{1,2})$/;
+			var matchArray = valIni.match(datePat);
+			if (matchArray == null)
+				return false;
+
+			mes = matchArray[3];
+			dia = matchArray[4];
+			ano = matchArray[1];
+			FecIni = ano+mes+dia;
+			alert("valor de FecIni "+FecIni);
+			
+			var matchArray = valFin.match(datePat);
+			if (matchArray == null)
+				return false;
+
+			mes = matchArray[3];
+			dia = matchArray[4];
+			ano = matchArray[1];
+			FecFin = ano+mes+dia;
+			alert("valor de FecFin "+FecFin);
+			
+			if(fecIni<=fecFin)
+			{
+				alert("La fecha fecIni es menor o igual que la fecha fecFin");
+				return false;
+			}else{
+				alert("La fecha fecIni es mayor que la fecha fecFin");
+				return false;
+			}
+		}
+		
+	}
+
 	function eliminarDetalle(codigo) {
 
 		$.ajax({
@@ -526,7 +649,7 @@ var codMon = "";
 						System.out.println("Estado: "+request.getAttribute("estadoCampos"));
 					%>
 					disabled="disabled"
-					<%} %> tabindex="21"/>(mes/dia/año)</td>
+					<%} %> tabindex="21"/>(año/mes/dia)</td>
 				</tr>
 				<tr>
 					<td>Socio</td>
@@ -666,7 +789,7 @@ var codMon = "";
 		<fieldset>					
 				<!--legend>Registro</legend-->
 				<br>
-				<table width="400px" border="0">
+				<table width="450px" border="0">
 					<tr>
 						<td><label>Codigo:</label></td>
 						<td><input type='text' name='codigo-p' id='codigo-p' class='text ui-widget-content ui-corner-all' readonly='readonly' size="10" style=" width : 50px;" tabindex="1"/></td>
@@ -685,7 +808,7 @@ var codMon = "";
 					</tr>
 					<tr>
 						<td><label>Costo:</label></td>
-						<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10" style=" width : 50px;" tabindex="5"/></td>
+						<td><input type='text' name='costo-p' id='costo-p' class='text ui-widget-content ui-corner-all'  readonly='readonly' size="10" style=" width : 50px;" disabled="disabled" tabindex="5"/></td>
 					</tr>
 					<tr>
 						<td><label>Cantidad:</label></td>
