@@ -7,6 +7,7 @@ package pe.com.mmh.sisgap.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -58,8 +59,19 @@ public class Itemcobranza implements Serializable {
     private String strDescripcion;
     @Column(name = "COD_RECIBOLUZ")
     private BigDecimal codReciboLuz;
+    @Column(name = "STR_TIPO")
+    private String strTipo;
+    @Column(name = "DAT_FECHAFIN")
+    private Date datFechaFin;
+    @Column(name = "STR_FLGVARIABLE")
+    private String strFlgVariable;
+    @Column(name = "NUM_COBROADICIONAL")
+    private BigDecimal numCobroAdicional;
+    @Column(name = "STR_FLGCOBROSOCIO")
+    private String strFlgCobroSocio;
     
-	@ManyToOne(fetch=FetchType.EAGER)
+	//@ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	@JoinColumn(name="COD_UNIMEDIDA")
 	private Unidadmedida unidadmedida;
     
@@ -112,11 +124,11 @@ public class Itemcobranza implements Serializable {
     }
 
     public String getStrTipocobranza() {
-        return strTipocobranza;
+        return strTipocobranza.trim();
     }
 
     public void setStrTipocobranza(String strTipocobranza) {
-        this.strTipocobranza = strTipocobranza;
+        this.strTipocobranza = strTipocobranza.trim();
     }
 
     public Short getNumEstado() {
@@ -158,8 +170,46 @@ public class Itemcobranza implements Serializable {
 	public void setStrDescripcion(String strDescripcion) {
 		this.strDescripcion = strDescripcion;
 	}
+
+	public String getStrTipo() {
+		return strTipo;
+	}
+
+	public void setStrTipo(String strTipo) {
+		this.strTipo = strTipo;
+	}
+
+	public Date getDatFechaFin() {
+		return datFechaFin;
+	}
+
+	public void setDatFechaFin(Date datFechaFin) {
+		this.datFechaFin = datFechaFin;
+	}
+
+	public String getStrFlgVariable() {
+		return strFlgVariable;
+	}
+
+	public void setStrFlgVariable(String strFlgVariable) {
+		this.strFlgVariable = strFlgVariable;
+	}
+
+	public BigDecimal getNumCobroAdicional() {
+		return numCobroAdicional;
+	}
+
+	public void setNumCobroAdicional(BigDecimal numCobroAdicional) {
+		this.numCobroAdicional = numCobroAdicional;
+	}
 	
-	
+	public String getStrFlgCobroSocio() {
+		return strFlgCobroSocio;
+	}
+
+	public void setStrFlgCobroSocio(String strFlgCobroSocio) {
+		this.strFlgCobroSocio = strFlgCobroSocio;
+	}
 
 	public long getNumCodItemPadre() {
 		return numCodItemPadre;
@@ -170,7 +220,6 @@ public class Itemcobranza implements Serializable {
 	}
 
 	public String getTipocobdes() {
-	
 		String valor = "";
 		if (strTipocobranza != null) {
 			if (strTipocobranza.trim().equals("C")) {
