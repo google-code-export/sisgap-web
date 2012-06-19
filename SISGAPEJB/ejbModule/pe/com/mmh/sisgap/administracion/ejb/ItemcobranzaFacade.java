@@ -117,7 +117,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 			rs = pst.executeQuery();
 			
 			while(rs.next()){
-				//COD_ITEMCOBRANZA,NUM_COSTO,STR_MONEDA,STR_TIPOCOBRANZA,NUM_ESTADO,STR_DESCRIPCION
+				//COD_ITEMCOBRANZA,NUM_COSTO,STR_MONEDA,STR_TIPOCOBRANZA,NUM_ESTADO,STR_DESCRIPCION,COD_RECIBOLUZ,STR_TIPO,DAT_FECHAFIN,STR_FLGVARIABLE,NUM_COBROADICIONAL
 
 				itemcobranza = new Itemcobranza();
 				itemcobranza.setCodItemcobranza(rs.getBigDecimal("COD_ITEMCOBRANZA"));
@@ -126,6 +126,10 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 				itemcobranza.setStrTipocobranza(rs.getString("STR_TIPOCOBRANZA"));
 				itemcobranza.setStrDescripcion(rs.getString("STR_DESCRIPCION"));
 				itemcobranza.setCodReciboLuz(rs.getBigDecimal("COD_RECIBOLUZ"));
+				itemcobranza.setStrTipo(rs.getString("STR_TIPO"));
+				itemcobranza.setDatFechaFin(rs.getDate("DAT_FECHAFIN"));
+				itemcobranza.setStrFlgVariable(rs.getString("STR_FLGVARIABLE"));
+				itemcobranza.setNumCobroAdicional(rs.getBigDecimal("NUM_COBROADICIONAL"));
 				lsItemCobranza.add(itemcobranza);
 			}
 			
