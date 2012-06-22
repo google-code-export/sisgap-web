@@ -616,12 +616,14 @@ return true;*/
 		}
 
 		//Valores temporales por defecto
-		$("#txtCagofijoh").val("2.50");
+		//$("#txtCagofijoh").val("2.50"); // Solo hasta Abril
+		$("#txtCagofijoh").val("0.70"); // a partir de Mayo
 		$("#txtAlupublich").val("1.00");
 		$("#txtUsoEquipoh").val("1.50");
 		$("#txtServmantoh").val("2.30");
 		$("#txtAporteleyh").val("0.20");
-		$("#txtRecargoh").val("0.10");
+		//$("#txtRecargoh").val("0.10");	//Solo hasta Abril
+		$("#txtRecargoh").val("0");  		//Ya no se cobrara
 		$("#txtRedondeoh").val("0");
 		$("#txtDeudaAnth").val(deuda_sls);
 		
@@ -775,7 +777,6 @@ return true;*/
 					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
 					<td><button id="imprimir-sls">Imprimir Todo</button></td>
 					<td><button id="imprimirPend-sls">Imprimir Pendientes</button></td>
-					<td><button id="imprimirPendXLS-sls">Imprimir Pendientes Excel</button></td>
 				</tr>
 			</table> 
 	</fieldset>

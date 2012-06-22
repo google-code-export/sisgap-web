@@ -213,13 +213,13 @@ public class ReportsServlet extends HttpServlet {
 				String estado = request.getParameter("estado");
 				String format = request.getParameter("formato");
 				if (estado.equals("1")){
-					if (format.equals("XLS")){
+					/*if (format.equals("XLS")){
 						provider=null;
 						ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz Pendiente XLS.jrxml");
 						generateReportOther(request, response, ruta, parametros);
-					}else{
+					}else{*/
 						ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz Pendiente.jrxml");
-					}
+					//}
 				}else{
 					ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte General de Recibos Luz.jrxml");
 				}

@@ -128,137 +128,6 @@
 <table id="tblMenu"
 	style="BORDER-RIGHT: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-RIGHT: 1px solid #B7B7B7"
 	height="100%" cellSpacing="0" cellPadding="0" border="0">
-<% if (!user.tienePermiso(Constantes.MENU_GENERAL)){%>
-	<tr>
-		<td>
-		<div class="SM_ps90023" id="SM900231"
-			onmouseover='SMcs90023(this, "SM_po90023", "")'
-			onclick='SMpoc90023("SM900231Sub", this, 1)'
-			onmouseout='SMcs90023(this, "SM_p90023", "")'>General</div>
-		<div class="SM_cb90023" id="SM900231Sub"
-			style="DISPLAY: block; OVERFLOW: auto; WIDTH: 120px;">
-		<div class="menuv">
-
-		<ul>
-			<li>
-
-			<div class="botonDelMenu">
-				 <a href="<%=request.getContextPath()%>/gestionarModelos.do?metodo=cargarAction" target="FraMain">	
-
-				 <img
-				alt="" src="<%=request.getContextPath()%>/imagenes/menu/gestionarModelos.png"> 
-				Gestionar modelos</a></div>
-
-
-			<div class="botonDelMenu"> 
-			
-			<a href="<%=request.getContextPath()%>/transmitirProduccion.do?metodo=cargarAction" target="FraMain">	
-
-			<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
-			Transmitir	tramas en producción</a></div>
-			</li>
-			<li>
-			<div class="botonDelMenu">
-			
-			<a href="<%=request.getContextPath()%>/asociarModelo.do?metodo=cargarAction" target="FraMain">	
-				<img
-				alt="" src="<%=request.getContextPath()%>/imagenes/menu/asociarModeloEquifax.png">
-			Asociar modelo Cliente a Equifax </a></div>
-			</li>
-			<li>
-			<div class="botonDelMenu">
-			 <a href="<%=request.getContextPath()%>/asociarModeloEquifax.do?metodo=cargarAction" target="FraMain">	
-				
-				<img alt=""
-				src="<%=request.getContextPath()%>/imagenes/menu/asociarModelo.png"> 
-				Asociar modelo	Equifax a Cliente</a></div>
-			</li>
-		</ul>
-		</div>
-
-		</div>
-		</td>
-	</tr>
-<%}%>	
-<% if (!user.tienePermiso(Constantes.MENU_EJECUTOR)){%>		
-	<tr>
-		<td>
-		<div class="SM_ps90023" id="SM900232"
-			onmouseover='SMcs90023(this, "SM_po90023", "")'
-			onclick='SMpoc90023("SM900232Sub", this, 1)'
-			onmouseout='SMcs90023(this, "SM_p90023", "")'>Ejecutor</div>
-		<div class="SM_cb90023" id="SM900232Sub"
-			style="DISPLAY: none; OVERFLOW: auto; WIDTH: 120px; POSITION: relative; TOP: 0px; HEIGHT: 0px;">
-		<div class="menuv">
-
-		<ul>
-			<li>
-				<div class="botonDelMenu">				   
-				    
-				     <a href="<%=request.getContextPath()%>/selConAtr.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
-								          Seleccionar conceptos y atributos
-				     </a>				    
-				    
-			    </div>
-			</li>
-			<li>
-			<div class="botonDelMenu">		
-			<a href="<%=request.getContextPath()%>/traTraEje.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
-								         Transmitir Trama
-		    </a>	
-				
-				
-			</div>
-			</li>
-		</ul>
-		</div>
-		</div>
-		</td>
-	</tr>
-<%}%>	
-<% if (!user.tienePermiso(Constantes.MENU_REPORTE_CREDITICIO)){%>	
-	<tr>
-		<td>
-		<div class="SM_ps90023" id="SM900233"
-			onmouseover='SMcs90023(this, "SM_po90023", "")'
-			onclick='SMpoc90023("SM900233Sub", this, 1)'
-			onmouseout='SMcs90023(this, "SM_p90023", "")'>
-			Reporte Crediticio</div>
-		<div class="SM_cb90023" id="SM900233Sub"
-			style="DISPLAY: none; OVERFLOW: auto; WIDTH: 120px; POSITION: relative; TOP: 0px; HEIGHT: 0px;">
-		<div class="menuv">
-
-		<ul>
-			<li>
-
-			<div class="botonDelMenu">			 			   
-			   
-			   <a href="<%=request.getContextPath()%>/selCon.do?metodo=cargarAction" target="FraMain">						
-						     <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptos.png">
-						   Seleccionar conceptos
-			   </a>				   			   
-			   
-			</div>
-			</li>
-			<li>
-			<div class="botonDelMenu">
-			    				  
-			   <a href="<%=request.getContextPath()%>/traTraRc.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
-								         Transmitir Trama
-		       </a>	  
-				  
-			</div>
-			</li>
-
-		</ul>
-		</div>
-		</div>
-		</td>
-	</tr>
-<%}%>
 <% if (user.tienePermiso(Constantes.MENU_REPORTE_CREDITICIO)){%>	
 	<tr>
 		<td>
@@ -270,40 +139,40 @@
 		<div class="SM_cb90023" id="SM900233Sub"
 			style="DISPLAY: none; OVERFLOW: auto; WIDTH: 120px; POSITION: relative; TOP: 0px; HEIGHT: 0px;">
 		<div class="menuv">
-
-		<ul>
-			<li>
-
-			<div class="botonDelMenu">			 			   
-			   
-			   <a href="<%=request.getContextPath()%>/gestionarFacturacion.do?metodo=cargarAction" target="FraMain">						
-						     <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptos.png">
-						   Facturación
-			   </a>				   			   
-			   
-			</div>
-			</li>
-			<li>
-			<div class="botonDelMenu">
-			    				  
-			   <a href="<%=request.getContextPath()%>/suministroLuz.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
-								         Suministro de Luz 
-		       </a>	  
-				  
-			</div>
-			</li>
-			<li>
-			<div class="botonDelMenu">		
-			<a href="<%=request.getContextPath()%>/registrosisas.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
-								         Vigilancia
-		    </a>	
-				
-				
-			</div>
-			</li>
-		</ul>
+			<ul>
+				<li>
+					<div class="botonDelMenu">			 			   
+						<a href="<%=request.getContextPath()%>/gestionarFacturacion.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptos.png">
+							Facturación
+					    </a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">
+						<a href="<%=request.getContextPath()%>/suministroLuz.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/transmitir.png"> 
+							Suministro de Luz 
+				    	</a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">		
+						<a href="<%=request.getContextPath()%>/registrosisas.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
+							Vigilancia
+					    </a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">		
+						<a href="<%=request.getContextPath()%>/servicioshigienicos.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/servicios.png"> 
+							Servicios Higienicos
+					    </a>
+					</div>
+				</li>
+			</ul>
 		</div>
 		</div>
 		</td>
@@ -319,55 +188,44 @@
 		<div class="SM_cb90023" id="SM900234Sub"
 			style="DISPLAY: none; OVERFLOW: auto; WIDTH: 120px; POSITION: relative; TOP: 0px; HEIGHT: 0px;">
 		<div class="menuv">
-
-		<ul>
-			<li>
-
-			<div class="botonDelMenu">
-			<a href="<%=request.getContextPath()%>/gestionarSocios.do?metodo=cargarAction" target="FraMain" >
-			<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/gestionarClientes.png"/>
-			Gestionar Socios</a></div>
-
-			</li>
-			<li>
-			<div class="botonDelMenu">
-			<a href="<%=request.getContextPath()%>/gestionarItemCobranza.do?metodo=cargarAction" target="FraMain">
-			<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/gestionarConceptos.png"/> Gestionar Items de Cobranza </a>
-			</div>
-			
-			</li>
-			<li>
-			<div class="botonDelMenu" style="visibility: hidden;">
-			<a href="<%=request.getContextPath()%>/aprobarModelos.do?metodo=cargarAction" target="FraMain" >
-			<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/aprobarModelos.png"/> 
-			Aprobar	modelos</a></div>
-			</li>
-			<li>
-			<div class="botonDelMenu" style="visibility: hidden;">
-			
-			
-			
-			
-			<a href="<%=request.getContextPath()%>/his.do?metodo=cargarAction" target="FraMain">						
-			       <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/historialModelos.png"> 
-			          Historial de modelos 
-		    </a>	 
-			
-			
-			</div>
-			</li>
-			<li>
-			<div class="botonDelMenu" style="visibility: hidden;">
-			
-			<a href="<%=request.getContextPath()%>/auditoria.do?metodo=cargarAction" target="FraMain">
-			<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/auditoria.png"/>
-			Auditoria </a>
-			
-			</div>
-			</li>
-		</ul>
+			<ul>
+				<li>
+					<div class="botonDelMenu">
+						<a href="<%=request.getContextPath()%>/gestionarSocios.do?metodo=cargarAction" target="FraMain" >
+						<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/gestionarClientes.png"/>
+						Gestionar Socios</a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">
+						<a href="<%=request.getContextPath()%>/gestionarItemCobranza.do?metodo=cargarAction" target="FraMain">
+						<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/gestionarConceptos.png"/>
+						Gestionar Items de Cobranza</a>
+					</div>			
+				</li>
+				<li>
+					<div class="botonDelMenu" style="visibility: hidden;">
+						<a href="<%=request.getContextPath()%>/aprobarModelos.do?metodo=cargarAction" target="FraMain" >
+						<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/aprobarModelos.png"/> 
+						Aprobar	modelos</a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu" style="visibility: hidden;">
+						<a href="<%=request.getContextPath()%>/his.do?metodo=cargarAction" target="FraMain">						
+				        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/historialModelos.png"> 
+				        Historial de modelos</a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu" style="visibility: hidden;">
+						<a href="<%=request.getContextPath()%>/auditoria.do?metodo=cargarAction" target="FraMain">
+						<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/auditoria.png"/>
+						Auditoria</a>
+					</div>
+				</li>
+			</ul>
 		</div>
-
 		</div>
 		</td>
 	</tr>
@@ -384,52 +242,36 @@
 
 
 		<div class="menuv">
-
-		<ul>
-			<li>
-				<div class="botonDelMenu">
-			   		<a href="<%=request.getContextPath()%>/repConAtr.do?metodo=cargarAction" target="FraMain">
-				    	<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteConceptoAtributos.png"/>
-				       Reporte de Socios
-			   		</a>			
-				</div>
-			</li>
-			<li>
-				<div class="botonDelMenu">
-			   		<a href="<%=request.getContextPath()%>/reporteItemsCobranza.do?metodo=cargarAction" target="FraMain">
-				    	<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteItemsCobranza.png"/>
-				       Reporte Items de Cobranza
-			   		</a>			
-				</div>
-			</li>
-
-			<li>
-			<div class="botonDelMenu" style="visibility: hidden;">		
-			 <a href="<%=request.getContextPath()%>/repDicGen.do?metodo=cargarAction" target="FraMain">						
-								        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteDiccionarioGeneral.png"> 
-								             Reporte del Diccionario en general
-		      </a>	
-			
-			</div>
-
-			</li>
-
-			<li>
-			<div class="botonDelMenu" style="visibility: hidden;">
-			
-			 <a href="<%=request.getContextPath()%>/repModGen.do?metodo=cargarAction" target="FraMain">						
-					<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/buscarModelosGenerales.png"> 
-								            Buscar modelos generados 
-		      </a>	
-			
-			
-			</div>
-
-			</li>
-			
-
-		</ul>
-
+			<ul>
+				<li>
+					<div class="botonDelMenu">
+				   		<a href="<%=request.getContextPath()%>/repConAtr.do?metodo=cargarAction" target="FraMain">
+					    <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteConceptoAtributos.png"/>
+					    Reporte de Socios</a>			
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">
+				   		<a href="<%=request.getContextPath()%>/reporteItemsCobranza.do?metodo=cargarAction" target="FraMain">
+					    <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteItemsCobranza.png"/>
+					    Reporte Items de Cobranza</a>			
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu" style="visibility: hidden;">		
+						<a href="<%=request.getContextPath()%>/repDicGen.do?metodo=cargarAction" target="FraMain">						
+				        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteDiccionarioGeneral.png"> 
+				        Reporte del Diccionario en general</a>	
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu" style="visibility: hidden;">
+						 <a href="<%=request.getContextPath()%>/repModGen.do?metodo=cargarAction" target="FraMain">						
+						 <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/buscarModelosGenerales.png"> 
+						 Buscar modelos generados</a>	
+					</div>
+				</li>			
+			</ul>
 		</div>
 		</div>
 		</td>
