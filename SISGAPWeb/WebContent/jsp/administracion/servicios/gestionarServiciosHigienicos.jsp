@@ -16,16 +16,16 @@
 
 $(function() {
 
-		$("#nuevo-sl").button();
-		$("#salir-sl").button();
-		$("#pdf-sl").button();
-		$("#imprimir-sl").button();
-		$("#buscar-sl").button();
+		$("#nuevo-sh").button();
+		$("#salir-sh").button();
+		$("#pdf-sh").button();
+		$("#imprimir-sh").button();
+		$("#buscar-sh").button();
 		
 		$("#btngrabar").button();
 		$("#btncerrar").button();
 	
-		$('#imprimir-sl').click(function() {      
+		$('#imprimir-sh').click(function() {      
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
 	        nueva=window.open('ReportsServlet?reporte=LISTADO_SERVICIOS_HIGIENICOS', 'Popup', caracteristicas);  
 	        return false;
@@ -56,15 +56,7 @@ $(function() {
 						allFields.val("").removeClass("ui-state-error");
 					}
 			});
-
-		
-		$('#nuevo-sl').click(function() { 
-
-			$("#grabar-form").dialog("open");
-     
-
-		});
-
+				
 		$("#eliminar-form").dialog({
 			autoOpen : false,
 			height : 0,
@@ -72,7 +64,7 @@ $(function() {
 			modal : true,
 			buttons : {
 				Eliminar : function() {
-					var frm = document.formFacturacion;								
+					var frm = document.formServiciosHigienicos;								
 					frm.submit();
 				},
 				Cancel : function() {
@@ -110,11 +102,14 @@ $(function() {
 	});
 		
 	function lstNuevo() {
-		alert("Nuevo...");
+		//alert("Nuevo...");
+		var frm = document.formServiciosHigienicos;
+		frm.metodo.value = 'irGrabar';
+		frm.submit();
 	}
 
 	function grabar() {
-		var frm = document.formFacturacion;
+		var frm = document.formServiciosHigienicos;
 		alert("Grabando...");		
 		//frm.submit();
 	}
@@ -124,7 +119,7 @@ $(function() {
 	}
 		
 	function setTipoDoc(cod){
-		var frm = document.formFacturacion;
+		var frm = document.formServiciosHigienicos;
 		frm.tipodocumento.value = cod;
 	}
 
@@ -161,7 +156,7 @@ $(function() {
 </head>
 <body>
 
-	<html:form action="/suministroLuz.do" styleId="formFacturacion">
+	<html:form action="/servicioshigienicos.do" styleId="formServiciosHigienicos">
 		<input type="hidden" name="metodo" />		
 		
 		<input type='hidden' name='fecvencimiento' id='fecvencimiento'/>
@@ -189,14 +184,29 @@ $(function() {
 							</select>
 						</td>
 						<td align="center"><input type="text" maxlength="6" size="16" /></td>
-						<td align="center"><input type="button" id="buscar-sl" name="buscar-sl" value="Busqueda Rápida" onclick="lstBuscar()" /></td>
-						<td align="center"><input type="button" id="pdf-sl" name="pdf-sl" value="PDF" onclick="lstPdf()" /></td>
-						<td align="center"><input type="button" id="imprimir-sl" name="imprimir-sl" value="Imprimir" onclick="lstImprimir()" /></td>
-						<td align="center"><input type="button" id="nuevo-sl" name="nuevo-sl" value="Nuevo" /></td>
+						<td align="center"><input type="button" id="buscar-sh" name="buscar-sh" value="Busqueda Rápida" onclick="lstBuscar()" /></td>
+						<td align="center"><input type="button" id="pdf-sh" name="pdf-sh" value="PDF" onclick="lstPdf()" /></td>
+						<td align="center"><input type="button" id="imprimir-sh" name="imprimir-sh" value="Imprimir" onclick="lstImprimir()" /></td>
+						<td align="center"><input type="button" id="nuevo-sh" name="nuevo-sh" value="Nuevo" onclick="lstNuevo()" /></td>
 					</tr>
 				</table>
 				</span>
 			</legend>
+		</fieldset>
+		
+		<fieldset>
+		<display:table name="lstSSHH" 
+						class="consultanormal"
+						excludedParams="metodo" 
+						requestURI="/gestionarServiciosHigienicos.do?metodo=cargarAction"		
+						id="row"
+						export="false">
+				<display:column title="Codigo Servicio" sortable="true"></display:column>
+				<display:column title="Nro.Doc.Impreso" sortable="true"></display:column>
+				<display:column title="Socio" sortable="true"></display:column>
+				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" sortable="true"></display:column>
+				<display:column title="Total" format="S/. {0,number,###.00}" sortable="true"></display:column>
+		</display:table>
 		</fieldset>	
 	</html:form>
 

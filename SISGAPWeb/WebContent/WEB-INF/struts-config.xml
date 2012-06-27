@@ -106,6 +106,7 @@
    <action name="ServiciosHigienicosForm" path="/servicioshigienicos" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.ServiciosHigienicosAction">
      <forward name="cargarAction" path="/jsp/administracion/servicios/gestionarServiciosHigienicos.jsp"/>
+     <forward name="agregarServicios" path="/jsp/administracion/servicios/agregarServiciosHigienicos.jsp"/>
      <forward name="blankpage" path="/jsp/administracion/servicios/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
      
