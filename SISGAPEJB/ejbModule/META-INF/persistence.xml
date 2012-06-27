@@ -13,7 +13,10 @@
 		<class>pe.com.mmh.sisgap.domain.DetallefacturaPK</class>
 		<class>pe.com.mmh.sisgap.domain.Factura</class>
 		<class>pe.com.mmh.sisgap.domain.Itemcobranza</class>
-		<class>pe.com.mmh.sisgap.domain.Unidadmedida</class>		
+		<class>pe.com.mmh.sisgap.domain.Unidadmedida</class>
+		<class>pe.com.mmh.sisgap.domain.ServicioItem</class>
+		<class>pe.com.mmh.sisgap.domain.Servicios</class>
+		<class>pe.com.mmh.sisgap.domain.ServicioDetalle</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
