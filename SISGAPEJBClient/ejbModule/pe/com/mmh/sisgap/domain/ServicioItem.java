@@ -33,7 +33,7 @@ public class ServicioItem  implements Serializable {
      private Boolean numEstado;
     @Column(name="DAT_FECHACREA")
      private Date datFechacrea;
-
+    
     public ServicioItem() {
     }
 	
@@ -90,7 +90,7 @@ public class ServicioItem  implements Serializable {
         this.datFechacrea = datFechacrea;
     }
 
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (codServicioitem != null ? codServicioitem.hashCode() : 0);

@@ -31,6 +31,10 @@ public class ServicioDetalle  implements java.io.Serializable {
      private Boolean numEstado;
     @Column(name="STR_MONEDA", length=20)
      private String strMoneda;
+    @Column(name="NUM_DEL", precision=11)
+    private BigDecimal numDel;
+    @Column(name="NUM_AL", precision=11)
+    private BigDecimal numAl;
 
     public ServicioDetalle() {
     }
@@ -105,6 +109,26 @@ public class ServicioDetalle  implements java.io.Serializable {
     public void setStrMoneda(String strMoneda) {
         this.strMoneda = strMoneda;
     }
+
+
+	public BigDecimal getNumDel() {
+		return numDel;
+	}
+
+
+	public void setNumDel(BigDecimal numDel) {
+		this.numDel = numDel;
+	}
+
+
+	public BigDecimal getNumAl() {
+		return numAl;
+	}
+
+	
+	public void setNumAl(BigDecimal numAl) {
+		this.numAl = numAl;
+	}
 
 
 
