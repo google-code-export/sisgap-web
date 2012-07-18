@@ -8,6 +8,7 @@ package pe.com.mmh.sisgap.administracion.ejb;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 	
 	private static final String view_buscar_item = "select * from view_buscar_item where str_descripcion like %s ";
 	private static final String SP_DEL_ITEMCOB = "{call PKG_ADMINISTRACION.SP_DEL_ITEMCOB(?)}";
-	private static final String SP_UPD_ITEMCOB = "{call PKG_ADMINISTRACION.SP_UPD_ITEMCOB(?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_UPD_ITEMCOB = "{call PKG_ADMINISTRACION.SP_UPD_ITEMCOB(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -46,7 +47,7 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
     public void edit(Itemcobranza ic) {
     	Connection connection = null;
     	CallableStatement cst = null;
-    	
+    	String tipo = "";
     	try {			
     		connection = getConnection();
 			cst = connection.prepareCall(SP_UPD_ITEMCOB);
@@ -59,6 +60,13 @@ public class ItemcobranzaFacade implements ItemcobranzaFacadeLocal {
 			cst.setInt("P_COD_UNIMEDIDA", ic.getUnidadmedida().getCodUnimedida().intValue());
 			cst.setLong("P_COD_ITEMPADRE", ic.getNumCodItemPadre());
 			cst.setInt("P_COD_LUZORIG", ic.getCodReciboLuz().intValue());
+			if(ic.getStrTipo()==null)
+				tipo = "I";
+			cst.setString("P_TIPO", tipo);
+			cst.setDate("P_FECHAFIN", (Date) ic.getDatFechaFin());
+			cst.setString("P_FLGVARIABLE", ic.getStrFlgVariable());
+			cst.setBigDecimal("P_NUMESTADO", ic.getNumCobroAdicional());
+			cst.setString("P_FLGCOBROSOCIO", ic.getStrFlgCobroSocio());
 			cst.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
