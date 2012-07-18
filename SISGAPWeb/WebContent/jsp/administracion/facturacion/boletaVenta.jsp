@@ -45,10 +45,12 @@
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 
-				$("#btnPrint").button().click(function() {
-					//alert("Pruebas");
+				$("#btnPrint").click(function() {
+					alert("Presiono Boleta");
 					var nrodocReal =  ${nroDocReal};
 					var nrodocInte =  ${nroDocInte};
+					alert("nrodocReal: "+nrodocReal);
+					alert("nrodocInte: "+nrodocInte);
 					//var nrodocReal =  $("{#nroDocReal}").val();
 					//var nrodocInte =  $("{#nroDocInte}").val();
 					$.ajax({
@@ -227,14 +229,11 @@
 		   </tr>
 		</table>
 		<form name="frmPrint" method="post" action="">
-		<table width="500" class="noprint" style="padding-left: 50px;">
-		   <tr>
-		      <td width="200"></td>
-		      <td align="center"><input type="button" id="btnPrint" name="btnPrint" value="Imprimir" onclick="window.print()" /></td>
-		      <td align="center"><input type="button" id="btnCerrar" name="btnCerrar" value="Cerrar" onclick="window.close()" /></td>
-		      <td width="200"></td>
-		   </tr>
-		</table>
+			<table>
+				<tr>
+					<td><button id="btnPrint" name="btnPrint">Imprimir</button></td>
+				</tr>
+			</table>
 		</form>
 	</body>
 </html>

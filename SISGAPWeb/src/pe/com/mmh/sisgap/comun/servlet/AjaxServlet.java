@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.comun.servlet;
 
+import java.awt.image.LookupOp;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpSession;
 import pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.ServiciosItemFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
 import pe.com.mmh.sisgap.comun.constantes.Constantes;
@@ -30,6 +33,7 @@ import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.DetallefacturaPK;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
+import pe.com.mmh.sisgap.domain.ServicioItem;
 import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
@@ -223,6 +227,19 @@ public class AjaxServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+			} else if(action.equals("BUSCAR_ITEM_SERVICIO")){
+				BigDecimal codigo = new BigDecimal(request.getParameter("codigo"));
+				
+				try {
+					ServiciosItemFacadeLocal itemfacade = (ServiciosItemFacadeLocal) context.lookup(ConstantesJNDI.SERVICIOSITEM);
+					List<ServicioItem> lstItemFacade = itemfacade.buscarxNombre(codigo);
+					
+				} catch (NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 			} else if(action.equals("AGREGAR_ITEM")){
 			
 				Detallefactura detallefactura = null;				
@@ -241,15 +258,10 @@ public class AjaxServlet extends HttpServlet {
 				String var10 = request.getParameter("total");
 				
 				try {
-					
 					//Agregar Detalle 
-					
 					detallefactura =  new Detallefactura();
-					
 					DetallefacturaPK pk=new DetallefacturaPK();
-					
 					pk.setCodItemcobranza(new Long(codigoItem));
-					
 					detallefactura.setId(pk);
 					detallefactura.setStrDescripcion(var2);
 					detallefactura.setStrTipocobranza(var3);

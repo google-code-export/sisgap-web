@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -76,6 +77,7 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		String fechacaducidad = request.getParameter("fechacaducidad");
 		String txtcobroadicional = request.getParameter("txtcobroadicional");
 		String cbcostovariable = request.getParameter("cbcostovariable");
+		String cbcobrosocio = request.getParameter("cbcobrosocio");
 		String cbestado = request.getParameter("cbestado");
 		
 		//Objeto UnidadMedida
@@ -93,19 +95,26 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		ic.setStrMoneda(cbmoneda);
 		ic.setUnidadmedida(um);
 		ic.setStrTipocobranza(cbtipocob);
-			//Conversion de Fecha
-			DateFormat formato;
-			Date fecha = null;
-			formato = new SimpleDateFormat("dd/MM/yyyy");
-			fecha = (Date) formato.parse(fechacaducidad);
-		ic.setDatFechaFin(fecha);
-		ic.setNumCobroAdicional(new BigDecimal(txtcobroadicional));
+		
+		if(!fechacaducidad.equals("")){
+				//Conversion de Fecha
+				DateFormat formato;
+				Date fecha = null;
+				formato = new SimpleDateFormat("dd/MM/yyyy");
+				fecha = (Date) formato.parse(fechacaducidad);
+			ic.setDatFechaFin(fecha);
+		}
+		
+		if(!txtcobroadicional.equals("")){
+			ic.setNumCobroAdicional(new BigDecimal(txtcobroadicional));
+		}
 		ic.setStrFlgVariable(cbcostovariable);
+		ic.setStrFlgCobroSocio(cbcobrosocio);
 		ic.setNumEstado(new Short(cbestado));
 		
 		
-		char a= cbmoneda.charAt(0);
-		ic.setStrMoneda(cbmoneda.trim());
+/*		char a= cbmoneda.charAt(0);
+		ic.setStrMoneda(cbmoneda.trim());*/
 
 /*		UnidadmedidaFacadeLocal unidadmedidaFacadeLocal = (UnidadmedidaFacadeLocal) lookup(ConstantesJNDI.UNIDADMEDIDAFACADE);
 		Unidadmedida uni= unidadmedidaFacadeLocal.find(new BigDecimal(cbmedida));
@@ -135,6 +144,7 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 		GestionarItemCobranzaActionForm frm=(GestionarItemCobranzaActionForm) form;
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		Itemcobranza obj=facadeLocal.find(new BigDecimal(frm.getCodigo()));
+		request.getSession().setAttribute("codigoItem", frm.getCodigo());
 		
 		ItemcobranzaFacadeLocal facadeLocalCob = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		List<Itemcobranza> lstCob = facadeLocalCob.findAll();
@@ -156,27 +166,50 @@ public class GestionarItemCobranzaAction extends GrandActionAbstract{
 	public ActionForward actualizar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[GestionarItemCobranzaAction] Inicio - actualizar");
 		GestionarItemCobranzaActionForm frm=(GestionarItemCobranzaActionForm) form;
-		
-		String cbtipocob = request.getParameter("cbtipocob");
-		String txtmoneda = request.getParameter("txtmoneda");
+		String codigoItem = (String) request.getSession().getAttribute("codigoItem");
+		String txtconcepto = request.getParameter("txtconcepto").toUpperCase();
+		String cbconceptpadre = request.getParameter("cbConceptPadre");
+		String cbReciboLuz = request.getParameter("cbReciboLuz");
 		String txtcosto = request.getParameter("txtcosto");
-		String txtconcepto = request.getParameter("txtconcepto");
-		String cbestado = request.getParameter("cbestado");
+		String cbmoneda = request.getParameter("cbmoneda");
 		String cbmedida = request.getParameter("cbmedida");
-		String  cbconceptpadre = request.getParameter("cbConceptPadre");
+		String cbtipocob = request.getParameter("cbtipocobranza");
+		String fechacaducidad = request.getParameter("fechacaducidad");
+		String txtcobroadicional = request.getParameter("txtcobroadicional");
+		String cbcostovariable = request.getParameter("cbcostovariable");
+		String cbcobrosocio = request.getParameter("cbcobrosocio");
+		String cbestado = request.getParameter("cbestado");
+		
+		//Objeto UnidadMedida
+		UnidadmedidaFacadeLocal unimedFacade = (UnidadmedidaFacadeLocal) lookup(ConstantesJNDI.UNIDADMEDIDAFACADE);
+		Unidadmedida um;
+		um = unimedFacade.find(BigDecimal.valueOf(Double.parseDouble(cbmedida)));
+		//um = unimedFacade.find(Long.valueOf(cbmedida));
 		
 		Itemcobranza ic = new Itemcobranza();
-		ic.setCodItemcobranza(new BigDecimal(frm.getCodigo()));
-		ic.setNumCosto(new BigDecimal(txtcosto));
-		ic.setNumEstado(new Short(cbestado));
+		ic.setCodItemcobranza(new BigDecimal(codigoItem));
 		ic.setStrDescripcion(txtconcepto);
-		ic.setStrTipocobranza(cbtipocob);
-		ic.setStrMoneda(txtmoneda.trim());
 		ic.setNumCodItemPadre(new Long(cbconceptpadre));
-
-		UnidadmedidaFacadeLocal unidadmedidaFacadeLocal = (UnidadmedidaFacadeLocal) lookup(ConstantesJNDI.UNIDADMEDIDAFACADE);
-		Unidadmedida uni= unidadmedidaFacadeLocal.find(new BigDecimal(cbmedida));
-		ic.setUnidadmedida(uni);
+		//ic.setStrTipo(cbTipoItem);
+		ic.setCodReciboLuz(new BigDecimal(cbReciboLuz));
+		ic.setNumCosto(new BigDecimal(txtcosto));
+		ic.setStrMoneda(cbmoneda);
+		ic.setUnidadmedida(um);
+		ic.setStrTipocobranza(cbtipocob);
+			//Conversion de Fecha
+		if(fechacaducidad.trim()!=""){
+			DateFormat formato;
+			Date fecha = null;
+			formato = new SimpleDateFormat("dd/MM/yyyy");
+			fecha = (Date) formato.parse(fechacaducidad);
+			ic.setDatFechaFin(fecha);
+		}
+		if(txtcobroadicional.trim()!=""){
+			ic.setNumCobroAdicional(new BigDecimal(txtcobroadicional));
+		}
+		ic.setStrFlgVariable(cbcostovariable);
+		ic.setStrFlgCobroSocio(cbcobrosocio);
+		ic.setNumEstado(new Short(cbestado));
 		
 		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		facadeLocal.edit(ic);

@@ -14,9 +14,61 @@ $(function() {
 
 	$("#btn-Grabar").button();
 	$("#btn-Cancelar").button();
+	
 });
 
 function grabar() {
+	var concepto = $('[name=txtconcepto]').val().trim();
+	var txtcosto = $('[name=txtcosto]').val().trim();
+	var txtmoned = $('[name=cbmoneda]').val();
+	var txtmedid = $('[name=cbmedida]').val();
+	var txtcobra = $('[name=cbtipocobranza').val();
+	var txtvaria = $('[name=cbcostovariable').val();
+	var txtsocio = $('[name=cbcobrosocio').val();
+	var txtestad = $('[name=cbestado').val();
+
+	if(concepto==""){
+		alert("Debe ingresar el Concepto");
+		$('[name=txtconcepto]').focus();
+		return false;
+	}
+	if(txtcosto==""){
+		alert("Debe ingresar el Costo");
+		$('[name=txtcosto]').focus();
+		return false;
+	}
+	if(txtmoned=="") {
+		alert("Debe seleccionar el Tipo de Moneda");
+		$('[name=cbmoneda]').focus();
+		return false;
+	}
+	if(txtmedid=="") {
+		alert("Debe seleccionar la Unidad de Medida");
+		$('[name=cbmedida]').focus();
+		return false;
+	}
+	if(txtcobra=="") {
+		alert("Debe seleccionar el Tipo de Cobranza");
+		$('[name=cbtipocobranza]').focus();
+		return false;
+	}
+	if(txtvaria=="") {
+		alert("Debe seleccionar el Tipo de Costo");
+		$('[name=cbcostovariable]').focus();
+		return false;
+	}
+	if(txtsocio=="") {
+		alert("Debe seleccionar si el item es afecto a todos los socios [s/n]");
+		$('[name=cbcobrosocio]').focus();
+		return false;
+	}
+	if(txtestad=="") {
+		alert("Debe seleccionar el Estado del Item");
+		$('[name=cbestado]').focus();
+		return false;
+	}
+
+
 	var frm = document.agregarItem;
 	frm.metodo.value = 'actualizar';
 	frm.submit();
@@ -157,7 +209,7 @@ function isNumber(obj){
 					<tr>
 						<td align="right">Moneda</td>
 						<td>
-							<select id="selMoneda" name="txtmoneda" style="width: 100px">
+							<select id="cbmoneda" name="cbmoneda" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.strMoneda =='S' }">
@@ -175,7 +227,7 @@ function isNumber(obj){
 					<tr>
 						<td align="right">U/M</td>
 						<td>
-							<select id="selUM" name="cbmedida" style="width: 100px">
+							<select id="cbmedida" name="cbmedida" style="width: 100px">
 								<option value="">Seleccione</option>
 								<c:forEach items="${lstMedidas}" var="row">
 									<c:choose>
@@ -193,14 +245,14 @@ function isNumber(obj){
 					<tr>
 						<td align="right">Tipo de Cobranza</td>
 						<td>
-							<select id="selCobranza" name="cbtipocob" style="width: 100px">
+							<select id="cbtipocobranza" name="cbtipocobranza" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
-									<c:when test="${objItem.strTipocobranza =='C ' }">
+									<c:when test="${objItem.strTipocobranza =='C' }">
 										<option value="C" selected>Contable</option>
 										<option value="N">No Contable</option>
 									</c:when>
-									<c:when test="${objItem.strTipocobranza =='N ' }">
+									<c:when test="${objItem.strTipocobranza =='N' }">
 										<option value="C">Contable</option>
 										<option value="N" selected>No Contable</option>
 									</c:when>																
@@ -230,6 +282,10 @@ function isNumber(obj){
 										<option value="S">Si</option>
 										<option value="N" selected>No</option>									
 									</c:when>
+									<c:when test="${objItem.strFlgVariable == null }">
+										<option value="S">Si</option>
+										<option value="N">No</option>
+									</c:when>
 								</c:choose>
 							</select><font color="red"> * </font>
 						</td>
@@ -248,6 +304,10 @@ function isNumber(obj){
 										<option value="G">General</option>
 										<option value="I" selected>Individual</option>
 									</c:when>
+									<c:when test="${objItem.strFlgCobroSocio == null }">
+										<option value="G">General</option>
+										<option value="I">Individual</option>
+									</c:when>
 								</c:choose>
 							</select><font color="red"> * </font>
 						</td>
@@ -255,7 +315,7 @@ function isNumber(obj){
 					<tr>
 						<td align="right">Estado</td>
 						<td>
-							<select id="selEstado" name="cbestado" style="width: 100px">
+							<select id="cbestado" name="cbestado" style="width: 100px">
 								<option value="" selected>Seleccione</option>
 								<c:choose>
 									<c:when test="${objItem.numEstado == 1 }">

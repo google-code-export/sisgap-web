@@ -25,26 +25,45 @@ $(function() {
 		$("#btngrabar").button();
 		$("#btncerrar").button();
 	
-		$('#imprimir-sh').click(function() {      
-			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=LISTADO_SERVICIOS_HIGIENICOS', 'Popup', caracteristicas);  
-	        return false;
+		$('#imprimir-sh').click(function() {
+			$("#selerepodia-form").dialog("open");
 		});
 
+
+		$("#selerepodia-form").dialog({
+			autoOpen : false,
+			height : 150,
+			width : 350,
+			modal : true,
+			buttons : {
+				Generar : function() {
+					var fecDoc = $("#fechadocumento").val();
+					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+			        nueva=window.open('ReportsServlet?reporte=LISTADO_SERVICIOS_HIGIENICOS&fecDoc='+fecDoc, 'Popup', caracteristicas);  
+			        //return false;
+				},
+				Cancel : function() {
+					$(this).dialog("close");
+				}},
+			close : function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+        
 	
-		$("#periodo").datepicker(
-	            {   
-	                changeMonth: true,
-	                changeYear: false,
-	                numberOfMonths: 1,
-	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
-	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
-	                    'Octubre', 'Noviembre', 'Diciembre'],
-	                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
-	                    'May', 'Jun', 'Jul', 'Ago',
-	                    'Sep', 'Oct', 'Nov', 'Dic'] 
-	            });   
+		$("#fechadocumento").datepicker({  
+			dateFormat: 'dd/mm/yy', 
+            changeMonth: true,
+            changeYear: false,
+            numberOfMonths: 1,
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+                'Junio', 'Julio', 'Agosto', 'Septiembre',
+                'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+                'May', 'Jun', 'Jul', 'Ago',
+                'Sep', 'Oct', 'Nov', 'Dic'] 
+        });  
              
 		
 		$("#grabar-form").dialog({
@@ -195,19 +214,31 @@ $(function() {
 		</fieldset>
 		
 		<fieldset>
-		<display:table name="lstSSHH" 
+		<display:table name="lstSSHH"
 						class="consultanormal"
 						excludedParams="metodo" 
-						requestURI="/gestionarServiciosHigienicos.do?metodo=cargarAction"		
+						requestURI="/gestionarServiciosHigienicos.do?metodo=cargarAction"
 						id="row"
 						export="false">
-				<display:column title="Codigo Servicio" sortable="true"></display:column>
-				<display:column title="Nro.Doc.Impreso" sortable="true"></display:column>
-				<display:column title="Socio" sortable="true"></display:column>
-				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" sortable="true"></display:column>
-				<display:column title="Total" format="S/. {0,number,###.00}" sortable="true"></display:column>
+				<display:column title="Cod.Servicio" property="codServicio" sortable="true"></display:column>
+				<display:column title="Fecha Servicio" format="{0,date,dd-MM-yyyy}" property="datFechaserv" sortable="true"></display:column>
+				<display:column title="Descripcion" property="strDescripcion" sortable="true"></display:column>
+				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" property="datFechacrea" sortable="true"></display:column>
+				<display:column title="Total" format="S/. {0,number,###.00}" property="numTotal" sortable="true"></display:column>
 		</display:table>
 		</fieldset>	
+
+		<div id="selerepodia-form" title="Seleccione Tipo de Reporte diario a mostrar...">
+			<div align="center">
+				<table border="0">
+					<tr>
+						<td>
+							<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;"/>(mes/dia/año)
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</html:form>
 
 </body>

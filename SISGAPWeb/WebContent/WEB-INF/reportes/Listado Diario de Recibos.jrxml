@@ -27,7 +27,7 @@
 		<defaultValueExpression ><![CDATA["R"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FECHA_DOC" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["05/06/2012"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["02/07/2012"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_EST_PENDIENTE" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["1"]]></defaultValueExpression>
@@ -55,7 +55,7 @@ FROM
      INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_FACTURA."TRAN_IDE" = SISGAP_SOCIO."TRAN_IDE"
 WHERE
      SISGAP_FACTURA."STR_TIPODOC" = $P{P_TIPO_DOC} AND 
-     SISGAP_FACTURA."DAT_FECHACRED" = TO_DATE($P{P_FECHA_DOC}) AND
+     TO_CHAR(SISGAP_FACTURA."DAT_FECHAFAC",'DD/MM/YYYY') = $P{P_FECHA_DOC} AND
      SISGAP_FACTURA."NUM_ESTADO" IN ($P{P_EST_PENDIENTE},$P{P_EST_PAGADA},$P{P_EST_CANCELADA})
 ORDER BY
      SISGAP_FACTURA."COD_FACTURA" ASC]]></queryString>

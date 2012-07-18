@@ -261,6 +261,12 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_EST_CANCELADA", canc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado Diario de Recibos.jrxml");
 				System.out.println("[ReportsServlet] Final - REPORTE_DIARIO_DOCUMENTOS");
+			}else if(reporte.equals("LISTADO_SERVICIOS_HIGIENICOS")){
+				System.out.println("[ReportsServlet] Inicio - LISTADO_SERVICIOS_HIGIENICOS");
+				String fecDoc = request.getParameter("fecDoc");
+				parametros.put("P_FECHA", fecDoc);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte Diario de Servicios Higienicos.jrxml");
+				System.out.println("[ReportsServlet] Final - LISTADO_SERVICIOS_HIGIENICOS");
 			}else if(reporte.equals("REPORTE_SISAS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_SISAS");
 				try {

@@ -156,7 +156,7 @@ var codMon = "";
 		}
 
 		$('#imprimir-f').click(function() {
-			$("#codigo-p").val()
+			$("#codigo-p").val();
 			$("#txtNroDoc").val($('[name=numeroreal]').val());
 			$("#selectImp-form").dialog("open");
 			return false;
@@ -833,10 +833,10 @@ var codMon = "";
 			</fieldset>
 		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		
-			Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" />
-			Ingrese Numero Puesto:<input type="text" name="numeropuesto" id="numeropuesto" style="width: 100px" />
+			Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" tabindex="15"/>
+			Ingrese Numero Puesto:<input type="text" name="numeropuesto" id="numeropuesto" style="width: 100px" tabindex="16"/>
 			<br>
-			<button id="btn-buscar-socio">Buscar Socio</button>
+			<button id="btn-buscar-socio" tabindex="17">Buscar Socio</button>
 			<div id="tablesocios"></div>
 		</div>
 		
