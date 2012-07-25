@@ -2,9 +2,13 @@ package pe.com.mmh.sisgap.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +33,7 @@ public class Servicios  implements java.io.Serializable {
     @Column(name="STR_DESCRIPCION", length=100)
      private String strDescripcion;
     @Column(name="NUM_ESTADO", precision=1, scale=0)
-     private Boolean numEstado;
+     private BigDecimal numEstado;
     @Temporal(TemporalType.DATE)
     @Column(name="DAT_FECHACREA", length=7)
      private Date datFechacrea;
@@ -38,15 +42,25 @@ public class Servicios  implements java.io.Serializable {
      private Date datFechaserv;
     @Column(name="STR_MONEDA", length=20)
      private String strMoneda;
+	@OneToMany(mappedBy="sisgapServicios", fetch=FetchType.EAGER)
+	private List<ServicioDetalle> sisgapServicioDetalle;
+    
+    public List<ServicioDetalle> getSisgapServicioDetalle() {
+		return sisgapServicioDetalle;
+	}
 
-    public Servicios() {
+	public void setSisgapServicioDetalle(List<ServicioDetalle> sisgapServicioDetalle) {
+		this.sisgapServicioDetalle = sisgapServicioDetalle;
+	}
+
+	public Servicios() {
     }
 
 	
     public Servicios(BigDecimal codServicio) {
         this.codServicio = codServicio;
     }
-    public Servicios(BigDecimal codServicio, Long nroServicio, BigDecimal numTotal, String strDescripcion, Boolean numEstado, Date datFechacrea, Date datFechaserv, String strMoneda) {
+    public Servicios(BigDecimal codServicio, Long nroServicio, BigDecimal numTotal, String strDescripcion, BigDecimal numEstado, Date datFechacrea, Date datFechaserv, String strMoneda) {
        this.codServicio = codServicio;
        this.nroServicio = nroServicio;
        this.numTotal = numTotal;
@@ -90,11 +104,11 @@ public class Servicios  implements java.io.Serializable {
         this.strDescripcion = strDescripcion;
     }
     
-        public Boolean getNumEstado() {
+    public BigDecimal getNumEstado() {
         return this.numEstado;
     }
     
-    public void setNumEstado(Boolean numEstado) {
+    public void setNumEstado(BigDecimal numEstado) {
         this.numEstado = numEstado;
     }
         public Date getDatFechacrea() {

@@ -1,9 +1,16 @@
 package pe.com.mmh.sisgap.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -36,7 +43,18 @@ public class ServicioDetalle  implements java.io.Serializable {
     @Column(name="NUM_AL", precision=11)
     private BigDecimal numAl;
 
-    public ServicioDetalle() {
+	//bi-directional many-to-one association to SisgapFactura
+	@ManyToOne(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+	@JoinColumn(name="COD_SERVICIO", nullable=false, insertable=false, updatable=false)
+	private Servicios sisgapServicios;
+    
+	//bi-directional many-to-one association to SisgapFactura
+	@ManyToOne(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
+	@JoinColumn(name="COD_SERVICIOITEM", nullable=false, insertable=false, updatable=false)
+	private ServicioItem sisgapServicioItem;
+
+
+	public ServicioDetalle() {
     }
 
 	
@@ -130,7 +148,24 @@ public class ServicioDetalle  implements java.io.Serializable {
 		this.numAl = numAl;
 	}
 
+	
+    public Servicios getSisgapServicios() {
+		return sisgapServicios;
+	}
+
+    
+	public void setSisgapServicios(Servicios sisgapServicios) {
+		this.sisgapServicios = sisgapServicios;
+	}
 
 
+	public ServicioItem getSisgapServicioItem() {
+		return sisgapServicioItem;
+	}
+
+
+	public void setSisgapServicioItem(ServicioItem sisgapServicioItem) {
+		this.sisgapServicioItem = sisgapServicioItem;
+	}
 
 }
