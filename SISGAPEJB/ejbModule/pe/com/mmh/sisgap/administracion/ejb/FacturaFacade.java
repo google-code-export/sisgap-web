@@ -90,44 +90,6 @@ public class FacturaFacade implements FacturaFacadeLocal {
     }
 
     public List<Factura> findAll() {
-    	//    	Connection connection = null;
-//    	CallableStatement cst = null;
-//    	List<Factura> facturas = new ArrayList<Factura>();
-//    	try {
-//    		
-//    		connection = getConnection();    		
-//			cst = connection.prepareCall(SP_LST_FACTURA);	
-//			cst.registerOutParameter(1, OracleTypes.CURSOR);
-//			cst.execute();
-//			ResultSet rs = (ResultSet) cst.getObject(1);
-//			while (rs.next()) {
-//				Factura f = new Factura();
-//				f.setCodFactura(rs.getLong("COD_FACTURA"));
-//				f.setCodFactura(rs.getLong("NRO_FACTURA"));
-//				f.setNumTotal(rs.getBigDecimal("NUM_TOTAL"));
-//				f.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
-//				f.setStrTipodoc(rs.getString("STR_TIPODOC"));
-//				f.setNumNrodoc(rs.getBigDecimal("NUM_NRODOC"));
-//				f.setStrDescanulada(rs.getString("STR_DESC_ANULADA"));
-//				f.setDatFechacred(rs.getDate("DAT_FECHACRED"));
-//				f.setActiTranNombre(rs.getString("ACTITRANNOMBRE"));
-//				f.setTranPuesto(rs.getString("TRANPUESTO"));
-//				f.setNombresocio(rs.getString("NOMBRESOCIO"));
-//				facturas.add(f);
-//			}
-//			
-//			System.out.println("ORACLE");
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally{			
-//				try {
-//					if(cst!=null){cst.close();}
-//					if(connection!=null){connection.close();}					
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//		}
     	
     	// Ordenando por tipo documento (1).
     	// Ordenando por nro doc interno (2).

@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
-import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ServicioDetalle;
 import pe.com.mmh.sisgap.domain.Servicios;
 import pe.com.mmh.sisgap.utils.JDBCUtil;
@@ -26,10 +25,9 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 	@Resource(mappedName = "java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 
-	
-	private static final String SP_LST_SSHH = "{call PKG_ADMINISTRACION.SP_LST_SSHH(?)}";
 	private static final String SP_INS_SERVICIO = "{call PKG_ADMINISTRACION.SP_INS_SERVICIO(?,?,?,?,?,?,?)}";
 	private static final String SP_INS_DETSERVICIO = "{call PKG_ADMINISTRACION.SP_INS_DETSERVICIO(?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_UPD_DELSERVICIO = "{call PKG_ADMINISTRACION.SP_UPD_DELSERVICIO(?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SeFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -37,54 +35,30 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
     @PersistenceContext
     private EntityManager em;
 
-    public void create(Factura factura) {
-        em.persist(factura);
+    public void create(Servicios servicios) {
+        em.persist(servicios);
     }
 
-    public void edit(Factura factura) {
-        em.merge(factura);
+    public void edit(Servicios servicios) {
+        em.merge(servicios);
     }
 
-	
-	
     public Servicios find(Object id) {
         return em.find(Servicios.class, id);
     }
 	
-	@Override
+    /*
+     * (non-Javadoc)
+     * @see pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal#findAll()
+     * by 7 Descripcion
+     */
 	public List<Servicios> findAll() {
-    	/*Connection connection = null;
-    	Object objParams[]   = {};
-    	List<Servicios> lst = new  ArrayList<Servicios>();
-    	try {			
-    		connection = getConnection();
-			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_LST_SSHH,objParams);
-			Servicios serv= null;
-			while (rs.next()) {
-				serv= new Servicios();
-				serv.setCodServicio(rs.getBigDecimal("codServicio"));
-				serv.setNroServicio(rs.getLong("nroServicio"));
-				serv.setNumTotal(rs.getBigDecimal("numTotal"));
-				serv.setStrDescripcion(rs.getString("strDescripcion"));
-				serv.setDatFechacrea(rs.getDate("datFechacrea"));
-				serv.setDatFechaserv(rs.getDate("datFechaserv"));
-				serv.setNumEstado(rs.getBoolean("numEstado"));
-				lst.add(serv);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally{			
-				try {
-					if(connection!=null){connection.close();}					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		}
-    
-    	return lst;*/
-		return em.createQuery("select object(o) from Servicios as o").getResultList();
+		return em.createQuery("select object(o) from Servicios as o order by 7 asc").getResultList();
 	}
 
+    /*public ServicioDetalle findSrvDet(Object id){
+	return em.find(ServicioDetalle.class, id);
+	}*/
 	
 	private Connection getConnection() {
 		try {
@@ -110,7 +84,7 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 		return null;
 	}
 
-	public void grabarFactura(Long codServicio, String descripcion, BigDecimal montototal, String fechadoc, List<ServicioDetalle> serviciodetalle) {
+	public void grabarServicios(Long codServicio, String descripcion, BigDecimal montototal, String fechadoc, List<ServicioDetalle> serviciodetalle) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	CallableStatement cst = null;
@@ -138,7 +112,8 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 			for (ServicioDetalle det : serviciodetalle) {
 				
 				cst.setBigDecimal("P_COD_SERVICIODETALLE", det.getCodServiciodetalle());
-				cst.setBigDecimal("P_COD_SERVICIOITEM", det.getCodServicioitem());
+				//cst.setBigDecimal("P_COD_SERVICIOITEM", det.getCodServicioitem());
+				cst.setBigDecimal("P_COD_SERVICIOITEM", det.getCodServiciodetalle());
 				cst.setBigDecimal("P_COD_SERVICIO", codigo);				
 				cst.setBigDecimal("P_NUM_COSTO", det.getNumCosto());
 				cst.setBigDecimal("P_NUM_CANTIDAD", det.getNumCantidad());
@@ -167,6 +142,39 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 		}
 	}
 
+	@Override
+	public void anularServicio(String codigoServicio) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
 
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_DELSERVICIO);
+			
+			cst.setLong("P_COD_SERVICIO", new Long(codigoServicio));
+			cst.execute();
+
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	
 
 }
