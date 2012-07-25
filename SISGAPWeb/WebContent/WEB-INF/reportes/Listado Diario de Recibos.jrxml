@@ -42,14 +42,15 @@
      SISGAP_FACTURA."COD_FACTURA" AS SISGAP_FACTURA_COD_FACTURA,
      SISGAP_FACTURA."NUM_NRODOC" AS SISGAP_FACTURA_NUM_NRODOC,
      SISGAP_FACTURA."NRO_FACTURA" AS SISGAP_FACTURA_NRO_FACTURA,
-     SISGAP_FACTURA."NUM_TOTAL" AS SISGAP_FACTURA_NUM_TOTAL,
      SISGAP_FACTURA."NUM_ESTADO" AS SISGAP_FACTURA_NUM_ESTADO,
      SISGAP_FACTURA."STR_TIPODOC" AS SISGAP_FACTURA_STR_TIPODOC,
      SISGAP_FACTURA."STR_DESC_ANULADA" AS SISGAP_FACTURA_STR_DESC_ANULAD,
      SISGAP_FACTURA."DAT_FECHAFAC" AS SISGAP_FACTURA_DAT_FECHAFAC,
      SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
      SISGAP_SOCIO."TRAN_PUESTO" AS SISGAP_SOCIO_TRAN_PUESTO,
-     SISGAP_FACTURA."DAT_FECHACRED" AS SISGAP_FACTURA_DAT_FECHACRED
+     SISGAP_FACTURA."DAT_FECHACRED" AS SISGAP_FACTURA_DAT_FECHACRED,
+     TO_CHAR(SISGAP_FACTURA."NUM_TOTAL",'9,999.99') AS SISGAP_FACTURA_NUM_TOTAL,
+     TO_CHAR(SISGAP_FACTURA."NUM_ACUENTA",'9,999.99') AS SISGAP_FACTURA_NUM_ACUENTA
 FROM
      "SISGAP"."SISGAP_FACTURA" SISGAP_FACTURA INNER JOIN "SISGAP"."SISGAP_DETALLEFACTURA" SISGAP_DETALLEFACTURA ON SISGAP_FACTURA."COD_FACTURA" = SISGAP_DETALLEFACTURA."COD_FACTURA"
      INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_FACTURA."TRAN_IDE" = SISGAP_SOCIO."TRAN_IDE"
@@ -63,7 +64,6 @@ ORDER BY
 	<field name="SISGAP_FACTURA_COD_FACTURA" class="java.math.BigDecimal"/>
 	<field name="SISGAP_FACTURA_NUM_NRODOC" class="java.math.BigDecimal"/>
 	<field name="SISGAP_FACTURA_NRO_FACTURA" class="java.lang.String"/>
-	<field name="SISGAP_FACTURA_NUM_TOTAL" class="java.math.BigDecimal"/>
 	<field name="SISGAP_FACTURA_NUM_ESTADO" class="java.math.BigDecimal"/>
 	<field name="SISGAP_FACTURA_STR_TIPODOC" class="java.lang.String"/>
 	<field name="SISGAP_FACTURA_STR_DESC_ANULAD" class="java.lang.String"/>
@@ -71,12 +71,14 @@ ORDER BY
 	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
 	<field name="SISGAP_SOCIO_TRAN_PUESTO" class="java.lang.String"/>
 	<field name="SISGAP_FACTURA_DAT_FECHACRED" class="java.sql.Timestamp"/>
+	<field name="SISGAP_FACTURA_NUM_TOTAL" class="java.lang.String"/>
+	<field name="SISGAP_FACTURA_NUM_ACUENTA" class="java.lang.String"/>
 
 	<variable name="V_CUENTA_REGISTROS" class="java.lang.Integer" resetType="Report" calculation="Count">
 		<variableExpression><![CDATA[$V{COLUMN_COUNT}]]></variableExpression>
 	</variable>
-	<variable name="V_SUMA_TOTAL" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
-		<variableExpression><![CDATA[$F{SISGAP_FACTURA_NUM_TOTAL}]]></variableExpression>
+	<variable name="V_SUMA_TOTAL" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[new Double($F{SISGAP_FACTURA_NUM_ACUENTA})]]></variableExpression>
 	</variable>
 
 		<group  name="SISGAP_SECTOR_SOCIO_SECT_TRAN_" >
@@ -142,9 +144,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="37"
+						x="21"
 						y="0"
-						width="62"
+						width="53"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -153,14 +155,14 @@ ORDER BY
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[NRO.DOC.]]></text>
+				<text><![CDATA[N.DOC.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="358"
+						x="318"
 						y="0"
-						width="59"
+						width="47"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -169,14 +171,14 @@ ORDER BY
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[PUESTO]]></text>
+				<text><![CDATA[PTO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="417"
+						x="365"
 						y="0"
-						width="68"
+						width="63"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -190,9 +192,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="485"
+						x="495"
 						y="0"
-						width="70"
+						width="60"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -208,7 +210,7 @@ ORDER BY
 						mode="Opaque"
 						x="1"
 						y="0"
-						width="36"
+						width="20"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -217,12 +219,12 @@ ORDER BY
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-				<text><![CDATA[NRO.]]></text>
+				<text><![CDATA[]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="177"
+						x="137"
 						y="0"
 						width="181"
 						height="18"
@@ -238,9 +240,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="99"
+						x="74"
 						y="0"
-						width="78"
+						width="63"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -251,15 +253,31 @@ ORDER BY
 					</textElement>
 				<text><![CDATA[FECHA]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="428"
+						y="0"
+						width="67"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-4"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[A CTA.]]></text>
+				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
 			<band height="15"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="5"
+						x="0"
 						y="2"
-						width="20"
+						width="16"
 						height="12"
 						key="textField-1"/>
 					<box></box>
@@ -270,9 +288,9 @@ ORDER BY
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="38"
+						x="20"
 						y="2"
-						width="61"
+						width="54"
 						height="12"
 						key="textField"/>
 					<box></box>
@@ -283,7 +301,7 @@ ORDER BY
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="177"
+						x="137"
 						y="2"
 						width="181"
 						height="12"
@@ -296,9 +314,9 @@ ORDER BY
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="358"
+						x="319"
 						y="2"
-						width="59"
+						width="46"
 						height="12"
 						key="textField"/>
 					<box></box>
@@ -307,9 +325,9 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_PUESTO}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="417"
+						x="368"
 						y="2"
 						width="53"
 						height="12"
@@ -318,13 +336,13 @@ ORDER BY
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_FACTURA_NUM_TOTAL}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["S/. " + $F{SISGAP_FACTURA_NUM_TOTAL}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="485"
+						x="495"
 						y="2"
-						width="70"
+						width="60"
 						height="12"
 						key="textField-2"/>
 					<box></box>
@@ -335,9 +353,9 @@ ORDER BY
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="102"
+						x="75"
 						y="2"
-						width="75"
+						width="60"
 						height="12"
 						key="textField"/>
 					<box></box>
@@ -345,6 +363,19 @@ ORDER BY
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{SISGAP_FACTURA_DAT_FECHAFAC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="430"
+						y="2"
+						width="60"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["S/. " + $F{SISGAP_FACTURA_NUM_ACUENTA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -428,31 +459,31 @@ ORDER BY
 		</pageFooter>
 		<summary>
 			<band height="20"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="405"
+						x="410"
 						y="0"
-						width="65"
+						width="60"
 						height="18"
 						key="textField"/>
 					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_SUMA_TOTAL}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{V_SUMA_TOTAL}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
-						x="330"
+						x="318"
 						y="0"
-						width="73"
+						width="85"
 						height="18"
 						key="staticText-3"/>
 					<box></box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
 					</textElement>
-				<text><![CDATA[TOTAL ---]]></text>
+				<text><![CDATA[TOTAL ---    S/.]]></text>
 				</staticText>
 			</band>
 		</summary>

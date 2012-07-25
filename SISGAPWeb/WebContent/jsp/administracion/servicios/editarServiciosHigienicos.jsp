@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<%@page import="org.apache.taglibs.standard.tag.el.fmt.ParseNumberTag"%>
 <%@include file="../../../taglibs.jsp"%>
 
 <html:html>
@@ -209,10 +210,6 @@ $(function() {
 	});
 
 	$("#btn-registra-sh").button().click(function() {
-		if($("#cant_campos").val()==0){
-			alert("No existe ningun dato a guardar, verifique");
-			return false;
-		}
 		$('[name=metodo]').val('grabar');
 		$('#servicioshigienicos').submit();
 		
@@ -286,62 +283,32 @@ function agregarFila(obj){
 	var strHtml4 = "<td>" + al + '<input type="hidden" id="hdnAl_' + oId + '" name="hdnAl_' + oId + '" value="' + al + '"/></td>' ;
 	var strHtml5 = "<td>" + costos + '<input type="hidden" id="hdnCostos_' + oId + '" name="hdnCostos_' + oId + '" value="' + costos + '"/></td>' ;
 	var strHtml6 = "<td>" + cantid + '<input type="hidden" id="hdnCantid_' + oId + '" name="hdnCantid_' + oId + '" value="' + cantid + '"/></td>' ;
-	var strHtml7 = "<td>" + totale + '<input type="hidden" id="hdnTotale_' + oId + '" name="hdnTotale_' + oId + '" value="' + totale + '"/></td>' ;
+	var strHtml7 = "<td id='uno'>" + totale + '<input type="hidden" id="hdnTotale_' + oId + '" name="hdnTotale_' + oId + '" value="' + totale + '"/></td>' ;
 	var strHtml8 = '<td><img src="imagenes/delete.png" width="16" height="16" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';
     strHtml8 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';
     //var strHtmlTr = "<tr id='rowDetalle_" + oId + "'></tr>";
     //var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6;
     //tambien se puede agregar todo el HTML de una sola vez.
-    var strHtmlTr = "<tr style='border:1px;' id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 + strHtml7 + strHtml8 + "</tr>";
+    var strHtmlTr = "<tr id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 + strHtml7 + strHtml8 + "</tr>";
     $("#tbDetalle").append(strHtmlTr);
     //si se agrega el HTML de una sola vez se debe comentar la linea siguiente.
     //$("#rowDetalle_" + oId).html(strHtmlFinal);
     var totales = 0.0;
-    var subtotal = 0.0;
-    var a = 0;
-    var Id = $("#num_campos").val();
+    var subtotal;
+    var a;
     for(a=1; a<=oId; a++){
-        alert("A: ["+a+"]   ID: ["+Id+"]");
-    	if (a == Id){
-        	a = parseInt(Id)+1;
-        	alert("Ahora a vale -->"+a);
-        }
         datos = eval("document.forms[0].hdnTotale_"+a);
         subtotal = parseFloat(datos.value);
         totales = parseFloat(totales) + parseFloat(subtotal);
     }
-
-    //alert("Totales:"+totales);
+	//alert("Totales:"+totales);
 	$("#totalGral").val(totales);
 	
     return false;
 }
 
 function eliminarFila(oId){
-    //Capturamos el ID de la fila seleccionada
-    var Id = 0;
-    Id = oId;
-    $("#num_campos").val(parseInt(oId));
-	//Capturamos la cantidad de filas totales actuales
-    var filas = $("#cant_campos").val();
-
-	//Eliminamos la fila deseada
-    $("#rowDetalle_" + oId).remove();
-
-    var totales = 0.0;
-    var subtotal = 0.0;
-    var a=0;
-    for(a=1; a<=filas; a++){
-        ////alert("A: ["+a+ "]   ID: ["+Id+"]");
-    	if (a==Id){
-        	a=Id+1;
-        }
-        datos = eval("document.forms[0].hdnTotale_"+a);
-        subtotal = parseFloat(datos.value);
-        totales = parseFloat(totales) + parseFloat(subtotal);
-    }
-	$("#totalGral").val(totales);
-		
+    $("#rowDetalle_" + oId).remove();	
 	return false;
 }
 
@@ -463,19 +430,11 @@ function pagar(){
 			<tr>
 				<td width="120px" align="left" style="color:red;"><b><label>SERVICIO:</label></b></td>
 				<td align="left" width="200px" style="color:red;">
-					<select name="tipoServicio" id="tipoServicio" tabindex="1">
-						<option value="0" selected="selected">Seleccione</option>
-						<option value="1">BAÑO NRO. 1</option>
-						<option value="2">BAÑO NRO. 2</option>
-						<option value="3">BAÑO NRO. 3</option>
-						<option value="4">BAÑO NRO. 4</option>
-						<option value="5">BAÑO NRO. 5</option>
-						<option value="6">BAÑO NRO. 6</option>
-					</select>
+					<input type="text" id="tipoServicio" name="tipoServicio" class='text ui-widget-content ui-corner-all' value="${strDescripcion}" style=" width : 80px; color: red;"/>
 				</td>
 				<td width="120px" style="color:red;"><b><label>FECHA DEL SERVICIO:</label></b></td>
 				<td width="350px" style="color:red;">
-					<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;" style="color:red;" />(año/mes/dia)
+					<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${datFechaServ}" style=" width : 80px; color: red;" />(año/mes/dia)
 				</td>
 			</tr>
 		</table>
@@ -487,9 +446,6 @@ function pagar(){
 				<button id="btn-agregar-item">Agregar Item</button>
 			</c:when>
 		</c:choose>
-	<!-- table width="100%" id="tblCabecera" name="tblCabecera" class="ui-widget ui-widget-content">
-		<tr><td><b><input type="text" align="middle" id="cabecera" name="cabecera" value="" style="color:red;"></b></td></tr>
-	</table -->
 	<table width="100%" id="tblDetalle" name="tblDetalle" class="ui-widget ui-widget-content">
 		<thead>
 			<tr class="ui-widget-header">
@@ -506,8 +462,25 @@ function pagar(){
 		<tbody id="tbDetalle">
 		</tbody>
 		<tr>
-			<td colspan="4">&nbsp;</td>
-			<td colspan="3" align="right"><label><input type="text" align="middle" id="totalGral" name="totalGral" value="0"></label></td>
+			<c:forEach items="${lstSrvDet}" var="row">
+				<tr>
+					<td>${row.codServiciodetalle }</td>
+					<td>${row.sisgapServicioItem.strDescripcion }</td>
+					<td>${row.numDel }</td>
+					<td>${row.numAl }</td>
+					<td>${row.numCosto }</td>
+					<td>${row.numCantidad }</td>
+					<c:set var="subtotal" value="${row.numCosto * row.numCantidad }" />
+					<td><c:out value="${subtotal}" /></td>
+					<c:set var="total" value="${total + subtotal }" />
+				</tr>
+			</c:forEach>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td colspan="3" align="right"><font size="2px" color="blue"><b>Total General S/. <c:out value="${total }" /></b></font></td>
 		</tr>		
 	</table>
 		<c:choose>

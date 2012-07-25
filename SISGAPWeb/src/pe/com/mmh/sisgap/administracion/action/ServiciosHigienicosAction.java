@@ -1,6 +1,7 @@
 package pe.com.mmh.sisgap.administracion.action;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,37 +100,73 @@ public class ServiciosHigienicosAction extends GrandActionAbstract {
 		}
 
 		if(lst!=null && codServicio!=null){
-			SSHHfacadeLocal.grabarFactura(new Long(codServicio), descripcion, new BigDecimal(montoTotal), fechadoc, lst);
+			SSHHfacadeLocal.grabarServicios(new Long(codServicio), descripcion, new BigDecimal(montoTotal), fechadoc, lst);
 		}
 		
 		List<Servicios> list = SSHHfacadeLocal.findAll();
 		request.setAttribute("lstSSHH", list);
 		
-	/*	FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
-		Factura facturaBolsa = (Factura) request.getSession().getAttribute("facturaBolsa");
-//		facadeLocal.create(facturaBolsa);
-		
-		List<Detallefactura> listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
-		
-		String totalfac = request.getParameter("txttotal");
-		String numerodocumento = request.getParameter("numerodocumento");
-		String montoacuenta = request.getParameter("txtacuenta");
-	
-		// Se procede a preparar el parametro fecha para luego ser convertido a fecha SQL y poder enviarlo a la BD al campo de tipo DATE
-		String fechadocumento = request.getParameter("fechadocumento"); //  dd/mm/yyyy
-		/*SimpleDateFormat fechadocumento = new SimpleDateFormat("dd-MM-yyyy");
-		java.sql.Date d = (Date) sdf.parse(fechadocumento);*/
-		
-		/*if(listDetallefactura!=null && codigoide!=null){
-			//facadeLocal.grebarFactura(new Long(numerodocumento), fecha, totalfac, codigoide, cbtipodoc, listDetallefactura);
-			facadeLocal.grebarFactura(new Long(numerodocumento), fechadocumento, totalfac, codigoide, cbtipodoc, listDetallefactura, montoacuenta);
-			//facadeLocal.grebarFactura(numerodocumento, totalfac, codigoide, cbtipodoc, listDetallefactura);
-		}
-		
-		List<Factura> lstCob = facadeLocal.findAll();
-		request.setAttribute("lstFac", lstCob);*/
 		System.out.println("[ServiciosHigienicos] Final - grabar");
 		return mapping.findForward("cargarAction");
 	}
+	
+	public ActionForward ver(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[ServiciosHigienicos] Inicio - ver");
+		
+		ServiciosHigienicosFacadeLocal facadeLocal = (ServiciosHigienicosFacadeLocal) lookup(ConstantesJNDI.SERVICIOSHIGIENICOS);
+		String codServicio = request.getParameter("codigoServicio");
+		
+		Servicios srv = null;
+		
+		if(codServicio!=null){
+			srv = facadeLocal.find(new BigDecimal(codServicio));
+		}
+		
+		List<ServicioDetalle> lstSrvDet = srv.getSisgapServicioDetalle();
+		
+		request.setAttribute("numCodServicio", srv.getCodServicio());
+		request.setAttribute("strDescripcion", srv.getStrDescripcion().trim());
+		request.setAttribute("datFechaServ", srv.getDatFechaserv());
+		request.setAttribute("numTotal", srv.getNumTotal());
+		
+		request.setAttribute("srv", srv);
+		request.setAttribute("lstSrvDet", lstSrvDet);
+		request.setAttribute("estadoCampos", "true");
+		
+
+		for(int a=0; a<lstSrvDet.size(); a++){
+			System.out.println(lstSrvDet.get(a).getCodServicioitem()+" : "+lstSrvDet.get(a).getNumDel()+"-"+lstSrvDet.get(a).getNumAl()+" : "+lstSrvDet.get(a).getNumCosto()+" : "+lstSrvDet.get(a).getNumCantidad());
+		}
+		
+		/*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String fechaDocumento = "";
+		if (fac.getDatFechafac()!=null)
+			fechaDocumento = sdf.format(fac.getDatFechafac());*/
+		
+		request.setAttribute("isDetalle", 1);
+		
+		System.out.println("[ServiciosHigienicos] Final - ver");
+		return mapping.findForward("verServicios");
+	}
+
+	
+	public ActionForward eliminar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[ServiciosHigienicos] Inicio - eliminar");
+
+		ServiciosHigienicosFacadeLocal facadeLocal = (ServiciosHigienicosFacadeLocal) lookup(ConstantesJNDI.SERVICIOSHIGIENICOS);
+		String codServicio = request.getParameter("codigoServicio");
+			
+		if(codServicio!=null){
+			facadeLocal.anularServicio(codServicio);
+		}
+		
+		ServiciosHigienicosFacadeLocal SSHHfacadeLocal = (ServiciosHigienicosFacadeLocal) lookup(ConstantesJNDI.SERVICIOSHIGIENICOS);
+		List<Servicios> list = SSHHfacadeLocal.findAll();
+		request.setAttribute("lstSSHH", list);
+		
+		System.out.println("[ServiciosHigienicos] Final - eliminar");
+		return mapping.findForward("cargarAction");
+	}
+	
 	
 }

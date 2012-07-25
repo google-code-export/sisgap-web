@@ -280,6 +280,8 @@ var codMon = "";
 				alert("debe seleccionar el socio...");
 				$('[name=buscar-socio]').focus();
 			}else{
+				$("#registra-f").removeAttr("disabled");
+				alert("Antes de abrir ventana...");
 				$("#dialog-form").dialog("open");
 			}
 			return false;
@@ -340,6 +342,7 @@ var codMon = "";
 
 		
 		$("#registra-f").button().click(function() {
+			if (${'#lstDetFac'}.size())
 			$('[name=metodo]').val('grabar');
 			$('#gestionarFacturacion').submit();
 			
@@ -769,12 +772,12 @@ var codMon = "";
 				</div>
 				<c:choose>
 					<c:when test="${isDetalle!=1}">
-						<button id="registra-f">Registrar Factura</button>
+						<button id="registra-f" name="registra-f">Registrar Factura</button>
 					</c:when>
 					<c:when test="${isDetalle==1}">
-						<button id="regresar-f">Regresar</button>
-						<button id="imprimir-f">Imprimir</button>
-						<button id="cancelar-f" onclick="pagar();">Pagar</button>
+						<button id="regresar-f" name="regresar-f">Regresar</button>
+						<button id="imprimir-f" name="imprimir-f">Imprimir</button>
+						<button id="cancelar-f" name="cancelar-f" onclick="pagar();">Pagar</button>
 					</c:when>					
 				</c:choose>	
 			</span>

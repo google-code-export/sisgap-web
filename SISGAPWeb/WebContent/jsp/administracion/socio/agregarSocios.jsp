@@ -155,11 +155,11 @@ function lstCancelar() {
 					</tr>
 					<tr>
 						<td align="right">Sector</td>
-						<td><input type="text" style="text-transform: uppercase;" size="10" name="txtSector" tabindex="6"/></td>
+						<td><input type="text" style="text-transform: uppercase;" size="2" name="txtSector" tabindex="6"/></td>
 					</tr>
 					<tr>
 						<td align="right">Puesto</td>
-						<td><input type="text" size="10" name="txtPuesto" tabindex="7"/></td>
+						<td><input type="text" size="4" name="txtPuesto" tabindex="7"/></td>
 					</tr>
 					<tr>
 						<td align="right">Estado</td>

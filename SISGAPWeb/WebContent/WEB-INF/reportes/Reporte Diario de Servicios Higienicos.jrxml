@@ -24,7 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="P_FECHA" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["12/07/2012"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["18/07/2012"]]></defaultValueExpression>
 	</parameter>
 	<queryString><![CDATA[SELECT
      SISGAP_SERVICIOS."COD_SERVICIO" AS SISGAP_SERVICIOS_COD_SERVICIO,
@@ -42,7 +42,7 @@ FROM
 WHERE
      TO_CHAR(SISGAP_SERVICIOS."DAT_FECHASERV",'DD/MM/YYYY') = $P{P_FECHA}
 ORDER BY
-     SISGAP_SERVICIOS."COD_SERVICIO" ASC, SISGAP_SERVICIOITEM."STR_DESCRIPCION" ASC]]></queryString>
+     SISGAP_SERVICIOS."STR_DESCRIPCION" ASC, SISGAP_SERVICIOITEM."STR_DESCRIPCION" ASC]]></queryString>
 
 	<field name="SISGAP_SERVICIOS_COD_SERVICIO" class="java.math.BigDecimal"/>
 	<field name="SISGAP_SERVICIOS_STR_DESCRIPCI" class="java.lang.String"/>
@@ -210,7 +210,7 @@ ORDER BY
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="23"  isSplitAllowed="true" >
+			<band height="104"  isSplitAllowed="true" >
 				<line direction="BottomUp">
 					<reportElement
 						x="1"
@@ -253,6 +253,41 @@ ORDER BY
 					</textElement>
 				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{SUM_V_CANTOT_1}]]></textFieldExpression>
 				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="333"
+						y="68"
+						width="195"
+						height="0"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="335"
+						y="70"
+						width="192"
+						height="15"
+						key="staticText-9"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[ENCARGADO O RESPONSABLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="335"
+						y="87"
+						width="192"
+						height="15"
+						key="staticText-10"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[nombre:.................................................]]></text>
+				</staticText>
 			</band>
 			</groupFooter>
 		</group>
@@ -481,7 +516,7 @@ ORDER BY
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="148"  isSplitAllowed="true" >
+			<band height="86"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="325"
@@ -517,43 +552,8 @@ ORDER BY
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="297"
-						y="110"
-						width="195"
-						height="0"
-						key="line-1"/>
-					<graphicElement stretchType="NoStretch"/>
-				</line>
-				<staticText>
-					<reportElement
-						x="299"
-						y="112"
-						width="192"
-						height="15"
-						key="staticText-5"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font/>
-					</textElement>
-				<text><![CDATA[ENCARGADO O RESPONSABLE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="299"
-						y="129"
-						width="192"
-						height="15"
-						key="staticText-6"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<text><![CDATA[nombre:.................................................]]></text>
-				</staticText>
-				<line direction="TopDown">
-					<reportElement
 						x="9"
-						y="110"
+						y="48"
 						width="195"
 						height="0"
 						key="line-2"/>
@@ -562,7 +562,7 @@ ORDER BY
 				<staticText>
 					<reportElement
 						x="11"
-						y="112"
+						y="50"
 						width="192"
 						height="15"
 						key="staticText-7"/>
@@ -575,7 +575,7 @@ ORDER BY
 				<staticText>
 					<reportElement
 						x="11"
-						y="129"
+						y="67"
 						width="192"
 						height="15"
 						key="staticText-8"/>

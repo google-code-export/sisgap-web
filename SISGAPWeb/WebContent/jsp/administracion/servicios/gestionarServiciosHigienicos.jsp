@@ -83,7 +83,9 @@ $(function() {
 			modal : true,
 			buttons : {
 				Eliminar : function() {
-					var frm = document.formServiciosHigienicos;								
+					var frm = document.formServiciosHigienicos;
+					frm.codigoServicio.value = cod;
+					frm.metodo.value = 'eliminar';
 					frm.submit();
 				},
 				Cancel : function() {
@@ -168,15 +170,43 @@ $(function() {
 			return false;
 		}
 	}
-	
-	
+
+	function ver(cod) {
+		var frm = document.formServiciosHigienicos;
+		frm.codigoServicio.value = cod;
+		frm.metodo.value = 'ver';
+		frm.submit();
+	}
+
+	function editar(cod) {
+		var frm = document.formServiciosHigienicos;
+		frm.codigoServicio.value = cod;
+		frm.metodo.value = 'editar';
+		frm.submit();
+	}
+
+	function eliminar(cod) {
+		rpta = confirmar("¿Esta seguro que desea eliminar este registro?");
+		if (rpta){
+			var frm = document.formServiciosHigienicos;
+			frm.codigoServicio.value = cod;
+			frm.metodo.value = 'eliminar';
+			frm.submit();
+		}
+	}
+
+	function confirmar( mensaje ){
+		return confirm( mensaje );
+	}
+
 </script>
 <title>Insert title here</title>
 </head>
 <body>
 
 	<html:form action="/servicioshigienicos.do" styleId="formServiciosHigienicos">
-		<input type="hidden" name="metodo" />		
+		<input type="hidden" name="metodo" />
+		<input type="hidden" name="codigoServicio" id="codigoServicio"/>		
 		
 		<input type='hidden' name='fecvencimiento' id='fecvencimiento'/>
 		<input type='hidden' name='fecemision' id='fecemision'/>
@@ -217,14 +247,23 @@ $(function() {
 		<display:table name="lstSSHH"
 						class="consultanormal"
 						excludedParams="metodo" 
-						requestURI="/gestionarServiciosHigienicos.do?metodo=cargarAction"
+						requestURI="/servicioshigienicos.do?metodo=cargarAction"
 						id="row"
 						export="false">
-				<display:column title="Cod.Servicio" property="codServicio" sortable="true"></display:column>
-				<display:column title="Fecha Servicio" format="{0,date,dd-MM-yyyy}" property="datFechaserv" sortable="true"></display:column>
-				<display:column title="Descripcion" property="strDescripcion" sortable="true"></display:column>
-				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" property="datFechacrea" sortable="true"></display:column>
-				<display:column title="Total" format="S/. {0,number,###.00}" property="numTotal" sortable="true"></display:column>
+				<display:column title="" style="width:60px;">
+					<c:choose>
+						<c:when test="${row.numEstado==1}">
+							<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Anular..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codServicio}');"/>
+							<img src="<%=request.getContextPath()%>/imagenes/manto/editar.png" alt="Editar..." border="0" width="16" height="16" id="" onclick=""/>
+						</c:when>
+					</c:choose>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="ver('${row.codServicio}');"/>
+				</display:column>
+				<display:column title="Cod.Servicio" property="codServicio" sortable="true" style="width:50px;"></display:column>
+				<display:column title="Fecha Servicio" format="{0,date,dd-MM-yyyy}" property="datFechaserv" sortable="true" style="width:150px;"></display:column>
+				<display:column title="Descripcion" property="strDescripcion" sortable="true" style="width:300px;"></display:column>
+				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" property="datFechacrea" sortable="true" style="width:150px;"></display:column>
+				<display:column title="Total" format="S/. {0,number,###.00}" property="numTotal" sortable="true" style="width:100px;"></display:column>
 		</display:table>
 		</fieldset>	
 
