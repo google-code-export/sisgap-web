@@ -216,10 +216,9 @@ var codMon = "";
 			modal : true,
 			buttons : {
 				Ok : function() {
-					alert("Pruebas...");
 					var cadena1 = $("#startDateBusca").val();
 					var cadena2 = $("#codigoide-f").val();
-					alert(cadena1+"\n"+cadena2);
+					//alert(cadena1+"\n"+cadena2);
 					$(this).dialog("close");
 				},
 				Cancel : function() {
@@ -485,6 +484,7 @@ var codMon = "";
 	} 
 
 	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
+		//alert("Codigo: "+codigo+"\nRazon Social: "+razonSocial+"\nPuesto: "+puesto+"\nCodigoIDE: "+codigoIde);
 		$("#codigo-f").val(codigo);
 		$("#socio-f").val(razonSocial);
 		$("#direccion-f").val(puesto);
@@ -504,15 +504,28 @@ var codMon = "";
 	}
 
 	function buscarCalendar(){
+		if($("#socio-f").val() == ""){
+			alert("Ingrese los datos del Socio");
+			$("#socio-f").focus();
+			return false;
+		}
+		
+		if($("#startDate").val() == ""){
+			alert("Ingrese el Periodo a generar para el Socio.");
+			$('#startDate').focus();
+			return false;
+		}
 		var frm = document.gestionarFacturacion;
 		frm.metodo.value = 'findGenerator';
 		frm.submit();
 	}
 
 	function ver(xperiodo,xcodigo){
-		$("#codigoide-f").val(xcodigo);
-		$("#periodo-f").val(xperiodo);
+		//alert("periodo: "+xperiodo+"\ncodigo: "+xcodigo);
+		/*$("#codigoide-f").val(xcodigo);
+		$("#periodo-f").val(xperiodo);*/
 
+		
 		$.ajax({
 	        type: "POST",
 	        url: "/SISGAPWeb/registrosisas.do",
@@ -542,7 +555,21 @@ var codMon = "";
 	function OpenWindows(){
 		$("#selectdate-form").dialog("open"); 
 	}
-		
+
+	function eliminar(xcodigo){
+		rpta = confirmar("¿Esta seguro que desea eliminar este registro?");
+		if (rpta){
+			var frm = document.gestionarFacturacion;
+			frm.codigoSisa.value = xcodigo;
+			frm.metodo.value = 'eliminar';
+			frm.submit();
+		}
+	}
+
+	function confirmar( mensaje ){
+		return confirm( mensaje );
+	}
+	
 </script>
 <style type="text/css">
 .ui-datepicker-calendar {
@@ -553,8 +580,7 @@ var codMon = "";
 <body>
 <html:form action="/registrosisas.do" styleId="gestionarFacturacion">
 		<input type="hidden" name="metodo" />
-		<input type="hidden" name="codigoide" id="codigoide-f"/>
-		<input type="hidden" name="periodo" id="periodo-f" />
+		<input type="hidden" name="codigoSisa" id="codigoSisa"/>
 		<input type="hidden" name="valuess" id="valuess" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
@@ -593,33 +619,31 @@ var codMon = "";
 				<td id="error" align="center" valign="middle" class="mensajeError"	style="display: none"></td>
 			</tr>
 		</table>
-
+		<br/>
 		<fieldset>
-			<legend>Nuevo registro</legend>		
+			<legend><b>Nuevo registro</b></legend>		
 			<table border="0" cellpadding="0" cellspacing="0" width="75%">
 				<tr>
 					<td>Socio</td>
-					<td colspan="3" ><input type='text' name="socio-f" id="socio-f" size=30 class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+					<td><input type='text' name="socio-f" id="socio-f" size=30 class="text ui-widget-content ui-corner-all" style="width: 300px;" readonly="readonly"/></td>
 					<td width="15px">
 								<button id="buscar-socio">...</button>
 					</td>
 					<td width="20px">Código</td>
-					<td><input type="text" name="codigo-f" id="codigo-f" size="10" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td><input type="text" name="codigo-f" id="codigo-f" size="10" class="text ui-widget-content ui-corner-all" style="width: 100px;" readonly="readonly" /></td>
 					<td width="20px">Ide</td>
-					<td><input type="text" name="codigoide-f" id="codigoide-f" size="10" class="text ui-widget-content ui-corner-all" readonly="readonly" /></td>
+					<td><input type="text" name="codigoide-f" id="codigoide-f" size="10" class="text ui-widget-content ui-corner-all" style="width: 100px;" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
-					<td colspan="3"><input type="text" name="direccion-f" id="direccion-f" size="10"  class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly"/></td>
-					<td width="15px"></td>
+					<td><input type="text" name="direccion-f" id="direccion-f" size="10"  class="text ui-widget-content ui-corner-all" style="width: 100px;" readonly="readonly"/></td>
+					<td>&nbsp;</td>
 					<td width="80px">Periodo</td>
-					<td>
-					<input name="startDate" id="startDate" class="date-picker" value="${fecha}"/>(mes/año)					
-					</td>
+					<td><input name="startDate" id="startDate" class="date-picker" value="${fecha}"/>(mes/año)</td>
 				</tr>
 			</table>
-			<button type="button" id="buscar-ls" name="buscar-ls" onclick="buscarCalendar();">Buscar</button>
-			<button type="button" id="imprime-ls" name="imprime-ls">Imprime Reporte</button> 
+			<button type="button" id="buscar-ls" name="buscar-ls" onclick="buscarCalendar();">Generar</button>
+			<button type="button" id="imprime-ls" name="imprime-ls">Imprimir Reporte</button> 
 		</fieldset>
 			
 		<display:table name="lstSisa" 
@@ -628,12 +652,18 @@ var codMon = "";
 						requestURI="/registrosisas.do?metodo=cargarAction"		
 						id="row"
 						export="false">
-				<display:column title="" style="width:60px;">
-					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver('<fmt:formatDate pattern="dd-MM-yyyy" value="${row.perido}" />',${row.codigo});"/>
+				<display:column title="Acción" style="width:60px;">
+					<c:choose>
+						<c:when test="${row.estado==1}">
+							<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Anular..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codigo}');"/>
+							<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver('<fmt:formatDate pattern="dd-MM-yyyy" value="${row.perido}" />','${row.tranCodigo}');"/>
+						</c:when>
+					</c:choose>
 				</display:column>
 				<display:column title="Puesto" property="puesto" sortable="true"/>
 				<display:column title="Periodo" property="perido" sortable="true"/>
 				<display:column title="Nombre" property="nombre" sortable="true"/>
+				<display:column title="Codigo" property="tranCodigo" sortable="true"/>
 				<display:column title="Total Dias" sortable="true"><center>${row.totaldias}</center></display:column>
 				<display:column title="Total Pagos" sortable="true"><center>${row.totalpagos}</center></display:column>
 				<display:column title="Estado" style="width:150px;">

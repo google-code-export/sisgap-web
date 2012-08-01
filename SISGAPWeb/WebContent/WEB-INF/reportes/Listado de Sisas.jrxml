@@ -28,31 +28,31 @@
 	</parameter>
 	<queryString><![CDATA[SELECT
      SISGAP_SISAS."CODIGO" AS SISGAP_SISAS_CODIGO,
-     SISGAP_SOCIO."TRAN_RAZON_SOCIAL" AS SISGAP_SOCIO_TRAN_RAZON_SOCIAL,
+     SISGAP_SISAS."CODIGOSOCIO" AS SISGAP_CODIGO_SOCIO,
+     (SELECT SS.TRAN_RAZON_SOCIAL FROM SISGAP_SOCIO SS WHERE TRIM(SS.TRAN_CODIGO) = TRIM(SISGAP_SISAS.CODIGOSOCIO)) AS SISGAP_SOCIO_NOMBRE,
      SISGAP_SISAS."PERIODO" AS SISGAP_SISAS_PERIODO,
-     SUM(SISGAP_SISAS."MONTO") AS SISGAP_SISAS_MONTO,
-     (SELECT MAX(SSD.DIA) FROM SISGAP_SISAS_DETA SSD),
+     --SISGAP_SISAS."MONTO" AS SISGAP_SISAS_MONTO,
+     (SELECT COUNT(*) FROM SISGAP_SISAS_DETA SSD WHERE SSD.VALOR > 0 AND SSD.CODIGOSISA = SISGAP_SISAS.CODIGO) AS DIAS_PAGADOS, 
+     (SELECT MAX(SSD.DIA) FROM SISGAP_SISAS_DETA SSD) AS DETA_MAXDIA,
      SUM(SISGAP_SISAS_DETA."VALOR") AS SISGAP_SISAS_DETA_VALOR,
      SISGAP_SISAS."ESTADO" AS SISGAP_SISAS_ESTADO
 FROM 
-     "SISGAP"."SISGAP_SISAS" SISGAP_SISAS INNER JOIN "SISGAP"."SISGAP_SISAS_DETA" SISGAP_SISAS_DETA ON SISGAP_SISAS."CODIGO" = SISGAP_SISAS_DETA."CODIGOSISA"
-     INNER JOIN "SISGAP"."SISGAP_SOCIO" SISGAP_SOCIO ON SISGAP_SISAS."CODIGOSOCIO" = SISGAP_SOCIO."TRAN_IDE"
+     "SISGAP"."SISGAP_SISAS" SISGAP_SISAS 
+     INNER JOIN "SISGAP"."SISGAP_SISAS_DETA" SISGAP_SISAS_DETA ON SISGAP_SISAS."CODIGO" = SISGAP_SISAS_DETA."CODIGOSISA"
 GROUP BY 
      SISGAP_SISAS."CODIGO",
-     SISGAP_SOCIO."TRAN_RAZON_SOCIAL",
+     SISGAP_SISAS."CODIGOSOCIO",
      SISGAP_SISAS."PERIODO",
      SISGAP_SISAS."MONTO",
-     --SISGAP_SISAS_DETA."DIA",
-     SISGAP_SISAS_DETA."CODIGOSISA",
      SISGAP_SISAS."ESTADO"
-ORDER BY
-     2]]></queryString>
+ORDER BY 4, 3]]></queryString>
 
 	<field name="SISGAP_SISAS_CODIGO" class="java.math.BigDecimal"/>
-	<field name="SISGAP_SOCIO_TRAN_RAZON_SOCIAL" class="java.lang.String"/>
+	<field name="SISGAP_CODIGO_SOCIO" class="java.lang.String"/>
+	<field name="SISGAP_SOCIO_NOMBRE" class="java.lang.String"/>
 	<field name="SISGAP_SISAS_PERIODO" class="java.sql.Timestamp"/>
-	<field name="SISGAP_SISAS_MONTO" class="java.math.BigDecimal"/>
-	<field name="(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)" class="java.math.BigDecimal"/>
+	<field name="DIAS_PAGADOS" class="java.math.BigDecimal"/>
+	<field name="DETA_MAXDIA" class="java.math.BigDecimal"/>
 	<field name="SISGAP_SISAS_DETA_VALOR" class="java.math.BigDecimal"/>
 	<field name="SISGAP_SISAS_ESTADO" class="java.math.BigDecimal"/>
 
@@ -94,7 +94,7 @@ ORDER BY
 					<textElement textAlignment="Center">
 						<font size="26" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Listado de Sisas]]></text>
+				<text><![CDATA[Listado de Socios - Sisas]]></text>
 				</staticText>
 			</band>
 		</title>
@@ -141,7 +141,7 @@ ORDER BY
 						mode="Opaque"
 						x="268"
 						y="2"
-						width="77"
+						width="64"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -155,9 +155,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="345"
+						x="332"
 						y="2"
-						width="57"
+						width="41"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -171,9 +171,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="402"
+						x="373"
 						y="2"
-						width="47"
+						width="43"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -187,9 +187,9 @@ ORDER BY
 				<staticText>
 					<reportElement
 						mode="Opaque"
-						x="449"
+						x="461"
 						y="2"
-						width="85"
+						width="73"
 						height="18"
 						forecolor="#FFFFFF"
 						backcolor="#999999"
@@ -200,16 +200,32 @@ ORDER BY
 					</textElement>
 				<text><![CDATA[ESTADO]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="416"
+						y="2"
+						width="45"
+						height="18"
+						forecolor="#FFFFFF"
+						backcolor="#999999"
+						key="staticText-8"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[TOTAL]]></text>
+				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="19"  isSplitAllowed="true" >
+			<band height="16"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
 						y="1"
 						width="33"
-						height="18"
+						height="15"
 						key="textField"/>
 					<box></box>
 					<textElement textAlignment="Center">
@@ -222,20 +238,20 @@ ORDER BY
 						x="39"
 						y="1"
 						width="229"
-						height="18"
+						height="15"
 						key="textField"/>
 					<box></box>
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_TRAN_RAZON_SOCIAL}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SISGAP_SOCIO_NOMBRE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="275"
+						x="269"
 						y="1"
-						width="70"
-						height="18"
+						width="63"
+						height="15"
 						key="textField"/>
 					<box></box>
 					<textElement textAlignment="Center">
@@ -245,48 +261,61 @@ ORDER BY
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="351"
+						x="332"
 						y="1"
-						width="51"
-						height="18"
+						width="41"
+						height="15"
 						key="textField"/>
 					<box></box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{DETA_MAXDIA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="406"
+						x="373"
 						y="1"
 						width="43"
-						height="18"
+						height="15"
 						key="textField"/>
 					<box></box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_SISAS_DETA_VALOR}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{DIAS_PAGADOS}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="454"
+						x="461"
 						y="1"
-						width="80"
-						height="18"
+						width="73"
+						height="15"
 						key="textField-1"/>
 					<box></box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[new String(
-    ($F{(SELECTMAX(SSD.DIA)FROMSISGAP_SISAS_DETASSD)}.intValue()==$F{SISGAP_SISAS_DETA_VALOR}.intValue())? 
+    ($F{DETA_MAXDIA}.intValue()==$F{DIAS_PAGADOS}.intValue())? 
     "Verde" : 
-    ($F{SISGAP_SISAS_DETA_VALOR}.intValue()==0)?
+    ($F{DIAS_PAGADOS}.intValue()==0)?
         "Rojo" :
         "Ambar"
 )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="416"
+						y="1"
+						width="45"
+						height="15"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{SISGAP_SISAS_DETA_VALOR}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

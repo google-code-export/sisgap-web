@@ -225,8 +225,10 @@ public class ReportsServlet extends HttpServlet {
 				}
 				String codRec = request.getParameter("codRec");
 				parametros.put("P_CODIGO_RECIBO", codRec);
-			}else if (reporte.equals("LISTADO_SISAS")){				
+			}else if (reporte.equals("LISTADO_SISAS")){
+				System.out.println("[ReportsServlet] Inicio - LISTADO_SISAS");
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Sisas.jrxml");
+				System.out.println("[ReportsServlet] Final - LISTADO_SISAS");
 			}else if (reporte.equals("REPORTE_DIARIO_DOCUMENTOS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_DIARIO_DOCUMENTOS");
 				String fecDoc = request.getParameter("fecDoc");
@@ -272,6 +274,7 @@ public class ReportsServlet extends HttpServlet {
 				try {
 					String periodo = request.getParameter("periodo");
 					Integer codigo = new Integer(request.getParameter("codigo"));
+					//String codigo = request.getParameter("codigo");
 					
 					SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
 					ResultSet rs = facadeLocal.getTempSisa(periodo, codigo);
@@ -323,7 +326,7 @@ public class ReportsServlet extends HttpServlet {
 			if (provider == null) {
 				generateReport(request, response, ruta, parametros);
 			} else {
-				generateReportOther(request, response, ruta, parametros);
+				generateReportOther(request, response, ruta, bytes);
 			}
 		}		
 	}
@@ -402,7 +405,7 @@ public class ReportsServlet extends HttpServlet {
 		return JNDIName;
 	}
 	
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	private void generateReportOther(HttpServletRequest request,
 			HttpServletResponse response,String ruta,HashMap<String, String> parametros) throws IOException{
 		
@@ -443,6 +446,34 @@ public class ReportsServlet extends HttpServlet {
 			response.getOutputStream().print(stringWriter.toString());
 		}
 
+	}*/
+	
+	@SuppressWarnings("unused")
+	private void generateReportOther(HttpServletRequest request,
+			HttpServletResponse response,String ruta,byte[] bytes) throws IOException{
+		
+		JasperReport masterReport = null;
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+
+		try {
+//			Connection cnn = getConnection();
+//			masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
+//			bytes = JasperRunManager.runReportToPdf(masterReport,parametros, cnn);
+
+			response.setContentType("application/pdf");
+			response.setContentLength(bytes.length);
+
+			servletOutputStream.write(bytes, 0, bytes.length);
+			servletOutputStream.flush();
+			servletOutputStream.close();	
+		} catch (Exception e) {
+			e.printStackTrace();
+			StringWriter stringWriter = new StringWriter();
+			PrintWriter printWriter = new PrintWriter(stringWriter);
+			e.printStackTrace(printWriter);
+			response.setContentType("text/plain");
+			response.getOutputStream().print(stringWriter.toString());
+		}
 	}
 	
 	private Connection getConnectionDirect(){

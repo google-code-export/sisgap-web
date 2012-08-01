@@ -1,51 +1,54 @@
 package pe.com.mmh.sisgap.administracion.action;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.DynaProperty;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pe.com.mmh.sisgap.administracion.action.form.GestionarItemCobranzaActionForm;
-import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
-import pe.com.mmh.sisgap.administracion.ejb.UnidadmedidaFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
-import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.Sisa;
-import pe.com.mmh.sisgap.domain.Unidadmedida;
-import pe.com.mmh.sisgap.utils.RowSetDynaClass;
 
 public class RegistroSisasAction extends GrandActionAbstract {
+	
+	String per;
+	String cod;
 
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
+		System.out.println("[RegistroSisasAction] Inicio - cargarAction");
 		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
 		List<Sisa> list = facadeLocal.findAll();
 		request.setAttribute("lstSisa", list);
-
+		
+		for(int a=0; a<list.size(); a++){
+			System.out.println(list.get(a).getCodigo()+ " - " + list.get(a).getTranCodigo().trim() + " - " + list.get(a).getEstado());
+		}
+		
+		System.out.println("[RegistroSisasAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
 	
 	public ActionForward updateSisa(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		System.out.println("[RegistroSisasAction] Inicio - updateSisa");
 		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
 
-		
-		String codigo = request.getParameter("codigoide");
-		String periodo = request.getParameter("periodo");
+		//Antes
+		/*String codigo = request.getParameter("codigoide");
+		String periodo = request.getParameter("periodo");*/
 		String valuess = request.getParameter("valuess");
+		//Despues 28/07/2012
+		String codigo = cod;
+		String periodo = per;
 		
 		if(valuess!=null){
 			String[] fecha = periodo.split("-");
@@ -54,17 +57,44 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		}
 		List<Sisa> list = facadeLocal.findAll();
 		request.setAttribute("lstSisa", list);
+		System.out.println("[RegistroSisasAction] Final - updateSisa");		
 		return mapping.findForward("cargarAction");
 	}
+	
+	//SP_UPD_SISAANULADA
+	public ActionForward eliminar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[RegistroSisasAction] Inicio - eliminar");
+		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
+
+		String codigoSisa = request.getParameter("codigoSisa");
+		
+		if(codigoSisa!=null){
+			
+			facadeLocal.eliminarSisa(codigoSisa);
+			
+		}
+		
+		List<Sisa> list = facadeLocal.findAll();
+		request.setAttribute("lstSisa", list);
+		System.out.println("[RegistroSisasAction] Final - eliminar");
+		return mapping.findForward("cargarAction");
+	}
+
 	
 	public ActionForward findGenerator(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
-
+		System.out.println("[RegistroSisasAction] Inicio - findGenerator");
 		String fecha = request.getParameter("startDate");
-		String codigo = request.getParameter("codigoide");
+		String codigo = request.getParameter("codigo-f"); //codigoide (antes)
 		String periodo = request.getParameter("periodo");
+		
+		if(codigo==null){
+			codigo = request.getParameter("codigoide");
+		}
+		cod = codigo;
+		per = periodo;
 		
 		if(periodo!=null && fecha==null){
 			String[] dt = periodo.split("-");
@@ -89,11 +119,13 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			
 		}
 		
+		
 		if(fecha!=null && !fecha.trim().equals("")){
 			
-			System.out.println(codigo);
+			//System.out.println(codigo);
+			//System.out.println(getDate(fecha));
 			SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
-			int valor = facadeLocal.registraFind(getDate(fecha), new Integer(codigo));
+			int valor = facadeLocal.registraFind(getDate(fecha), codigo.trim());
 			
 			if(valor==1){
 				
@@ -102,36 +134,39 @@ public class RegistroSisasAction extends GrandActionAbstract {
 				if(ajax!=null){
 					
 					String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
-					String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));				
+					String lss = facadeLocal.getSisa(getDate(fecha), codigo.trim());				
 					request.setAttribute("lstPlan", getTable(ls,fecha,lss));
+					System.out.println("[RegistroSisasAction] Final - Ajax - findGenerator");
 					return mapping.findForward("blankpage");
 					
 				}
 				
 			}else{
 				System.out.println(fecha);
-				facadeLocal.registrarSisa(getDate(fecha), new Long(codigo));
+				//facadeLocal.registrarSisa(getDate(fecha), new Long(codigo)); //reemplazando registro
+				facadeLocal.registrarSisa(getDate(fecha), codigo.trim());
 //				String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
 //				String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));
-//				List<Sisa> list = facadeLocal.findAll();
-//				request.setAttribute("lstSisa", list);
+				List<Sisa> list = facadeLocal.findAll();
+				request.setAttribute("lstSisa", list);
 //				request.setAttribute("lstPlan", getTable(ls,fecha,lss));
 			}
 			
-			List<Sisa> list = facadeLocal.findSisa(getDate(fecha), new Long(codigo));
-			request.setAttribute("lstSisa", list);
+			//List<Sisa> list = facadeLocal.findSisa(getDate(fecha), codigo.trim());
+			//request.setAttribute("lstSisa", list);
 			
 		}else if(codigo!=null && !codigo.trim().equals("")){
 			
 		}
 		
-		request.setAttribute("showCalendar", "true");		
+		request.setAttribute("showCalendar", "true");
+		System.out.println("[RegistroSisasAction] Final - findGenerator");
 		return mapping.findForward("cargarAction");
 	}
 	
 	
 	public String getDate(String date){
-		
+		System.out.println("[RegistroSisasAction] Inicio - getDate");		
 		String[] dates=date.split(" ");
 		
 		HashMap<String, String> model= new HashMap<String, String>();
@@ -151,13 +186,12 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		
 		String dato = dates[1] + "-" + model.get(dates[0]) + "-" + "01";
 		
-		System.out.println(dato);
-		
+		System.out.println("[RegistroSisasAction] Final - getDate "+dato);
 		return dato;
 	}
 	
 	public String getTable(String ls, String fecha,String dta){
-		
+		System.out.println("[RegistroSisasAction] Inicio - getTable");
 		String[] calendario =ls.split(","); 
 		String[] lss = {}; 
 		if(dta!=null){
@@ -195,8 +229,9 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			}
 		}
 		columnas += "</tr></table>";
-		
+		System.out.println("[RegistroSisasAction] Final - getTable");
 		return columnas;
 	}
+	
 	
 }

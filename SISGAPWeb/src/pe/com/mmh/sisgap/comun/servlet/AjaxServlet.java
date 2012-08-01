@@ -58,6 +58,7 @@ public class AjaxServlet extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("[AjaxServlet] - Inicio service");
 		Context context = null;
 		ServletOutputStream out = response.getOutputStream();
 		HttpSession session = request.getSession(true);
@@ -79,7 +80,7 @@ public class AjaxServlet extends HttpServlet {
 		
 		if (action != null) {
 			if(action.equals("BUSCAR_SOCIO")){
-
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_SOCIO");
 				String nombre = request.getParameter("nombre");
 				String opcion = request.getParameter("opcion");
 				String nropto = request.getParameter("nropto");
@@ -175,9 +176,10 @@ public class AjaxServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_SOCIO");
 				
 			}else if(action.equals("BUSCAR_PRODUCTO")){
-
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_PRODUCTO");
 				String nombre = request.getParameter("nombre");
 				String codigo = request.getParameter("codigo");
 				String codide = request.getParameter("codide");
@@ -226,8 +228,10 @@ public class AjaxServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_PRODUCTO");
 				
 			} else if(action.equals("BUSCAR_ITEM_SERVICIO")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_ITEM_SERVICIO");
 				BigDecimal codigo = new BigDecimal(request.getParameter("codigo"));
 				
 				try {
@@ -238,10 +242,10 @@ public class AjaxServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				System.out.println("[AjaxServlet] Final - BUSCAR_ITEM_SERVICIO");
 				
 			} else if(action.equals("AGREGAR_ITEM")){
-			
+				System.out.println("[AjaxServlet] Inicio - AGREGAR_ITEM");
 				Detallefactura detallefactura = null;				
 				
 				listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
@@ -337,10 +341,10 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+				System.out.println("[AjaxServlet] Final - AGREGAR_ITEM");
 				
 			}else if(action.equals("REGISTRAR_FACTURA")){
-				
+				System.out.println("[AjaxServlet] Inicio - REGISTRAR_FACTURA");
 				Factura factura=null;
 				Detallefactura detallefactura=null;
 				BigDecimal total = new BigDecimal(0);
@@ -371,7 +375,7 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			
+				System.out.println("[AjaxServlet] Final - REGISTRAR_FACTURA");
 			}else if(action.equals("ACTUALIZA_NRO_DOCUMENTO")){
 				System.out.println("[AjaxServlet] Inicio - ACTUALIZA_NRO_DOCUMENTO");
 				String nroDocReal = request.getParameter("nrodocReal");
@@ -385,7 +389,9 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				System.out.println("[AjaxServlet] Final - ACTUALIZA_NRO_DOCUMENTO");
 			}else if(action.equals("BUSCAR_EXISTE_SOCIO")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_EXISTE_SOCIO");
 				String recibo = request.getParameter("recibo");
 				String socio = request.getParameter("socio");
 				int respuesta = 0;
@@ -415,9 +421,9 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("[AjaxServlet] Final - ACTUALIZA_NRO_DOCUMENTO");
+				System.out.println("[AjaxServlet] Final - BUSCAR_EXISTE_SOCIO");
 			}else if(action.equals("ELIMINAR_ITEM")){
-				
+				System.out.println("[AjaxServlet] Inicio - ELIMINAR_ITEM");
 				try {
 					
 					listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
@@ -493,6 +499,7 @@ public class AjaxServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				System.out.println("[AjaxServlet] Final - ELIMINAR_ITEM");
 			}else if(action.equals("BUSCAR_RECIBO_LUZ_SOCIO")){
 				System.out.println("[AjaxServlet] Inicio - BUSCAR_RECIBO_LUZ_SOCIO");
 				String codide = request.getParameter("codide");
@@ -544,6 +551,7 @@ public class AjaxServlet extends HttpServlet {
 				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_ESPECIAL");
 			}	
 		}
+		System.out.println("[AjaxServlet] - Final service");
 	}
 	
 	public void validarProducto(List<Detallefactura> listDetallefactura, Detallefactura det) {
