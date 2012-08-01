@@ -11,6 +11,8 @@ public class Sisa {
 	Integer cantidad;
 	Integer totalpagos;
 	Integer totaldias;
+	Integer estado;
+	String tranCodigo;
 	
 	public String getNombre() {
 		return nombre;
@@ -53,6 +55,18 @@ public class Sisa {
 	}
 	public void setTotaldias(Integer totaldias) {
 		this.totaldias = totaldias;
+	}
+	public Integer getEstado() {
+		return estado;
+	}
+	public void setEstado(Integer estado) {
+		this.estado = estado;
+	}
+	public String getTranCodigo() {
+		return tranCodigo;
+	}
+	public void setTranCodigo(String tranCodigo) {
+		this.tranCodigo = tranCodigo;
 	}
 
 }
