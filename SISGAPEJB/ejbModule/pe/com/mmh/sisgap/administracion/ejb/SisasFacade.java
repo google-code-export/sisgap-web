@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.administracion.ejb;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?)}";
 	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
 	private static final String SP_MUESTRA_TEMP = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP(?,?,?)}";
+	private static final String SP_UPD_SISAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_SISAANULADA(?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -55,7 +57,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	return rsdcPlatilla;
     }
     	
-	public void registrarSisa(String periodo,long codigoSocio) {
+	public void registrarSisa(String periodo, String codigoSocio) {
     	Connection connection = null;
     	Object objParams[]   = {codigoSocio,periodo};
     	String rsdcPlatilla = null;
@@ -74,7 +76,7 @@ public class SisasFacade implements SisasFacadeLocal {
     
     }
 	
-	public int registraFind(String periodo,long codigoSocio) {
+	public int registraFind(String periodo,String codigoSocio) {
     	Connection connection = null;
     	Object objParams[]   = {codigoSocio,periodo};
     	String rsdcPlatilla = null;
@@ -94,9 +96,9 @@ public class SisasFacade implements SisasFacadeLocal {
     	return -1;
     }
 	
-	public String getSisa(String periodo,long codigoSocio) {
+	public String getSisa(String periodo, String codigoSocio) {
     	Connection connection = null;
-    	Object objParams[]   = {codigoSocio,periodo};
+    	Object objParams[]   = {codigoSocio.trim(),periodo};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
@@ -128,9 +130,11 @@ public class SisasFacade implements SisasFacadeLocal {
 				sisa.setNombre(rs.getString("tran_razon_social"));
 				sisa.setPerido(rs.getDate("periodo"));
 				sisa.setPuesto(rs.getString("tran_puesto"));
-				sisa.setCodigo(rs.getLong("tran_ide"));
+				sisa.setCodigo(rs.getLong("codigo"));
 				sisa.setTotaldias(rs.getInt("totaldias"));
 				sisa.setTotalpagos(rs.getInt("totalpagos"));
+				sisa.setEstado(rs.getInt("estado"));
+				sisa.setTranCodigo(rs.getString("tran_codigo"));
 				lst.add(sisa);
 			}
 		} catch (Exception e) {
@@ -151,7 +155,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	public void updateSisa(String periodo, String codigo, String valuess) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
-    	Object objParams[]   = {codigo,periodo,valuess};
+    	Object objParams[]   = {codigo.trim(),periodo,valuess};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
@@ -178,7 +182,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	}
 
 	@Override
-	public List<Sisa> findSisa(String date, Long long1) {
+	public List<Sisa> findSisa(String date, String long1) {
     	Connection connection = null;
     	Object objParams[]   = {long1,date};
     	List<Sisa> lst = new  ArrayList<Sisa>();
@@ -194,6 +198,8 @@ public class SisasFacade implements SisasFacadeLocal {
 				sisa.setCodigo(rs.getLong("tran_ide"));
 				sisa.setTotaldias(rs.getInt("totaldias"));
 				sisa.setTotalpagos(rs.getInt("totalpagos"));
+				sisa.setEstado(rs.getInt("estado"));
+				sisa.setTranCodigo(rs.getString("tran_codigo"));				
 				lst.add(sisa);
 			}
 		} catch (Exception e) {
@@ -229,6 +235,38 @@ public class SisasFacade implements SisasFacadeLocal {
 		
 	}
 
+	@Override
+	public void eliminarSisa(String codigoSisa) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_SISAANULADA);
+			
+			cst.setLong("P_COD_SISA", new Long(codigoSisa));
+			cst.execute();
+
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
 
 
 
