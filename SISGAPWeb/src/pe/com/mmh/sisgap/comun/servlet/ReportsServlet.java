@@ -285,10 +285,13 @@ public class ReportsServlet extends HttpServlet {
 					ResultsDecoratorPrinter printer = new ResultsDecoratorPrinterImpl();
 					ResultsDecorator decorator = new ResultsDecoratorHTML(printer);
 					decorator.setTableDefination("<table border='1' style='font-size:13px;'>");
-					decorator.write(rs,"3%","20%","8%","8%","8%");
+					//decorator.write(rs,"3%","20%","8%","8%","8%");
+					decorator.write(rs,"3%","20%","8%");
 					
-			        String snippet = "<center><h3>ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL</h3></center>";
-			        	   snippet +="<h3>PADRON DE ASOCIADOS</h3>";
+			        String snippet = "<table border='1' style='font-size:15px;'>";
+			        	   snippet +="<tr style='padding-left:200px'><th>ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL</th></tr>";
+			        	   snippet +="<tr style='padding-left:300px'><th>PADRON DE ASOCIADOS</th></tr>";
+			        	   snippet +="</table>";
 			        	   snippet +=printer.toString();
 			        	   
 		   	        HashMap<String,Object> map = new HashMap<String, Object>();
@@ -320,7 +323,10 @@ public class ReportsServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				System.out.println("[ReportsServlet] Final - REPORTE_SISAS");
-				
+			}else if(reporte.equals("LISTADO_GENERAL_VIGILANCIA")){
+				System.out.println("[ReportsServlet] Inicio - LISTADO_GENERAL_VIGILANCIA");
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado General de Vigilancia.jrxml");
+				System.out.println("[ReportsServlet] Final - LISTADO_GENERAL_VIGILANCIA");	
 			}
 			
 			if (provider == null) {

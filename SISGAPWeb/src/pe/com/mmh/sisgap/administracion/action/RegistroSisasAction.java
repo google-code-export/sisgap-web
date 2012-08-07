@@ -36,6 +36,16 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		return mapping.findForward("cargarAction");
 	}
 	
+	public ActionForward blankPage(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		System.out.println("[RegistroSisasAction] Inicio - blankPage");
+
+		System.out.println("[RegistroSisasAction] Final - blankPage");
+		return mapping.findForward("blankPage");
+	}
+
+	
 	public ActionForward updateSisa(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

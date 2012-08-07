@@ -13,7 +13,7 @@
 	$(function() {
 
 		$("#nuevo-f").button();
-		$("#salir-f").button();
+		//$("#salir-f").button();
 		$("#pdf-f").button();
 		$("#imprimir-f").button();
 		$("#buscar-f").button();

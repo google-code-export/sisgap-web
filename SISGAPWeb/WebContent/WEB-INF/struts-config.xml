@@ -56,51 +56,55 @@
   <action name="gestionarSociosActionForm" path="/gestionarSocios" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.GestionarSociosAction">
      <forward name="cargarAction" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
-     <forward name="success" path="/index.jsp"/>
      <forward name="agregarClientes" path="/jsp/administracion/socio/agregarSocios.jsp"/>
      <forward name="gestionarClientes" path="/jsp/administracion/socio/gestionarSocios.jsp"/>
+     <forward name="success" path="/index.jsp"/>
    </action>
    
   <action name="gestionarItemCobranzaActionForm" path="/gestionarItemCobranza" parameter="metodo"
    scope="session" type="pe.com.mmh.sisgap.administracion.action.GestionarItemCobranzaAction">
      <forward name="cargarAction" path="/jsp/administracion/itemcobranza/gestionarItemCob.jsp"/>
-     <forward name="success" path="/index.jsp"/>
 	 <forward name="agregarCobranzas" path="/jsp/administracion/itemcobranza/agregarItemCob.jsp"/>
 	 <forward name="editarItem" path="/jsp/administracion/itemcobranza/editarItemCob.jsp"/>
+	 <forward name="success" path="/index.jsp"/>
    </action>   
  
    <action name="facturacionActionForm" path="/gestionarFacturacion" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.FacturacionAction">
      <forward name="cargarAction" path="/jsp/administracion/facturacion/gestionarFacturacion.jsp"/>
-     <forward name="success" path="/index.jsp"/>
      <forward name="agregarFacturacion" path="/jsp/administracion/facturacion/agregarFacturacion.jsp"/>
      <forward name="editarItem" path="/jsp/administracion/itemcobranza/agregarItemCob.jsp"/>
      <forward name="imprimirRecibo" path="/jsp/administracion/facturacion/reciboIngreso.jsp"/>
      <forward name="imprimirBoleta" path="/jsp/administracion/facturacion/boletaVenta.jsp"/>
+     <forward name="success" path="/index.jsp"/>
    </action> 
 
    <action name="SuministroLuzActionForm" path="/suministroLuz" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.SuministroLuzAction">
      <forward name="cargarAction" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
-     <forward name="success" path="/index.jsp"/>
      <forward name="admSuministroluz" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="agrebarSuministroluz" path="/jsp/administracion/suministroluz/agregarSuministroLuzSocio.jsp"/>
-     
+     <forward name="success" path="/index.jsp"/>
    </action>
    
    <action name="ReporteItemsCobranzaForm" path="/reporteItemsCobranza" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesItemCobranzaAction">
      <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteItemCob.jsp"/>
      <forward name="success" path="/index.jsp"/>
-     
    </action>
 
    <action name="RegistroSisasForm" path="/registrosisas" parameter="metodo"
    scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisasAction">
      <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarSisasx.jsp"/>
-     <forward name="blankpage" path="/jsp/administracion/sisas/blankpage.jsp"/>
+     <forward name="reporteAction" path="/jsp/administracion/sisas/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
-     
+   </action>
+   
+   <!-- Reporte de SISAS -->
+   <action name="ReporteItemsCobranzaForm" path="/reporteSisas" parameter="metodo"
+   scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesSisaAction">
+	 <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteSisa.jsp"/>
+     <forward name="success" path="/index.jsp"/>
    </action>
    
    <action name="ServiciosHigienicosForm" path="/servicioshigienicos" parameter="metodo"
@@ -110,7 +114,6 @@
      <forward name="verServicios" path="/jsp/administracion/servicios/verServiciosHigienicos.jsp"/>
      <forward name="blankpage" path="/jsp/administracion/servicios/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
-     
    </action>
    
    

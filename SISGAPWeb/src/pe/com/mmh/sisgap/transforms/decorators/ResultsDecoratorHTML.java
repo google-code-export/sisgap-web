@@ -33,6 +33,7 @@ public class ResultsDecoratorHTML extends ResultsDecorator {
 			}
 						
 			print(md.getColumnLabel(i));
+			print("</th>"); //JMC
 		}
 		println("</tr>");
 		while (rs.next()) {
@@ -40,6 +41,7 @@ public class ResultsDecoratorHTML extends ResultsDecorator {
 			for (int i = 1; i <= count; i++) {
 				print("<td>");
 				print(rs.getString(i));
+				print("</td>"); //JMC
 			}
 			println("</tr>");
 		}

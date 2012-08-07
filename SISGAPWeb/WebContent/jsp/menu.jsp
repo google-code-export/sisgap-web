@@ -258,6 +258,13 @@
 					</div>
 				</li>
 				<li>
+					<div class="botonDelMenu">
+				   		<a href="<%=request.getContextPath()%>/reporteSisas.do?metodo=cargarAction" target="FraMain">
+					    <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/vigilancia_2.png"/>
+					    Reporte General de Vigilancia</a>			
+					</div>
+				</li>
+				<!-- li>
 					<div class="botonDelMenu" style="visibility: hidden;">		
 						<a href="<%=request.getContextPath()%>/repDicGen.do?metodo=cargarAction" target="FraMain">						
 				        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteDiccionarioGeneral.png"> 
@@ -270,7 +277,7 @@
 						 <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/buscarModelosGenerales.png"> 
 						 Buscar modelos generados</a>	
 					</div>
-				</li>			
+				</li -->			
 			</ul>
 		</div>
 		</div>

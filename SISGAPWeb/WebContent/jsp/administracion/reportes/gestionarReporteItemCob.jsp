@@ -164,7 +164,7 @@
 					<tr>
 						<td>
 						Item :
-							<select id="cbItemCob" name="cbItemCob" style="width: 150px">
+							<select id="cbItemCob" name="cbItemCob" style="width: 300px">
 								<option value="0" selected>Seleccione</option>
 								<c:forEach items="${lstCob}" var="row">
 									<option value="${row.codItemcobranza}">${row.strDescripcion}</option>										
