@@ -39,18 +39,18 @@
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/standard-1.0.6.jar"/>
 	<classpathentry kind="lib" path="/SISGAP/EarContent/lib/struts.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container/SISGAPWeb"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/commons-beanutils.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/commons-collections-3.2.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/displaytag-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/groovy-1.8.4.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/hibernate-core.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/itext-1.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/org.springframework.context.support-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/org.springframework.web-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/oswego.jar"/>
-	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-huaral/SISGAP/EarContent/lib/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/displaytag-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/groovy-1.8.4.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/itext-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/org.springframework.context.support-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/org.springframework.web-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/oswego.jar"/>
+	<classpathentry kind="lib" path="C:/tools/proyectos/workspace-sisgap-final/SISGAP/EarContent/lib/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="C:/tools/jboss7/modules/javax/ejb/api/main/jboss-ejb-api_3.1_spec-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="C:/tools/jboss7/modules/javax/persistence/api/main/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>

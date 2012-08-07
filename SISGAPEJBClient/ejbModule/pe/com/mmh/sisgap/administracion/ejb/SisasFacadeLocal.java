@@ -28,4 +28,6 @@ public interface SisasFacadeLocal {
 	public ResultSet getTempSisa(String periodo,Integer codigo);
 	
 	void eliminarSisa(String codigoSisa);
+	
+	public void cargarVigilanciaTMP(String codigo);
 }
