@@ -32,6 +32,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
 	private static final String SP_MUESTRA_TEMP = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP(?,?,?)}";
 	private static final String SP_UPD_SISAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_SISAANULADA(?)}";
+	private static final String SP_DETALLE_ESTADO_CUENTA = "{call PKG_ADMINISTRACION.SP_DETALLE_ESTADO_CUENTA(?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -268,6 +269,24 @@ public class SisasFacade implements SisasFacadeLocal {
 		}
 	}
 
-
+	@Override
+	public void cargarVigilanciaTMP(String codigo) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	Object objParams[]   = {codigo.trim()};
+    	String rsdcPlatilla = null;
+    	try {			
+    		connection = getConnection();
+			JDBCUtil.callSQLProcExecute(connection,SP_DETALLE_ESTADO_CUENTA,objParams);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
 
 }
