@@ -342,7 +342,6 @@ var codMon = "";
 
 		
 		$("#registra-f").button().click(function() {
-			if (${'#lstDetFac'}.size())
 			$('[name=metodo]').val('grabar');
 			$('#gestionarFacturacion').submit();
 			

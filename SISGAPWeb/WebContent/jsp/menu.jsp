@@ -172,6 +172,14 @@
 					    </a>
 					</div>
 				</li>
+				<li>
+					<div class="botonDelMenu">		
+						<a href="<%=request.getContextPath()%>/controlAsistencia.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/controlAsistencia.png"> 
+							Control de Asamblea
+					    </a>
+					</div>
+				</li>
 			</ul>
 		</div>
 		</div>
@@ -245,7 +253,7 @@
 			<ul>
 				<li>
 					<div class="botonDelMenu">
-				   		<a href="<%=request.getContextPath()%>/repConAtr.do?metodo=cargarAction" target="FraMain">
+				   		<a href="<%=request.getContextPath()%>/reporteSisas.do?metodo=blankpage" target="FraMain">
 					    <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteConceptoAtributos.png"/>
 					    Reporte de Socios</a>			
 					</div>

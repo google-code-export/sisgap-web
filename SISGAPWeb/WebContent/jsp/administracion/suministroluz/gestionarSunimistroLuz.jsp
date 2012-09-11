@@ -551,13 +551,13 @@ $(function() {
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarItems(${row.codOrgreciboLuz});"/>
 				</display:column>
 				<display:column title="Periodo" sortable="true">
-					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />
+					<center><fmt:formatDate pattern="dd/MM/yyyy" value="${row.fecPeriodo}" /></center>
 				</display:column>
 				<display:column title="Fecha de Emisión" sortable="true">
-					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecEmision}" />
+					<center><fmt:formatDate pattern="dd/MM/yyyy" value="${row.fecEmision}" /></center>
 				</display:column>
 				<display:column title="Vencimiento" sortable="true">
-					<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecVencimiento}" />
+					<center><fmt:formatDate pattern="dd/MM/yyyy" value="${row.fecVencimiento}" /></center>
 				</display:column>				
 				<display:column title="Total a Pagar" property="numMonto" sortable="true"></display:column>			
 				<display:column title="Estado" sortable="true">

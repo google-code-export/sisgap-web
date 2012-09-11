@@ -23,10 +23,11 @@ public class ReportesSisaAction extends GrandActionAbstract{
 		List<Socio> lstSocio = facadeSocio.findAll();
 		request.setAttribute("lstSocio", lstSocio);
 		
-		for(int a=0; a<lstSocio.size(); a++){
+		/*for(int a=0; a<lstSocio.size(); a++){
 			System.out.println((a+1) +" - " + lstSocio.get(a).getTranIde()+ " - " + lstSocio.get(a).getTranCodigo().trim() + " - " + lstSocio.get(a).getTranRazonSocial());
-		}
+		}*/
 		
+		request.getSession().setAttribute("Respuesta", null);
 		System.out.println("[ReportesSisaAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
@@ -35,10 +36,20 @@ public class ReportesSisaAction extends GrandActionAbstract{
 		System.out.println("[ReportesSisaAction] Inicio - grabarVigilancia");
 		
 		String codSocio = request.getParameter("codigo");
+		String fecIni = request.getParameter("fechaIni");
+		String fecFin = request.getParameter("fechaFin");
+		int rpta=0;
+		fecIni = "01/"+fecIni;
+		fecFin = "01/"+fecFin;
 		
 		SisasFacadeLocal facadeSisa = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
-		facadeSisa.cargarVigilanciaTMP(codSocio);
+		rpta = facadeSisa.cargarVigilanciaTMP(codSocio,fecIni,fecFin,rpta);
 		
+		request.getSession().setAttribute("Respuesta", rpta);
+		request.getSession().setAttribute("fechaIni", fecIni);
+		request.getSession().setAttribute("fechaFin", fecFin);
+		
+		System.out.println("Respuesta: "+rpta);
 		System.out.println("[ReportesSisaAction] Final - grabarVigilancia");
 		return mapping.findForward("cargarAction");
 	}

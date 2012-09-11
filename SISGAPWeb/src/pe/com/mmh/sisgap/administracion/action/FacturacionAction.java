@@ -206,7 +206,7 @@ public class FacturacionAction extends GrandActionAbstract{
 		
 		
 		String tipodocumento = request.getParameter("tipodocumento");
-		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento);
+		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento); 
 		
 		session.setAttribute("listDetallefactura", listDetallefactura);
 		session.setAttribute("facturaBolsa", facturaBolsa);	

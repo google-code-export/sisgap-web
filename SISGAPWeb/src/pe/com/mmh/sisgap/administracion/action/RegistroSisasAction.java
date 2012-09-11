@@ -10,6 +10,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.sun.org.apache.bcel.internal.generic.LSTORE;
+
 import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
@@ -36,13 +38,13 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		return mapping.findForward("cargarAction");
 	}
 	
-	public ActionForward blankPage(ActionMapping mapping, ActionForm form,
+	public ActionForward blankpage(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		System.out.println("[RegistroSisasAction] Inicio - blankPage");
 
 		System.out.println("[RegistroSisasAction] Final - blankPage");
-		return mapping.findForward("blankPage");
+		return mapping.findForward("blankpage");
 	}
 
 	
@@ -60,10 +62,13 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		String codigo = cod;
 		String periodo = per;
 		
+		String fecIngreso = request.getParameter("fecingreso");
+		String recNumero = request.getParameter("recnumero");
+		
 		if(valuess!=null){
 			String[] fecha = periodo.split("-");
 			periodo = fecha[2] + "-" + fecha[1] + "-" + fecha[0];
-			facadeLocal.updateSisa(periodo,codigo,valuess);
+			facadeLocal.updateSisa(periodo,codigo,valuess,fecIngreso,recNumero);
 		}
 		List<Sisa> list = facadeLocal.findAll();
 		request.setAttribute("lstSisa", list);
@@ -142,13 +147,15 @@ public class RegistroSisasAction extends GrandActionAbstract {
 				String ajax = request.getParameter("ajax");
 				
 				if(ajax!=null){
-					
+					System.out.println("[RegistroSisasAction] Inicio - Ajax - findGenerator");
 					String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
 					String lss = facadeLocal.getSisa(getDate(fecha), codigo.trim());				
 					request.setAttribute("lstPlan", getTable(ls,fecha,lss));
+					
+					System.out.println(getTable(ls,fecha,lss));
+					
 					System.out.println("[RegistroSisasAction] Final - Ajax - findGenerator");
 					return mapping.findForward("blankpage");
-					
 				}
 				
 			}else{
@@ -207,7 +214,7 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		if(dta!=null){
 			lss = dta.split(",");
 		}
-		String columnas = "<table border='1'><tr>";
+		String columnas = "<center><table border='0'><tr>";
 		
 		int size = calendario.length/5;
 		int count = 1;
@@ -238,7 +245,7 @@ public class RegistroSisasAction extends GrandActionAbstract {
 
 			}
 		}
-		columnas += "</tr></table>";
+		columnas += "</tr></table><br/></center>";
 		System.out.println("[RegistroSisasAction] Final - getTable");
 		return columnas;
 	}

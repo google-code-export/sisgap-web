@@ -17,4 +17,6 @@ public class ConstantesJNDI {
 	public final static String SISASFACADE			= "java:app/SISGAPEJB/SisasFacade!pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal";
 	public final static String SERVICIOSHIGIENICOS	= "java:app/SISGAPEJB/ServiciosHigienicosFacade!pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal";
 	public final static String SERVICIOSITEM        = "java:app/SISGAPEJB/ServiciosItemFacade!pe.com.mmh.sisgap.administracion.ejb.ServiciosItemFacadeLocal";
+	public final static String REUNIONESFACADE      = "java:app/SISGAPEJB/ReunionesFacade!pe.com.mmh.sisgap.administracion.ejb.ReunionesFacadeLocal";
+	public final static String REUNIONESSOCIOFACADE = "java:app/SISGAPEJB/ReunionesSocioFacade!pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal";
 }

@@ -24,7 +24,6 @@
 <script src="<%=request.getContextPath()%>/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.dualListBox-1.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.popupWindow.js"></script>
-
 <script src="<%=request.getContextPath()%>/js/external/jquery.bgiframe-2.1.2.js"></script>
 <script src="<%=request.getContextPath()%>/js/ui/jquery.ui.core.js"></script>
 <script src="<%=request.getContextPath()%>/js/ui/jquery.ui.widget.js"></script>
@@ -35,3 +34,4 @@
 <script src="<%=request.getContextPath()%>/js/ui/jquery.ui.resizable.js"></script>
 <script src="<%=request.getContextPath()%>/js/ui/jquery.ui.dialog.js"></script>
 <script src="<%=request.getContextPath()%>/js/ui/jquery.effects.core.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery.blockUI.js?v2.38" type="text/javascript"></script>

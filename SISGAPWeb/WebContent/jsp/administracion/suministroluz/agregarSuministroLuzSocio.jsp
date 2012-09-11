@@ -774,9 +774,11 @@ return true;*/
 					<td><input type="text" name="lecfin-sls" id="lecfin-sls" size="10" value="" style="width:100px;" readonly="readonly"/></td>
 				</tr>
 				<tr>
-					<td colspan="2"><button id="nuevo-sls">Agregar</button></td>
-					<td><button id="imprimir-sls">Imprimir Todo</button></td>
-					<td><button id="imprimirPend-sls">Imprimir Pendientes</button></td>
+					<td colspan="2">
+						<button id="nuevo-sls">Agregar</button>
+						<button id="imprimir-sls">Imprimir Todo</button>
+						<button id="imprimirPend-sls">Imprimir Pendientes</button>
+					</td>
 				</tr>
 			</table> 
 	</fieldset>
@@ -801,8 +803,8 @@ return true;*/
 				</c:otherwise>
 			</c:choose>
 			</display:column>
-			<display:column title="Nombres" property="nombres" sortable="true"></display:column>
 			<display:column title="Puesto" property="puesto" sortable="true" style="width:50px; text-align:center"></display:column>
+			<display:column title="Nombres" property="nombres" sortable="true"></display:column>			
 			<display:column title="Lect. Inicial" property="lecturaini" sortable="true" style="width:80px; text-align:center"></display:column>
 			<display:column title="Lect. Final" property="lecturafin" sortable="true" style="width:80px; text-align:center"></display:column>
 			<display:column title="Carg. x Energ." property="cargoener" sortable="true" style="width:80px; text-align:center"></display:column>

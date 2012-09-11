@@ -78,8 +78,8 @@
 
 		$("#selerepodia-form").dialog({
 			autoOpen : false,
-			height : 150,
-			width : 350,
+			height : 200,
+			width : 400,
 			modal : true,
 			buttons : {
 				Generar : function() {
@@ -318,7 +318,7 @@
 						<select name="estDocY" id="estDocY">
 							<option value="T" selected>-- Todos --</option>
 							<option value="P">Pendiente</option>
-							<option value="C">Cancelada</option>
+							<option value="C">Pagada</option>
 							<option value="A">Anulada</option>
 						</select>
 					</td>

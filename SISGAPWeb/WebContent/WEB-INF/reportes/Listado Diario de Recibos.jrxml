@@ -131,7 +131,7 @@ ORDER BY
 						<font pdfFontName="Helvetica-Bold" size="16" isBold="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["REPORTE DE INGRESOS DIARIOS - "+ (($F{SISGAP_FACTURA_STR_TIPODOC}).toString().equals("R")? "RECIBO" : "BOLETA")
-+ " " +(new SimpleDateFormat("dd/MM/yyyy")).format($F{SISGAP_FACTURA_DAT_FECHACRED})]]></textFieldExpression>
++ " " +(new SimpleDateFormat("dd/MM/yyyy")).format($F{SISGAP_FACTURA_DAT_FECHAFAC})]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>

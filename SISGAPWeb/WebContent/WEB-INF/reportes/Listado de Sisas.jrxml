@@ -39,6 +39,8 @@
 FROM 
      "SISGAP"."SISGAP_SISAS" SISGAP_SISAS 
      INNER JOIN "SISGAP"."SISGAP_SISAS_DETA" SISGAP_SISAS_DETA ON SISGAP_SISAS."CODIGO" = SISGAP_SISAS_DETA."CODIGOSISA"
+WHERE
+     SISGAP_SISAS."ESTADO" <> 3
 GROUP BY 
      SISGAP_SISAS."CODIGO",
      SISGAP_SISAS."CODIGOSOCIO",
@@ -87,14 +89,14 @@ ORDER BY 4, 3]]></queryString>
 					<reportElement
 						x="-9"
 						y="8"
-						width="352"
+						width="543"
 						height="35"
 						key="staticText-1"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font size="26" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="24" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Listado de Socios - Sisas]]></text>
+				<text><![CDATA[Listado General de Socios - Vigilancia]]></text>
 				</staticText>
 			</band>
 		</title>

@@ -54,6 +54,7 @@ import com.itextpdf.text.pdf.codec.Base64.InputStream;
 
 //Funcion EJB
 import pe.com.mmh.sisgap.administracion.action.FacturacionAction;
+import pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
@@ -160,15 +161,20 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_CODIGO_SOCIOS", codSoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz.jrxml");
 			}else if(reporte.equals("RECIBO_LUZ_DOBLE")){
+				System.out.println("[ReportsServlet] Inicio - RECIBO_LUZ_DOBLE");
 				codRec = request.getParameter("codRec");
 				codSoc = request.getParameter("codSoc");
 				correl = request.getParameter("correl");
 				mensaj = "Mercado Modelo de Huaral, donde da gusto comprar.";
+				
 				System.out.println("[RECIBO_LUZ_DOBLE]Parámetro Recibo : " + codRec + " Parámetro Socio : " + codSoc + " Correlativo : " + correl);
 				parametros.put("P_CODIGO_RECIBO", codRec);
 				parametros.put("P_CODIGO_SOCIOS", codSoc);
 				parametros.put("P_MENSAJE_PIE", mensaj);
+				//parametros.put("SUBREPORT_DIR","/WEB-INF/reportes/");
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz Doble.jrxml");
+				//ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Luz Doble Grafico.jrxml");
+				System.out.println("[ReportsServlet] Final - RECIBO_LUZ_DOBLE");
 			}else if(reporte.equals("RECIBO_LUZ_DOBLE_A4")){
 				String codRec = request.getParameter("codRec");
 				String codSoc = request.getParameter("codSoc");
@@ -229,6 +235,14 @@ public class ReportsServlet extends HttpServlet {
 				System.out.println("[ReportsServlet] Inicio - LISTADO_SISAS");
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Sisas.jrxml");
 				System.out.println("[ReportsServlet] Final - LISTADO_SISAS");
+			}else if (reporte.equals("REPORTE_DIA_SISAS")){
+				System.out.println("[ReportsServlet] Inicio - REPORTE_DIA_SISAS");
+				String periodo = request.getParameter("periodo");
+				String codigo  = request.getParameter("codigo");				
+				parametros.put("P_FECHA_PERIODO", periodo);
+				parametros.put("P_CODIGO_SOCIO", codigo);
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado por Dia de Vigilancia.jrxml");
+				System.out.println("[ReportsServlet] Final - REPORTE_DIA_SISAS");
 			}else if (reporte.equals("REPORTE_DIARIO_DOCUMENTOS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_DIARIO_DOCUMENTOS");
 				String fecDoc = request.getParameter("fecDoc");
@@ -271,6 +285,20 @@ public class ReportsServlet extends HttpServlet {
 				System.out.println("[ReportsServlet] Final - LISTADO_SERVICIOS_HIGIENICOS");
 			}else if(reporte.equals("REPORTE_SISAS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_SISAS");
+				String fecDoc = request.getParameter("periodo");
+				String mes = fecDoc.substring(0, 3);
+				if (mes.equals("01/")) { fecDoc = fecDoc.replace("01/", "ENERO "); };
+				if (mes.equals("02/")) { fecDoc = fecDoc.replace("02/", "FEBRERO "); };
+				if (mes.equals("03/")) { fecDoc = fecDoc.replace("03/", "MARZO "); };
+				if (mes.equals("04/")) { fecDoc = fecDoc.replace("04/", "ABRIL "); };
+				if (mes.equals("05/")) { fecDoc = fecDoc.replace("05/", "MAYO "); };
+				if (mes.equals("06/")) { fecDoc = fecDoc.replace("06/", "JUNIO "); };
+				if (mes.equals("07/")) { fecDoc = fecDoc.replace("07/", "JULIO "); };
+				if (mes.equals("08/")) { fecDoc = fecDoc.replace("08/", "AGOSTO "); };
+				if (mes.equals("09/")) { fecDoc = fecDoc.replace("09/", "SETIEMBRE "); };
+				if (mes.equals("10/")) { fecDoc = fecDoc.replace("10/", "OCTUBRE "); };
+				if (mes.equals("11/")) { fecDoc = fecDoc.replace("11/", "NOVIEMBRE "); };
+				if (mes.equals("12/")) { fecDoc = fecDoc.replace("12/", "DICIEMBRE "); };
 				try {
 					String periodo = request.getParameter("periodo");
 					Integer codigo = new Integer(request.getParameter("codigo"));
@@ -285,12 +313,12 @@ public class ReportsServlet extends HttpServlet {
 					ResultsDecoratorPrinter printer = new ResultsDecoratorPrinterImpl();
 					ResultsDecorator decorator = new ResultsDecoratorHTML(printer);
 					decorator.setTableDefination("<table border='1' style='font-size:13px;'>");
-					//decorator.write(rs,"3%","20%","8%","8%","8%");
-					decorator.write(rs,"3%","20%","8%");
+					decorator.write(rs,"3%","20%","8%","5%","5%");
+					//decorator.write(rs,"3%","20%","8%");
 					
 			        String snippet = "<table border='1' style='font-size:15px;'>";
-			        	   snippet +="<tr style='padding-left:200px'><th>ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL</th></tr>";
-			        	   snippet +="<tr style='padding-left:300px'><th>PADRON DE ASOCIADOS</th></tr>";
+			        	   snippet +="<tr style='padding-left:200px'><td><b>ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL - PADRON DE ASOCIOADOS</b></td></tr>";
+			        	   snippet +="<tr style='padding-left:240px;'><td><b>LISTADO DE CUOTAS DE VIGILANCIA PARA EL MES DE "+ fecDoc + "</b></td></tr>";
 			        	   snippet +="</table>";
 			        	   snippet +=printer.toString();
 			        	   
@@ -323,11 +351,70 @@ public class ReportsServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				System.out.println("[ReportsServlet] Final - REPORTE_SISAS");
+			}else if(reporte.equals("REPORTE_SOCIOS_ASAMBLEAS")){
+				System.out.println("[ReportsServlet] Inicio - REPORTE_SOCIOS_ASAMBLEAS");
+				String fecDoc = request.getParameter("periodo");
+				try {
+					String periodo = request.getParameter("periodo");
+					Integer codigo = new Integer(request.getParameter("codigo"));
+					//String codigo = request.getParameter("codigo");
+					
+					ReunionesSocioFacadeLocal facadeLocal = (ReunionesSocioFacadeLocal) lookup(ConstantesJNDI.REUNIONESSOCIOFACADE);
+					ResultSet rs = facadeLocal.getTempAsambleas();
+			        Document document = new Document(PageSize.A4.rotate());
+			        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			        PdfWriter.getInstance(document, baos);
+			        document.open();
+					ResultsDecoratorPrinter printer = new ResultsDecoratorPrinterImpl();
+					ResultsDecorator decorator = new ResultsDecoratorHTML(printer);
+					decorator.setTableDefination("<table border='1' style='font-size:13px;'>");
+					//decorator.write(rs,"3%","20%","8%","8%","8%");
+					decorator.write(rs,"3%","20%","8%");
+					
+			        String snippet = "<table border='1' style='font-size:15px;'>";
+			        	   snippet +="<tr style='padding-left:200px'><th>ASOCIACION DE COMERCIANTES DEL MERCADO MODELO DE HUARAL - PADRON DE ASOCIADOS</th></tr>";
+			        	   snippet +="<tr style='padding-left:240px'><th>LISTADO DE ASISTENCIA DE SOCIOS A LAS ASAMBLEAS</th></tr>";
+			        	   snippet +="</table>";
+			        	   snippet +=printer.toString();
+			        	   
+		   	        HashMap<String,Object> map = new HashMap<String, Object>();
+			        map.put(HTMLWorker.FONT_PROVIDER, new FontProvider() {
+						
+						@Override
+						public boolean isRegistered(String arg0) {
+							// TODO Auto-generated method stub
+							return false;
+						}
+						
+						@Override
+						public Font getFont(String fontname,
+				                String encoding, boolean embedded, float size,
+				                int style, BaseColor color) {
+							// TODO Auto-generated method stub
+							return new Font(FontFamily.UNDEFINED, 7, style, color);
+						}
+					});
+			        	   
+			        	   
+					List<Element> objects = HTMLWorker.parseToList(new StringReader(snippet), null, map);
+					for (Element element : objects){document.add(element);}
+					
+					document.close();
+					bytes = baos.toByteArray();	
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				System.out.println("[ReportsServlet] Final - REPORTE_SOCIOS_ASAMBLEAS");
 			}else if(reporte.equals("LISTADO_GENERAL_VIGILANCIA")){
 				System.out.println("[ReportsServlet] Inicio - LISTADO_GENERAL_VIGILANCIA");
+				String fecIni = request.getParameter("fechaInicial");
+				String fecFin = request.getParameter("fechaFinal");
+				parametros.put("P_FECHA_INI", fecIni);
+				parametros.put("P_FECHA_FIN", fecFin);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado General de Vigilancia.jrxml");
 				System.out.println("[ReportsServlet] Final - LISTADO_GENERAL_VIGILANCIA");	
-			}
+			}			
 			
 			if (provider == null) {
 				generateReport(request, response, ruta, parametros);

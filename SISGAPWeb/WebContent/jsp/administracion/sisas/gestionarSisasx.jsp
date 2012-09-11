@@ -108,6 +108,7 @@ var codMon = "";
 		$("#btncerrar").button();
 		$("#imprime-ls").button();
 		$("#btn-buscar-periodo").button();
+		$("#btn_Grabar").button();
 	
 		$('#imprimir-ls').click(function() {      
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
@@ -231,8 +232,8 @@ var codMon = "";
 		
 		$("#calendar-form").dialog({
 			autoOpen : false,
-			height : 400,
-			width : 300,
+			height : 500,
+			width : 400,
 			modal : true,
 			buttons : {
 				Cancel : function() {
@@ -290,6 +291,22 @@ var codMon = "";
 	            $(this).datepicker('setDate', new Date(year, month, 1));
 	        }
 	    });
+
+
+		$("#fechaingreso").datepicker(
+	            {
+	            	dateFormat: 'dd/mm/yy',   
+	                changeMonth: true,
+	                changeYear: false,
+	                numberOfMonths: 1,
+	                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                    'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                    'Octubre', 'Noviembre', 'Diciembre'],
+	                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+	                    'May', 'Jun', 'Jul', 'Ago',
+	                    'Sep', 'Oct', 'Nov', 'Dic'] 
+	            }); 
 
 		
 		$("#dialog-form").dialog(
@@ -522,24 +539,48 @@ var codMon = "";
 
 	function ver(xperiodo,xcodigo){
 		//alert("periodo: "+xperiodo+"\ncodigo: "+xcodigo);
-		/*$("#codigoide-f").val(xcodigo);
-		$("#periodo-f").val(xperiodo);*/
+		$("#codigoide-f").val(xcodigo);
+		$("#periodo-f").val(xperiodo);
 
 		
 		$.ajax({
 	        type: "POST",
 	        url: "/SISGAPWeb/registrosisas.do",
 	        data: "metodo=findGenerator&periodo="+xperiodo+"&codigoide="+xcodigo+"&ajax=true",
-	        success: function(datos){					        
+	        success: function(datos){
 	        	$("#dataCalendar").html(datos);
 	      }
 		});	
-		
+
+		//alert("Antes del calendario...");
 		$("#calendar-form").dialog("open");
+		//alert("Despues del calendario...");
 	}
 
+	function verReporte(xperiodo,xcodigo){
+		xperiodo = fentrada(xperiodo);
+		$("#codigoide-f").val(xcodigo);
+		$("#periodo-f").val(xperiodo);
+
+		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	    nueva=window.open('ReportsServlet?reporte=REPORTE_DIA_SISAS&periodo='+xperiodo+'&codigo='+xcodigo, 'Popup', caracteristicas);
+	} 
+
+	//Donde fentrada es: 
+	function fentrada(cambio){ 
+	    var uno=cambio.substring(0, 2); 
+	    var dos=cambio.substring(3, 5); 
+	    var tres=cambio.substring(6, 10); 
+	    var resul = (uno+"/"+dos+"/"+tres); 
+	    return resul; 
+	}  
+
+	
 	function updateSisa(){
-		
+		$("#fecingreso").val($("#fechaingreso").val());
+		$("#recnumero").val($("#recibonumero").val());
+		/*alert(document.gestionarFacturacion.fecingreso.value);
+		alert(document.gestionarFacturacion.recnumero.value);*/
 		var frm = document.gestionarFacturacion;
 		frm.metodo.value = 'updateSisa';
 		$("#valuess").val("");
@@ -547,7 +588,7 @@ var codMon = "";
 			     function () {return this.value;}).get().join(","));	
 	    if($("#valuess").val()==''){
 	    	$("#valuess").val('-1');
-		}	
+		}
 		frm.submit();
 		
 	}
@@ -573,7 +614,7 @@ var codMon = "";
 </script>
 <style type="text/css">
 .ui-datepicker-calendar {
-    display: none;
+    display: block;
     }
 </style>
 </head>
@@ -582,6 +623,8 @@ var codMon = "";
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoSisa" id="codigoSisa"/>
 		<input type="hidden" name="valuess" id="valuess" />
+	    <input type="hidden" name="fecingreso" id="fecingreso" />
+	    <input type="hidden" name="recnumero" id="recnumero" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
@@ -657,6 +700,7 @@ var codMon = "";
 						<c:when test="${row.estado==1}">
 							<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Anular..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codigo}');"/>
 							<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver('<fmt:formatDate pattern="dd-MM-yyyy" value="${row.perido}" />','${row.tranCodigo}');"/>
+							<img src="<%=request.getContextPath()%>/imagenes/manto/reporte.png" alt="Reporte Detallado..." border="0" width="16" height="16" onclick="verReporte('<fmt:formatDate pattern="dd-MM-yyyy" value="${row.perido}" />','${row.tranCodigo}');"/>
 						</c:when>
 					</c:choose>
 				</display:column>
@@ -679,15 +723,35 @@ var codMon = "";
 						</c:when>
 					</c:choose>
 				</display:column>			
-		</display:table>	
-		
-		<div id="calendar-form" title="Calendario">
-			<div class="controls">
-				<span><a href="javascript:void(0);" class="invertSelection"></a></span>
-				<span><b>Seleccinar Todos</b><input type="checkbox" class="checkAll" /><span>				
-			</div>
-			<div id='dataCalendar'></div>
-			<button type="button"  onclick="updateSisa();">Grabar</button>
+		</display:table>
+		<div id="calendar-form" title="Calendario" style="border: 1px;">
+			<table width="100%" border="0" cellpadding="1" cellspacing="1">
+				<tr>
+					<td width="30%" align="right"><b>Fecha de Ingreso:</b></td>
+					<td width="70%"><input type='text' name='fechaingreso' id='fechaingreso' size="20" style=" width : 80px;" />(dia/mes/año)</td>
+				</tr>
+				<tr>
+					<td align="right"><b>Recibo Nro:</b></td>
+					<td><input type='text' name='recibonumero' id='recibonumero' size="20" style=" width : 80px;" /></td>
+				</tr>
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td colspan="2" align="center" class="controls">
+						<span><a href="javascript:void(0);" class="invertSelection"></a></span>
+						<span><b><font color="blue">Seleccionar Todos</font></b><input type="checkbox" class="checkAll" /></span>				
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="dataCalendar" style="border: 1px; border-color: green;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button type="button" id="btn_Grabar" name="btn_Grabar" onclick="updateSisa();">Actualizar los días seleccionados...</button>
+					</td>
+				</tr>
+			</table>
 		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		
 			Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" />

@@ -23,6 +23,8 @@ import javax.servlet.http.HttpSession;
 import pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.ReunionesFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ServiciosItemFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
@@ -34,6 +36,7 @@ import pe.com.mmh.sisgap.domain.DetallefacturaPK;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.ServicioItem;
+import pe.com.mmh.sisgap.domain.SisgapReunionesSocio;
 import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
@@ -422,22 +425,35 @@ public class AjaxServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				System.out.println("[AjaxServlet] Final - BUSCAR_EXISTE_SOCIO");
+			}else if(action.equals("BUSCAR_EXISTE_SOCIO_ASAMBLEA")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_EXISTE_SOCIO_ASAMBLEA");
+				String recibo = request.getParameter("recibo");
+				String socio = request.getParameter("socio");
+				int respuesta = 0;
+				try {
+					ReunionesSocioFacadeLocal reunionesfacadeLocal = (ReunionesSocioFacadeLocal) context.lookup(ConstantesJNDI.REUNIONESSOCIOFACADE);
+					respuesta = reunionesfacadeLocal.buscarReunionesxCodigoxSocio(recibo.trim(), socio.trim());
+					
+					if (respuesta==1){
+						out.print("true");
+					}else{
+						out.print("false");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_EXISTE_SOCIO_ASAMBLEA");
 			}else if(action.equals("ELIMINAR_ITEM")){
 				System.out.println("[AjaxServlet] Inicio - ELIMINAR_ITEM");
 				try {
-					
 					listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
-					
 					String codigoItem = request.getParameter("codigoItem");
 					
 					for (Detallefactura detallefactura : listDetallefactura) {
-						
 						if ( String.valueOf( detallefactura.getId().getCodItemcobranza()).equals(codigoItem) ) {
-							
 							listDetallefactura.remove(detallefactura);
 							break;
 						}
-						
 					}
 					
 					out.print("<table id='detalle-f' class='ui-widget ui-widget-content' width='100%'>");
