@@ -27,7 +27,7 @@ public class SuministroLusReciboSocio {
 	private BigDecimal estado; 
 	private BigDecimal deudaant;
 	private Timestamp fechacarga;
-	private String puesto;
+	private BigDecimal puesto;
 	private BigDecimal impreso;
 	
 	public long getCodigorecibo() {
@@ -206,11 +206,11 @@ public class SuministroLusReciboSocio {
 		this.fechacarga = fechacarga;
 	}
 
-	public String getPuesto() {
+	public BigDecimal getPuesto() {
 		return puesto;
 	}
 
-	public void setPuesto(String puesto) {
+	public void setPuesto(BigDecimal puesto) {
 		this.puesto = puesto;
 	}
 

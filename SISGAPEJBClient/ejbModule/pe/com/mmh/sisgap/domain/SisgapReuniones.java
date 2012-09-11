@@ -30,6 +30,7 @@ public class SisgapReuniones  implements java.io.Serializable {
      private String strObservaciones;
      private BigDecimal numEstado;
      private Date datFechaIngreso;
+     private String strUsuario;
 
     public SisgapReuniones() {
     }
@@ -119,7 +120,17 @@ public class SisgapReuniones  implements java.io.Serializable {
         return this.datFechaIngreso;
     }
     
-    public void setDatFechaIngreso(Date datFechaIngreso) {
+    public String getStrUsuario() {
+		return strUsuario;
+	}
+
+
+	public void setStrUsuario(String strUsuario) {
+		this.strUsuario = strUsuario;
+	}
+
+
+	public void setDatFechaIngreso(Date datFechaIngreso) {
         this.datFechaIngreso = datFechaIngreso;
     }
 

@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "SISGAP_REUNIONES_SOCIO", schema = "SISGAP")
 public class SisgapReunionesSocio implements java.io.Serializable {
-private static final long serialVersionUID = 1L;
+private static long serialVersionUID = 1L;
 
     private BigDecimal codigocorrelativo;
     private BigDecimal codigoreuniones;
@@ -26,6 +26,8 @@ private static final long serialVersionUID = 1L;
     private BigDecimal estado;
     private String usuario;
     private String observaciones;
+    private String nombres;
+    private String sector;
 
     public SisgapReunionesSocio() {
     }
@@ -119,4 +121,22 @@ private static final long serialVersionUID = 1L;
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+    
+    
 }

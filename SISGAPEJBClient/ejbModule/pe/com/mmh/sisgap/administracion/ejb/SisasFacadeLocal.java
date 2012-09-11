@@ -21,7 +21,7 @@ public interface SisasFacadeLocal {
 
 	public List<Sisa> findAll();
 
-	public void updateSisa(String periodo, String codigo, String valuess);
+	public void updateSisa(String periodo, String codigo, String valuess, String fecIngreso, String recNumero);
 
 	public List<Sisa> findSisa(String date, String long1);
 	
@@ -29,5 +29,5 @@ public interface SisasFacadeLocal {
 	
 	void eliminarSisa(String codigoSisa);
 	
-	public void cargarVigilanciaTMP(String codigo);
+	public int cargarVigilanciaTMP(String codigo, String fecIni, String fecFin, Integer rpta);
 }
