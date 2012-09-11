@@ -12,6 +12,8 @@ import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
+import oracle.jdbc.driver.OracleTypes;
+
 import pe.com.mmh.sisgap.domain.Sisa;
 import pe.com.mmh.sisgap.utils.JDBCUtil;
 import pe.com.mmh.sisgap.utils.RowSetDynaClass;
@@ -28,11 +30,11 @@ public class SisasFacade implements SisasFacadeLocal {
 	private static final String SP_BUSCAR_SISA = "{call PKG_ADMINISTRACION.SP_BUSCAR_SISA(?,?,?)}";
 	private static final String SP_GET_SISA = "{call PKG_ADMINISTRACION.SP_GET_SISA(?,?,?)}";
 	private static final String SP_GET_SISA_ALL = "{call PKG_ADMINISTRACION.SP_GET_SISA_ALL(?)}";
-	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?)}";
+	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?,?,?)}";
 	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
 	private static final String SP_MUESTRA_TEMP = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP(?,?,?)}";
 	private static final String SP_UPD_SISAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_SISAANULADA(?)}";
-	private static final String SP_DETALLE_ESTADO_CUENTA = "{call PKG_ADMINISTRACION.SP_DETALLE_ESTADO_CUENTA(?)}";
+	private static final String SP_DETALLE_ESTADO_CUENTA = "{call PKG_ADMINISTRACION.SP_DETALLE_ESTADO_CUENTA(?,?,?,?)}";
 	
     /* (non-Javadoc)
 	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
@@ -153,10 +155,16 @@ public class SisasFacade implements SisasFacadeLocal {
 	
 	
 	@Override
-	public void updateSisa(String periodo, String codigo, String valuess) {
+	public void updateSisa(String periodo, String codigo, String valuess, String fecIngreso, String recNumero) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
-    	Object objParams[]   = {codigo.trim(),periodo,valuess};
+    	if(fecIngreso.trim().equals("")){
+    		fecIngreso = null;
+    	}
+    	if(recNumero.trim().equals("")){
+    		recNumero = null;
+    	}
+    	Object objParams[]   = {codigo.trim(),periodo,fecIngreso,recNumero,valuess};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
@@ -270,14 +278,23 @@ public class SisasFacade implements SisasFacadeLocal {
 	}
 
 	@Override
-	public void cargarVigilanciaTMP(String codigo) {
+	public int cargarVigilanciaTMP(String codigo, String fecIni, String fecFin, Integer rpta) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
-    	Object objParams[]   = {codigo.trim()};
-    	String rsdcPlatilla = null;
+    	//Object objParams[]   = {codigo.trim(),fecIni,fecFin,rpta};
+    	//String rsdcPlatilla = null;
+    	Integer eRpta=0;
     	try {			
     		connection = getConnection();
-			JDBCUtil.callSQLProcExecute(connection,SP_DETALLE_ESTADO_CUENTA,objParams);
+			//JDBCUtil.callSQLProcExecute(connection,SP_DETALLE_ESTADO_CUENTA,objParams);    	      
+			CallableStatement cs =  connection.prepareCall(SP_DETALLE_ESTADO_CUENTA);
+			cs.setString(1, codigo.trim());
+			cs.setString(2, fecIni);
+			cs.setString(3, fecFin);
+			cs.registerOutParameter(4, OracleTypes.NUMBER);
+			cs.execute();
+    		eRpta = cs.getInt(4);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -287,6 +304,7 @@ public class SisasFacade implements SisasFacadeLocal {
 					e.printStackTrace();
 				}
 		}
+    	return eRpta;
 	}
 
 }

@@ -758,17 +758,6 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setConsumomes(rs.getBigDecimal("CONSUMOMES"));
 				srs.setCagofijo(rs.getBigDecimal("CAGOFIJO"));
 				srs.setAlupublic(rs.getBigDecimal("ALUPUBLIC"));
-				///srs.setCargoener(new BigDecimal(df.format(rs.getBigDecimal("CARGOENER"))));
-				///srs.setTotalmes(new BigDecimal(df.format(rs.getBigDecimal("TOTALMES"))));
-				///srs.setIgv(new BigDecimal(df.format(rs.getBigDecimal("IGV"))));
-				///srs.setSubtotalmes(new BigDecimal(df.format(rs.getBigDecimal("SUBTOTALMES"))));
-				///srs.setUsoequipo(new BigDecimal(df.format(rs.getBigDecimal("USOEQUIPO"))));
-				///srs.setServmanto(new BigDecimal(df.format(rs.getBigDecimal("SERVMANTO"))));
-				///srs.setAporteley(new BigDecimal(df.format(rs.getBigDecimal("APORTELEY"))));
-				///srs.setRecargo(new BigDecimal(df.format(rs.getBigDecimal("RECARGO"))));
-				///srs.setRedondeo(new BigDecimal(df.format(rs.getBigDecimal("REDONDEO"))));
-				///srs.setTotal(new BigDecimal(df.format(rs.getBigDecimal("TOTAL"))));
-				///srs.setDeudaant(new BigDecimal(df.format(rs.getBigDecimal("DEUDAANT"))));
 				srs.setCargoener(rs.getBigDecimal("CARGOENER")); //Es como se presentaba anteriormente, sin decimales
 				srs.setTotalmes(rs.getBigDecimal("TOTALMES"));
 				srs.setIgv(rs.getBigDecimal("IGV"));
@@ -785,7 +774,7 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 				srs.setEstado(rs.getBigDecimal("ESTADO"));
 				srs.setDeudaant(rs.getBigDecimal("DEUDAANT"));
 				srs.setFechacarga(rs.getTimestamp("FECHACARGA"));
-				srs.setPuesto(rs.getString("TRAN_PUESTO"));
+				srs.setPuesto(rs.getBigDecimal("TRAN_PUESTO"));
 				srs.setImpreso(rs.getBigDecimal("IMPRESO"));
 				lstSuministroLusReciboSocio.add(srs);
 			}

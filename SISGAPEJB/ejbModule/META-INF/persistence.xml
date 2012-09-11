@@ -17,6 +17,7 @@
 		<class>pe.com.mmh.sisgap.domain.ServicioItem</class>
 		<class>pe.com.mmh.sisgap.domain.Servicios</class>
 		<class>pe.com.mmh.sisgap.domain.ServicioDetalle</class>
+		<class>pe.com.mmh.sisgap.domain.SisgapReuniones</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
