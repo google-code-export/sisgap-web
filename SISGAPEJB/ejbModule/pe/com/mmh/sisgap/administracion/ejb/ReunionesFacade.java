@@ -6,9 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,12 +15,8 @@ import javax.sql.DataSource;
 
 import oracle.jdbc.driver.OracleTypes;
 
-import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.SisgapReuniones;
-import pe.com.mmh.sisgap.domain.SisgapReunionesSocio;
-import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.utils.JDBCUtil;
-import pe.com.mmh.sisgap.utils.RowSetDynaClass;
 
 @Stateless
 public class ReunionesFacade implements ReunionesFacadeLocal {
@@ -32,7 +26,9 @@ public class ReunionesFacade implements ReunionesFacadeLocal {
 	
 	private static final String SP_REUNIONES_ALL = "{call PKG_ADMINISTRACION.SP_REUNIONES_ALL(?)}";
 	private static final String SP_INS_ASAMBLEAS = "{call PKG_ADMINISTRACION.SP_INS_ASAMBLEAS(?,?,?,?,?,?)}";
+	private static final String SP_UPD_ASAMBLEAS = "{call PKG_ADMINISTRACION.SP_UPD_ASAMBLEAS(?,?,?,?,?,?)}";
 	private static final String SP_LIST_ASAMBLEA = "{call PKG_ADMINISTRACION.SP_LST_ASAMBLEAS(?,?)}";
+	private static final String SP_DEL_ASAMBLEAS = "{call PKG_ADMINISTRACION.SP_DEL_ASAMBLEAS(?)}";
 	
 	
 	@Override
@@ -197,6 +193,81 @@ public class ReunionesFacade implements ReunionesFacadeLocal {
 					e.printStackTrace();
 				}
 		}		
+	}
+
+	
+	@Override
+	public void actualizarAsambleas(BigDecimal codigoReuniones, String fechaAsamblea, String lugarAsamblea, String agendaAsamblea, String acuerdoAsamblea, String observaciones, String usuario) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_ASAMBLEAS);
+			
+			cst.setBigDecimal("P_CODIGOREUNIONES", codigoReuniones);
+			//cst.setString("P_FECHAASAMBLEA", fechaAsamblea);
+			cst.setString("P_LUGARASAMBLEA", lugarAsamblea.toUpperCase().trim());
+			cst.setString("P_AGENDAASAMBLEA", agendaAsamblea.toUpperCase().trim());
+			cst.setString("P_ACUERDOSASAMBLEA", acuerdoAsamblea.toUpperCase().trim());
+			cst.setString("P_OBSERVACIONES", observaciones.toUpperCase().trim());
+			cst.setString("P_USUARIOS",usuario.toUpperCase().trim());
+			cst.execute();
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}		
+	}
+
+
+	
+	@Override
+	public void eliminarAsamblea(String codigo) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_DEL_ASAMBLEAS);
+			
+			cst.setLong("P_CODIGOREUNIONES", new Long(codigo));
+			cst.execute();
+
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 	}
 
 		

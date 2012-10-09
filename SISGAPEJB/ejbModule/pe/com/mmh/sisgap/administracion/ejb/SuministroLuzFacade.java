@@ -1036,6 +1036,38 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		
 	}
 
+	public int buscarReciboxCodigoxSocioxPeriodo(String periodo, String codSocio) {
+    	Connection connection = null;
+    	PreparedStatement pst = null;
+    	ResultSet rs = null;
+    	
+    	int rpta=0;
+    	
+    	List<SuministroLusReciboSocio> lsSuministroLuzSocio = null;
+    	SuministroLusReciboSocio reciboSocio = null;
+		try {
+			connection = getConnection();
+			lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
+			pst = connection.prepareStatement(String.format(view_buscar_recibo_socio, "'"+ codSocio.trim()+ "' AND fec_periodo = add_months(to_date('"+ periodo.trim() +"'),-1)"));
+			rs = pst.executeQuery();
+			if(!rs.next()){
+				rpta = 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return rpta;
+		
+	}
 	
 	public List<SuministroLusReciboSocio> buscarReciboLuzxCodigoSocio(String codSocio, String codRecibo) {
 		System.out.println("[SuministroLuzFacade] Inicio - buscarReciboLuzxCodigoSocio");

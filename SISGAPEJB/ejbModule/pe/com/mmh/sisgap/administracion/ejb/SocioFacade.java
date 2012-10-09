@@ -33,6 +33,7 @@ public class SocioFacade implements SocioFacadeLocal {
 	//private static final String view_bucar_socio = "select * from view_bucar_socio where tran_razon_social like %s ";
 	private static final String view_bucar_socio_nombre = "select * from view_bucar_socio where tran_razon_social like %s ";
 	private static final String view_bucar_socio_puesto = "select * from view_bucar_socio where tran_puesto like %s ";
+	private static final String view_bucar_socio_dni = "select * from view_bucar_socio where dni like %s ";
 	private static final String SP_LST_GENERARNROCOD = "{call PKG_ADMINISTRACION.SP_LST_GENERARNROCOD(?,?)}";
 	
 	@Resource(name="java:/jdbc/sisgapDS")
@@ -140,6 +141,49 @@ public class SocioFacade implements SocioFacadeLocal {
 		
 		return lsSocios;
 	}
+
+	
+	@Override
+	public List<Socio> buscarxDNI(String dni) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement pst;
+		ResultSet rs;
+		List<Socio> lsSocios = null;
+		Socio socio = null;
+		try {
+			connection = getConnection();
+			lsSocios = new ArrayList<Socio>();
+			pst=connection.prepareStatement(String.format(view_bucar_socio_dni, "'"+dni.trim()+"' AND SUBSTR(tran_codigo,1,2) = 'SO'"));
+			rs = pst.executeQuery();
+			
+			while(rs.next()){
+				
+				socio = new Socio();
+				socio.setTranIde(rs.getLong("tran_ide"));
+				socio.setTranCodigo(rs.getString("tran_codigo"));
+				socio.setTranPuesto(rs.getString("tran_puesto"));
+				socio.setTranRazonSocial(rs.getString("tran_razon_social"));
+				lsSocios.add(socio);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return lsSocios;
+	}
+
+	
 	
 	@Override
 	public String generarNroCodigo(String tipocod) {

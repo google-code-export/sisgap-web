@@ -30,12 +30,13 @@ public class ReunionesSocioFacade implements ReunionesSocioFacadeLocal {
 	@Resource(mappedName = "java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 	
-	private static final String SP_REUNIONES_ALL = "{call PKG_ADMINISTRACION.SP_REUNIONES_ALL(?)}";
-	private static final String SP_LIST_ASAMBLEASSOCIOS = "{call PKG_ADMINISTRACION.SP_LIST_ASAMBLEASSOCIOS(?,?)}";
-	private static final String SP_INS_ASAMBLEA_SOCIOS = "{call PKG_ADMINISTRACION.SP_INS_ASAMBLEA_SOCIOS(?,?,?,?,?,?)}";
+	private static final String SP_REUNIONES_ALL          = "{call PKG_ADMINISTRACION.SP_REUNIONES_ALL(?)}";
+	private static final String SP_LIST_ASAMBLEASSOCIOS   = "{call PKG_ADMINISTRACION.SP_LIST_ASAMBLEASSOCIOS(?,?)}";
+	private static final String SP_INS_ASAMBLEA_SOCIOS    = "{call PKG_ADMINISTRACION.SP_INS_ASAMBLEA_SOCIOS(?,?,?,?,?,?)}";
 	private static final String SP_MUESTRA_TEMP_ASAMBLEAS = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP_ASAMBLEAS(?)}";
+	private static final String SP_UPD_ASOCIADOREUNION    = "{call PKG_ADMINISTRACION.SP_UPD_ASOCIADOREUNION(?,?,?)}";
 	
-
+	
 	private static final String view_buscar_asamblea_socio = "select * from view_buscar_asamblea_socio where codigoreuniones = %s ";
 
 	@Override
@@ -167,6 +168,46 @@ public class ReunionesSocioFacade implements ReunionesSocioFacadeLocal {
 		}
 	}
 
+	
+	
+	@Override
+	public void eliminarAsociadoReunion(Long codigoModi, String codigoAsoc,	Long codigoCorr) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	
+    	try {
+    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_UPD_ASOCIADOREUNION);
+			
+			cst.setLong("P_CODIGOREUNION", codigoModi);
+			cst.setString("P_CODIGOASOCIADO", codigoAsoc);
+			cst.setLong("P_CODIGOCORRELATIVO", codigoCorr);
+			
+			cst.execute();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+
+	
+	
 	public ResultSet getTempAsambleas(){
 		
     	Connection connection = null;

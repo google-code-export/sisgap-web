@@ -26,7 +26,7 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 	private DataSource dataSource;
 
 	private static final String SP_INS_SERVICIO = "{call PKG_ADMINISTRACION.SP_INS_SERVICIO(?,?,?,?,?,?,?)}";
-	private static final String SP_INS_DETSERVICIO = "{call PKG_ADMINISTRACION.SP_INS_DETSERVICIO(?,?,?,?,?,?,?,?,?)}";
+	private static final String SP_INS_DETSERVICIO = "{call PKG_ADMINISTRACION.SP_INS_DETSERVICIO(?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_UPD_DELSERVICIO = "{call PKG_ADMINISTRACION.SP_UPD_DELSERVICIO(?)}";
 	
     /* (non-Javadoc)
@@ -50,10 +50,11 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
     /*
      * (non-Javadoc)
      * @see pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal#findAll()
+     * by 6 Fecha Servicio
      * by 7 Descripcion
      */
 	public List<Servicios> findAll() {
-		return em.createQuery("select object(o) from Servicios as o order by 7 asc").getResultList();
+		return em.createQuery("select object(o) from Servicios as o order by DAT_FECHASERV desc, STR_DESCRIPCION asc").getResultList();
 	}
 
     /*public ServicioDetalle findSrvDet(Object id){
@@ -121,6 +122,7 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 				cst.setString("P_STR_MONEDA", det.getStrMoneda());
 				cst.setBigDecimal("P_NUM_DEL", det.getNumDel());
 				cst.setBigDecimal("P_NUM_AL", det.getNumAl());
+				cst.registerOutParameter("P_COD_SERVICIO_DETALLE", Types.DECIMAL);
 				cst.execute();
 				
 			}
