@@ -3,7 +3,6 @@
 <%@page import="oracle.sql.DATE"%>
 <%@include file="../../../taglibs.jsp"%>
 <%@page import="pe.com.mmh.sisgap.util.NumberToLeterConverter"%>
-
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -45,22 +44,27 @@
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 
-				$("#btnPrint").click(function() {
-					alert("Presiono Recibo");
-					var nrodocReal =  ${nroDocReal};
-					var nrodocInte =  ${nroDocInte};
-					alert("nrodocReal: "+nrodocReal);
-					alert("nrodocInte: "+nrodocInte);					
-					/*$('[name=metodo]').val('cancelarFactura');
+				$('#btnPrint').click(function() {
 					var nrodocReal = $("#docreal").val();
-					var nrodocInte = $("#docinte").val();*/
-					$.ajax({
-					        type: "POST",
-					        url: "/SISGAPWeb/AjaxServlet",
-					        data: "action=ACTUALIZA_NRO_DOCUMENTO&nrodocReal="+nrodocReal+"&nrodocInte="+nrodocInte,
-					});
+					var nrodocInte = $("#docinte").val();
+					//alert("DocReal: "+nrodocReal+"\nDocInte: "+nrodocInte);
+
+					alert("Antes de imprimir todo");
+					$('[name=metodo]').val('print');
+					window.close();				
+					$('#gestionarFacturacion').submit();
+
 				});
+
+				
 			});
+
+			function imprime(){
+				alert("Antes de imprimir todo");
+				$('[name=metodo]').val('print');
+				window.close();				
+				$('#gestionarFacturacion').submit();
+			}
 		</script>
 		<style type="text/css">
 			/*demo page css*/
@@ -79,8 +83,13 @@
 		
 	</head>
 	<body style="padding-bottom: 100px;">
-		<input type="hidden" name="docreal" id=docreal value="${nroDocReal}" />
+	<html:form action="/gestionarFacturacion.do" styleId="gestionarFacturacion">
+		<input type="hidden" name="metodo" />
+		<input type="hidden" name="docreal" id="docreal" value="${nroDocReal}" />
 		<input type="hidden" name="docinte" id="docinte" value="${nroDocInte}" />
+		<input type="hidden" id="variable" name="variable"
+			value="<%=session.getAttribute("Respuesta")%>" />
+		
 		<c-rt:set var="now" value="<%= new java.util.Date() %>" />
 		<table width="550" border="0" cellspacing="0" style="padding-left: 50px;">
 		   <tr>
@@ -126,7 +135,8 @@
 		         		<td width="60">&nbsp;</td>
 		         		<td width="140">&nbsp;</td>
 		         		<td rowspan="3" width="170" align="right">
-		         			<fmt:formatNumber value="${total}" type="currency" var="total1"/> 
+		         			<!--  fmt:setLocale value="es_DO"/-->
+		         			<fmt:formatNumber value="${total}" var="total1"/> 
 		         			<font face="Courier New,Courier" size="4"><b><c:out value="${total1}"/>&nbsp;&nbsp;</b></font>
 		         		</td>
 		         	</tr>
@@ -213,13 +223,13 @@
 		      </td>
 		   </tr>
 		</table>
-		<form name="frmPrint" method="post" action="">
-			<table>
-				<tr>
-					<td><button id="btnPrint" name="btnPrint">Imprimir</button></td>
-				</tr>
-			</table>
-		</form>
+	    <input type="hidden" name="guess" value="Imprimir">
+		<table border="1">
+			<tr>
+				<td><button id="btnPrint" name="btnPrint">Imprimir</button></td>
+			</tr>
+		</table>
+		</html:form>
 	</body>
 </html>
 

@@ -105,33 +105,35 @@ $(function() {
 	$("#btn-registra-sh").button();
 	$("#btnAgregar").button();
 	
-	
-	$('#btn-agregar-item').click(function() {
+
+	$("#btn-agregar-item").button().click(function() {
 		if($('#tipoServicio').val()==0){
 			alert("Debe seleccionar un tipo de servicio");
 			$('#tipoServicio').focus();
 			return false;
-		}
-		if($('#fechadocumento').val()==""){
-			alert("Debe seleccionar una fecha");
-			$('#fechadocumento').focus();
+		}else if ($('#fechadocumento').val()==""){
+			alert("debe seleccionar el socio...");
+			$('[name=fechadocumento]').focus();
 			return false;
+		}else{
+			/*$("#tipoItem option[value='']").attr("selected","selected");
+			//Inicializa campos
+			$("#costo").val('');
+			$("#del").val('');
+			$("#al").val('');
+			$("#unidades").val('');
+			$("#total").val('');
+			//Inicializa atributos
+			$('#rango').attr({'style':'display:none'});
+			$('#unidad').attr({'style':'display:none'});
+			$('#final').attr({'style':'display:none'});
+			//Abre ventana dialog*/
+			alert("Antes de ir a dialog");
+			$("#dialog-form-item").dialog("open");
 		}
-		
-		$("#tipoItem option[value='']").attr("selected","selected");
-		//Inicializa campos
-		$("#costo").val('');
-		$("#del").val('');
-		$("#al").val('');
-		$("#unidades").val('');
-		$("#total").val('');
-		//Inicializa atributos
-		$('#rango').attr({'style':'display:none'});
-		$('#unidad').attr({'style':'display:none'});
-		$('#final').attr({'style':'display:none'});
-		//Abre ventana dialog
-		$("#dialog-form-item").dialog("open");
-	}); 
+		return false;
+	});
+	
 	
 	$("#dialog-form-item").dialog({
 		autoOpen : false,
@@ -140,11 +142,6 @@ $(function() {
 		modal : true,
 		buttons : {
 			Agregar : function() {
-				/*if($('#tipoServicio').val()==0){
-					alert("debe seleccionar el Tipo de Servicio");
-					$('#tipoServicio').focus();
-					return false;
-				}*/
 				if($('#tipoItem').val()==0){
 					alert("debe seleccionar el Tipo de Item");
 					$('#tipoItem').focus();
@@ -217,45 +214,20 @@ $(function() {
 		$('#servicioshigienicos').submit();
 		
 	});
-	
-	$(document).ready(
-			function(){/* Aqui podria filtrar que controles necesitará manejar,
-						* en el caso de incluir un dropbox $('input,select');
-					   */
-				   tb=$('input,select');
-				   if($.browser.mozilla){
-					   $(tb).keypress(enter2tab);
-				   } else {
-					   $(tb).keydown(enter2tab);
-				   }
-			});
 
-			function enter2tab(e){
-				if(e.keyCode==13){				
-					cb=parseInt($(this).attr('tabindex'));
-					if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
-						$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
-						$(':input[tabindex=\''+ (cb + 1) +'\']').select();
-						e.preventDefault();
-						return false;
-					}
-				}
-			}
-
-
-			$("#fechadocumento").datepicker({  
-				dateFormat: 'yy/mm/dd', 
-	            changeMonth: true,
-	            changeYear: false,
-	            numberOfMonths: 1,
-	            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-	            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
-	                'Junio', 'Julio', 'Agosto', 'Septiembre',
-	                'Octubre', 'Noviembre', 'Diciembre'],
-	            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
-	                'May', 'Jun', 'Jul', 'Ago',
-	                'Sep', 'Oct', 'Nov', 'Dic'] 
-	        }); 
+	$("#fechadocumento").datepicker({  
+		dateFormat: 'yy/mm/dd', 
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+            'Junio', 'Julio', 'Agosto', 'Septiembre',
+            'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+            'May', 'Jun', 'Jul', 'Ago',
+            'Sep', 'Oct', 'Nov', 'Dic'] 
+    });			
 			
 });
 
@@ -273,6 +245,7 @@ function agregarFila(obj){
 	if(e.style.display=="block"){
 		cantid = ($("#al").val()-$("#del").val())+1;	
 	}
+	
 	var e=document.getElementById("unidad");
 	if(e.style.display=="block"){
 		cantid = $("#unidades").val();
@@ -448,12 +421,6 @@ function pagar(){
 			</table>
 		</logic:notEmpty>
 
-<!-- div class="button_div">    
-    <input type="reset" id="btnCancel" name="btnCancel" value="Cancelar" class="buttons_CANCEL" onclick="cancelar();" />
-    <input type="button" id="btnAgregar" name="btnAgregar" value="Agregar Persona" class="buttons_aplicar" onclick="agregarFila(document.getElementById('cant_campos'));" />
-    <input type="button" id="btnAgregar" name="btnAgregar" value="Guardar" class="buttons_OK" onclick="xajax_guardar(xajax.getFormValues('proyecto'));" />
-</div -->
-
 <fieldset class="fieldset">
     <legend class="legend"><b>Nuevo registro - Detalle de Servicios</b></legend>
     <div class="clear"></div>
@@ -463,7 +430,7 @@ function pagar(){
 			<tr>
 				<td width="120px" align="left" style="color:red;"><b><label>SERVICIO:</label></b></td>
 				<td align="left" width="200px" style="color:red;">
-					<select name="tipoServicio" id="tipoServicio" tabindex="1">
+					<select name="tipoServicio" id="tipoServicio">
 						<option value="0" selected="selected">Seleccione</option>
 						<option value="1">BAÑO NRO. 1</option>
 						<option value="2">BAÑO NRO. 2</option>
@@ -529,24 +496,10 @@ function pagar(){
 						<tr>
 							<td colspan="2">
 								<table border="0" cellpadding="0" cellspacing="2" width="500px">
-									<!-- tr>
-										<td width="120px" align="left"><label>SERVICIO:</label></td>
-										<td colspan="5" align="left">
-											<select name="tipoServicio" id="tipoServicio" tabindex="1">
-												<option value="0" selected="selected">Seleccione</option>
-												<option value="1">BAÑO NRO. 1</option>
-												<option value="2">BAÑO NRO. 2</option>
-												<option value="3">BAÑO NRO. 3</option>
-												<option value="4">BAÑO NRO. 4</option>
-												<option value="5">BAÑO NRO. 5</option>
-												<option value="6">BAÑO NRO. 6</option>
-											</select>
-										</td>
-									</tr -->
 									<tr>
 										<td align="left"><label>ITEM DE COBRANZA:</label></td>
 										<td> 
-											<select name="tipoItem" id="tipoItem" onchange="costoSeleccionado(this.value)" tabindex="2">
+											<select name="tipoItem" id="tipoItem" onchange="costoSeleccionado(this.value)" tabindex="1">
 												<option value="" selected="selected">Seleccione</option>
 												<c:forEach items="${lstSI}" var="row">
 													<option value="${row.codServicioitem }${row.numCosto}">${row.strDescripcion }</option>
@@ -555,7 +508,7 @@ function pagar(){
 										</td>
 										<td width="80px"><label>COSTO:</label></td>
 										<td colspan="3">
-											<input type="text" name="costo" id="costo" value="${row.numCosto}" size="10" disabled="disabled"/>
+											<input type="text" name="costo" id="costo" value="${row.numCosto}" size="10" disabled="disabled" tabindex="2"/>
 										</td>
 									</tr>
 									<tr id="rango" style="display: none;">
@@ -577,7 +530,7 @@ function pagar(){
 									<tr id="final" style="display: none;">
 										<td colspan="3" align="right"><label>TOTAL:</label></td>
 										<td>
-											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;"  tabindex="6"/>									
+											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;" tabindex="6"/>									
 										</td>
 									</tr>
 								</table>

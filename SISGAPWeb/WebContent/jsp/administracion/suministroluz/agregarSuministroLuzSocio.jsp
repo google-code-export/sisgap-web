@@ -173,7 +173,9 @@ var codMon = "";
 				var recibo =  ${resori.codOrgreciboLuz};
 				var socio =  $('[name=codigo-sls]').val();//codigo-sls //socio-sls
 				var puesto =  $('[name=direccion-sls]').val();
+				var periodo = $('[name=fecperiodo]').val(); //${resori.fecPeriodo};
 				//alert("recibo "+recibo+"\nsocio "+socio+"\npuesto "+puesto);
+				periodo = periodo.substr(8,2) + "/" + periodo.substr(5,2) + "/" + periodo.substr(0,4);
 				
 				$.ajax({
 			        type: "POST",
@@ -183,10 +185,21 @@ var codMon = "";
 			        	//$("#tablesocios").html(datos);
 			        //	$("#respuesta").val();
 			        	//alert("La respuesta es "+datos);
-			        	if(datos=="true"){
-							alert("El Socio que intenta ingresar, ya fue registrado");
+			        	if(datos=="ExisteSocio"){
+							alert("El Asociado que intenta ingresar, ya fue registrado");
 							return false;
-						}else{
+						}else {
+							//Verificando recibo anterior
+							$.ajax({
+						        type: "POST",
+						        url: "/SISGAPWeb/AjaxServlet",
+						        data: "action=BUSCAR_EXISTE_RECIBO_ANTERIOR&periodo="+periodo+"&socio="+socio/*+"&puesto="+puesto*/,
+								success: function(datos){									
+						        	if(datos=="NoExistePeriodo"){
+										alert("El Asociado que intenta ingresar, NO REGISTRA RECIBO en el periodo anterior...!!!");
+						        	}
+								}
+							});
 							$("#correlativo").val("");
 							if ($("#lecfin-sls").val() > 0){
 								$("#txtLecturaInih").val($("#lecfin-sls").val());
@@ -676,6 +689,7 @@ return true;*/
 <html:form action="/suministroLuz.do" styleId="gestionarFacturacion">
 		<input type="hidden" name="metodo" id="metodo"/>
 		<input type="hidden" name="codigoModi" id="codigoModi" value="${resori.codOrgreciboLuz}"/>
+		<input type="hidden" name="fecperiodo" id="fecperiodo" value="${resori.fecPeriodo}"/>
 		<input type="hidden" name="codigoide" id="codigoide"/>
 		<input type="hidden" name="codigocod" id="codigocod" />
 		<input type="hidden" name="correlativo" id="correlativo"/>
@@ -719,7 +733,9 @@ return true;*/
 				</tr>
 				<tr>
 					<td width="120px" align="right"><b>Cod. Recibo</b></td>
-					<td colspan="7">${resori.codOrgreciboLuz}</td>
+					<td colspan="3">${resori.codOrgreciboLuz}</td>
+					<td align="right"><b>Periodo</b></td>
+					<td colspan="3">${resori.fecPeriodo }</td>
 				</tr>
 				<!-- tr>
 					<td><b>Lectura Inicial</b></td>

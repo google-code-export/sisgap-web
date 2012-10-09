@@ -57,7 +57,7 @@
 							//alert("FechaIni: "+fecIni+"\nfechaFin: "+fecFin);
 							//$('[name=fechaIni]').val(fecIni);
 							//$('[name=fechaFin]').val(fecFin);
-							alert("Recuerde que antes de mostrar el reporte; primero debe presionar el boton: 'Generar Reporte General de socios'")
+							alert("El siguiente reporte mostrará la última consulta realizada");
 
 							var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";
 							nueva = window.open(
@@ -71,38 +71,41 @@
 			$("#selectfecha-form").dialog("open");
 		});
 
-		$("#selectfecha-form")
-				.dialog(
-						{
-							autoOpen : false,
-							height : 200,
-							width : 400,
-							modal : true,
-							buttons : {
-								Generar : function() {
-									var codSocio = $('#cbSocio option:selected').val();
-									var fecIni = $('#fechaInicial').val();
-									var fecFin = $('#fechaFinal').val();
+		$("#selectfecha-form").dialog(
+				{
+					autoOpen : false,
+					height : 200,
+					width : 400,
+					modal : true,
+					buttons : {
+						Generar : function() {
+							var codSocio = $('#cbSocio option:selected').val();
+							var fecIni = $('#fechaInicial').val();
+							var fecFin = $('#fechaFinal').val();
+							
+							$('[name=fechaIni]').val(fecIni);
+							$('[name=fechaFin]').val(fecFin);
+							$('[name=codigo]').val(codSocio);
 
-									$('[name=fechaIni]').val(fecIni);
-									$('[name=fechaFin]').val(fecFin);
-									$('[name=codigo]').val(codSocio);
-									
-									$('[name=metodo]').val('grabarVigilancia');
-									$('#agregarReporteSisa').submit();
-
-									$(this).dialog("close");
-
-								},
-								Cancel : function() {
-									$(this).dialog("close");
-								}
-							},
-							close : function() {
-								allFields.val("").removeClass("ui-state-error");
-							}
-
-						});
+							$.blockUI({ message: "<h3><img src='<%=request.getContextPath()%>/imagenes/busy.gif' /> Espere un momento...procesando</h3>" });
+							
+							//$.blockUI({ message: "<h3><img src='busy.gif' /> Espere un momento...procesando</h3>" });
+							
+							$('[name=metodo]').val('grabarVigilancia');
+							$('#agregarReporteSisa').submit();
+							
+							$(this).dialog("close");
+		
+						},
+						Cancel : function() {
+							$(this).dialog("close");
+						}
+					},
+					close : function() {
+						allFields.val("").removeClass("ui-state-error");
+					}
+		
+				});
 
 		$('.date-picker1').datepicker(
 				{
@@ -144,14 +147,16 @@
 		});
 	});
 
-	function terminaBloqueo(valor) {
+	function terminaBloqueo(valor, valor2, valor3) {
+		var fecIni = valor2;
+		var fecFin = valor3;
+		
 		if (valor == '1') {
 			$.unblockUI();
-			valor = null;
 
-			$('[name=metodo]').val('cargarAction');
-			$('#agregarReporteSisa').submit();
-
+			var caracteristicas = "height=500,width=800,resizable=1,scrollbars=1,location=0";
+			nueva = window.open("ReportsServlet?reporte=LISTADO_GENERAL_VIGILANCIA&fechaInicial=" + fecIni + "&fechaFinal=" + fecFin,	"Popup", caracteristicas);			
+			valor = null; fecIni = null; fecFin = null;
 		}
 	}
 
@@ -170,7 +175,7 @@
 
 </head>
 <body
-	onload="terminaBloqueo(document.getElementById('variable').value);">
+	onload="terminaBloqueo(document.getElementById('variable').value, document.getElementById('fechaIni').value, document.getElementById('fechaFin').value);">
 
 	<html:form action="/reporteSisas.do" method="post"
 		styleId="agregarReporteSisa">

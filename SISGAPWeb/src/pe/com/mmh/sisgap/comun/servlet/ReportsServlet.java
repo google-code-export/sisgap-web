@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.comun.servlet;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,6 +69,7 @@ import pe.com.mmh.sisgap.transforms.decorators.ResultsDecoratorPrinterImpl;
 //----- Inicio -----
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -75,7 +77,32 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.Sides;
 //----- Fin -----
+
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.PrintJob;
+import java.awt.Toolkit;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.OrientationRequested;
+
+//Impresoras....
+import javax.print.attribute.Attribute;
+
 
 /**
  * Servlet implementation class ReportsServlet
@@ -281,7 +308,7 @@ public class ReportsServlet extends HttpServlet {
 				System.out.println("[ReportsServlet] Inicio - LISTADO_SERVICIOS_HIGIENICOS");
 				String fecDoc = request.getParameter("fecDoc");
 				parametros.put("P_FECHA", fecDoc);
-				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte Diario de Servicios Higienicos.jrxml");
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte Diario de Servicios Higienicos 1.jrxml");
 				System.out.println("[ReportsServlet] Final - LISTADO_SERVICIOS_HIGIENICOS");
 			}else if(reporte.equals("REPORTE_SISAS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_SISAS");
@@ -351,9 +378,15 @@ public class ReportsServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				System.out.println("[ReportsServlet] Final - REPORTE_SISAS");
-			}else if(reporte.equals("REPORTE_SOCIOS_ASAMBLEAS")){
+			}else if(reporte.equals("IMPRIME_BOLETAS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_SOCIOS_ASAMBLEAS");
-				String fecDoc = request.getParameter("periodo");
+				
+				String nroDocReal = request.getParameter("nrodocReal");
+				String nroDocInte = request.getParameter("nrodocInte");
+				parametros.put("P_NRODOCUMENTO", nroDocReal);
+				provider = "1";
+				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Recibo de Ingreso.jrxml");
+				/*String fecDoc = request.getParameter("periodo");
 				try {
 					String periodo = request.getParameter("periodo");
 					Integer codigo = new Integer(request.getParameter("codigo"));
@@ -404,23 +437,29 @@ public class ReportsServlet extends HttpServlet {
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
-				}
+				}*/
+				
 				System.out.println("[ReportsServlet] Final - REPORTE_SOCIOS_ASAMBLEAS");
 			}else if(reporte.equals("LISTADO_GENERAL_VIGILANCIA")){
 				System.out.println("[ReportsServlet] Inicio - LISTADO_GENERAL_VIGILANCIA");
 				String fecIni = request.getParameter("fechaInicial");
 				String fecFin = request.getParameter("fechaFinal");
+				//String fecIni = request.getParameter("fechaIni");
+				//String fecFin = request.getParameter("fechaFin");
 				parametros.put("P_FECHA_INI", fecIni);
 				parametros.put("P_FECHA_FIN", fecFin);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado General de Vigilancia.jrxml");
 				System.out.println("[ReportsServlet] Final - LISTADO_GENERAL_VIGILANCIA");	
-			}			
+			}
+			
+			
 			
 			if (provider == null) {
 				generateReport(request, response, ruta, parametros);
 			} else {
 				generateReportOther(request, response, ruta, bytes);
 			}
+			
 		}		
 	}
 
@@ -496,50 +535,8 @@ public class ReportsServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		return JNDIName;
-	}
+	}	
 	
-	/*@SuppressWarnings("unused")
-	private void generateReportOther(HttpServletRequest request,
-			HttpServletResponse response,String ruta,HashMap<String, String> parametros) throws IOException{
-		
-		JasperReport masterReport = null;
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-		String xlsFileName = "demo.xls";
-		File f;
-		InputStream in;
-
-		try {
-			Connection cnn = getConnection();
-			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(ruta, parametros, cnn);
-			
-			JRXlsExporter exporter = new JRXlsExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, xlsFileName);
-			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
-			exporter.exportReport();
-			
-//			masterReport =  JasperCompileManager.compileReport(ruta);//(JasperReport) JRLoader.loadObject(master);
-//			bytes = JasperRunManager.runReportToPdf(masterReport,parametros, cnn);
-
-			f = new File(xlsFileName);
-			
-			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + xlsFileName + "\"");
-			
-			servletOutputStream.flush();
-			servletOutputStream.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			StringWriter stringWriter = new StringWriter();
-			PrintWriter printWriter = new PrintWriter(stringWriter);
-			e.printStackTrace(printWriter);
-			response.setContentType("text/plain");
-			response.getOutputStream().print(stringWriter.toString());
-		}
-
-	}*/
 	
 	@SuppressWarnings("unused")
 	private void generateReportOther(HttpServletRequest request,
@@ -570,50 +567,26 @@ public class ReportsServlet extends HttpServlet {
 	}
 	
 	private Connection getConnectionDirect(){
-		//Connection connection = null;
-		//try {
-		    // Load the JDBC driver
-		    /*String driverName = "oracle.jdbc.driver.OracleDriver";
-		    Class.forName(driverName);*/
+		    
+	    String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	    Connection con = null;
 
-		    // Create a connection to the database
-		    /*String serverName = "localhost";
-		    String portNumber = "1521";
-		    String sid = "xe";
-		    String url = "jdbc:oracle:thin:@" + serverName + ":" + portNumber + ":" + sid;
-		    String username = "sisgap";
-		    String password = "sisgap";
-		    connection = DriverManager.getConnection(url, username, password);
-		    
-		    return connection;*/
-
-		    
-		    String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		    Connection con = null;
-
-		    try{
-		    	Class.forName( "oracle.jdbc.driver.OracleDriver" );
-		    }catch ( Exception e ){
-			    System.out.println( "No se puede cargar el driver" );
-			    e.printStackTrace();
-		    }
-		    try{
-			    con = DriverManager.getConnection(url, "sisgap", "sisgap");
-			    System.out.println( "Conexion establecida");
-		    }catch (SQLException sqle) {
-			    System.out.println( "Error en la conexion a la BD" );
-			    sqle.printStackTrace();
-		    }
-		    
-		    return con;
-		    
-		    
-		/*} catch (ClassNotFoundException e) {
+	    try{
+	    	Class.forName( "oracle.jdbc.driver.OracleDriver" );
+	    }catch ( Exception e ){
+		    System.out.println( "No se puede cargar el driver" );
 		    e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;*/
+	    }
+	    try{
+		    con = DriverManager.getConnection(url, "sisgap", "sisgap");
+		    System.out.println( "Conexion establecida");
+	    }catch (SQLException sqle) {
+		    System.out.println( "Error en la conexion a la BD" );
+		    sqle.printStackTrace();
+	    }
+	    
+	    return con;
+		    
 	}
 }
+

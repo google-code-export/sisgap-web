@@ -169,7 +169,7 @@ var codMon = "";
 				alert("Debe buscar y seleccionar el Socio para marcar su asistencia");
 				return false;
 			}else{
-				var recibo =  ${lstAsambleaRes1.numCodReuniones};
+				var recibo =  $('[codigoasamblea]').val();    // ${lstAsambleaRes1.numCodReuniones};
 				var socio =  $('[name=codigo-as]').val();
 				var puesto =  $('[name=direccion-as]').val();
 				//alert("recibo "+recibo+"\nsocio "+socio+"\npuesto "+puesto);
@@ -307,7 +307,7 @@ var codMon = "";
 		$("#buscarsocio-form")
 			.dialog({
 				autoOpen : false,
-				height : 300,
+				height : 350,
 				width : 550,
 				modal : true,
 				buttons : {
@@ -329,10 +329,11 @@ var codMon = "";
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
 			var nropto =  $('[name=numeropuesto]').val();
+			var nrodni =  $('[name=numerodni]').val();
 				$.ajax({
 			        type: "POST",
 			        url: "/SISGAPWeb/AjaxServlet",
-			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&opcion=reciboluz&nropto="+nropto,
+			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&opcion=reciboluz&nropto="+nropto+"&nrodni="+nrodni,
 			        success: function(datos){
 			        	$("#tablesocios").html(datos);
 			      }
@@ -387,15 +388,14 @@ var codMon = "";
 	}
 
 
-	function eliminarRes(corr,soc,res){
-		alert("eliminando...");
+	function eliminarRes(creu,csoc,ccor){
 		var frm = document.gestionarAsistencia;
 		
-		$("#codigoModi").val(res);
-		$("#codigoide").val(soc);
-		$("#correlativo").val(corr);
+		$("#codigoModi").val(creu);
+		$("#codigoAsoc").val(csoc);
+		$("#codigoCorr").val(ccor);
 
-		$("#metodo").val("eliminarItemReciboLuz");
+		$("#metodo").val("eliminarAsociadoReunion");
 
 		$("#eliminar-form").dialog("open");
 	}
@@ -482,7 +482,10 @@ var codMon = "";
 <body>
 <html:form action="/controlAsistencia.do" styleId="gestionarAsistencia">
 		<input type="hidden" name="metodo" id="metodo"/>
-		<input type="hidden" name="codigoModi" id="codigoModi" value=""/>
+		<input type="hidden" name="codigoModi" id="codigoModi"/>
+		<input type="hidden" name="codigoAsoc" id="codigoAsoc"/>
+		<input type="hidden" name="codigoCorr" id="codigoCorr"/>
+		
 		<input type="hidden" name="codigoide" id="codigoide"/>
 		<input type="hidden" name="codigocod" id="codigocod" />
 		<input type="hidden" name="correlativo" id="correlativo"/>
@@ -572,12 +575,12 @@ var codMon = "";
 			<display:column title="" style="width:60px;">
 			<c:choose>
 				<c:when test="${row.estado==2}">
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigoreuniones},${row.codigosocios},${row.codigocorrelativo});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" > <!-- onclick="mostrarRep(${row.codigoreuniones},${row.codigosocios},${row.codigocorrelativo});"/ -->
 				</c:when>
 				<c:otherwise>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminarRes(${row.codigoreuniones},${row.codigosocios},${row.codigocorrelativo});"/>
-					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16"/>
-					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigoreuniones},${row.codigosocios},${row.codigocorrelativo});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminarRes(${row.codigoreuniones},'${row.codigosocios}',${row.codigocorrelativo});"/>
+					<!-- img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" /><!-- mostrarRep(${row.codigoreuniones},${row.codigosocios},${row.codigocorrelativo});"/-->
 				</c:otherwise>
 			</c:choose>
 			</display:column>
@@ -606,6 +609,7 @@ var codMon = "";
 	<div id="buscarsocio-form" title="Buscar Socio">		
 		Ingrese Nombre Socio:<input type="text" name="nombresocio" id="nombresocio" class="text ui-widget-content ui-corner-all" />
 		Ingrese Numero Puesto:<input type="text" name="numeropuesto" id="numeropuesto" style="width: 100px" />
+		Ingrese Numero DNI:<input type="text" name="numerodni" id="numerodni" style="width: 100px" />
 		<br> 
 		<button id="btn-buscar-socio">Buscar Socio</button>
 		<div id="tablesocios"></div>

@@ -170,11 +170,12 @@ var codMon = "";
 			modal : true,
 			buttons : {
 				Generar : function() {
+					
 					var nroDocReal =  $('[name=txtNroDoc]').val();
 					var nroDocInterno = $('[name=numerodocumento]').val();
 					var tipDocumento = $('[name=cbtipodocx]').val();
 					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";
-					//alert("Tipo Doc. "+tipDocumento);
+					
 					if(tipDocumento=='R'){  
 			        	nueva=window.open("gestionarFacturacion.do?metodo=imprimirRecibo&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
 					}
@@ -594,7 +595,7 @@ var codMon = "";
 		$('[name=metodo]').val('cancelarFactura');	
 		$('#gestionarFacturacion').submit();
 	}
-	
+
 </script>
 </head>
 <body>

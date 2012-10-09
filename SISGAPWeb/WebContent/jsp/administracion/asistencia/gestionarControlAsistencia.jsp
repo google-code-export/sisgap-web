@@ -53,16 +53,20 @@ $(function() {
 					width : 840,
 					modal : true,		
 					close : function() {
+						$("#fecAsamblea").removeAttr("disabled");
 						allFields.val("").removeClass("ui-state-error");
 					}
 			});
 
 		
 		$('#nuevo-ca').click(function() { 
-
+			
 			$("#grabar-form").dialog("open");
-     
-
+     		$("#lugarAsamblea").val("");
+     		$("#agendaAsamblea").val("");
+     		$("#acuerdosAsamblea").val("");
+     		$("#observacionesAsamblea").val("");
+     		$("#fecAsamblea").focus();     		
 		});
 
 		$("#eliminar-form").dialog({
@@ -106,14 +110,10 @@ $(function() {
 					}
 				}
 			}
-		
+ 
 	});
 	
 	
-	function lstNuevo() {
-
-	}
-
 	function mostrarItems(cod) {
 		var frm = document.formAsistencia;
 		frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
@@ -123,144 +123,43 @@ $(function() {
 	
 	function eliminar(cod) {
 		var frm = document.formAsistencia;
-		$("#codigoModi").val(cod);
-		frm.metodo.value = 'eliminarReciboLuz';
+		frm.codigoModi.value = cod;//$("#codigoModi").val(cod);
+		frm.metodo.value = 'eliminarAsamblea';
 		$("#eliminar-form").dialog("open");
 		//$("#anulardoc-form").dialog("open");
 	}
 
-	function ver(cod,lecturaIni,lecturaFin,monto,costoWats,periodo,estado,
-			vrepomancnx,
-			vcargofijo,
-			valumpublic,
-			vsubtotalmes,
-			vigv,
-			vtotalmesact,
-			vaporteley,
-			vcuotaconv,
-			vredonmesact,
-			vredonmesant,
-			vinteresconvenio,
-			venergactfraptaactual,
-			venergactfraptaanteri,
-			venergactfraptadifer,
-			venergactfraptafactor,
-			venergactfraptaconsu,
-			venergactfraptaconfa,
-			venergactfraptapreuni,
-			venergactfraptatotal,
-			venergacthorptaactu,
-			venergacthorptaant,
-			venergacthorptadif,
-			venergacthorptafac,
-			venergacthorptacons,
-			venergacthorptaconfac,
-			venergacthorptapreuni,
-			venergacthorptatotal,
-			venergreacinicial,
-			venergreacanteri,
-			venergreacdifere,
-			venergreacfactor,
-			venergreacconsu,
-			venergreacfaccons,
-			venergreacpreuni,
-			venergreactotal,
-			vpotenciafpini,
-			vpotenciafpante,
-			vpotenciafpdif,
-			vpotenciafpfac,
-			vpotenciafpcons,
-			vpotenciahpact,
-			vpotenciahpant,
-			vpotenciahpdif,
-			vpotenciahpfac,
-			vpotenciahpcons,
-			vpotusoreddistconfac,
-			vpotusoreddistpreuni,
-			vpotusoreddisttotal,
-			vpotgenfpconfac,
-			vpotgenfppreuni,
-			vpotgenfptotal,
-			vfecvencimiento,
-			vfecemision) {
 
+	function ver(cod) {
+		//alert("CodigoModi:"+cod);
 		var frm = document.formAsistencia;
-				
-		$("#codigoModi").val(cod);	
-		$("#lecturaIni").val(lecturaIni);
-		$("#lecturaFin").val(lecturaFin);
-		$("#monto").val(monto);
-		$("#costoWats").val(costoWats);
-		$("#periodo").val(periodo);
+		var codigo = cod;
+		$.ajax({
+	        type: "POST",
+	        url: "/SISGAPWeb/AjaxServlet",
+	        data: "action=EDITAR_REUNIONES&codigoModi="+cod,
+	        success: function(datos){
+		        var element = datos.split('</td>');
+		        /*for(var i=0;i<element.length-1;i++){
+		        	alert(element[i]);
+		        }*/
+		        $('#fecAsamblea').val(element[0].substring(4));
+		        $('#lugarAsamblea').val(element[1].substring(4));
+		        $('#agendaAsamblea').val(element[2].substring(4));
+		        $('#acuerdosAsamblea').val(element[3].substring(4));
+		        $('#observacionesAsamblea').val(element[4].substring(4));
+	        }
+		});
 
-		$('#repomancnx').val(vrepomancnx);
-		$('#cargofijo').val(vcargofijo);
-		$('#alumpublic').val(valumpublic);
-		$('#subtotalmes').val(vsubtotalmes);
-		$('#igv').val(vigv);
-		$('#totalmesact').val(vtotalmesact);
-		$('#aporteley').val(vaporteley);
-		$('#cuotaconv').val(vcuotaconv);
-		$('#redonmesact').val(vredonmesact);
-		$('#redonmesant').val(vredonmesant);
-		$('#interesconvenio').val(vinteresconvenio);
-		$('#energactfraptaactual').val(venergactfraptaactual);
-		$('#energactfraptaanteri').val(venergactfraptaanteri);
-		$('#energactfraptadifer').val(venergactfraptadifer);
-		$('#energactfraptafactor').val(venergactfraptafactor);
-		$('#energactfraptaconsu').val(venergactfraptaconsu);
-		$('#energactfraptaconfa').val(venergactfraptaconfa);
-		$('#energactfraptapreuni').val(venergactfraptapreuni);
-		$('#energactfraptatotal').val(venergactfraptatotal);
-		$('#energacthorptaactu').val(venergacthorptaactu);
-		$('#energacthorptaant').val(venergacthorptaant);
-		$('#energacthorptadif').val(venergacthorptadif);
-		$('#energacthorptafac').val(venergacthorptafac);
-		$('#energacthorptacons').val(venergacthorptacons);
-		$('#energacthorptaconfac').val(venergacthorptaconfac);
-		$('#energacthorptapreuni').val(venergacthorptapreuni);
-		$('#energacthorptatotal').val(venergacthorptatotal);
-		$('#energreacinicial').val(venergreacinicial);
-		$('#energreacanteri').val(venergreacanteri);
-		$('#energreacdifere').val(venergreacdifere);
-		$('#energreacfactor').val(venergreacfactor);
-		$('#energreacconsu').val(venergreacconsu);
-		$('#energreacfaccons').val(venergreacfaccons);
-		$('#energreacpreuni').val(venergreacpreuni);
-		$('#energreactotal').val(venergreactotal);
-		$('#potenciafpini').val(vpotenciafpini);
-		$('#potenciafpante').val(vpotenciafpante);
-		$('#potenciafpdif').val(vpotenciafpdif);
-		$('#potenciafpfac').val(vpotenciafpfac);
-		$('#potenciafpcons').val(vpotenciafpcons);
-		$('#potenciahpact').val(vpotenciahpact);
-		$('#potenciahpant').val(vpotenciahpant);
-		$('#potenciahpdif').val(vpotenciahpdif);
-		$('#potenciahpfac').val(vpotenciahpfac);
-		$('#potenciahpcons').val(vpotenciahpcons);
-		$('#potusoreddistconfac').val(vpotusoreddistconfac);
-		$('#potusoreddistpreuni').val(vpotusoreddistpreuni);
-		$('#potusoreddisttotal').val(vpotusoreddisttotal);
-		$('#potgenfpconfac').val(vpotgenfpconfac);
-		$('#potgenfppreuni').val(vpotgenfppreuni);
-		$('#potgenfptotal').val(vpotgenfptotal);
-		
-		$('#fecvencimiento').val(vfecvencimiento);
-		$('#fecemision').val(vfecemision);
-
-		
-		if(estado==1){
-			$('input[name=estado]').attr('checked', true);
-		}else{
-			$('input[name=estado]').attr('checked', false);
-		}
+		$('#codigoModi').val(codigo);
+		$("#fecAsamblea").attr("disabled","-1");
+		$('#lugarAsamblea').focus();
 		$("#grabar-form").dialog("open");
-
+		
 	}
-
+	
 	function grabar() {
 		var frm = document.formAsistencia;
-
 
 		$("#fecAsambleax").val($("#fecAsamblea").val());
 		$("#lugarAsambleax").val($("#lugarAsamblea").val());
@@ -273,19 +172,23 @@ $(function() {
 		}else{
 			$("#estadox").val("0");
 		}*/
-		frm.metodo.value = 'registrarAsamblea';
 		
-		/*if($("#codigoModi").val()!=''){
+
+		alert("El valor que viene es: " + $("#codigoModi").val());
+		if($("#codigoModi").val()!=''){
+			alert("uno");
 			frm.metodo.value = 'actualizarAsamblea';
 		}else{
-			
-		}*/
+			alert("dos");
+			frm.metodo.value = 'registrarAsamblea';
+		}
 		
 		frm.submit();
 	}
 	
 
 	function cerrarPop() {
+		$("#fecAsamblea").removeAttr("disabled");
 		$("#grabar-form").dialog("close");
 	}	
 	
@@ -348,28 +251,23 @@ $(function() {
 			requestURI="/controlAsistencia.do?metodo=cargarAction" id="row"
 			export="false">
 			<display:column title="" style="width:60px;">
-				<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png"
-					alt="Eliminar..." border="0" width="16" height="16" id=""
-					onclick="" />
-				<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png"
-					alt="Editar..." border="0" width="16" height="16"
-					onclick="" />
-				<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png"
-					alt="Ver..." border="0" width="16" height="16"
-					onclick="mostrarItems(${row.numCodReuniones});" />
+				<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminar(${row.numCodReuniones})" />
+				<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.numCodReuniones})" />
+				<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png"	alt="Ver..." border="0" width="16" height="16" />
 			</display:column>
-			<display:column title="Nro" property="numCodReuniones" sortable="true"></display:column>
-			<display:column title="Fecha de Asamblea" sortable="true">
+			<display:column title="Nro" property="numCodReuniones" style="text-align:center; width:20px" sortable="true"></display:column>
+			<display:column title="Fecha Asamblea" style="width:100px" sortable="true">
 				<fmt:formatDate pattern="dd MMMM yyyy" value="${row.datFechaSesion}" />
 			</display:column>
-			<display:column title="Lugar" property="strLugar" sortable="true" />
-			<display:column title="Agenda" property="strAgenda" sortable="true" />
-			<display:column title="Acuerdos" property="strAcuerdos" sortable="true" />
+			<display:column title="Lugar" property="strLugar" style="width:150px" sortable="true" />
+			<display:column title="Agenda" property="strAgenda" style="width:300px" sortable="true" />
+			<display:column title="Acuerdos" property="strAcuerdos" style="width:300px" sortable="true" />
 			<display:column title="Observaciones" property="strObservaciones" sortable="true" />
-			<display:column title="Estado" sortable="true">
+			<display:column title="Estado" style="text-align:center" sortable="true">
 				<c:choose>
 					<c:when test="${row.numEstado==1}">Activo</c:when>
 					<c:when test="${row.numEstado==0}">Inactivo</c:when>
+					<c:when test="${row.numEstado==null}">Nada</c:when>
 				</c:choose>
 			</display:column>
 		</display:table>
@@ -403,16 +301,17 @@ $(function() {
 					</td>
 				</tr>
 				<tr>
-					<td  align="center" colspan="2">
-						<button name="btngrabar" id="btngrabar" onclick="grabar();">Grabar</button>&nbsp;&nbsp;
-						<button name="btncerrar" id="btncerrar" onclick="cerrarPop();">Cancelar</button>
+					<td align="center">
+						<input type="button" name="btngrabar" id="btngrabar" onclick="grabar();" value="Grabar">
+					</td>
+					<td align="center">
+						<input type="button" name="btncerrar" id="btncerrar" onclick="cerrarPop();" value="Cancelar">
 					</td>					
 				</tr>
 			</table>
 		</div>
-		<div id="eliminar-form" title="Esta seguro que desea eliminar...?">
-			<div align="center"></div>
-		</div>
+		<div id="eliminar-form" title="Esta seguro que desea eliminar...?"></div>
+		<div id="tablesocios"></div>
 	</html:form>
 
 </body>

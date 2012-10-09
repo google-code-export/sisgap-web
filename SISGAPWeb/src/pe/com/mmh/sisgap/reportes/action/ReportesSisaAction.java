@@ -13,6 +13,7 @@ import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
+import pe.com.mmh.sisgap.comun.servlet.ReportsServlet;
 import pe.com.mmh.sisgap.domain.Socio;
 
 public class ReportesSisaAction extends GrandActionAbstract{
@@ -48,6 +49,11 @@ public class ReportesSisaAction extends GrandActionAbstract{
 		request.getSession().setAttribute("Respuesta", rpta);
 		request.getSession().setAttribute("fechaIni", fecIni);
 		request.getSession().setAttribute("fechaFin", fecFin);
+		
+		/*request.getSession().setAttribute("reporte", "LISTADO_GENERAL_VIGILANCIA");
+		
+		ReportsServlet rs = new ReportsServlet();
+		rs.service(null, null);*/
 		
 		System.out.println("Respuesta: "+rpta);
 		System.out.println("[ReportesSisaAction] Final - grabarVigilancia");

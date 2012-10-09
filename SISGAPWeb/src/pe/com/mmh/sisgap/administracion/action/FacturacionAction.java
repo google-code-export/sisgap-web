@@ -23,6 +23,7 @@ import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.UnidadmedidaFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
+import pe.com.mmh.sisgap.comun.servlet.ImprimeDemo;
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
@@ -34,7 +35,6 @@ public class FacturacionAction extends GrandActionAbstract{
 	public String codFactura="";
 	
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		System.out.println("[FacturacionAction] Inicio - cargarAction");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
 		List<Factura> lstCob = facadeLocal.findAll();
@@ -63,8 +63,6 @@ public class FacturacionAction extends GrandActionAbstract{
 		if(codFactura!=null){
 			fac = facadeLocal.find(new Long(codFactura));
 		}
-		
-		
 		
 		List<Detallefactura> lstDetFac=fac.getSisgapDetallefacturas();
 		
@@ -394,6 +392,15 @@ public class FacturacionAction extends GrandActionAbstract{
 		return mapping.findForward("cargarAction");
 	}
 		
-	
-	
+
+	public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[FacturacionAction] Inicio - print");
+		
+		ImprimeDemo pr = new ImprimeDemo();
+		pr.Imprime("Johan","Muñoz Cavero");
+		
+		System.out.println("[FacturacionAction] Final - print");
+		return mapping.findForward("blankpage");
+	}
+
 }

@@ -1,17 +1,11 @@
 package pe.com.mmh.sisgap.comun.servlet;
 
-import java.awt.image.LookupOp;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.Transient;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -20,23 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ItemcobranzaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ReunionesFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal;
-import pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ServiciosItemFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
-import pe.com.mmh.sisgap.comun.constantes.Constantes;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.DetallefacturaPK;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
 import pe.com.mmh.sisgap.domain.ServicioItem;
-import pe.com.mmh.sisgap.domain.SisgapReunionesSocio;
+import pe.com.mmh.sisgap.domain.SisgapReuniones;
 import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
@@ -87,6 +78,7 @@ public class AjaxServlet extends HttpServlet {
 				String nombre = request.getParameter("nombre");
 				String opcion = request.getParameter("opcion");
 				String nropto = request.getParameter("nropto");
+				String nrodni = request.getParameter("nrodni");
 				
 				//String codRec = request.getParameter("codigoModi");
 				try {
@@ -96,6 +88,8 @@ public class AjaxServlet extends HttpServlet {
 						lstSocio = facadeLocal.buscarxNombre(nombre);
 					} else if (nropto != null && !nropto.equals("")) {
 						lstSocio = facadeLocal.buscarxPuesto(nropto);
+					} else if (nrodni != null && !nrodni.equals("")) {
+						lstSocio = facadeLocal.buscarxDNI(nrodni);
 					}
 					out.print("<table id='users' class='ui-widget ui-widget-content'   width='100%'>");
 					out.print("<thead>");
@@ -418,13 +412,32 @@ public class AjaxServlet extends HttpServlet {
 						out.print("   </tbody>");
 						out.print("</table>");
 					*/
-						out.print("true");
+						out.print("ExisteSocio");
 						
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				System.out.println("[AjaxServlet] Final - BUSCAR_EXISTE_SOCIO");
+			}else if(action.equals("BUSCAR_EXISTE_RECIBO_ANTERIOR")){
+				System.out.println("[AjaxServlet] Inicio - BUSCAR_EXISTE_RECIBO_ANTERIOR");
+				String socio = request.getParameter("socio");
+				String periodo = request.getParameter("periodo");
+				int respuesta = 0;
+				try {
+					//Listado que trae Datos de los recibos de Suministro de Luz
+					SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+					respuesta = suministrofacadeLocal.buscarReciboxCodigoxSocioxPeriodo(periodo.trim(), socio.trim());
+					
+					if (respuesta==1){
+						out.print("NoExistePeriodo");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("[AjaxServlet] Final - BUSCAR_EXISTE_RECIBO_ANTERIOR");
 			}else if(action.equals("BUSCAR_EXISTE_SOCIO_ASAMBLEA")){
 				System.out.println("[AjaxServlet] Inicio - BUSCAR_EXISTE_SOCIO_ASAMBLEA");
 				String recibo = request.getParameter("recibo");
@@ -555,20 +568,76 @@ public class AjaxServlet extends HttpServlet {
 						out.print(lsItemCobranza.get(0).getDatFechaFin().toString());
 						out.print(lsItemCobranza.get(0).getStrFlgVariable().toString());
 						out.print(lsItemCobranza.get(0).getNumCobroAdicional().toString());
-						System.out.println(lsItemCobranza.get(0).getDatFechaFin());
+						/*System.out.println(lsItemCobranza.get(0).getDatFechaFin());
 						System.out.println(lsItemCobranza.get(0).getStrFlgVariable());
-						System.out.println(lsItemCobranza.get(0).getNumCobroAdicional());
+						System.out.println(lsItemCobranza.get(0).getNumCobroAdicional());*/
 					}
 					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_ESPECIAL");
-			}	
+				System.out.println("[AjaxServlet] Final - BUSCAR_RECIBO_ESPECIAL");	
+			}else if(action.equals("EDITAR_REUNIONES")){
+				System.out.println("[AjaxServlet] Inicio - EDITAR_REUNIONES");
+				String codigoModi = request.getParameter("codigoModi");
+				System.out.println("Codigo: "+codigoModi);
+				
+				try {
+					ReunionesFacadeLocal facadeLocal = (ReunionesFacadeLocal) lookup(ConstantesJNDI.REUNIONESFACADE);
+					List<SisgapReuniones> lstAsambleaSocio =  facadeLocal.listarAsamblea(new BigDecimal(codigoModi));
+					
+					if (!lstAsambleaSocio.isEmpty()){
+						
+						//out.print("<tr>");
+						if (lstAsambleaSocio.get(0).getDatFechaSesion() == null) {
+							out.print("<td></td>");
+						} else {
+							out.print("<td>"+lstAsambleaSocio.get(0).getDatFechaSesion().toString()+"</td>");
+						}
+						if (lstAsambleaSocio.get(0).getStrLugar() == null) {
+							out.print("<td></td>");
+						} else {
+							out.print("<td>"+lstAsambleaSocio.get(0).getStrLugar().toString()+"</td>");
+						}
+						if (lstAsambleaSocio.get(0).getStrAgenda() == null) {
+							out.print("<td></td>");
+						} else {
+							out.print("<td>"+lstAsambleaSocio.get(0).getStrAgenda().toString()+"</td>");
+						}
+						if (lstAsambleaSocio.get(0).getStrAcuerdos() == null) {
+							out.print("<td></td>");
+						} else {
+							out.print("<td>"+lstAsambleaSocio.get(0).getStrAcuerdos().toString()+"</td>");
+						}
+						if (lstAsambleaSocio.get(0).getStrObservaciones() == null) {
+							out.print("<td></td>");
+						} else {
+							out.print("<td>"+ lstAsambleaSocio.get(0).getStrObservaciones().toString()+"</td>");
+						}
+						//out.print("</tr>");						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				//request.setAttribute("lstAsambleaSocio", lstAsambleaSocio);
+				System.out.println("[AjaxServlet] Final - EDITAR_REUNIONES");
+			}
 		}
 		System.out.println("[AjaxServlet] - Final service");
 	}
+	
+	
+	public Object lookup(String JNDIName){
+		try {
+			return new InitialContext().lookup(JNDIName);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return JNDIName;
+	}
+	
 	
 	public void validarProducto(List<Detallefactura> listDetallefactura, Detallefactura det) {
 		Integer nuevaCantidad = 0;

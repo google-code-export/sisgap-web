@@ -192,7 +192,10 @@ div#users-contain table td,div#users-contain table th {
 					<td>${row.numCosto }</td>
 					<td>${row.numCantidad }</td>
 					<c:set var="subtotal" value="${row.numCosto * row.numCantidad }" />
-					<td><c:out value="${subtotal}" /></td>
+					<td>
+						<fmt:formatNumber pattern="###,###.##" maxIntegerDigits="2" value="${subtotal}" />
+						<!-- c:out value="${subtotal}" / -->
+					</td>
 					<c:set var="total" value="${total + subtotal }" />
 				</tr>
 			</c:forEach>

@@ -12,12 +12,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.ReunionesFacade;
 import pe.com.mmh.sisgap.administracion.ejb.ReunionesFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
+import pe.com.mmh.sisgap.domain.Factura;
+import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.SisgapReuniones;
 import pe.com.mmh.sisgap.domain.SisgapReunionesSocio;
+import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 
 public class ControlAsistenciaAction extends GrandActionAbstract{//GrandActionAbstract{
 	
@@ -51,12 +56,42 @@ public class ControlAsistenciaAction extends GrandActionAbstract{//GrandActionAb
 		return mapping.findForward("cargarAction");
 	}
 	
-	public ActionForward modificarReunion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("[ControlAsistenciaAction] Inicio - modificarReunion");
+	public ActionForward actualizarAsamblea(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("[ControlAsistenciaAction] Inicio - actualizarAsamblea");
+		String codigoModi  = request.getParameter("codigoModi");
+		if (codigoModi.isEmpty()) {
+			codigoModi = "";
+		}
+		String fecAsamblea = request.getParameter("fecAsambleax");
+		if (fecAsamblea.isEmpty()) {
+			fecAsamblea = "";
+		}
+		String lugAsamblea = request.getParameter("lugarAsambleax");
+		if (lugAsamblea.isEmpty()) {
+			lugAsamblea = "";
+		}
+		String ageAsamblea = request.getParameter("agendaAsambleax");
+		if (ageAsamblea.isEmpty()) {
+			ageAsamblea = "";
+		}
+		String acuAsamblea = request.getParameter("acuerdosAsambleax");
+		if (acuAsamblea.isEmpty()) {
+			acuAsamblea = "";
+		}
+		String obsAsamblea = request.getParameter("observacionesAsambleax");
+		if (obsAsamblea.isEmpty()) {
+			obsAsamblea = "";
+		}
+		//String usuario     = request.getParameter('ADMIN'); 
 		
+		ReunionesFacadeLocal ReunionesfacadeLocal = (ReunionesFacadeLocal) lookup(ConstantesJNDI.REUNIONESFACADE);
+		ReunionesfacadeLocal.actualizarAsambleas(new BigDecimal(codigoModi), fecAsamblea, lugAsamblea, ageAsamblea, acuAsamblea, obsAsamblea, "ADMIN");
 		
-		System.out.println("[ControlAsistenciaAction] Final - modificarReunion");
-		return mapping.findForward("modificarReunion");
+		List<SisgapReuniones> lst = ReunionesfacadeLocal.findAll();
+		request.setAttribute("lstRes", lst);
+		
+		System.out.println("[ControlAsistenciaAction] Final - actualizarAsamblea");
+		return mapping.findForward("cargarAction");
 	}
 	
 	public ActionForward mostrarItemsAsamblea(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
@@ -116,6 +151,42 @@ public class ControlAsistenciaAction extends GrandActionAbstract{//GrandActionAb
 		return mapping.findForward("agregarAsistenciaSocio");
 	}
 	
+	
+	public ActionForward eliminarAsamblea(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[ControlAsistenciaAction] Inicio - eliminarAsamblea");
+		ReunionesFacadeLocal facadeLocal = (ReunionesFacadeLocal) lookup(ConstantesJNDI.REUNIONESFACADE);
+
+		String codigoModi = request.getParameter("codigoModi");
+		
+		if(codigoModi!=null){
+			facadeLocal.eliminarAsamblea(codigoModi);			
+		}
+		
+		List<SisgapReuniones> lst = facadeLocal.findAll();
+		request.setAttribute("lstRes", lst);
+		System.out.println("[ControlAsistenciaAction] Final - eliminarAsamblea");
+		return mapping.findForward("cargarAction");
+	}
+
+	
+	public ActionForward eliminarAsociadoReunion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[ControlAsistenciaAction] Inicio - eliminarAsociadoReunion");
+		ReunionesSocioFacadeLocal facadeLocal = (ReunionesSocioFacadeLocal) lookup(ConstantesJNDI.REUNIONESSOCIOFACADE);
+
+		String codigoModi = request.getParameter("codigoModi");
+		String codigoAsoc = request.getParameter("codigoAsoc");
+		String codigoCorr = request.getParameter("codigoCorr");
+		
+		if(codigoModi!=null){
+			facadeLocal.eliminarAsociadoReunion(new Long(codigoModi), codigoAsoc, new Long(codigoCorr));			
+		}
+		
+		List<SisgapReunionesSocio> lstAsambleaSocio =  facadeLocal.listarAsambleaSocio(new BigDecimal(codigoModi));
+		request.setAttribute("lstAsambleaSocio", lstAsambleaSocio);
+		
+		System.out.println("[ControlAsistenciaAction] Final - eliminarAsociadoReunion");
+		return mapping.findForward("agregarAsistenciaSocio");
+	}
 	
 	
 	public Object lookup(String JNDIName){

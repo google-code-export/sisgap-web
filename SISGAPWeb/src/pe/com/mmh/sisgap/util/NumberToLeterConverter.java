@@ -67,18 +67,19 @@ public abstract class NumberToLeterConverter {
 	
 		// Validamos que sea un numero legal
 		
-		//double doubleNumber = Double.parseDouble(number.replace(".",""));
-		double doubleNumber = Double.parseDouble(number.replace(",",""));
+		double doubleNumber = Double.parseDouble(number.replace(".",""));
+		//double doubleNumber = Double.parseDouble(number.replace(",",""));
 		if (doubleNumber > 999999999)
 			throw new NumberFormatException(
 					"El numero es mayor de 999'999.999, "
 							+ "no es posible convertirlo");
 	
-		String splitNumber[] = number.replace(',', '#').split("#");
+		String splitNumber[] = number.replace('.', '#').split("#");
+		//String splitNumber[] = number.replace(',', '#').split("#");
 		
 		/*System.out.println(splitNumber[0]);
-		System.out.println(splitNumber[1]);*/
-		/*for(int i=0; i<splitNumber.length; i++)
+		System.out.println(splitNumber[1]);
+		for(int i=0; i<splitNumber.length; i++)
 		{
 			System.out.println(splitNumber[i]);
 		}*/

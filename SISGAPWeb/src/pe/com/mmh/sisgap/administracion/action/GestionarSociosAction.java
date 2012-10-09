@@ -97,7 +97,7 @@ public class GestionarSociosAction extends GrandActionAbstract{
 		
 		Socio soc = new Socio();
 		soc.setTranCodigo(numerocliente);
-		soc.setTranRazonSocial(txtRazonSocial);
+		soc.setTranRazonSocial(txtRazonSocial.toUpperCase());
 		soc.setTranFechaConstitucion(fecha);
 		soc.setSisgapActividadSocio(act);
 		soc.setSisgapTipoSocio(tip);

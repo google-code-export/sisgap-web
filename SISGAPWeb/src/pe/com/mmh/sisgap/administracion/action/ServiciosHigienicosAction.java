@@ -124,6 +124,9 @@ public class ServiciosHigienicosAction extends GrandActionAbstract {
 		
 		List<ServicioDetalle> lstSrvDet = srv.getSisgapServicioDetalle();
 		
+		
+		
+		
 		request.setAttribute("numCodServicio", srv.getCodServicio());
 		request.setAttribute("strDescripcion", srv.getStrDescripcion().trim());
 		request.setAttribute("datFechaServ", srv.getDatFechaserv());
