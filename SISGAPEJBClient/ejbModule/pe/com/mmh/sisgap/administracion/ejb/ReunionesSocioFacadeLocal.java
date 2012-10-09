@@ -18,5 +18,7 @@ public interface ReunionesSocioFacadeLocal {
 	
 	public void grabarAsambleaSocio(String codAsamblea, String codSocio, String fecAsamblea, String estado, String usuario, String observaciones);
 
+	void eliminarAsociadoReunion(Long codigoModi, String codigoAsoc, Long codigoCorr);
+	
 	public ResultSet getTempAsambleas();
 }

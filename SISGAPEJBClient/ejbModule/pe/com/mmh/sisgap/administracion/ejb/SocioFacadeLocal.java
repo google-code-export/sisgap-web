@@ -29,6 +29,8 @@ public interface SocioFacadeLocal {
     List<Socio> buscarxNombre(String nombre);
     
     List<Socio> buscarxPuesto(String puesto);
+    
+    List<Socio> buscarxDNI(String dni);
 
 	String generarNroCodigo(String tipocod);
 

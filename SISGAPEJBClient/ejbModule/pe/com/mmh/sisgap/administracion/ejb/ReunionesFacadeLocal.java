@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 
 import pe.com.mmh.sisgap.domain.SisgapReuniones;
-import pe.com.mmh.sisgap.domain.SisgapReunionesSocio;
 
 @Local
 public interface ReunionesFacadeLocal {
@@ -14,7 +13,11 @@ public interface ReunionesFacadeLocal {
 	
 	public void grabarAsambleas(String fechaAsamblea, String lugarAsamblea, String agendaAsamblea, String acuerdoAsamblea, String observacionesAsamblea);
 	
+	public void actualizarAsambleas(BigDecimal codigoReuniones, String fechaAsamblea, String lugarAsamblea, String agendaAsamblea, String acuerdoAsamblea, String observacionesAsamblea, String usuario);
+	
 	List<SisgapReuniones> listarAsamblea(BigDecimal codigo);
+	
+	void eliminarAsamblea(String codigo);
 	
 	public SisgapReuniones buscarAsamblea(SisgapReuniones codigo);
 
