@@ -7,7 +7,7 @@ package pe.com.mmh.sisgap.domain;
  * @author andres
  *
  */
-public class SisaDetalle {
+public class VigilanciaDetalle {
 	
 	private long codigoSisa;
 	private int dia;
@@ -16,7 +16,7 @@ public class SisaDetalle {
 	/**
 	 * 
 	 */
-	public SisaDetalle() {
+	public VigilanciaDetalle() {
 		// TODO Auto-generated constructor stub
 	}
 

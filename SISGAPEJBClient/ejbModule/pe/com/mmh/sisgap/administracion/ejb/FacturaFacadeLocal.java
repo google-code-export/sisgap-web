@@ -32,7 +32,9 @@ public interface FacturaFacadeLocal {
 
     Factura find(Object id);
 
-    List<Factura> findAll();
+    List<Factura> findAll(Long estado);
+    
+    List<Factura> findAlls();
     
     void grebarFactura(Long numerodocumento,String fechadocumento, String totalfac, String codigoide, String cbtipodoc,List<Detallefactura> detallefactura, String acuenta);
 
@@ -45,4 +47,6 @@ public interface FacturaFacadeLocal {
 	void cancelarFactura(String codigoFactura);
 	
 	void impresaFactura(String codigoFactura, Long nroFactura);
+	
+	List<Detallefactura> editarDetalle(Long codigoFact, Long codigoItem);
 }

@@ -2,7 +2,7 @@ package pe.com.mmh.sisgap.domain;
 
 import java.util.Date;
 
-public class Sisa {
+public class Vigilancia {
 	
 	long codigo;
 	String nombre;
@@ -13,6 +13,15 @@ public class Sisa {
 	Integer totaldias;
 	Integer estado;
 	String tranCodigo;
+	
+	
+	/*Datos necesarios*/
+	String girocomer;
+	String sector;
+	String numrecibo;
+	double valor;
+	Date fechaIngreso;
+	double deuda;
 	
 	public String getNombre() {
 		return nombre;
@@ -67,6 +76,48 @@ public class Sisa {
 	}
 	public void setTranCodigo(String tranCodigo) {
 		this.tranCodigo = tranCodigo;
+	}
+
+	
+	
+	
+	
+	
+	public String getGirocomer() {
+		return girocomer;
+	}
+	public void setGirocomer(String girocomer) {
+		this.girocomer = girocomer;
+	}
+	public String getSector() {
+		return sector;
+	}
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+	public String getNumrecibo() {
+		return numrecibo;
+	}
+	public void setNumrecibo(String numrecibo) {
+		this.numrecibo = numrecibo;
+	}
+	public double getValor() {
+		return valor;
+	}
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+	public double getDeuda() {
+		return deuda;
+	}
+	public void setDeuda(double deuda) {
+		this.deuda = deuda;
 	}
 
 }

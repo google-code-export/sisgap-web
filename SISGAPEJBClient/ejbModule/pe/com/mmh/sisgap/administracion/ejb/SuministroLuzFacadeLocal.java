@@ -9,6 +9,7 @@ import javax.ejb.Local;
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
+import pe.com.mmh.sisgap.domain.ReciboLuzAsociado;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
@@ -67,4 +68,5 @@ public interface SuministroLuzFacadeLocal {
 
 	List<SuministroLusReciboSocio> buscarReciboLuzxCodigoSocio(String codSocio, String codRecibo);
 	
+	public List<ReciboLuzAsociado> findSuministroxAsociado(BigDecimal long1);
 }
