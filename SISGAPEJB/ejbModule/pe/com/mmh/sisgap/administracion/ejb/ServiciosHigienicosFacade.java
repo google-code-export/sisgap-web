@@ -93,7 +93,7 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
     	try {
     		
     		connection = getConnection();
-//    		connection.setAutoCommit(false);
+    		//connection.setAutoCommit(false);
     		
 			cst = connection.prepareCall(SP_INS_SERVICIO);
 			
@@ -107,6 +107,8 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 			cst.execute();
 			
 			BigDecimal codigo = cst.getBigDecimal("P_CODIGO_SRV");
+			
+			cst = null;
 			
 			cst = connection.prepareCall(SP_INS_DETSERVICIO);
 			
@@ -137,7 +139,8 @@ public class ServiciosHigienicosFacade implements ServiciosHigienicosFacadeLocal
 		} finally{			
 				try {
 					if(cst!=null){cst.close();}
-					if(connection!=null){connection.close();}					
+					if(connection!=null){connection.close();}
+					cst = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

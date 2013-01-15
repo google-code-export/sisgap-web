@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.administracion.ejb;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,30 +15,33 @@ import javax.sql.DataSource;
 
 import oracle.jdbc.driver.OracleTypes;
 
-import pe.com.mmh.sisgap.domain.Sisa;
+import pe.com.mmh.sisgap.domain.SumistroLuz;
+import pe.com.mmh.sisgap.domain.Vigilancia;
 import pe.com.mmh.sisgap.utils.JDBCUtil;
 import pe.com.mmh.sisgap.utils.RowSetDynaClass;
 
 @Stateless
-public class SisasFacade implements SisasFacadeLocal {
+public class VigilanciaFacade implements VigilanciaFacadeLocal {
 	
 	@Resource(mappedName = "java:/jdbc/sisgapDS")
 	private DataSource dataSource;
 
 	
-	private static final String SP_PLANTILLA_SISA = "{call PKG_ADMINISTRACION.SP_PLANTILLA_SISA(?,?)}";
-	private static final String SP_REGISTRAR_SISA = "{call PKG_ADMINISTRACION.SP_REGISTRAR_SISA(?,?)}";
-	private static final String SP_BUSCAR_SISA = "{call PKG_ADMINISTRACION.SP_BUSCAR_SISA(?,?,?)}";
-	private static final String SP_GET_SISA = "{call PKG_ADMINISTRACION.SP_GET_SISA(?,?,?)}";
-	private static final String SP_GET_SISA_ALL = "{call PKG_ADMINISTRACION.SP_GET_SISA_ALL(?)}";
-	private static final String SP_ACTUALIZAR_SISA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_SISA(?,?,?,?,?)}";
-	private static final String SP_GET_SISA_ID = "{call PKG_ADMINISTRACION.SP_GET_SISA_ID(?,?,?)}";
+	private static final String SP_PLANTILLA_VIGILANCIA = "{call PKG_ADMINISTRACION.SP_PLANTILLA_VIGILANCIA(?,?)}";
+	private static final String SP_REGISTRAR_VIGILANCIA = "{call PKG_ADMINISTRACION.SP_REGISTRAR_VIGILANCIA(?,?)}";
+	private static final String SP_BUSCAR_VIGILANCIA = "{call PKG_ADMINISTRACION.SP_BUSCAR_VIGILANCIA(?,?,?)}";
+	private static final String SP_GET_VIGILANCIA = "{call PKG_ADMINISTRACION.SP_GET_VIGILANCIA(?,?,?)}";
+	private static final String SP_GET_VIGILANCIA_ALL = "{call PKG_ADMINISTRACION.SP_GET_VIGILANCIA_ALL(?)}";
+	private static final String SP_ACTUALIZAR_VIGILANCIA = "{call PKG_ADMINISTRACION.SP_ACTUALIZAR_VIGILANCIA(?,?,?,?,?)}";
+	private static final String SP_GET_VIGILANCIA_ID = "{call PKG_ADMINISTRACION.SP_GET_VIGILANCIA_ID(?,?,?)}";
 	private static final String SP_MUESTRA_TEMP = "{call PKG_ADMINISTRACION.SP_MUESTRA_TEMP(?,?,?)}";
-	private static final String SP_UPD_SISAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_SISAANULADA(?)}";
+	private static final String SP_UPD_VIGILANCIAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_VIGILANCIAANULADA(?)}";
 	private static final String SP_DETALLE_ESTADO_CUENTA = "{call PKG_ADMINISTRACION.SP_DETALLE_ESTADO_CUENTA(?,?,?,?)}";
+	private static final String SP_VIGILANCIA_ASOCIADO = "{call PKG_ADMINISTRACION.SP_VIGILANCIA_ASOCIADO(?,?,?)}";
+	
 	
     /* (non-Javadoc)
-	 * @see pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal#mostrarPlatilla(java.lang.String)
+	 * @see pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal#mostrarPlatilla(java.lang.String)
 	 */
     @Override
 	public String mostrarPlatilla(String fecha) {
@@ -46,7 +50,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
-			rsdcPlatilla=JDBCUtil.callSQLProcRSString(connection,SP_PLANTILLA_SISA,objParams);
+			rsdcPlatilla=JDBCUtil.callSQLProcRSString(connection,SP_PLANTILLA_VIGILANCIA,objParams);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -60,13 +64,13 @@ public class SisasFacade implements SisasFacadeLocal {
     	return rsdcPlatilla;
     }
     	
-	public void registrarSisa(String periodo, String codigoSocio) {
+	public void registrarVigilancia(String periodo, String codigoSocio) {
     	Connection connection = null;
     	Object objParams[]   = {codigoSocio,periodo};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
-			JDBCUtil.callSQLProcExecute(connection,SP_REGISTRAR_SISA,objParams);
+			JDBCUtil.callSQLProcExecute(connection,SP_REGISTRAR_VIGILANCIA,objParams);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -85,7 +89,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
-			return (Integer) JDBCUtil.callSQLProcObject(connection,SP_BUSCAR_SISA,objParams);
+			return (Integer) JDBCUtil.callSQLProcObject(connection,SP_BUSCAR_VIGILANCIA,objParams);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -99,13 +103,13 @@ public class SisasFacade implements SisasFacadeLocal {
     	return -1;
     }
 	
-	public String getSisa(String periodo, String codigoSocio) {
+	public String getVigilancia(String periodo, String codigoSocio) {
     	Connection connection = null;
     	Object objParams[]   = {codigoSocio.trim(),periodo};
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
-			return JDBCUtil.callSQLProcRSString(connection,SP_GET_SISA,objParams);
+			return JDBCUtil.callSQLProcRSString(connection,SP_GET_VIGILANCIA,objParams);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -120,16 +124,16 @@ public class SisasFacade implements SisasFacadeLocal {
     }
 	
 	@Override
-	public List<Sisa> findAll() {
+	public List<Vigilancia> findAll() {
     	Connection connection = null;
     	Object objParams[]   = {};
-    	List<Sisa> lst = new  ArrayList<Sisa>();
+    	List<Vigilancia> lst = new  ArrayList<Vigilancia>();
     	try {			
     		connection = getConnection();
-			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_GET_SISA_ALL,objParams);
-			Sisa sisa= null;
+			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_GET_VIGILANCIA_ALL,objParams);
+			Vigilancia sisa= null;
 			while (rs.next()) {
-				sisa= new Sisa();
+				sisa= new Vigilancia();
 				sisa.setNombre(rs.getString("tran_razon_social"));
 				sisa.setPerido(rs.getDate("periodo"));
 				sisa.setPuesto(rs.getString("tran_puesto"));
@@ -155,7 +159,7 @@ public class SisasFacade implements SisasFacadeLocal {
 	
 	
 	@Override
-	public void updateSisa(String periodo, String codigo, String valuess, String fecIngreso, String recNumero) {
+	public void updateVigilancia(String periodo, String codigo, String valuess, String fecIngreso, String recNumero) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	if(fecIngreso.trim().equals("")){
@@ -168,7 +172,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	String rsdcPlatilla = null;
     	try {			
     		connection = getConnection();
-			JDBCUtil.callSQLProcExecute(connection,SP_ACTUALIZAR_SISA,objParams);
+			JDBCUtil.callSQLProcExecute(connection,SP_ACTUALIZAR_VIGILANCIA,objParams);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{			
@@ -191,16 +195,16 @@ public class SisasFacade implements SisasFacadeLocal {
 	}
 
 	@Override
-	public List<Sisa> findSisa(String date, String long1) {
+	public List<Vigilancia> findVigilancia(String date, String long1) {
     	Connection connection = null;
     	Object objParams[]   = {long1,date};
-    	List<Sisa> lst = new  ArrayList<Sisa>();
+    	List<Vigilancia> lst = new  ArrayList<Vigilancia>();
     	try {			
     		connection = getConnection();
-			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_GET_SISA_ID,objParams);
-			Sisa sisa= null;
+			ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_GET_VIGILANCIA_ID,objParams);
+			Vigilancia sisa= null;
 			while (rs.next()) {
-				sisa= new Sisa();
+				sisa= new Vigilancia();
 				sisa.setNombre(rs.getString("tran_razon_social"));
 				sisa.setPerido(rs.getDate("periodo"));
 				sisa.setPuesto(rs.getString("tran_puesto"));
@@ -224,7 +228,7 @@ public class SisasFacade implements SisasFacadeLocal {
     	return lst;
 	}
 	
-	public ResultSet getTempSisa(String periodo,Integer codigo){
+	public ResultSet getTempVigilancia(String periodo, Integer codigo){
 		
     	Connection connection = null;
     	Object objParams[]   = {periodo,codigo};		
@@ -243,9 +247,64 @@ public class SisasFacade implements SisasFacadeLocal {
 		return rs;
 		
 	}
-
+	
+	
 	@Override
-	public void eliminarSisa(String codigoSisa) {
+	public List<Vigilancia> findVigilanciaAsociado(String date, String long1) {
+    	Connection connection = null;
+    	/*Object objParams[] = {date,long1};
+    	Vigilancia sisa = null;
+    	List<Vigilancia> lstVigilancia = new  ArrayList<Vigilancia>();*/
+    	
+    	
+    	CallableStatement cst = null;
+		ResultSet rs;
+		List<Vigilancia> lstVigilancia = null;
+		Vigilancia sisa = null;
+    	try {			
+    		connection = getConnection();
+			//ResultSet rs =  JDBCUtil.callSQLProcRS(connection,SP_VIGILANCIA_ASOCIADO,objParams);
+			
+			lstVigilancia = new ArrayList<Vigilancia>();
+			cst = connection.prepareCall(SP_VIGILANCIA_ASOCIADO);
+			cst.setString("P_PERIODO", date);
+			cst.setString("P_CODIGO", long1);
+			cst.registerOutParameter("LSTVIGILANCIA", OracleTypes.CURSOR);
+			cst.execute();
+			
+			rs = (ResultSet) cst.getObject("LSTVIGILANCIA");
+			
+			while (rs.next()) {
+				sisa = new Vigilancia();
+			    sisa.setCodigo(rs.getLong("codigo"));
+			    sisa.setPuesto(rs.getString("puesto"));
+			    sisa.setNombre(rs.getString("nombres"));
+			    sisa.setGirocomer(rs.getString("girocomer"));
+			    sisa.setSector(rs.getString("sector"));
+				sisa.setPerido(rs.getDate("periodo"));
+				sisa.setTotaldias(rs.getInt("dia"));
+				sisa.setNumrecibo(rs.getString("numrecibo"));
+				sisa.setFechaIngreso(rs.getDate("fechaingreso"));
+				sisa.setValor(rs.getDouble("valor"));
+				sisa.setDeuda(rs.getDouble("deuda"));				
+				lstVigilancia.add(sisa);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+    
+    	return lstVigilancia;
+	}	
+
+	
+	@Override
+	public void eliminarVigilancia(String codigoVigilancia) {
 		// TODO Auto-generated method stub
     	Connection connection = null;
     	CallableStatement cst = null;
@@ -255,9 +314,9 @@ public class SisasFacade implements SisasFacadeLocal {
     		
     		connection = getConnection();
     		
-			cst = connection.prepareCall(SP_UPD_SISAANULADA);
+			cst = connection.prepareCall(SP_UPD_VIGILANCIAANULADA);
 			
-			cst.setLong("P_COD_SISA", new Long(codigoSisa));
+			cst.setLong("P_COD_VIGILANCIA", new Long(codigoVigilancia));
 			cst.execute();
 
 		} catch (Exception e) {

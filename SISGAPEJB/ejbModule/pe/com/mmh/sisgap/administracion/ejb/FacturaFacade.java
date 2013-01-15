@@ -20,6 +20,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
+import javax.xml.rpc.Call;
 
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
@@ -28,6 +29,9 @@ import oracle.jdbc.oracore.OracleType;
 
 import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
+import pe.com.mmh.sisgap.domain.SisgapReuniones;
+import pe.com.mmh.sisgap.domain.Socio;
+import pe.com.mmh.sisgap.domain.Vigilancia;
 
 /**
  *
@@ -42,10 +46,10 @@ public class FacturaFacade implements FacturaFacadeLocal {
 	private static final String SP_LST_GENERARNRODOC = "{call PKG_ADMINISTRACION.SP_LST_GENERARNRODOC(?,?)}";
 	private static final String SP_UPD_FACTURAANULADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURAANULADA(?,?)}";
 	private static final String SP_UPD_FACTURACANCELADA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURACANCELADA(?)}";
-	private static final String SP_LST_FACTURA = "{call PKG_ADMINISTRACION.SP_LST_FACTURA(?)}";
+	private static final String SP_LST_FACTURA = "{call PKG_ADMINISTRACION.SP_LST_FACTURA(?,?)}";
 	private static final String SP_UPD_FACTURAIMPRESA = "{call PKG_ADMINISTRACION.SP_UPD_FACTURAIMPRESA(?,?)}";
 	private static final String SP_UPD_NROFACTURASOCIO = "{call PKG_ADMINISTRACION.SP_UPD_NROFACTURASOCIO(?,?)}";
-
+	private static final String SP_EDIT_ITEMFACTURA = "{call PKG_ADMINISTRACION.SP_EDIT_ITEMFACTURA(?,?)}";
 	
 	@Resource(mappedName="java:/jdbc/sisgapDS")
 	private DataSource dataSource;
@@ -89,7 +93,7 @@ public class FacturaFacade implements FacturaFacadeLocal {
         return em.find(Factura.class, id);
     }
 
-    public List<Factura> findAll() {
+    public List<Factura> findAlls() {
     	
     	// Ordenando por tipo documento (1).
     	// Ordenando por nro doc interno (2).
@@ -102,11 +106,63 @@ public class FacturaFacade implements FacturaFacadeLocal {
         return em.createQuery("select object(o) from Factura as o order by 6 desc").getResultList();
 //    	return facturas;
     }
+    
+    public List<Factura> findAll(Long estado) {
+    	
+    	// Ordenando por tipo documento (1).
+    	// Ordenando por nro doc interno (2).
+    	// Ordenando por socio (3).
+    	// Ordenando por puesto (4).
+    	// Ordenando por actividad (5).
+    	// Ordenando por fecha de creacion (6).
+    	// Ordenando por total (7).
+    	// Ordenando por estado (8).
+        ////return em.createQuery("select object(o) from Factura as o order by 6 desc").getResultList();
+//    	return facturas;
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	ResultSet rs;
+    	Factura srs = null;
+    	List<Factura> lstFac = new  ArrayList<Factura>();
+    	try {
+    		connection = getConnection();
+    		cst = connection.prepareCall(SP_LST_FACTURA);
+    		
+    		cst.registerOutParameter("LSTFACTURA", OracleTypes.CURSOR);
+    		cst.setLong("P_ESTADO", estado);
+			cst.execute();
+			
+			rs = (ResultSet) cst.getObject("LSTFACTURA");            			
+			
+			while (rs.next()) {
+				srs = new Factura();
+				srs.setCodFactura(rs.getLong("COD_FACTURA"));
+				srs.setStrTipodoc(rs.getString("STR_TIPODOC"));
+				srs.setNumNrodoc(rs.getBigDecimal("NUM_NRODOC"));
+				srs.setNroFactura(rs.getString("NRO_FACTURA"));
+				srs.setNombresocio(rs.getString("SOCIO"));
+				srs.setTranPuesto(rs.getString("PUESTO"));
+				srs.setActiTranNombre(rs.getString("ACTIVIDAD"));
+				srs.setDatFechacred(rs.getDate("DAT_FECHACRED"));
+				srs.setNumTotal(rs.getBigDecimal("NUM_TOTAL"));
+				srs.setNumEstado(rs.getBigDecimal("NUM_ESTADO"));
+				lstFac.add(srs);
+			}
+    		
+    	} catch (Exception e) {
+    		
+    	}
+    	
+    	return lstFac;
+    }
 
+    
+    
 	@Override
 	public void grebarFactura(Long numerodocumento, String fechadocumento, String totalfac, String codigoide,
 			String cbtipodoc, List<Detallefactura> detallefactura, String acuenta) {
 		// TODO Auto-generated method stub
+		System.out.println("[FacturaFacade] Inicio - grebarFactura");
     	Connection connection = null;
     	CallableStatement cst = null;
     	
@@ -129,23 +185,22 @@ public class FacturaFacade implements FacturaFacadeLocal {
 			
 			BigDecimal codigo = cst.getBigDecimal("P_CODIGO_FAC");
 			
-			cst = connection.prepareCall(SP_INS_DETFACTURA);
-			
-			for (Detallefactura det : detallefactura) {
-				
-				cst.setLong("P_COD_ITEMCOBRANZA", det.getId().getCodItemcobranza());
-				cst.setBigDecimal("P_COD_FACTURA", codigo);				
-				cst.setBigDecimal("P_NUM_COSTO", det.getNumCosto());				
-				cst.setString("P_STR_DESCRIPCION", det.getStrDescripcion());				
-				cst.setString("P_STR_TIPOCOBRANZA", det.getStrTipocobranza());
-				cst.setString("P_STR_MONEDA", det.getStrMoneda());
-				cst.setBigDecimal("P_NUM_CANTIDAD", det.getNumCantidad());
-				cst.setBigDecimal("P_NUM_ACUENTA", det.getNumAcuenta());		
-				
-				cst.execute();
-				
+			if (!(Integer.valueOf(codigo.toString())==0)){
+				cst = connection.prepareCall(SP_INS_DETFACTURA);
+				for (Detallefactura det : detallefactura) {
+					cst.setLong("P_COD_ITEMCOBRANZA", det.getId().getCodItemcobranza());
+					cst.setBigDecimal("P_COD_FACTURA", codigo);				
+					cst.setBigDecimal("P_NUM_COSTO", det.getNumCosto());				
+					cst.setString("P_STR_DESCRIPCION", det.getStrDescripcion());				
+					cst.setString("P_STR_TIPOCOBRANZA", det.getStrTipocobranza());
+					cst.setString("P_STR_MONEDA", det.getStrMoneda());
+					cst.setBigDecimal("P_NUM_CANTIDAD", det.getNumCantidad());
+					cst.setBigDecimal("P_NUM_ACUENTA", det.getNumAcuenta());		
+					cst.execute();
+				}
 			}
-			
+		
+		System.out.println("[FacturaFacade] Final - grebarFactura");
 		} catch (Exception e) {
 			try {
 				connection.rollback();
@@ -350,4 +405,48 @@ public class FacturaFacade implements FacturaFacadeLocal {
 				}
 		}
 	}
+	
+	
+	@Override
+	public List<Detallefactura> editarDetalle(Long codigoFact, Long codigoItem) {
+		// TODO Auto-generated method stub
+    	Connection connection = null;
+    	CallableStatement cst = null;
+    	ResultSet rs;
+    	Factura fac = null;
+    	List<Detallefactura> lstDetFac = new  ArrayList<Detallefactura>();
+    	try {    		
+    		connection = getConnection();
+    		
+			cst = connection.prepareCall(SP_EDIT_ITEMFACTURA);
+			cst.setLong("P_COD_ITEM", new Long(codigoFact));
+			cst.setLong("P_COD_FACT", new Long(codigoItem));
+			cst.registerOutParameter("LSTDETALLE", OracleTypes.CURSOR);
+			cst.execute();
+			
+			rs = (ResultSet) cst.getObject("LSTVIGILANCIA");
+			
+			while (rs.next()) {
+				
+			}
+
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(cst!=null){cst.close();}
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+    	
+    	return lstDetFac;
+	}
+
 }

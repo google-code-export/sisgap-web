@@ -30,11 +30,13 @@ import pe.com.mmh.sisgap.domain.Detallefactura;
 import pe.com.mmh.sisgap.domain.Factura;
 import pe.com.mmh.sisgap.domain.ItemSumistroLuz;
 import pe.com.mmh.sisgap.domain.Itemcobranza;
+import pe.com.mmh.sisgap.domain.ReciboLuzAsociado;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.Socio;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
 import pe.com.mmh.sisgap.domain.SumistroLuz;
 import pe.com.mmh.sisgap.domain.SumistroLuzDet;
+import pe.com.mmh.sisgap.domain.Vigilancia;
 
 /**
  *
@@ -59,6 +61,8 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 	private static final String SP_UPD_SUMINISTROLUZSOCIO = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_UPD_SUMINISTROLUZSOCIO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 	private static final String SP_SUMINISTROLUZSOCIOPAGAR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOPAGAR(?,?,?)}";
 	private static final String SP_SUMINISTROLUZSOCIOIMPRIMIR = "{call PKG_ADMINISTRACION.SP_SUMINISTROLUZSOCIOIMPRIMIR(?,?,?)}";
+	
+	private static final String SP_LIST_SUMINISTROLUZxSOCIOS = "{call PKG_SISGAP_RECIBOLUZ_SOCIO.SP_LIST_SUMINISTROLUZxSOCIOS(?,?)}";
 	
 	//private static final String SP_LST_RECIBOLUZSOCIO = "{call PKG_ADMINISTRACION.SP_LST_SUMISTROLUZxCODSOCIO(?,?,?)";
 	
@@ -1104,6 +1108,9 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 			e.printStackTrace();
 		}finally{
 			try {
+				connection = getConnection();
+				lsSuministroLuzSocio = new ArrayList<SuministroLusReciboSocio>();
+				
 				connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -1115,5 +1122,54 @@ public class SuministroLuzFacade implements SuministroLuzFacadeLocal {
 		return lsSuministroLuzSocio;
 		
 	}
+	
+	
+	@Override
+	public List<ReciboLuzAsociado> findSuministroxAsociado(BigDecimal long1) {
+		System.out.println("[SuministroLuzFacade] Inicio - findSuministroxAsociado");
+		
+    	Connection connection = null;
+    	CallableStatement cst = null;
+		ResultSet rs;
+		List<ReciboLuzAsociado> lstSuministroLusReciboSocio = null;
+		ReciboLuzAsociado srs = null;
+
+		try {
+			connection = getConnection();
+			lstSuministroLusReciboSocio = new ArrayList<ReciboLuzAsociado>();
+			cst = connection.prepareCall(SP_LIST_SUMINISTROLUZxSOCIOS);
+			
+			cst.registerOutParameter(1, OracleTypes.CURSOR);
+			cst.setBigDecimal(2, long1);
+			cst.execute();
+			rs = (ResultSet) cst.getObject(1);
+			
+			while(rs.next()){	
+				srs = new ReciboLuzAsociado();
+				srs.setCodigoRecibo(rs.getBigDecimal("CODIGORECIBO"));
+				srs.setCodigoSocio(rs.getBigDecimal("CODIGOSOCIO"));
+				srs.setCorrelativo(rs.getBigDecimal("CORRELATIVO"));
+				srs.setTotal(rs.getBigDecimal("TOTAL"));
+				srs.setTotalReciboOrg(rs.getBigDecimal("TOTALMESACT"));
+				srs.setPeriodo(rs.getString("PERIODO"));
+				srs.setEstado(rs.getString("ESTADO"));
+				lstSuministroLusReciboSocio.add(srs);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{			
+				try {
+					if(connection!=null){connection.close();}					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+    
+    	System.out.println("[SuministroLuzFacade] Final - findSuministroxAsociado");
+    	return lstSuministroLusReciboSocio;
+	}	
+
+	
 	
 }
