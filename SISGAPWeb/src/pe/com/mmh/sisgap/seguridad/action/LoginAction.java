@@ -14,17 +14,6 @@ import pe.com.mmh.sisgap.comun.BaseDispatchAction;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.seguridad.action.form.LoginActionForm;
 
-
-
-import com.infocorp.segap.negocio.LoginException;
-
-//import pe.com.equifax.paramweb.comun.GrandActionAbstract;
-//import pe.com.equifax.paramweb.comun.constantes.Constantes;
-//import pe.com.equifax.paramweb.factory.ServiceFactory;
-//import pe.mmh.sisgap.paramweb.seguridad.action.form.LoginActionForm;
-//import pe.com.equifax.paramweb.seguridad.domain.UserInfo;
-//import pe.com.equifax.paramweb.util.SeguridadUtil;
-
 public class LoginAction extends BaseDispatchAction{
 
   /**
@@ -58,9 +47,6 @@ public class LoginAction extends BaseDispatchAction{
 //			}
 		}
 	    catch(Exception ex){
-//			ex.printStackTrace();
-//			request.setAttribute(Constantes.EXCEPTION,ex);
-//			this.saveToken(request);
 			return mapping.findForward("ingresarSistema");
 		}finally{          
 			frm.setTxtPassword("");
@@ -79,13 +65,6 @@ public class LoginAction extends BaseDispatchAction{
 	 */
 	public ActionForward  cargarCambiarPassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
-//		UserInfo user = SeguridadUtil.obtenerUsuarioSesion(request);
-//		if(user==null){
-//			ResourceBundle rb = ResourceBundle.getBundle("pe.com.equifax.paramweb.resources.mensajes");
-//			request.setAttribute(Constantes.ALERT_MSG, rb.getString("GENERI.ERR.001"));
-//            this.saveToken(request);
-//			return mapping.findForward("ingresarSistema");
-//		}
 		return mapping.findForward("cargarCambiarPassword");
 	}
 	
@@ -98,37 +77,6 @@ public class LoginAction extends BaseDispatchAction{
 	 * @return
 	 * @throws Exception
 	 */
-//	public ActionForward  cambiarPassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		
-//		LoginActionForm frm=(LoginActionForm)form;							
-//		UserInfo user = SeguridadUtil.obtenerUsuarioSesion(request);
-//		if(user==null){//usuario no logeado. no puede cambiar contraseña
-//			ResourceBundle rb = ResourceBundle.getBundle("pe.com.equifax.paramweb.resources.mensajes");
-//			request.setAttribute(Constantes.ALERT_MSG, rb.getString("GENERI.ERR.001"));
-//            this.saveToken(request);
-//			return mapping.findForward("ingresarSistema");
-//		}
-//		 
-//		try{			
-//			//proceder a iniciar sesion
-//		     ServiceFactory.getSeguridadService().cambiarPasswordPassword(user, frm.getTxtPassword(), frm.getTxtNuevoPassword(),request);				
-//			 user.setDebeCambiarPwd(false);		
-//			//direccionar a pagina principal			
-//			return mapping.findForward("inicio");									
-//		}catch(LoginException lex){
-//			request.setAttribute(Constantes.ALERT_MSG, lex.getMessage());
-//			logger.error("Ocurrió un error", lex);
-//			return mapping.findForward("cargarCambiarPassword");
-//		}catch(Exception ex){
-//            ex.printStackTrace();
-//            logger.error("Ocurrió un error", ex);
-//			request.setAttribute(Constantes.EXCEPTION,ex);
-//			return mapping.findForward("cargarCambiarPassword");
-//		}finally{
-//			frm.setTxtPassword("");
-//		}
-//		
-//	}
 	
 	/**
 	 * Muestra pantalla de Inicio
@@ -155,20 +103,6 @@ public class LoginAction extends BaseDispatchAction{
    */
 	public ActionForward cerrarSesion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		   
-		  // Si NO ha presionadp el botón CerrarSesion		
-//		   if(request.getParameter("boton")==null){
-//			   //Le envío un mensaje
-//			   ResourceBundle rb = ResourceBundle.getBundle("pe.com.equifax.paramweb.resources.mensajes");
-//			   request.setAttribute(Constantes.ALERT_MSG, rb.getString("GENERI.ERR.001"));
-//		   }
-//			//proceder a iniciar sesion
-//			HttpSession session = request.getSession();
-//			session = request.getSession(false);
-//			if(session != null) {
-//				session.setMaxInactiveInterval(1);
-//				session.invalidate();
-//			}									            			
-//			
 			return mapping.findForward("ingresarSistema");					
 	}
 		

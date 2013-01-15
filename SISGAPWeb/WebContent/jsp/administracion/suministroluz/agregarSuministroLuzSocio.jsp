@@ -410,10 +410,10 @@ var codMon = "";
 			}
 		});
 
-		$("table#person").createScrollableTable({  
+		/*$("table#person").createScrollableTable({  
 			width: '800px',  
 			height: '400px' 
-		}); 
+		}); */
 					
 
 	});
@@ -683,6 +683,20 @@ return true;*/
 		frm.submit();
 	}
 
+
+	function verReporte(xcodRecibo,xcodSocio){
+		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+        nueva=window.open('/SISGAPWeb/suministroLuz.do?metodo=verReporteSuministroLuz&xcodSocio='+xcodSocio, 'Popup', caracteristicas);
+		return false;
+
+/*		var frm = document.gestionarFacturacion;
+		frm.metodo.value = 'verReporteSuministroLuz';
+		frm.xcodRecibo.value = xcodRecibo;
+		frm.xcodSocio.value = xcodSocio; 
+		frm.submit();*/
+	} 
+	
+	
 </script>
 </head>
 <body>
@@ -711,6 +725,8 @@ return true;*/
 		<input type="hidden" name="txtTotal" id="txtTotal" />
 		<input type="hidden" name="txtDeudaAnt" id="txtDeudaAnt" />
 
+	    <input type="hidden" name="xcodRecibo" id="xcodRecibo" />
+	    <input type="hidden" name="xcodSocio" id="xcodSocio" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
@@ -811,11 +827,13 @@ return true;*/
 			<c:choose>
 				<c:when test="${row.estado==2}">
 					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/reporte.png" alt="Reporte Detallado..." border="0" width="16" height="16" onclick="verReporte(${row.codigorecibo},${row.codigosocio});"/>
 				</c:when>
 				<c:otherwise>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminarRes(${row.correlativo},${row.codigosocio},${row.codigorecibo});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="editarRes(${row.codigorecibo},${row.codigosocio},${row.correlativo},${row.lecturaini},${row.lecturafin},${row.consumomes},${row.cagofijo},${row.alupublic},${row.cargoener},${row.totalmes},${row.igv},${row.subtotalmes},${row.usoequipo},${row.servmanto},${row.aporteley},${row.recargo},${row.redondeo},${row.total},${row.deudaant});"/>
 					<img src="<%=request.getContextPath()%>/imagenes/manto/ver.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarRep(${row.codigorecibo},${row.codigosocio},${row.correlativo});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/reporte.png" alt="Reporte Detallado..." border="0" width="16" height="16" onclick="verReporte(${row.codigorecibo},${row.codigosocio});"/>
 				</c:otherwise>
 			</c:choose>
 			</display:column>
@@ -834,7 +852,7 @@ return true;*/
 			</display:column>
 			</c:if>
 			<c:if test="${row.impreso==1}">
-			<display:column title="Estado" sortable="true" style="width:100px; text-align:center; background-color:#7ACAFF">
+			<display:column title="Estado" sortable="true" style="width:100px; text-align:center; background-color:#FBEE99">
 				<c:choose>
 					<c:when test="${row.estado==1}"><font color="red">Pendiente</font></c:when>
 					<c:when test="${row.estado==2}"><font color="blue"><b>Pagado</b></font></c:when>

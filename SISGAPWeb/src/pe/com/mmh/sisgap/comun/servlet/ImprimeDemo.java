@@ -15,13 +15,22 @@ public class ImprimeDemo implements Printable {
 
 	static String valor1;
 	static String valor2;
+	static String valor3;
+	static String valor4;
+	static String valor5;
 	
-	public static void Demo(String valor_1, String valor_2) {
+	public static void Demo(String valor_1, String valor_2, String valor_3, String valor_4, String valor_5) {
 		valor1 = valor_1;
 		valor2 = valor_2;
+		valor3 = valor_3;
+		valor4 = valor_4;
+		valor5 = valor_5;
 		
 		System.out.println("Valor 1 : " + valor1);
 		System.out.println("Valor 2 : " + valor2);
+		System.out.println("Valor 3 : " + valor3);
+		System.out.println("Valor 4 : " + valor4);
+		System.out.println("Valor 5 : " + valor5);
 	}
 	
 	@Override
@@ -31,13 +40,19 @@ public class ImprimeDemo implements Printable {
 			return NO_SUCH_PAGE;
 		
 		Graphics2D g2 = (Graphics2D) g; //Courier New, SansSerif 
-		g2.setFont(new Font("Courier New",Font.PLAIN, 14));
+		g2.setFont(new Font("Courier New",Font.PLAIN, 12));
 		g2.setPaint(Color.black);
 		g2.drawString(valor1, 50, 50);
 		
 		g2.setFont(new Font("Courier",Font.PLAIN, 12));
 		g2.drawString(valor2, 150, 150);
-
+		g2.setFont(new Font("Courier",Font.PLAIN, 12));
+		g2.drawString(valor3, 150, 165);
+		g2.setFont(new Font("Courier",Font.PLAIN, 12));
+		g2.drawString(valor4, 150, 180);
+		g2.setFont(new Font("Courier",Font.PLAIN, 12));
+		g2.drawString(valor5, 150, 195);
+		
 		Rectangle2D outline = new Rectangle2D.Double(
 						pf.getImageableX(), 
 						pf.getImageableY(), 
@@ -50,8 +65,8 @@ public class ImprimeDemo implements Printable {
 	}
 
 	
-	public static void Imprime(String valor_1, String valor_2){
-		Demo(valor_1, valor_2);
+	public static void Imprime(String valor_1, String valor_2, String valor_3, String valor_4, String valor_5){
+		Demo(valor_1, valor_2, valor_3, valor_4, valor_5);
 		PrinterJob pj = PrinterJob.getPrinterJob();
 		PageFormat pf = pj.defaultPage();
 		Paper paper = new Paper();

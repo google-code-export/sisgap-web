@@ -1,5 +1,6 @@
 package pe.com.mmh.sisgap.administracion.action;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,12 +13,12 @@ import org.apache.struts.action.ActionMapping;
 
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
-import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
-import pe.com.mmh.sisgap.domain.Sisa;
+import pe.com.mmh.sisgap.domain.Vigilancia;
 
-public class RegistroSisasAction extends GrandActionAbstract {
+public class RegistroVigilanciaAction extends GrandActionAbstract {
 	
 	String per;
 	String cod;
@@ -25,34 +26,34 @@ public class RegistroSisasAction extends GrandActionAbstract {
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		System.out.println("[RegistroSisasAction] Inicio - cargarAction");
-		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
-		List<Sisa> list = facadeLocal.findAll();
-		request.setAttribute("lstSisa", list);
+		System.out.println("[RegistroVigilanciaAction] Inicio - cargarAction");
+		VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
+		List<Vigilancia> list = facadeLocal.findAll();
+		request.setAttribute("lstVigilancia", list);
 		
-		for(int a=0; a<list.size(); a++){
+		/*for(int a=0; a<list.size(); a++){
 			System.out.println(list.get(a).getCodigo()+ " - " + list.get(a).getTranCodigo().trim() + " - " + list.get(a).getEstado());
-		}
+		}*/
 		
-		System.out.println("[RegistroSisasAction] Final - cargarAction");
+		System.out.println("[RegistroVigilanciaAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
 	
 	public ActionForward blankpage(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		System.out.println("[RegistroSisasAction] Inicio - blankPage");
+		System.out.println("[RegistroVigilanciaAction] Inicio - blankPage");
 
-		System.out.println("[RegistroSisasAction] Final - blankPage");
+		System.out.println("[RegistroVigilanciaAction] Final - blankPage");
 		return mapping.findForward("blankpage");
 	}
 
 	
-	public ActionForward updateSisa(ActionMapping mapping, ActionForm form,
+	public ActionForward updateVigilancia(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		System.out.println("[RegistroSisasAction] Inicio - updateSisa");
-		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
+		System.out.println("[RegistroVigilanciaAction] Inicio - updateVigilancia");
+		VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
 
 		//Antes
 		/*String codigo = request.getParameter("codigoide");
@@ -68,30 +69,30 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		if(valuess!=null){
 			String[] fecha = periodo.split("-");
 			periodo = fecha[2] + "-" + fecha[1] + "-" + fecha[0];
-			facadeLocal.updateSisa(periodo,codigo,valuess,fecIngreso,recNumero);
+			facadeLocal.updateVigilancia(periodo,codigo,valuess,fecIngreso,recNumero);
 		}
-		List<Sisa> list = facadeLocal.findAll();
-		request.setAttribute("lstSisa", list);
-		System.out.println("[RegistroSisasAction] Final - updateSisa");		
+		List<Vigilancia> list = facadeLocal.findAll();
+		request.setAttribute("lstVigilancia", list);
+		System.out.println("[RegistroVigilanciaAction] Final - updateVigilancia");		
 		return mapping.findForward("cargarAction");
 	}
 	
 	//SP_UPD_SISAANULADA
 	public ActionForward eliminar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-		System.out.println("[RegistroSisasAction] Inicio - eliminar");
-		SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
+		System.out.println("[RegistroVigilanciaAction] Inicio - eliminar");
+		VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
 
-		String codigoSisa = request.getParameter("codigoSisa");
+		String codigoVigilancia = request.getParameter("codigoVigilancia");
 		
-		if(codigoSisa!=null){
+		if(codigoVigilancia!=null){
 			
-			facadeLocal.eliminarSisa(codigoSisa);
+			facadeLocal.eliminarVigilancia(codigoVigilancia);
 			
 		}
 		
-		List<Sisa> list = facadeLocal.findAll();
-		request.setAttribute("lstSisa", list);
-		System.out.println("[RegistroSisasAction] Final - eliminar");
+		List<Vigilancia> list = facadeLocal.findAll();
+		request.setAttribute("lstVigilancia", list);
+		System.out.println("[RegistroVigilanciaAction] Final - eliminar");
 		return mapping.findForward("cargarAction");
 	}
 
@@ -100,7 +101,7 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
-		System.out.println("[RegistroSisasAction] Inicio - findGenerator");
+		System.out.println("[RegistroVigilanciaAction] Inicio - findGenerator");
 		String fecha = request.getParameter("startDate");
 		String codigo = request.getParameter("codigo-f"); //codigoide (antes)
 		String periodo = request.getParameter("periodo");
@@ -139,7 +140,7 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			
 			//System.out.println(codigo);
 			//System.out.println(getDate(fecha));
-			SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
+			VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
 			int valor = facadeLocal.registraFind(getDate(fecha), codigo.trim());
 			
 			if(valor==1){
@@ -147,43 +148,39 @@ public class RegistroSisasAction extends GrandActionAbstract {
 				String ajax = request.getParameter("ajax");
 				
 				if(ajax!=null){
-					System.out.println("[RegistroSisasAction] Inicio - Ajax - findGenerator");
+					System.out.println("[RegistroVigilanciaAction] Inicio - Ajax - findGenerator");
 					String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
-					String lss = facadeLocal.getSisa(getDate(fecha), codigo.trim());				
+					String lss = facadeLocal.getVigilancia(getDate(fecha), codigo.trim());				
 					request.setAttribute("lstPlan", getTable(ls,fecha,lss));
 					
 					System.out.println(getTable(ls,fecha,lss));
 					
-					System.out.println("[RegistroSisasAction] Final - Ajax - findGenerator");
+					System.out.println("[RegistroVigilanciaAction] Final - Ajax - findGenerator");
 					return mapping.findForward("blankpage");
 				}
 				
 			}else{
 				System.out.println(fecha);
-				//facadeLocal.registrarSisa(getDate(fecha), new Long(codigo)); //reemplazando registro
-				facadeLocal.registrarSisa(getDate(fecha), codigo.trim());
-//				String ls = facadeLocal.mostrarPlatilla(getDate(fecha));
-//				String lss = facadeLocal.getSisa(getDate(fecha),new Long(codigo));
-				List<Sisa> list = facadeLocal.findAll();
-				request.setAttribute("lstSisa", list);
-//				request.setAttribute("lstPlan", getTable(ls,fecha,lss));
+				facadeLocal.registrarVigilancia(getDate(fecha), codigo.trim());
+				List<Vigilancia> list = facadeLocal.findAll();
+				request.setAttribute("lstVigilancia", list);
 			}
 			
-			//List<Sisa> list = facadeLocal.findSisa(getDate(fecha), codigo.trim());
-			//request.setAttribute("lstSisa", list);
+			//List<Sisa> list = facadeLocal.findVigilancia(getDate(fecha), codigo.trim());
+			//request.setAttribute("lstVigilancia", list);
 			
 		}else if(codigo!=null && !codigo.trim().equals("")){
 			
 		}
 		
 		request.setAttribute("showCalendar", "true");
-		System.out.println("[RegistroSisasAction] Final - findGenerator");
+		System.out.println("[RegistroVigilanciaAction] Final - findGenerator");
 		return mapping.findForward("cargarAction");
 	}
 	
 	
 	public String getDate(String date){
-		System.out.println("[RegistroSisasAction] Inicio - getDate");		
+		System.out.println("[RegistroVigilanciaAction] Inicio - getDate");		
 		String[] dates=date.split(" ");
 		
 		HashMap<String, String> model= new HashMap<String, String>();
@@ -203,12 +200,12 @@ public class RegistroSisasAction extends GrandActionAbstract {
 		
 		String dato = dates[1] + "-" + model.get(dates[0]) + "-" + "01";
 		
-		System.out.println("[RegistroSisasAction] Final - getDate "+dato);
+		System.out.println("[RegistroVigilanciaAction] Final - getDate "+dato);
 		return dato;
 	}
 	
 	public String getTable(String ls, String fecha,String dta){
-		System.out.println("[RegistroSisasAction] Inicio - getTable");
+		System.out.println("[RegistroVigilanciaAction] Inicio - getTable");
 		String[] calendario =ls.split(","); 
 		String[] lss = {}; 
 		if(dta!=null){
@@ -246,9 +243,35 @@ public class RegistroSisasAction extends GrandActionAbstract {
 			}
 		}
 		columnas += "</tr></table><br/></center>";
-		System.out.println("[RegistroSisasAction] Final - getTable");
+		System.out.println("[RegistroVigilanciaAction] Final - getTable");
 		return columnas;
 	}
 	
+	public ActionForward verReporteDiaVigilancia(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[RegistroVigilanciaAction] Inicio - verReporteDiaVigilancia");
+
+		String xperiodo = request.getParameter("xperiodo");
+		String xcodigo  = request.getParameter("xcodigo").trim();
+		
+		VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
+		
+		@SuppressWarnings("unchecked")
+		List<Vigilancia> list = facadeLocal.findVigilanciaAsociado(xperiodo, xcodigo);
+		
+		double totalValor = 0.0;
+		double totalDeuda = 0.0;
+		for (int a=0; a<list.size(); a++){
+			totalValor += list.get(a).getValor();
+			totalDeuda += list.get(a).getDeuda();
+			//System.out.println(list.get(a).getNombre().toString()+" "+list.get(a).getTotaldias().intValue()+
+			//		list.get(a).getNumrecibo()+" "+list.get(a).getTotalpagos().doubleValue()+" "+list.get(a).getDeuda());
+		}
+		request.setAttribute("totalValor", totalValor);
+		request.setAttribute("totalDeuda", totalDeuda);
+		request.setAttribute("lstVigilancia", list);
+		System.out.println("[RegistroVigilanciaAction] Final - verReporteDiaVigilancia");
+		return mapping.findForward("mostrarAction");
+	}
+
 	
 }

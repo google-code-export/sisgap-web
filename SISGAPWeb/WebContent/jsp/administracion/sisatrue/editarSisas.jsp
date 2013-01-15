@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<%@page import="org.apache.taglibs.standard.tag.el.fmt.ParseNumberTag"%>
 <%@include file="../../../taglibs.jsp"%>
 
 <html:html>
@@ -104,41 +105,34 @@ $(function() {
 	$("#btn-agregar-item").button();
 	$("#btn-registra-sh").button();
 	$("#btnAgregar").button();
-
-	var name = $("#name"), email = $("#email"), password = $("#password"), allFields = $(
-			[]).add(name).add(email).add(password), tips = $(".validateTips");
-
-	$("#btn-agregar-item").button().click(function() {
-		$("#tipoItem").val(0);
-		
+	
+	
+	$('#btn-agregar-item').click(function() {
 		if($('#tipoServicio').val()==0){
 			alert("Debe seleccionar un tipo de servicio");
 			$('#tipoServicio').focus();
 			return false;
-		}else if ($('#fechadocumento').val()==""){
-			alert("Debe seleccionar la fecha del reporte...");
-			$('[name=fechadocumento]').focus();
-			return false;
-		}else{
-			/*$("#tipoItem option[value='']").attr("selected","selected");*/
-			//Inicializa campos
-			$("#costo").val('');
-			$("#del").val('');
-			$("#al").val('');
-			$("#unidades").val('');
-			$("#cantidades").val('');
-			$("#total").val('');
-			//Inicializa atributos
-			$('#rango').attr({'style':'display:none'});
-			$('#canti').attr({'style':'display:none'});
-			$('#unidad').attr({'style':'display:none'});
-			$('#final').attr({'style':'display:none'});
-			//Abre ventana dialog*/
-			$("#dialog-form-item").dialog("open");
 		}
-		return false;
-	});
-	
+		if($('#fechadocumento').val()==""){
+			alert("Debe seleccionar una fecha");
+			$('#fechadocumento').focus();
+			return false;
+		}
+		
+		$("#tipoItem option[value='']").attr("selected","selected");
+		//Inicializa campos
+		$("#costo").val('');
+		$("#del").val('');
+		$("#al").val('');
+		$("#unidades").val('');
+		$("#total").val('');
+		//Inicializa atributos
+		$('#rango').attr({'style':'display:none'});
+		$('#unidad').attr({'style':'display:none'});
+		$('#final').attr({'style':'display:none'});
+		//Abre ventana dialog
+		$("#dialog-form-item").dialog("open");
+	}); 
 	
 	$("#dialog-form-item").dialog({
 		autoOpen : false,
@@ -147,6 +141,11 @@ $(function() {
 		modal : true,
 		buttons : {
 			Agregar : function() {
+				/*if($('#tipoServicio').val()==0){
+					alert("debe seleccionar el Tipo de Servicio");
+					$('#tipoServicio').focus();
+					return false;
+				}*/
 				if($('#tipoItem').val()==0){
 					alert("debe seleccionar el Tipo de Item");
 					$('#tipoItem').focus();
@@ -211,50 +210,51 @@ $(function() {
 	});
 
 	$("#btn-registra-sh").button().click(function() {
-		if($("#cant_campos").val()==0){
-			alert("No existe ningun dato a guardar, verifique");
-			return false;
-		}
 		$('[name=metodo]').val('grabar');
-		$('#servicioshigienicos').submit();
+		$('#sisas').submit();
 		
 	});
+	
+	$(document).ready(
+			function(){/* Aqui podria filtrar que controles necesitará manejar,
+						* en el caso de incluir un dropbox $('input,select');
+					   */
+				   tb=$('input,select');
+				   if($.browser.mozilla){
+					   $(tb).keypress(enter2tab);
+				   } else {
+					   $(tb).keydown(enter2tab);
+				   }
+			});
 
-	$("#fechadocumento").datepicker({  
-		dateFormat: 'yy/mm/dd', 
-        changeMonth: true,
-        changeYear: true,
-        numberOfMonths: 1,
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
-            'Junio', 'Julio', 'Agosto', 'Septiembre',
-            'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
-            'May', 'Jun', 'Jul', 'Ago',
-            'Sep', 'Oct', 'Nov', 'Dic'] 
-    });	
+			function enter2tab(e){
+				if(e.keyCode==13){				
+					cb=parseInt($(this).attr('tabindex'));
+					if ($(':input[tabindex=\''+ (cb + 1) +'\']') != null){
+						$(':input[tabindex=\''+ (cb + 1) +'\']').focus();
+						$(':input[tabindex=\''+ (cb + 1) +'\']').select();
+						e.preventDefault();
+						return false;
+					}
+				}
+			}
 
 
+			$("#fechadocumento").datepicker({  
+				dateFormat: 'yy/mm/dd', 
+	            changeMonth: true,
+	            changeYear: false,
+	            numberOfMonths: 1,
+	            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+	            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+	                'Junio', 'Julio', 'Agosto', 'Septiembre',
+	                'Octubre', 'Noviembre', 'Diciembre'],
+	            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
+	                'May', 'Jun', 'Jul', 'Ago',
+	                'Sep', 'Oct', 'Nov', 'Dic'] 
+	        }); 
 			
 });
-
-
-function SumarColumna(tablagrid, columna) {
-    var resultVal = 0.0;
-    var tabla = tablagrid;
-	//$("#tblDetalle tbody tr").not(':first').not(':last').each(
-    $("#"+ tabla +" tbody tr").not(':last').each(
-        function() {
-            var celdaValor = $(this).find('td:eq(' + columna + ')');
-            if (celdaValor.val() != null)
-                    resultVal += parseFloat(celdaValor.html().replace(',','.'));
-        } //function
-    ); //each*/
-    $("#tblDetalle tbody tr:last td:eq(" + columna + ")").html(resultVal.toFixed(2).toString());//.replace('.',','));
-    resultado = resultVal;
-    return resultado;
-}   		
-
 
 function agregarFila(obj){
     $("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);
@@ -270,7 +270,6 @@ function agregarFila(obj){
 	if(e.style.display=="block"){
 		cantid = ($("#al").val()-$("#del").val())+1;	
 	}
-	
 	var e=document.getElementById("unidad");
 	if(e.style.display=="block"){
 		cantid = $("#unidades").val();
@@ -284,33 +283,32 @@ function agregarFila(obj){
 	var strHtml4 = "<td>" + al + '<input type="hidden" id="hdnAl_' + oId + '" name="hdnAl_' + oId + '" value="' + al + '"/></td>' ;
 	var strHtml5 = "<td>" + costos + '<input type="hidden" id="hdnCostos_' + oId + '" name="hdnCostos_' + oId + '" value="' + costos + '"/></td>' ;
 	var strHtml6 = "<td>" + cantid + '<input type="hidden" id="hdnCantid_' + oId + '" name="hdnCantid_' + oId + '" value="' + cantid + '"/></td>' ;
-	var strHtml7 = "<td>" + totale + '<input type="hidden" id="hdnTotale_' + oId + '" name="hdnTotale_' + oId + '" value="' + totale + '"/></td>' ;
+	var strHtml7 = "<td id='uno'>" + totale + '<input type="hidden" id="hdnTotale_' + oId + '" name="hdnTotale_' + oId + '" value="' + totale + '"/></td>' ;
 	var strHtml8 = '<td><img src="imagenes/delete.png" width="16" height="16" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';
     strHtml8 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';
     //var strHtmlTr = "<tr id='rowDetalle_" + oId + "'></tr>";
     //var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6;
     //tambien se puede agregar todo el HTML de una sola vez.
-    var strHtmlTr = "<tr style='border:1px;' id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 + strHtml7 + strHtml8 + "</tr>";
+    var strHtmlTr = "<tr id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 + strHtml7 + strHtml8 + "</tr>";
     $("#tbDetalle").append(strHtmlTr);
     //si se agrega el HTML de una sola vez se debe comentar la linea siguiente.
     //$("#rowDetalle_" + oId).html(strHtmlFinal);
     var totales = 0.0;
-    totales = SumarColumna('tblDetalle', 6); 
-    
+    var subtotal;
+    var a;
+    for(a=1; a<=oId; a++){
+        datos = eval("document.forms[0].hdnTotale_"+a);
+        subtotal = parseFloat(datos.value);
+        totales = parseFloat(totales) + parseFloat(subtotal);
+    }
+	//alert("Totales:"+totales);
 	$("#totalGral").val(totales);
-	$("#hdntotalGral").val(totales);
 	
     return false;
 }
 
 function eliminarFila(oId){
-	//Eliminamos la fila deseada
-	$("#num_campos").val(oId);
-    $("#rowDetalle_" + oId).remove();
-    var totales = 0.0;
-    totales = SumarColumna('tblDetalle', 6);     
-	$("#totalGral").val(totales);
-	$("#hdntotalGral").val(totales);		
+    $("#rowDetalle_" + oId).remove();	
 	return false;
 }
 
@@ -319,20 +317,15 @@ function cancelar(){
 	return false;
 }
 
+
+
 function pagar(){
 	$('[name=metodo]').val('cancelarFactura');	
-	$('#servicioshigienicos').submit();
+	$('#sisas').submit();
 }
 
 	function costoSeleccionado(valor){
 		//alert(valor+" - "+valor.substring(1));
-		//Limpiar campos de salida
-		$('[name=del]').val('');
-		$('[name=al]').val('');
-		$('[name=cantidades]').val('');
-		$('[name=total]').val('');
-		
-		
 		var valor1 = valor.substring(1);
 		$('[name=costo]').val(valor1);
 
@@ -342,7 +335,6 @@ function pagar(){
 			case 2:
 			case 3:
 			case 4:
-				$('#canti').attr({'style':'display:block'});
 				$('#rango').attr({'style':'display:block'});
 				$('#unidad').attr({'style':'display:none'});
 				$('#final').attr({'style':'display:block'});
@@ -350,7 +342,6 @@ function pagar(){
 			case 5:
 			case 6:
 			case 7:
-				$('#canti').attr({'style':'display:none'});
 				$('#rango').attr({'style':'display:none'});
 				$('#unidad').attr({'style':'display:block'});
 				$('#final').attr({'style':'display:block'});
@@ -368,14 +359,11 @@ function pagar(){
 		var valor2 = 0;
 		var valor3 = 0;
 		var valor4 = 0;
-		var valor5 = 0;
 		valor1 = $('[name=del]').val();
 		valor2 = $('[name=al]').val();
 		valor3 = $('[name=costo]').val();
 		valor4 = $('[name=unidades]').val();
-		valor5 = $('[name=cantidades]').val();
-		if(valor2 >= valor1){
-			$('[name=cantidades]').val(redondear((valor2-valor1)+1));
+		if(valor2 > valor1){
 			$('[name=total]').val(redondear(((valor2-valor1)+1)*valor3,2));
 		}
 		if(valor4 != '')
@@ -392,18 +380,17 @@ function pagar(){
 </script>
 </head>
 <body>
-<html:form action="/servicioshigienicos.do" styleId="servicioshigienicos">
+<html:form action="/registrosisas.do" styleId="registrosisas">
 		<input type="hidden" name="metodo" />
 		<input type="hidden" id="num_campos" name="num_campos" value="0" />
     	<input type="hidden" id="cant_campos" name="cant_campos" value="0" />
     	<input type="hidden" id="hdnCabecera" name="hdnCabecera" value="" />
     	<input type="hidden" id="hdnItem" name="hdnItem" value="" />
-    	<input type="hidden" id="hdnTotalGral" name="hdnTotalGral" value="" />
     	<input type="hidden" name="fecdocumento" value="${fechadocumento}" />
     		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Ingresos / Servicios Higienicos</td>
+				<td width=885 align="left" class="titulo">Ingresos / Sisas</td>
 			</tr>
 		</table>
 		<table align="center">
@@ -428,28 +415,26 @@ function pagar(){
 			</table>
 		</logic:notEmpty>
 
+<!-- div class="button_div">    
+    <input type="reset" id="btnCancel" name="btnCancel" value="Cancelar" class="buttons_CANCEL" onclick="cancelar();" />
+    <input type="button" id="btnAgregar" name="btnAgregar" value="Agregar Persona" class="buttons_aplicar" onclick="agregarFila(document.getElementById('cant_campos'));" />
+    <input type="button" id="btnAgregar" name="btnAgregar" value="Guardar" class="buttons_OK" onclick="xajax_guardar(xajax.getFormValues('proyecto'));" />
+</div -->
+
 <fieldset class="fieldset">
-    <legend class="legend"><b>Nuevo registro - Detalle de Servicios</b></legend>
+    <legend class="legend"><b>Nuevo registro - Detalle de Sisas</b></legend>
     <div class="clear"></div>
 
 	<div id="cabecera" title="Fecha del Servicio" class="ui-widget ui-widget-content" width="100%">
 		<table border="0" cellpadding="2" cellspacing="2" width="800px">
 			<tr>
-				<td width="120px" align="left" style="color:red;"><b><label>SERVICIO:</label></b></td>
+				<td width="120px" align="left" style="color:red;"><b><label>SISAS:</label></b></td>
 				<td align="left" width="200px" style="color:red;">
-					<select name="tipoServicio" id="tipoServicio">
-						<option value="0" selected="selected">Seleccione</option>
-						<option value="1">BAÑO NRO. 1</option>
-						<option value="2">BAÑO NRO. 2</option>
-						<option value="3">BAÑO NRO. 3</option>
-						<option value="4">BAÑO NRO. 4</option>
-						<option value="5">BAÑO NRO. 5</option>
-						<option value="6">BAÑO NRO. 6</option>
-					</select>
+					<input type="text" id="tipoServicio" name="tipoServicio" class='text ui-widget-content ui-corner-all' value="${strDescripcion}" style=" width : 80px; color: red;"/>
 				</td>
-				<td width="120px" style="color:red;"><b><label>FECHA DEL SERVICIO:</label></b></td>
+				<td width="120px" style="color:red;"><b><label>FECHA DE LA SISA:</label></b></td>
 				<td width="350px" style="color:red;">
-					<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;" style="color:red;" />(año/mes/dia)
+					<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${datFechaServ}" style=" width : 80px; color: red;" />(año/mes/dia)
 				</td>
 			</tr>
 		</table>
@@ -461,9 +446,6 @@ function pagar(){
 				<button id="btn-agregar-item">Agregar Item</button>
 			</c:when>
 		</c:choose>
-	<!-- table width="100%" id="tblCabecera" name="tblCabecera" class="ui-widget ui-widget-content">
-		<tr><td><b><input type="text" align="middle" id="cabecera" name="cabecera" value="" style="color:red;"></b></td></tr>
-	</table -->
 	<table width="100%" id="tblDetalle" name="tblDetalle" class="ui-widget ui-widget-content">
 		<thead>
 			<tr class="ui-widget-header">
@@ -480,34 +462,65 @@ function pagar(){
 		<tbody id="tbDetalle">
 		</tbody>
 		<tr>
-			<td colspan="4">&nbsp;</td>
-			<td colspan="3" align="right"><label><input type="text" align="middle" id="totalGral" name="totalGral" value="0"></label></td>
+			<c:forEach items="${lstSrvDet}" var="row">
+				<tr>
+					<td>${row.codServiciodetalle }</td>
+					<td>${row.sisgapServicioItem.strDescripcion }</td>
+					<td>${row.numDel }</td>
+					<td>${row.numAl }</td>
+					<td>${row.numCosto }</td>
+					<td>${row.numCantidad }</td>
+					<c:set var="subtotal" value="${row.numCosto * row.numCantidad }" />
+					<td><c:out value="${subtotal}" /></td>
+					<c:set var="total" value="${total + subtotal }" />
+				</tr>
+			</c:forEach>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td colspan="3" align="right"><font size="2px" color="blue"><b>Total General S/. <c:out value="${total }" /></b></font></td>
 		</tr>		
 	</table>
 		<c:choose>
 			<c:when test="${isDetalle!=1}">
-				<button id="btn-registra-sh">Registrar Servicios</button>
+				<button id="btn-registra-sh">Registrar Sisas</button>
 			</c:when>
 		</c:choose>
 
     </div>
 </fieldset>
 				
-		<div id="dialog-form-item" title="Agregar Item a Detalle de Servicio" style="display: none">
+		<div id="dialog-form-item" title="Agregar Item a Detalle de Factura" style="display: none">
 		<fieldset>					
 				<!--legend>Registro</legend-->
 				<br>
-				<div id="grabarnuevo-form" title="Ingrese los datos de los Servicios...">
+				<div id="grabarnuevo-form" title="Ingrese los datos de las Sisas...">
 					<div align="center">
 					<table border="0">
 						<tr>
 							<td colspan="2">
 								<table border="0" cellpadding="0" cellspacing="2" width="500px">
+									<!-- tr>
+										<td width="120px" align="left"><label>SERVICIO:</label></td>
+										<td colspan="5" align="left">
+											<select name="tipoServicio" id="tipoServicio" tabindex="1">
+												<option value="0" selected="selected">Seleccione</option>
+												<option value="1">BAÑO NRO. 1</option>
+												<option value="2">BAÑO NRO. 2</option>
+												<option value="3">BAÑO NRO. 3</option>
+												<option value="4">BAÑO NRO. 4</option>
+												<option value="5">BAÑO NRO. 5</option>
+												<option value="6">BAÑO NRO. 6</option>
+											</select>
+										</td>
+									</tr -->
 									<tr>
 										<td align="left"><label>ITEM DE COBRANZA:</label></td>
 										<td> 
-											<select name="tipoItem" id="tipoItem" onchange="costoSeleccionado(this.value)" tabindex="1">
-												<option value="0" selected="selected">Seleccione</option>
+											<select name="tipoItem" id="tipoItem" onchange="costoSeleccionado(this.value)" tabindex="2">
+												<option value="" selected="selected">Seleccione</option>
 												<c:forEach items="${lstSI}" var="row">
 													<option value="${row.codServicioitem }${row.numCosto}">${row.strDescripcion }</option>
 												</c:forEach>
@@ -515,7 +528,7 @@ function pagar(){
 										</td>
 										<td width="80px"><label>COSTO:</label></td>
 										<td colspan="3">
-											<input type="text" name="costo" id="costo" value="${row.numCosto}" size="10" disabled="disabled" tabindex="2"/>
+											<input type="text" name="costo" id="costo" value="${row.numCosto}" size="10" disabled="disabled"/>
 										</td>
 									</tr>
 									<tr id="rango" style="display: none;">
@@ -529,21 +542,15 @@ function pagar(){
 										</td>
 									</tr>
 									<tr id="unidad" style="display: none;">
-										<td align="right"><label>UNIDADES:</label></td>
+										<td align="right"><label>Unidades:</label></td>
 										<td>
 											<input type='text' name='unidades' id='unidades' class='texto' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" style=" width : 100px;" tabindex="5"/>									
-										</td>
-									</tr>
-									<tr id="canti" style="display: none;">
-										<td align="right"><label>CANTIDAD:</label></td>
-										<td>
-											<input type='text' name='cantidades' id='cantidades' class='texto' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" style=" width : 100px;" disabled="disabled" tabindex="6"/>									
 										</td>
 									</tr>
 									<tr id="final" style="display: none;">
 										<td colspan="3" align="right"><label>TOTAL:</label></td>
 										<td>
-											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;" tabindex="7"/>									
+											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;"  tabindex="6"/>									
 										</td>
 									</tr>
 								</table>

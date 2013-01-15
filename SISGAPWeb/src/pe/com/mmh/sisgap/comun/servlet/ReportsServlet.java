@@ -56,7 +56,7 @@ import com.itextpdf.text.pdf.codec.Base64.InputStream;
 //Funcion EJB
 import pe.com.mmh.sisgap.administracion.action.FacturacionAction;
 import pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal;
-import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.transforms.decorators.ResultsDecorator;
@@ -258,18 +258,18 @@ public class ReportsServlet extends HttpServlet {
 				}
 				String codRec = request.getParameter("codRec");
 				parametros.put("P_CODIGO_RECIBO", codRec);
-			}else if (reporte.equals("LISTADO_SISAS")){
-				System.out.println("[ReportsServlet] Inicio - LISTADO_SISAS");
+			}else if (reporte.equals("LISTADO_VIGILANCIA")){
+				System.out.println("[ReportsServlet] Inicio - LISTADO_VIGILANCIA");
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado de Sisas.jrxml");
-				System.out.println("[ReportsServlet] Final - LISTADO_SISAS");
-			}else if (reporte.equals("REPORTE_DIA_SISAS")){
-				System.out.println("[ReportsServlet] Inicio - REPORTE_DIA_SISAS");
+				System.out.println("[ReportsServlet] Final - LISTADO_VIGILANCIA");
+			}else if (reporte.equals("REPORTE_DIA_VIGILANCIA")){
+				System.out.println("[ReportsServlet] Inicio - REPORTE_DIA_VIGILANCIA");
 				String periodo = request.getParameter("periodo");
-				String codigo  = request.getParameter("codigo");				
+				String codigo  = request.getParameter("codigo");
 				parametros.put("P_FECHA_PERIODO", periodo);
 				parametros.put("P_CODIGO_SOCIO", codigo);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Listado por Dia de Vigilancia.jrxml");
-				System.out.println("[ReportsServlet] Final - REPORTE_DIA_SISAS");
+				System.out.println("[ReportsServlet] Final - REPORTE_DIA_VIGILANCIA");
 			}else if (reporte.equals("REPORTE_DIARIO_DOCUMENTOS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_DIARIO_DOCUMENTOS");
 				String fecDoc = request.getParameter("fecDoc");
@@ -310,8 +310,8 @@ public class ReportsServlet extends HttpServlet {
 				parametros.put("P_FECHA", fecDoc);
 				ruta = getServletConfig().getServletContext().getRealPath("/WEB-INF/reportes/Reporte Diario de Servicios Higienicos 1.jrxml");
 				System.out.println("[ReportsServlet] Final - LISTADO_SERVICIOS_HIGIENICOS");
-			}else if(reporte.equals("REPORTE_SISAS")){
-				System.out.println("[ReportsServlet] Inicio - REPORTE_SISAS");
+			}else if(reporte.equals("REPORTE_VIGILANCIA")){
+				System.out.println("[ReportsServlet] Inicio - REPORTE_VIGILANCIA");
 				String fecDoc = request.getParameter("periodo");
 				String mes = fecDoc.substring(0, 3);
 				if (mes.equals("01/")) { fecDoc = fecDoc.replace("01/", "ENERO "); };
@@ -331,8 +331,8 @@ public class ReportsServlet extends HttpServlet {
 					Integer codigo = new Integer(request.getParameter("codigo"));
 					//String codigo = request.getParameter("codigo");
 					
-					SisasFacadeLocal facadeLocal = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
-					ResultSet rs = facadeLocal.getTempSisa(periodo, codigo);
+					VigilanciaFacadeLocal facadeLocal = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
+					ResultSet rs = facadeLocal.getTempVigilancia(periodo, codigo);
 			        Document document = new Document(PageSize.A4.rotate());
 			        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			        PdfWriter.getInstance(document, baos);
@@ -377,7 +377,7 @@ public class ReportsServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				System.out.println("[ReportsServlet] Final - REPORTE_SISAS");
+				System.out.println("[ReportsServlet] Final - REPORTE_VIGILANCIA");
 			}else if(reporte.equals("IMPRIME_BOLETAS")){
 				System.out.println("[ReportsServlet] Inicio - REPORTE_SOCIOS_ASAMBLEAS");
 				
@@ -566,7 +566,7 @@ public class ReportsServlet extends HttpServlet {
 		}
 	}
 	
-	private Connection getConnectionDirect(){
+/*	private Connection getConnectionDirect(){
 		    
 	    String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	    Connection con = null;
@@ -587,6 +587,6 @@ public class ReportsServlet extends HttpServlet {
 	    
 	    return con;
 		    
-	}
+	}*/
 }
 

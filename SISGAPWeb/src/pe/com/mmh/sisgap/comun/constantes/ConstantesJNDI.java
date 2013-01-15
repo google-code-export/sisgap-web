@@ -14,9 +14,10 @@ public class ConstantesJNDI {
 	public final static String LOCALIDADFACADE 		= "java:app/SISGAPEJB/LocalidadFacade!pe.com.mmh.sisgap.administracion.ejb.LocalidadFacadeLocal";
 	public final static String DETALLEFACTURAFACADE = "java:app/SISGAPEJB/DetallefacturaFacade!pe.com.mmh.sisgap.administracion.ejb.DetallefacturaFacadeLocal";
 	public final static String SUMINISTROLUZ		= "java:app/SISGAPEJB/SuministroLuzFacade!pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal";
-	public final static String SISASFACADE			= "java:app/SISGAPEJB/SisasFacade!pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal";
+	public final static String VIGILANCIAFACADE		= "java:app/SISGAPEJB/VigilanciaFacade!pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal";
 	public final static String SERVICIOSHIGIENICOS	= "java:app/SISGAPEJB/ServiciosHigienicosFacade!pe.com.mmh.sisgap.administracion.ejb.ServiciosHigienicosFacadeLocal";
 	public final static String SERVICIOSITEM        = "java:app/SISGAPEJB/ServiciosItemFacade!pe.com.mmh.sisgap.administracion.ejb.ServiciosItemFacadeLocal";
 	public final static String REUNIONESFACADE      = "java:app/SISGAPEJB/ReunionesFacade!pe.com.mmh.sisgap.administracion.ejb.ReunionesFacadeLocal";
 	public final static String REUNIONESSOCIOFACADE = "java:app/SISGAPEJB/ReunionesSocioFacade!pe.com.mmh.sisgap.administracion.ejb.ReunionesSocioFacadeLocal";
+	public final static String SISASFACADE          = "java:app/SISGAPEJB/SisasFacade!pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal";
 }

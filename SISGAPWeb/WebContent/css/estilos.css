@@ -31,11 +31,11 @@ body{
 .textoSubTitulo {	font-size: 1.5em;	color: gray;}
 
 /*Estilos para tablas*/
-.tablaEquifax {	padding: 10px;	text-align:center;border: 2px;border-color: black;}
-.tablaEquifax  th{background: #4682B4; color: white;}
-.tablaEquifax  td{	margin: 3px;color: black;}
-.tablaEquifax  tr.impar{	background: white;}
-.tablaEquifax  tr.par{	background: gray;}
+.tablaMMH {	padding: 10px;	text-align:center;border: 2px;border-color: black;}
+.tablaMMH  th{background: #4682B4; color: white;}
+.tablaMMH  td{	margin: 3px;color: black;}
+.tablaMMH  tr.impar{	background: white;}
+.tablaMMH  tr.par{	background: gray;}
 tr.par{background-color:#F0F0F0}
 
 /*Estilos para tablas de MMH*/
@@ -46,12 +46,12 @@ table.consultanormal tr.par{background-color:#F0F0F0}
 table.consultanormal tr.impar{background-color:#FFFFFF}
 table.consultanormal tr.seleccion{background-color:#FBEE99;}
 
-table.consultanormal tr:hover {  background-color: #7ACAFF;}
-table.consultanormal tr.par:hover{background-color:#7ACAFF;}
-table.consultanormal tr.even:hover{background-color:#7ACAFF;}
-table.consultanormal tr.odd:hover{background-color:#7ACAFF;}
-table.consultanormal tr.seleccion:hover{background-color:#7ACAFF;}
-table.consultanormal tr.impar:hover{background-color:#7ACAFF;}	
+table.consultanormal tr:hover {  background-color: #FBEE99;}
+table.consultanormal tr.par:hover{background-color:#FBEE99;}
+table.consultanormal tr.even:hover{background-color:#FBEE99;}
+table.consultanormal tr.odd:hover{background-color:#FBEE99;}
+table.consultanormal tr.seleccion:hover{background-color:#FBEE99;}
+table.consultanormal tr.impar:hover{background-color:#FBEE99;}	
 /* Color verde : #0066CC*/
 
 legend {	font-size: 14px;}

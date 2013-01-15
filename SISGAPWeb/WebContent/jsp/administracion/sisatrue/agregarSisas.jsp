@@ -104,36 +104,19 @@ $(function() {
 	$("#btn-agregar-item").button();
 	$("#btn-registra-sh").button();
 	$("#btnAgregar").button();
-
-	var name = $("#name"), email = $("#email"), password = $("#password"), allFields = $(
-			[]).add(name).add(email).add(password), tips = $(".validateTips");
+	
 
 	$("#btn-agregar-item").button().click(function() {
-		$("#tipoItem").val(0);
-		
-		if($('#tipoServicio').val()==0){
-			alert("Debe seleccionar un tipo de servicio");
-			$('#tipoServicio').focus();
+		if($('#tipoSisa').val()==0){
+			alert("Debe seleccionar un tipo de sisa");
+			$('#tipoSisa').focus();
 			return false;
 		}else if ($('#fechadocumento').val()==""){
-			alert("Debe seleccionar la fecha del reporte...");
+			alert("debe seleccionar el asociado...");
 			$('[name=fechadocumento]').focus();
 			return false;
 		}else{
-			/*$("#tipoItem option[value='']").attr("selected","selected");*/
-			//Inicializa campos
-			$("#costo").val('');
-			$("#del").val('');
-			$("#al").val('');
-			$("#unidades").val('');
-			$("#cantidades").val('');
-			$("#total").val('');
-			//Inicializa atributos
-			$('#rango').attr({'style':'display:none'});
-			$('#canti').attr({'style':'display:none'});
-			$('#unidad').attr({'style':'display:none'});
-			$('#final').attr({'style':'display:none'});
-			//Abre ventana dialog*/
+			alert("Antes de ir a dialog");
 			$("#dialog-form-item").dialog("open");
 		}
 		return false;
@@ -186,20 +169,10 @@ $(function() {
 				
 				agregarFila(document.getElementById('cant_campos'));
  
-				$("#hdnCabecera").val($('#tipoServicio :selected').val());
-				$("#hdnItem").val($('#tipoServicio :selected').text());
+				$("#hdnCabecera").val($('#tipoSisa :selected').val());
+				$("#hdnItem").val($('#tipoSisa :selected').text());
 				
 				$(this).dialog("close");
-					
-				/*var codigo =  $('#tipoItem').val().trim().substring(0,1);
-				$.ajax({
-			        type: "POST",
-			        url: "/SISGAPWeb/AjaxServlet",
-			        data: "action=BUSCAR_ITEM_SERVICIO&codigo="+codigo,
-			        success: function(datos){					        
-			        	$("#tableProducto").html(datos);
-			      	}
-				});*/
 
 			},
 			Cancelar : function() {
@@ -216,7 +189,7 @@ $(function() {
 			return false;
 		}
 		$('[name=metodo]').val('grabar');
-		$('#servicioshigienicos').submit();
+		$('#sisas').submit();
 		
 	});
 
@@ -232,29 +205,9 @@ $(function() {
         monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr',
             'May', 'Jun', 'Jul', 'Ago',
             'Sep', 'Oct', 'Nov', 'Dic'] 
-    });	
-
-
+    });			
 			
 });
-
-
-function SumarColumna(tablagrid, columna) {
-    var resultVal = 0.0;
-    var tabla = tablagrid;
-	//$("#tblDetalle tbody tr").not(':first').not(':last').each(
-    $("#"+ tabla +" tbody tr").not(':last').each(
-        function() {
-            var celdaValor = $(this).find('td:eq(' + columna + ')');
-            if (celdaValor.val() != null)
-                    resultVal += parseFloat(celdaValor.html().replace(',','.'));
-        } //function
-    ); //each*/
-    $("#tblDetalle tbody tr:last td:eq(" + columna + ")").html(resultVal.toFixed(2).toString());//.replace('.',','));
-    resultado = resultVal;
-    return resultado;
-}   		
-
 
 function agregarFila(obj){
     $("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);
@@ -287,30 +240,56 @@ function agregarFila(obj){
 	var strHtml7 = "<td>" + totale + '<input type="hidden" id="hdnTotale_' + oId + '" name="hdnTotale_' + oId + '" value="' + totale + '"/></td>' ;
 	var strHtml8 = '<td><img src="imagenes/delete.png" width="16" height="16" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';
     strHtml8 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';
-    //var strHtmlTr = "<tr id='rowDetalle_" + oId + "'></tr>";
-    //var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6;
     //tambien se puede agregar todo el HTML de una sola vez.
     var strHtmlTr = "<tr style='border:1px;' id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 + strHtml7 + strHtml8 + "</tr>";
     $("#tbDetalle").append(strHtmlTr);
     //si se agrega el HTML de una sola vez se debe comentar la linea siguiente.
-    //$("#rowDetalle_" + oId).html(strHtmlFinal);
     var totales = 0.0;
-    totales = SumarColumna('tblDetalle', 6); 
-    
+    var subtotal = 0.0;
+    var a = 0;
+    var Id = $("#num_campos").val();
+    for(a=1; a<=oId; a++){
+        alert("A: ["+a+"]   ID: ["+Id+"]");
+    	if (a == Id){
+        	a = parseInt(Id)+1;
+        	alert("Ahora a vale -->"+a);
+        }
+        datos = eval("document.forms[0].hdnTotale_"+a);
+        subtotal = parseFloat(datos.value);
+        totales = parseFloat(totales) + parseFloat(subtotal);
+    }
+
+    //alert("Totales:"+totales);
 	$("#totalGral").val(totales);
-	$("#hdntotalGral").val(totales);
 	
     return false;
 }
 
 function eliminarFila(oId){
+    //Capturamos el ID de la fila seleccionada
+    var Id = 0;
+    Id = oId;
+    $("#num_campos").val(parseInt(oId));
+	//Capturamos la cantidad de filas totales actuales
+    var filas = $("#cant_campos").val();
+
 	//Eliminamos la fila deseada
-	$("#num_campos").val(oId);
     $("#rowDetalle_" + oId).remove();
+
     var totales = 0.0;
-    totales = SumarColumna('tblDetalle', 6);     
+    var subtotal = 0.0;
+    var a=0;
+    for(a=1; a<=filas; a++){
+        ////alert("A: ["+a+ "]   ID: ["+Id+"]");
+    	if (a==Id){
+        	a=Id+1;
+        }
+        datos = eval("document.forms[0].hdnTotale_"+a);
+        subtotal = parseFloat(datos.value);
+        totales = parseFloat(totales) + parseFloat(subtotal);
+    }
 	$("#totalGral").val(totales);
-	$("#hdntotalGral").val(totales);		
+		
 	return false;
 }
 
@@ -319,20 +298,15 @@ function cancelar(){
 	return false;
 }
 
+
+
 function pagar(){
 	$('[name=metodo]').val('cancelarFactura');	
-	$('#servicioshigienicos').submit();
+	$('#sisas').submit();
 }
 
 	function costoSeleccionado(valor){
 		//alert(valor+" - "+valor.substring(1));
-		//Limpiar campos de salida
-		$('[name=del]').val('');
-		$('[name=al]').val('');
-		$('[name=cantidades]').val('');
-		$('[name=total]').val('');
-		
-		
 		var valor1 = valor.substring(1);
 		$('[name=costo]').val(valor1);
 
@@ -342,7 +316,6 @@ function pagar(){
 			case 2:
 			case 3:
 			case 4:
-				$('#canti').attr({'style':'display:block'});
 				$('#rango').attr({'style':'display:block'});
 				$('#unidad').attr({'style':'display:none'});
 				$('#final').attr({'style':'display:block'});
@@ -350,7 +323,6 @@ function pagar(){
 			case 5:
 			case 6:
 			case 7:
-				$('#canti').attr({'style':'display:none'});
 				$('#rango').attr({'style':'display:none'});
 				$('#unidad').attr({'style':'display:block'});
 				$('#final').attr({'style':'display:block'});
@@ -368,14 +340,11 @@ function pagar(){
 		var valor2 = 0;
 		var valor3 = 0;
 		var valor4 = 0;
-		var valor5 = 0;
 		valor1 = $('[name=del]').val();
 		valor2 = $('[name=al]').val();
 		valor3 = $('[name=costo]').val();
 		valor4 = $('[name=unidades]').val();
-		valor5 = $('[name=cantidades]').val();
-		if(valor2 >= valor1){
-			$('[name=cantidades]').val(redondear((valor2-valor1)+1));
+		if(valor2 > valor1){
 			$('[name=total]').val(redondear(((valor2-valor1)+1)*valor3,2));
 		}
 		if(valor4 != '')
@@ -392,18 +361,17 @@ function pagar(){
 </script>
 </head>
 <body>
-<html:form action="/servicioshigienicos.do" styleId="servicioshigienicos">
+<html:form action="/registrosisas.do" styleId="registrosisas">
 		<input type="hidden" name="metodo" />
 		<input type="hidden" id="num_campos" name="num_campos" value="0" />
     	<input type="hidden" id="cant_campos" name="cant_campos" value="0" />
     	<input type="hidden" id="hdnCabecera" name="hdnCabecera" value="" />
     	<input type="hidden" id="hdnItem" name="hdnItem" value="" />
-    	<input type="hidden" id="hdnTotalGral" name="hdnTotalGral" value="" />
     	<input type="hidden" name="fecdocumento" value="${fechadocumento}" />
     		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Ingresos / Servicios Higienicos</td>
+				<td width=885 align="left" class="titulo">Ingresos / Sisas</td>
 			</tr>
 		</table>
 		<table align="center">
@@ -429,25 +397,22 @@ function pagar(){
 		</logic:notEmpty>
 
 <fieldset class="fieldset">
-    <legend class="legend"><b>Nuevo registro - Detalle de Servicios</b></legend>
+    <legend class="legend"><b>Nuevo registro - Detalle de Sisas</b></legend>
     <div class="clear"></div>
 
 	<div id="cabecera" title="Fecha del Servicio" class="ui-widget ui-widget-content" width="100%">
 		<table border="0" cellpadding="2" cellspacing="2" width="800px">
 			<tr>
-				<td width="120px" align="left" style="color:red;"><b><label>SERVICIO:</label></b></td>
+				<td width="120px" align="left" style="color:red;"><b><label>SISAS:</label></b></td>
 				<td align="left" width="200px" style="color:red;">
-					<select name="tipoServicio" id="tipoServicio">
+					<select name="tipoSisa" id="tipoSisa">
 						<option value="0" selected="selected">Seleccione</option>
-						<option value="1">BAÑO NRO. 1</option>
-						<option value="2">BAÑO NRO. 2</option>
-						<option value="3">BAÑO NRO. 3</option>
-						<option value="4">BAÑO NRO. 4</option>
-						<option value="5">BAÑO NRO. 5</option>
-						<option value="6">BAÑO NRO. 6</option>
+						<option value="1">TICKET ROSADO</option>
+						<option value="2">TICKET AMARILLO</option>
+						<option value="3">TICKET BLANCO</option>
 					</select>
 				</td>
-				<td width="120px" style="color:red;"><b><label>FECHA DEL SERVICIO:</label></b></td>
+				<td width="120px" style="color:red;"><b><label>FECHA DEL SISAS:</label></b></td>
 				<td width="350px" style="color:red;">
 					<input type='text' name='fechadocumento' id='fechadocumento' class='text ui-widget-content ui-corner-all' size="20" value="${fechadocumento}" style=" width : 80px;" style="color:red;" />(año/mes/dia)
 				</td>
@@ -486,18 +451,18 @@ function pagar(){
 	</table>
 		<c:choose>
 			<c:when test="${isDetalle!=1}">
-				<button id="btn-registra-sh">Registrar Servicios</button>
+				<button id="btn-registra-sh">Registrar Sisas</button>
 			</c:when>
 		</c:choose>
 
     </div>
 </fieldset>
 				
-		<div id="dialog-form-item" title="Agregar Item a Detalle de Servicio" style="display: none">
+		<div id="dialog-form-item" title="Agregar Item a Detalle de Sisas" style="display: none">
 		<fieldset>					
 				<!--legend>Registro</legend-->
 				<br>
-				<div id="grabarnuevo-form" title="Ingrese los datos de los Servicios...">
+				<div id="grabarnuevo-form" title="Ingrese los datos de las Sisas...">
 					<div align="center">
 					<table border="0">
 						<tr>
@@ -507,7 +472,7 @@ function pagar(){
 										<td align="left"><label>ITEM DE COBRANZA:</label></td>
 										<td> 
 											<select name="tipoItem" id="tipoItem" onchange="costoSeleccionado(this.value)" tabindex="1">
-												<option value="0" selected="selected">Seleccione</option>
+												<option value="" selected="selected">Seleccione</option>
 												<c:forEach items="${lstSI}" var="row">
 													<option value="${row.codServicioitem }${row.numCosto}">${row.strDescripcion }</option>
 												</c:forEach>
@@ -529,21 +494,15 @@ function pagar(){
 										</td>
 									</tr>
 									<tr id="unidad" style="display: none;">
-										<td align="right"><label>UNIDADES:</label></td>
+										<td align="right"><label>Unidades:</label></td>
 										<td>
 											<input type='text' name='unidades' id='unidades' class='texto' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" style=" width : 100px;" tabindex="5"/>									
-										</td>
-									</tr>
-									<tr id="canti" style="display: none;">
-										<td align="right"><label>CANTIDAD:</label></td>
-										<td>
-											<input type='text' name='cantidades' id='cantidades' class='texto' size="10" onkeypress="calcularTotal();" onkeyup="calcularTotal();" style=" width : 100px;" disabled="disabled" tabindex="6"/>									
 										</td>
 									</tr>
 									<tr id="final" style="display: none;">
 										<td colspan="3" align="right"><label>TOTAL:</label></td>
 										<td>
-											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;" tabindex="7"/>									
+											<input type='text' name='total' id='total' class='texto' size="10" style=" width : 100px;" tabindex="6"/>									
 										</td>
 									</tr>
 								</table>

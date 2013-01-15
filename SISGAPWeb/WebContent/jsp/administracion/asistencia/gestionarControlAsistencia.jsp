@@ -253,7 +253,9 @@ $(function() {
 			<display:column title="" style="width:60px;">
 				<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" onclick="eliminar(${row.numCodReuniones})" />
 				<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.numCodReuniones})" />
-				<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png"	alt="Ver..." border="0" width="16" height="16" />
+				<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png"
+					alt="Ver..." border="0" width="16" height="16"
+					onclick="mostrarItems(${row.numCodReuniones});" />
 			</display:column>
 			<display:column title="Nro" property="numCodReuniones" style="text-align:center; width:20px" sortable="true"></display:column>
 			<display:column title="Fecha Asamblea" style="width:100px" sortable="true">

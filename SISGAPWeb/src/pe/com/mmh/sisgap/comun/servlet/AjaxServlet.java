@@ -91,84 +91,81 @@ public class AjaxServlet extends HttpServlet {
 					} else if (nrodni != null && !nrodni.equals("")) {
 						lstSocio = facadeLocal.buscarxDNI(nrodni);
 					}
-					out.print("<table id='users' class='ui-widget ui-widget-content'   width='100%'>");
-					out.print("<thead>");
-					out.print("<tr class='ui-widget-header'>");
-					out.print(" <th>Id</th>");
-					out.print("	<th>Codigo</th>");
-					out.print("	<th>Nombres</th>");
-					out.print("	<th>Puesto</th>");
-					out.print("	<th>Accion</th>");
-					if(opcion.equals("reciboluz")){
-						out.print("	<th>Estado</th>");
-						out.print("	<th>Deuda</th>");
-					}
-					out.print("</tr>");
-					out.print("</thead>");
-					out.print("<tbody>");
-					for (Socio socio : lstSocio) {
+					/*} else if (nrodni == null && nropto.equals("") && nombre.equals("")){
+						out.print("false");
+					} else {*/
+						out.print("<table id='users' class='ui-widget ui-widget-content' width='100%'>");
+						out.print("<thead>");
+						out.print("<tr class='ui-widget-header'>");
+						out.print(" <th>Id</th>");
+						out.print("	<th>Codigo</th>");
+						out.print("	<th>Nombres</th>");
+						out.print("	<th>Puesto</th>");
+						out.print("	<th>Accion</th>");
 						if(opcion.equals("reciboluz")){
-							//Listado que trae Datos de los recibos de Suministro de Luz
-							SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
-							List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboxCodigo(socio.getTranCodigo().trim());
-							
-							/*System.out.println("Cant.Registros "+lsSuministroLuzSocio.size());
-							System.out.println("Deuda Anterior "+lsSuministroLuzSocio.get(0).getDeudaant());
-							System.out.println("Estado "+lsSuministroLuzSocio.get(0).getEstado());
-							System.out.println("Total "+lsSuministroLuzSocio.get(0).getTotal());
-							System.out.println("Lectura Inicial "+lsSuministroLuzSocio.get(0).getLecturaini());
-							System.out.println("Lectura Final "+lsSuministroLuzSocio.get(0).getLecturafin());*/
-							if (lsSuministroLuzSocio.isEmpty()){
+							out.print("	<th>Estado</th>");
+							out.print("	<th>Deuda</th>");
+						}
+						out.print("</tr>");
+						out.print("</thead>");
+						out.print("<tbody>");
+						for (Socio socio : lstSocio) {
+							if(opcion.equals("reciboluz")){
+								//Listado que trae Datos de los recibos de Suministro de Luz
+								SuministroLuzFacadeLocal suministrofacadeLocal = (SuministroLuzFacadeLocal) context.lookup(ConstantesJNDI.SUMINISTROLUZ);
+								List<SuministroLusReciboSocio> lsSuministroLuzSocio = suministrofacadeLocal.buscarReciboxCodigo(socio.getTranCodigo().trim());
+								
+								if (lsSuministroLuzSocio.isEmpty()){
+									out.print("<tr>");
+									out.print("<td>"+socio.getTranIde()+"</td>");
+									out.print("<td>"+socio.getTranCodigo()+"</td>");
+									out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
+									out.print("<td>"+socio.getTranPuesto()+"</td>");
+									String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
+											+ "','" + socio.getTranPuesto() +"','---','---','"+socio.getTranIde()+"','---')";
+									out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");
+									out.print("<td align='center'>---</td>");
+									out.print("<td align='center'>---</td>");							
+								} else {
+									if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 1){
+										colLin = "'color:#FF0000'"; //Color Rojo
+										estLin = "Pend.";
+										totales = lsSuministroLuzSocio.get(0).getTotal();
+									} else if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 2){
+										colLin = "'color:#0000FF'"; //Color Azul
+										estLin = "Paga.";
+										totales = new BigDecimal(0);
+									}
+									out.print("<tr>");
+									out.print("<td style="+colLin+">"+socio.getTranIde()+"</td>");
+									out.print("<td style="+colLin+">"+socio.getTranCodigo()+"</td>");
+									out.print("<td style="+colLin+">"+socio.getTranRazonSocial().trim()+"</td>");
+									out.print("<td style="+colLin+">"+socio.getTranPuesto()+"</td>");
+									String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
+											+ "','" + socio.getTranPuesto() +"','" + lsSuministroLuzSocio.get(0).getEstado() +"','" 
+											+ totales +"','"+socio.getTranIde()+"','"+lsSuministroLuzSocio.get(0).getLecturafin()+"')";
+									out.print("<td><a href='#' style="+colLin+
+											" onMouseOver='this.style.cssText="+colLin+
+											" onMouseOut='this.style.cssText="+colLin+
+											" onclick=\""+function+"\">Agregar</a></td>");
+									out.print("<td align='center' style="+colLin+">"+estLin+"</td>");
+									out.print("<td align='center' style="+colLin+">"+ totales +"</td>");
+								} 
+							} else {
+								//Muestra datos para Facturas y Vigilancia
 								out.print("<tr>");
 								out.print("<td>"+socio.getTranIde()+"</td>");
 								out.print("<td>"+socio.getTranCodigo()+"</td>");
 								out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
 								out.print("<td>"+socio.getTranPuesto()+"</td>");
 								String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
-										+ "','" + socio.getTranPuesto() +"','---','---','"+socio.getTranIde()+"','---')";
-								out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");
-								out.print("<td align='center'>---</td>");
-								out.print("<td align='center'>---</td>");							
-							} else {
-								if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 1){
-									colLin = "'color:#FF0000'"; //Color Rojo
-									estLin = "Pend.";
-									totales = lsSuministroLuzSocio.get(0).getTotal();
-								} else if (lsSuministroLuzSocio.get(0).getEstado().intValue() == 2){
-									colLin = "'color:#0000FF'"; //Color Azul
-									estLin = "Paga.";
-									totales = new BigDecimal(0);
-								}
-								out.print("<tr>");
-								out.print("<td style="+colLin+">"+socio.getTranIde()+"</td>");
-								out.print("<td style="+colLin+">"+socio.getTranCodigo()+"</td>");
-								out.print("<td style="+colLin+">"+socio.getTranRazonSocial().trim()+"</td>");
-								out.print("<td style="+colLin+">"+socio.getTranPuesto()+"</td>");
-								String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
-										+ "','" + socio.getTranPuesto() +"','" + lsSuministroLuzSocio.get(0).getEstado() +"','" 
-										+ totales +"','"+socio.getTranIde()+"','"+lsSuministroLuzSocio.get(0).getLecturafin()+"')";
-								out.print("<td><a href='#' style="+colLin+
-										" onMouseOver='this.style.cssText="+colLin+
-										" onMouseOut='this.style.cssText="+colLin+
-										" onclick=\""+function+"\">Agregar</a></td>");
-								out.print("<td align='center' style="+colLin+">"+estLin+"</td>");
-								out.print("<td align='center' style="+colLin+">"+ totales +"</td>");
-							} 
-						} else {
-							//Muestra datos para Facturas y Vigilancia
-							out.print("<tr>");
-							out.print("<td>"+socio.getTranIde()+"</td>");
-							out.print("<td>"+socio.getTranCodigo()+"</td>");
-							out.print("<td>"+socio.getTranRazonSocial().trim()+"</td>");
-							out.print("<td>"+socio.getTranPuesto()+"</td>");
-							String function="agregarSocio('"+socio.getTranCodigo()+ "','" + socio.getTranRazonSocial()
-									+ "','" + socio.getTranPuesto() +"','"+socio.getTranIde()+"')";
-							out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");							
+										+ "','" + socio.getTranPuesto() +"','"+socio.getTranIde()+"')";
+								out.print("<td><a href='#' onclick=\""+function+"\">Agregar</a></td>");							
+							}
+							out.print("</tr>");
 						}
-						out.print("</tr>");
-					}
-					out.print("</tbody>");
-					out.print("</table>");
+						out.print("</tbody>");
+						out.print("</table>");
 				} catch (NamingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -278,10 +275,10 @@ public class AjaxServlet extends HttpServlet {
 										
 					session.setAttribute("listDetallefactura",listDetallefactura);
 					
-					out.print("<table id='detalle-f' class='ui-widget ui-widget-content' width='100%'>");
+					out.print("<table id='detalle-f' class='ui-widget ui-widget-content' width='100%'>"); 	//Padre 3 
 					out.print("<thead>");
 					out.print("<tr class='ui-widget-header'>");
-					out.print("	<th>Action</th>");
+					out.print("	<th>Acci&oacuten</th>");
 					out.print("	<th>C&oacutedigo</th>");
 					out.print("	<th>Descripci&oacuten</th>");
 					out.print("	<th>Tipo de Cobranza</th>");
@@ -292,16 +289,24 @@ public class AjaxServlet extends HttpServlet {
 					out.print("	<th>A Cuenta</th>");
 					out.print("</tr>");
 					out.print("</thead>");
-					out.print("<tbody>");
+					out.print("<tbody>");																	//Padre 2
 					
 					double total = 0;
 					double acuenta = 0;
-					
+					int a=1;
+					String functionEli = "";
+					String functionEdi = "";
+					String functionMsg = "";
 					for (Detallefactura det : listDetallefactura) {
-						out.print("<tr>");
-						String functionEli="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";
-						String functionEdi="editarDetalle("+det.getId().getCodItemcobranza() + ")";						
-						out.print("<td>");
+						out.print("<tr>");																	//Padre 1
+							functionEli="eliminarDetalle("+ det.getId().getCodItemcobranza() + ")";
+							/*functionEdi="editarDetalle("+ det.getId().getCodItemcobranza() + ",'" + det.getStrDescripcion().trim() + "','" + 
+														det.getStrTipocobranza().trim() + "','" + det.getStrMonedaDescrip().trim() + "'," +
+														det.getNumCosto() + ","+ det.getNumCantidad() +","+ det.getNumTotal() + "," + det.getNumAcuenta()+ ")";*/
+							functionEdi="editarDetalle("+ det.getId().getCodItemcobranza() + ")";
+							functionMsg="actualizarItems("+ det.getNumCosto() +","+ det.getNumCantidad() +","+ det.getNumTotal() +","+ det.getNumAcuenta() +")";
+						
+						out.print("<td>");																	//Padre 0
 						out.print("<a href='#' onclick=\""+functionEli+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
 						out.print("<a href='#' onclick=\""+functionEdi+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
 						out.print("</td>");
@@ -317,6 +322,7 @@ public class AjaxServlet extends HttpServlet {
 						
 						total += det.getNumTotal().doubleValue();
 						acuenta += det.getNumAcuenta().doubleValue();
+						a++;
 					}
 					
 					out.print("<tr>");
@@ -491,7 +497,7 @@ public class AjaxServlet extends HttpServlet {
 					for (Detallefactura det : listDetallefactura) {
 						out.print("<tr>");
 						String functionEli="eliminarDetalle("+det.getId().getCodItemcobranza() + ")";
-						String functionEdi="editarDetalle("+det.getId().getCodItemcobranza() + ")";
+						String functionEdi="editarDetalle("+det.getId().getCodItemcobranza() + "," + det.getStrDescripcion().trim() + ")";
 						out.print("<td>");
 						out.print("<a href='#' onclick=\""+functionEli+"\"><img src='"+request.getContextPath()+"/imagenes/manto/eliminar.png' alt='Eliminar...' border='0' width='16' height='16'/></a>");
 						out.print("<a href='#' onclick=\""+functionEdi+"\"><img src='"+request.getContextPath()+"/imagenes/manto/editar.png' alt='Editar...' border='0' width='16' height='16'/></a>");
@@ -529,6 +535,19 @@ public class AjaxServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				System.out.println("[AjaxServlet] Final - ELIMINAR_ITEM");
+			}else if(action.equals("EDITAR_ITEM")){
+				System.out.println("[AjaxServlet] Inicio - EDITAR_ITEM");
+				try {
+					//listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
+					String codigoFact = request.getParameter("codigoFact");
+					String codigoItem = request.getParameter("codigoItem");
+					FacturaFacadeLocal facFacade = (FacturaFacadeLocal) context.lookup(ConstantesJNDI.FACTURAFACADE);
+					facFacade.editarDetalle(new Long(codigoFact), new Long(codigoItem));
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("[AjaxServlet] Final - EDITAR_ITEM");
 			}else if(action.equals("BUSCAR_RECIBO_LUZ_SOCIO")){
 				System.out.println("[AjaxServlet] Inicio - BUSCAR_RECIBO_LUZ_SOCIO");
 				String codide = request.getParameter("codide");

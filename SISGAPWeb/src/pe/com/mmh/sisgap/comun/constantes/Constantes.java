@@ -72,13 +72,10 @@ public class Constantes
 	
 	public static final int MODELO_BUSQUEDA_TODOS = 0;
 	public static final int MODELO_BUSQUEDA_CLIENTES = 1;
-	public static final int MODELO_BUSQUEDA_EQUIFAX = 2;
 	public static final int MODELO_BUSQUEDA_CLIENTES_NUEVOS = 3;
-	public static final int MODELO_BUSQUEDA_EQUIFAX_NUEVOS = 4;
 	
 	public static final int MODELO_BUSQUEDA_ESTAN_HISTORIAL = 5;
 	
-	public static final String MODELO_CODIGO_EQUIFAX = "000307";
 	public static final int PAGINACION_POPUP_ASOCIAR_MODELO = 10;
 	public static final int MAX_LINEA_TXT_CLIENTE = 106;
 	
@@ -94,7 +91,7 @@ public class Constantes
 	public static final String CLIENTE_TODOS = "Todos";
 	
 	
-	public static final String RUTA_RESOURCE_BUNDLE = "pe.com.equifax.paramweb.resources.mensajes";
+	public static final String RUTA_RESOURCE_BUNDLE = "pe.com.mmh.paramweb.resources.mensajes";
 	public static final Integer AUDITORIA_ID_TODOS = 0;
 	public static final String AUDITORIA_TODOS = "Todos";
 	

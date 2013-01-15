@@ -112,7 +112,7 @@ var codMon = "";
 	
 		$('#imprimir-ls').click(function() {      
 			var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	        nueva=window.open('ReportsServlet?reporte=LISTADO_SISAS', 'Popup', caracteristicas);  
+	        nueva=window.open('ReportsServlet?reporte=LISTADO_VIGILANCIA', 'Popup', caracteristicas);  
 	        return false;
 		});
 		
@@ -262,7 +262,7 @@ var codMon = "";
 			buttons : {
 				Generar : function() {
 					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-				    nueva=window.open('ReportsServlet?reporte=REPORTE_SISAS&periodo='+$("#startDate2").val()+'&codigo=0&provider=other', 'Popup', caracteristicas); 
+				    nueva=window.open('ReportsServlet?reporte=REPORTE_VIGILANCIA&periodo='+$("#startDate2").val()+'&codigo=0&provider=other', 'Popup', caracteristicas); 
 				    $(this).dialog("close");
 				    return false;
 				},
@@ -433,19 +433,19 @@ var codMon = "";
 		
 		$("#registra-f").button().click(function() {
 			$('[name=metodo]').val('grabar');
-			$('#gestionarFacturacion').submit();
+			$('#gestionarVigilancia').submit();
 			
 		});
 
 		$("#regresar-f").button().click(function() {
 			$('[name=metodo]').val('cargarAction');
-			$('#gestionarFacturacion').submit();
+			$('#gestionarVigilancia').submit();
 		});
 		
 
 		$("btn-cancelar").button().click(function() {
 			$("#dialog-form-item").dialog("close");
-			$('#gestionarFacturacion').submit();
+			$('#gestionarVigilancia').submit();
 		});
 
 		$( function() {
@@ -532,7 +532,7 @@ var codMon = "";
 			$('#startDate').focus();
 			return false;
 		}
-		var frm = document.gestionarFacturacion;
+		var frm = document.gestionarVigilancia;
 		frm.metodo.value = 'findGenerator';
 		frm.submit();
 	}
@@ -545,7 +545,7 @@ var codMon = "";
 		
 		$.ajax({
 	        type: "POST",
-	        url: "/SISGAPWeb/registrosisas.do",
+	        url: "/SISGAPWeb/registrovigilancia.do",
 	        data: "metodo=findGenerator&periodo="+xperiodo+"&codigoide="+xcodigo+"&ajax=true",
 	        success: function(datos){
 	        	$("#dataCalendar").html(datos);
@@ -562,8 +562,14 @@ var codMon = "";
 		$("#codigoide-f").val(xcodigo);
 		$("#periodo-f").val(xperiodo);
 
-		var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-	    nueva=window.open('ReportsServlet?reporte=REPORTE_DIA_SISAS&periodo='+xperiodo+'&codigo='+xcodigo, 'Popup', caracteristicas);
+		var frm = document.gestionarVigilancia;
+		frm.metodo.value = 'verReporteDiaVigilancia';
+		frm.xperiodo.value = xperiodo;
+		frm.xcodigo.value = xcodigo; 
+		frm.submit();
+
+		/*var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
+	    nueva=window.open('ReportsServlet?reporte=REPORTE_DIA_VIGILANCIA&periodo='+xperiodo+'&codigo='+xcodigo, 'Popup', caracteristicas);*/
 	} 
 
 	//Donde fentrada es: 
@@ -576,13 +582,11 @@ var codMon = "";
 	}  
 
 	
-	function updateSisa(){
+	function updateVigilancia(){
 		$("#fecingreso").val($("#fechaingreso").val());
 		$("#recnumero").val($("#recibonumero").val());
-		/*alert(document.gestionarFacturacion.fecingreso.value);
-		alert(document.gestionarFacturacion.recnumero.value);*/
-		var frm = document.gestionarFacturacion;
-		frm.metodo.value = 'updateSisa';
+		var frm = document.gestionarVigilancia;
+		frm.metodo.value = 'updateVigilancia';
 		$("#valuess").val("");
 		$("#valuess").val($("#calendar-form input[name=fechadia]:checked").map(
 			     function () {return this.value;}).get().join(","));	
@@ -600,8 +604,8 @@ var codMon = "";
 	function eliminar(xcodigo){
 		rpta = confirmar("¿Esta seguro que desea eliminar este registro?");
 		if (rpta){
-			var frm = document.gestionarFacturacion;
-			frm.codigoSisa.value = xcodigo;
+			var frm = document.gestionarVigilancia;
+			frm.codigoVigilancia.value = xcodigo;
 			frm.metodo.value = 'eliminar';
 			frm.submit();
 		}
@@ -619,12 +623,14 @@ var codMon = "";
 </style>
 </head>
 <body>
-<html:form action="/registrosisas.do" styleId="gestionarFacturacion">
+<html:form action="/registrovigilancia.do" styleId="gestionarVigilancia">
 		<input type="hidden" name="metodo" />
-		<input type="hidden" name="codigoSisa" id="codigoSisa"/>
+		<input type="hidden" name="codigoVigilancia" id="codigoVigilancia"/>
 		<input type="hidden" name="valuess" id="valuess" />
 	    <input type="hidden" name="fecingreso" id="fecingreso" />
 	    <input type="hidden" name="recnumero" id="recnumero" />
+	    <input type="hidden" name="xperiodo" id="xperiodo" />
+	    <input type="hidden" name="xcodigo" id="xcodigo" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
@@ -689,10 +695,10 @@ var codMon = "";
 			<button type="button" id="imprime-ls" name="imprime-ls">Imprimir Reporte</button> 
 		</fieldset>
 			
-		<display:table name="lstSisa" 
+		<display:table name="lstVigilancia" 
 						class="consultanormal"
 						excludedParams="metodo" 
-						requestURI="/registrosisas.do?metodo=cargarAction"		
+						requestURI="/registrovigilancia.do?metodo=cargarAction"		
 						id="row"
 						export="false">
 				<display:column title="Acción" style="width:60px;">
@@ -748,7 +754,7 @@ var codMon = "";
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<button type="button" id="btn_Grabar" name="btn_Grabar" onclick="updateSisa();">Actualizar los días seleccionados...</button>
+						<button type="button" id="btn_Grabar" name="btn_Grabar" onclick="updateVigilancia();">Actualizar los días seleccionados...</button>
 					</td>
 				</tr>
 			</table>

@@ -41,7 +41,7 @@
 	TEXT-ALIGN: center
 }
 
-.copyrightEquifax {
+.copyrightMMH {
 	FONT-SIZE: 10px;
 	COLOR: #ffffff;
 	FONT-FAMILY: Arial, Helvetica, sans-serif;
@@ -53,7 +53,7 @@
 </style>
 
 <script src="<%=request.getContextPath()%>/js/utils.js"></script>
-<script src="<%=request.getContextPath()%>/js/utilEquifax.js" ></script>	
+<script src="<%=request.getContextPath()%>/js/utilMMH.js" ></script>	
 <SCRIPT LANGUAGE=javascript>
 <!--
 function validar(){  
@@ -246,8 +246,7 @@ function regresar(){
 			<td colspan="2" align="center">
 				<table width="99%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
-						<td class="copyrightEquifax">Infocorp/Equifax  -
-							&copy; Derechos Reservados</td>
+						<td class="copyrightMMH">Mercado Modelo de Huaral - © Derechos Reservados</td>
 					</tr>
 				</table></td>
 		</tr>

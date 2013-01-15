@@ -20,6 +20,8 @@
 
 		$("#impdoc-f").button();
 		$("#cancel-f").button();
+		$("#pagado-f").button();
+		$("#anulado-f").button();
 
 		//Botón Nuevo		
 		$('#nuevo-f').click(function() { 
@@ -99,7 +101,21 @@
 			}
 		});
 
+		//Boton Pagado
+		$("#pagado-f").button().click(function() {
+			var frm = document.formFacturacion;									
+			$('[name=facestado]').val(2);
+			$('[name=metodo]').val('cargarAction');		
+			frm.submit();
+		});
 
+		//Boton Anulado
+		$('#anulado-f').click(function() {
+			var frm = document.formFacturacion;									
+			$('[name=facestado]').val(3);
+			$('[name=metodo]').val('cargarAction');		
+			frm.submit();
+		});	
 		
 		//Imagen Anular
 		$("#anulardoc-form").dialog({
@@ -170,10 +186,11 @@
 		<input type="hidden" name="descripanulada" id="descripanulada"/>
 		<input type="hidden" name="fecdocumento" value="${fechadocumento}" />
 		<input type="hidden" name="tipodocumento" id="tipodocumento" value="R"/>
+		<input type="hidden" name="facestado" id="facestado" value="1"/>
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"
 			cellspacing="1">
-			<tr bgcolor="#EFF3F9">
+			<tr bgcolor="#FBEE99">
 				<td width=885 align="left" class="titulo">Administración/Recibo de Ingreso/Boleta de Venta</td>
 			</tr>
 		</table>
@@ -220,6 +237,8 @@
 							<td align="center"><input type="button" id="pdf-f" name="pdf-f" value="PDF" /></td>
 							<td align="center"><input type="button" id="imprimir-f" name="imprimir-f" value="Imprimir" onclick="lstImprimir()" /></td>
 							<td align="center"><input type="button" id="nuevo-f" name="nuevo-f" value="Nuevo" /></td>
+							<td align="center"><input type="button" id="pagado-f" name="pagado-f" value="Pagado" /></td>
+							<td align="center"><input type="button" id="anulado-f" name="anulado-f" value="Anulado" /></td>
 						</tr>
 					</table>
 				</span>
@@ -227,7 +246,8 @@
 		</fieldset>
 	
 		<fieldset>
-		<display:table name="lstFac" 
+		<display:table name="lstFac"
+						size="TOTAL REG." pagesize="30" 
 						class="consultanormal"
 						excludedParams="metodo" 
 						requestURI="/gestionarFacturacion.do?metodo=cargarAction"		
@@ -249,9 +269,9 @@
 				</display:column>
 				<display:column title="Nro.Doc.Interno" property="numNrodoc" sortable="true"></display:column>
 				<display:column title="Nro.Doc.Impreso" property="nroFactura" sortable="true"></display:column>
-				<display:column title="Socio" property="sisgapSocio" sortable="true"></display:column>
-				<display:column title="Puesto" sortable="true">${row.sisgapSocio.tranPuesto}</display:column>
-				<display:column title="Actividad" sortable="true">${row.sisgapSocio.sisgapActividadSocio.actiTranNombre}</display:column>
+				<display:column title="Socio" sortable="true">${row.nombresocio}</display:column>
+				<display:column title="Puesto" sortable="true">${row.tranPuesto}</display:column>
+				<display:column title="Actividad" sortable="true">${row.actiTranNombre}</display:column>
 				<display:column title="Fecha de Creación" property="datFechacred" format="{0,date,dd-MM-yyyy}" sortable="true"></display:column>
 				<display:column title="Total" property="numTotal" format="S/. {0,number,###.00}" sortable="true"></display:column>
 				<display:column title="Estado" sortable="true">

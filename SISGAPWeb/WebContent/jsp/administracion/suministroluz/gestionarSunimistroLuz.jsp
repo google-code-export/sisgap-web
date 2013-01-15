@@ -148,6 +148,15 @@ $(function() {
 		frm.submit();
 	}
 	
+	function mostrarReporte(cod){
+		var frm = document.formFacturacion;
+		frm.metodo.value = 'verReporteSuministroLuz';
+		frm.codigoModi.value = cod; 
+		frm.submit();
+	} 
+
+
+
 	function eliminar(cod) {
 		var frm = document.formFacturacion;
 		$("#codigoModi").val(cod);
@@ -545,10 +554,11 @@ $(function() {
 						requestURI="/suministroLuz.do?metodo=cargarAction"		
 						id="row"
 						export="false">
-				<display:column title="" style="width:60px;">
+				<display:column title="" style="width:80px;">
 					<img src="<%=request.getContextPath()%>/imagenes/manto/eliminar.png" alt="Eliminar..." border="0" width="16" height="16" id="" onclick="eliminar('${row.codOrgreciboLuz}');"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/edit.png" alt="Editar..." border="0" width="16" height="16" onclick="ver(${row.codOrgreciboLuz},${row.numLecturaInicial},${row.numLecturaFinal},${row.numMonto},${row.numCostoWats},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecPeriodo}" />',${row.numEstado},${row.repomancnx},${row.cargofijo},${row.alumpublic},${row.subtotalmes},${row.igv},${row.totalmesact},${row.aporteley},${row.cuotaconv},${row.redonmesact},${row.redonmesant},${row.interesconvenio},${row.energactfraptaactual},${row.energactfraptaanteri},${row.energactfraptadifer},${row.energactfraptafactor},${row.energactfraptaconsu},${row.energactfraptaconfa},${row.energactfraptapreuni},${row.energactfraptatotal},${row.energacthorptaactu},${row.energacthorptaant},${row.energacthorptadif},${row.energacthorptafac},${row.energacthorptacons},${row.energacthorptaconfac},${row.energacthorptapreuni},${row.energacthorptatotal},${row.energreacinicial},${row.energreacanteri},${row.energreacdifere},${row.energreacfactor},${row.energreacconsu},${row.energreacfaccons},${row.energreacpreuni},${row.energreactotal},${row.potenciafpini},${row.potenciafpante},${row.potenciafpdif},${row.potenciafpfac},${row.potenciafpcons},${row.potenciahpact},${row.potenciahpant},${row.potenciahpdif},${row.potenciahpfac},${row.potenciahpcons},${row.potusoreddistconfac},${row.potusoreddistpreuni},${row.potusoreddisttotal},${row.potgenfpconfac},${row.potgenfppreuni},${row.potgenfptotal},'<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecVencimiento}" />','<fmt:formatDate pattern="MM/dd/yyyy" value="${row.fecEmision}" />');"/>
 					<img src="<%=request.getContextPath()%>/imagenes/iconos/flecha.png" alt="Ver..." border="0" width="16" height="16" onclick="mostrarItems(${row.codOrgreciboLuz});"/>
+					<img src="<%=request.getContextPath()%>/imagenes/manto/reporte.png" alt="Reportar..." border="0" width="16" height="16" onclick="mostrarReporte(${row.codOrgreciboLuz});"/>
 				</display:column>
 				<display:column title="Periodo" sortable="true">
 					<center><fmt:formatDate pattern="dd/MM/yyyy" value="${row.fecPeriodo}" /></center>

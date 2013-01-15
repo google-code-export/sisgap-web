@@ -11,29 +11,10 @@
     <form-bean name="facturacionActionForm" type="pe.com.mmh.sisgap.administracion.action.form.FacturacionActionForm"/>
     <form-bean name="SuministroLuzActionForm" type="pe.com.mmh.sisgap.administracion.action.form.SuministroLuzActionForm"/> 
     <form-bean name="ReporteItemsCobranzaForm" type="pe.com.mmh.sisgap.administracion.action.form.ReporteItemsCobranzaForm"/> 
-    <form-bean name="RegistroSisasForm" type="pe.com.mmh.sisgap.administracion.action.form.RegistroSisasForm"/>
+    <form-bean name="RegistroVigilanciaForm" type="pe.com.mmh.sisgap.administracion.action.form.RegistroVigilanciaForm"/>
+    <form-bean name="RegistroSisaForm" type="pe.com.mmh.sisgap.administracion.action.form.RegistroSisaForm"/>
     <form-bean name="ServiciosHigienicosForm" type="pe.com.mmh.sisgap.administracion.action.form.ServiciosHigienicosActionForm"/>
-    <form-bean name="ControlAsistenciaActionForm" type="pe.com.mmh.sisgap.administracion.action.form.ControlAsistenciaActionForm"/>                                                        
-<!--     
-    <form-bean name="gestionarConceptosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarConceptosActionForm"/>
-    <form-bean name="gestionarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.GestionarModelosActionForm"/>
-    <form-bean name="seleccionarConceptosAtributosActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.SeleccionarConceptosAtributosActionForm"/>
-    <form-bean name="modificarSeleccionConceptosAtributosActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.ModificarSeleccionConceptosAtributosActionForm"/>
-    <form-bean name="seleccionarConceptosActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.SeleccionarConceptosActionForm"/>
-    <form-bean name="modificarSeleccionConceptosActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.ModificarSeleccionConceptosActionForm"/>
-  	<form-bean name="auditoriaActionForm" type="pe.com.equifax.paramweb.seguridad.action.form.AuditoriaForm"/>
-	<form-bean name="asociarModeloActionForm" type="pe.com.equifax.paramweb.general.action.form.AsociarModeloActionForm"/>
-	<form-bean name="asociarModeloEquifaxActionForm" type="pe.com.equifax.paramweb.general.action.form.AsociarModeloEquifaxActionForm"/>
-	<form-bean name="transmitirTramaEjecutorActionForm" type="pe.com.equifax.paramweb.ejecutor.action.form.TransmitirTramaEjecutorActionForm"/>
-	<form-bean name="transmitirTramaReporteCrediticioActionForm" type="pe.com.equifax.paramweb.reportecrediticio.action.form.TransmitirTramaReporteCrediticioActionForm"/>
-	<form-bean name="reporteDiccionarioGeneralActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteDiccionarioGeneralActionForm"/>
-	<form-bean name="reporteConceptosAtributosActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteConceptosAtributosActionForm"/>
-	<form-bean name="reporteModelosGeneradosActionForm" type="pe.com.equifax.paramweb.reporte.action.form.ReporteModelosGeneradosActionForm"/>	
-	<form-bean name="historialActionForm" type="pe.com.equifax.paramweb.administracion.action.form.HistorialActionForm"/>
-	<form-bean name="aprobarModelosActionForm" type="pe.com.equifax.paramweb.administracion.action.form.AprobarModelosActionForm"/>
-	<form-bean name="transmitirProduccionActionForm" type="pe.com.equifax.paramweb.general.action.form.TransmitirProduccionActionForm"/>
-		 -->
-	
+    <form-bean name="ControlAsistenciaActionForm" type="pe.com.mmh.sisgap.administracion.action.form.ControlAsistenciaActionForm"/>	
  </form-beans>
  
  <global-exceptions/>
@@ -85,6 +66,7 @@
      <forward name="cargarAction" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="admSuministroluz" path="/jsp/administracion/suministroluz/gestionarSunimistroLuz.jsp"/>
      <forward name="agrebarSuministroluz" path="/jsp/administracion/suministroluz/agregarSuministroLuzSocio.jsp"/>
+     <forward name="mostrarAction" path="/jsp/administracion/suministroluz/mostrarSuministroLuz.jsp"/>
      <forward name="success" path="/index.jsp"/>
    </action>
    
@@ -94,18 +76,25 @@
      <forward name="success" path="/index.jsp"/>
    </action>
 
-   <action name="RegistroSisasForm" path="/registrosisas" parameter="metodo"
-   scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisasAction">
-     <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarSisasx.jsp"/>
-     <forward name="reporteAction" path="/jsp/administracion/sisas/blankpage.jsp"/>
-     <forward name="blankpage" path="/jsp/administracion/sisas/blankpage.jsp"/>
+   <action name="RegistroSisaForm" path="/registrosisas" parameter="metodo"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroSisaAction">
+     <forward name="cargarAction" path="/jsp/administracion/sisatrue/gestionarSisas.jsp"/>
+     <forward name="blankpage" path="/jsp/administracion/sisatrue/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
    </action>
    
    <!-- Reporte de SISAS -->
+   <action name="RegistroVigilanciaForm" path="/registrovigilancia" parameter="metodo"
+   scope="request" type="pe.com.mmh.sisgap.administracion.action.RegistroVigilanciaAction">
+     <forward name="cargarAction" path="/jsp/administracion/sisas/gestionarVigilancia.jsp"/>
+     <forward name="mostrarAction" path="/jsp/administracion/sisas/mostrarVigilancia.jsp"/>
+     <forward name="blankpage" path="/jsp/administracion/sisas/blankpage.jsp"/>
+     <forward name="success" path="/index.jsp"/>
+   </action>
+   
    <action name="ReporteItemsCobranzaForm" path="/reporteSisas" parameter="metodo"
-   scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesSisaAction">
-	 <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteSisa.jsp"/>
+   scope="request" type="pe.com.mmh.sisgap.reportes.action.ReportesVigilanciaAction">
+	 <forward name="cargarAction" path="/jsp/administracion/reportes/gestionarReporteVigilancia.jsp"/>
 	 <forward name="blankpage" path="/jsp/administracion/sisas/blankpage.jsp"/>
      <forward name="success" path="/index.jsp"/>
    </action>

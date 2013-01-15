@@ -21,15 +21,6 @@ import pe.com.mmh.sisgap.seguridad.action.LoginAction;
 import pe.com.mmh.sisgap.seguridad.domain.UserInfo;
 import pe.com.mmh.sisgap.system.propiedades.PropiedadesSistema;
 
-//import pe.com.equifax.paramweb.comun.constantes.Constantes;
-//import pe.com.equifax.paramweb.comun.constantes.ConstantesSesion;
-//import pe.com.equifax.paramweb.core.domain.Accion;
-//import pe.com.equifax.paramweb.core.domain.Auditoria;
-//import pe.com.equifax.paramweb.factory.ServiceFactory;
-//import pe.com.equifax.paramweb.seguridad.action.LoginAction;
-//import pe.com.equifax.paramweb.seguridad.domain.UserInfo;
-//import pe.com.equifax.paramweb.system.propiedades.PropiedadesSistema;
-//import pe.com.equifax.paramweb.util.json.JSONObject;
 
 public class SeguridadUtil {		
 
@@ -46,27 +37,7 @@ public class SeguridadUtil {
 		}
 		return new UserInfo();		
 	}
-//	public static String obtenerCodigoUsuarioSesion(HttpServletRequest request) {		
-//		return obtenerUsuarioSesion(request).getCodPersonal();		
-//	}	
-//	
-//	
-//	public static boolean existeSessionAjax(HttpServletRequest request,HttpServletResponse response){
-//		if(request.getAttribute("expireSession")!=null){
-//		    JSONObject jsonObj=new JSONObject();    
-//		    try{
-//			jsonObj.put("expire", "S");			
-//			PrintWriter out = response.getWriter();				
-//			out.print(jsonObj.toString());
-//		    }catch(Exception e){
-//		    	    e.printStackTrace();
-//		         }		
-//			return false;
-//	    }
-//		return true;
-//	}
-//	
-//	
+
 	public static boolean isPaginaInicio(Action action) {
 		boolean isPaginaInicio = true;
 		if(!(action instanceof LoginAction)) {		
@@ -88,38 +59,5 @@ public class SeguridadUtil {
         Connection connection = ds.getConnection();                     
         return connection;
 	}
-//	/**
-//	 * Obtiene una conexión utilizada para JDBC
-//	 * @return
-//	 * @throws Exception 
-//	 */
-//	public static Connection getConnection() throws Exception{	    
-//	
-//	        Connection connection = ServiceFactory.getSeguridadService().getConnection();                
-//	        return connection;
-//		
-//	}
-//	
-//	public static void auditar(Integer idAccion, String detalle,HttpServletRequest request) throws Exception{
-//		
-//		UserInfo usuario= obtenerUsuarioSesion(request);
-//		
-//		Accion accion= new Accion();
-//		accion.setId(idAccion);
-//		
-//		Auditoria auditoria= new Auditoria();		
-//		auditoria.setUsuario(usuario.getCodPersonal());
-//		auditoria.setIp(usuario.getIp());
-//		auditoria.setFecha(FechaUtil.getCurrentTimestamp());
-//		auditoria.setAccion(accion);
-//		auditoria.setDetalle(detalle);		
-//		ServiceFactory.getAuditoriaService().auditar(auditoria);
-//		
-//	}
-//	
-//	public static String  obtenerMensaje(String key){
-//		ResourceBundle resourceBundle=ResourceBundle.getBundle(Constantes.RUTA_RESOURCE_BUNDLE);
-//		return resourceBundle.getString(key);
-//	}
 		
 }

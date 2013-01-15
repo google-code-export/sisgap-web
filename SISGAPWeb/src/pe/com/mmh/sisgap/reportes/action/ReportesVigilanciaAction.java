@@ -9,14 +9,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pe.com.mmh.sisgap.administracion.ejb.SisasFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal;
 import pe.com.mmh.sisgap.administracion.ejb.SocioFacadeLocal;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.comun.servlet.ReportsServlet;
 import pe.com.mmh.sisgap.domain.Socio;
 
-public class ReportesSisaAction extends GrandActionAbstract{
+public class ReportesVigilanciaAction extends GrandActionAbstract{
 	
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[ReportesSisaAction] Inicio - cargarAction");
@@ -43,7 +43,7 @@ public class ReportesSisaAction extends GrandActionAbstract{
 		fecIni = "01/"+fecIni;
 		fecFin = "01/"+fecFin;
 		
-		SisasFacadeLocal facadeSisa = (SisasFacadeLocal) lookup(ConstantesJNDI.SISASFACADE);
+		VigilanciaFacadeLocal facadeSisa = (VigilanciaFacadeLocal) lookup(ConstantesJNDI.VIGILANCIAFACADE);
 		rpta = facadeSisa.cargarVigilanciaTMP(codSocio,fecIni,fecFin,rpta);
 		
 		request.getSession().setAttribute("Respuesta", rpta);

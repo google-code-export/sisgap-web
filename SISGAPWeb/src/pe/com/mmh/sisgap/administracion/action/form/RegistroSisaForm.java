@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.upload.FormFile;
 
 
-public class RegistroSisasForm extends ActionForm{	
+public class RegistroSisaForm extends ActionForm{	
 	
 
 

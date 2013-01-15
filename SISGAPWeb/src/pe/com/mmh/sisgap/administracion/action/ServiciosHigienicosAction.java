@@ -62,7 +62,7 @@ public class ServiciosHigienicosAction extends GrandActionAbstract {
 		return mapping.findForward("cargarAction");
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("static-access")
 	public ActionForward grabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[ServiciosHigienicos] Inicio - grabar");
 		
@@ -74,9 +74,11 @@ public class ServiciosHigienicosAction extends GrandActionAbstract {
 		ServiciosHigienicosFacadeLocal SSHHfacadeLocal = (ServiciosHigienicosFacadeLocal) lookup(ConstantesJNDI.SERVICIOSHIGIENICOS);
 		
 		int cantElementos = Integer.parseInt(request.getParameter("cant_campos"));
+		int numeroCampo = Integer.parseInt(request.getParameter("num_campos"));
 		List<ServicioDetalle> lst = new ArrayList<ServicioDetalle>();
 		
 		for(int a=1; a<=cantElementos; a++){
+			if (numeroCampo==a) a++;
 			ServicioDetalle sd = new ServicioDetalle();
 			sd.setCodServicio(new BigDecimal(request.getParameter("hdnCabecera")));
 			sd.setCodServiciodetalle(new BigDecimal(request.getParameter("hdnCodigo_"+a)));
@@ -102,6 +104,11 @@ public class ServiciosHigienicosAction extends GrandActionAbstract {
 		if(lst!=null && codServicio!=null){
 			SSHHfacadeLocal.grabarServicios(new Long(codServicio), descripcion, new BigDecimal(montoTotal), fechadoc, lst);
 		}
+		
+		codServicio = null;
+		lst = null;
+		
+		//Thread.currentThread().sleep(5000);
 		
 		List<Servicios> list = SSHHfacadeLocal.findAll();
 		request.setAttribute("lstSSHH", list);

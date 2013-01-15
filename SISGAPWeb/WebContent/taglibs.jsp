@@ -19,7 +19,7 @@
 <!--  script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script -->
 <script src="<%=request.getContextPath()%>/js/jquery.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/utils.js"></script>
-<script src="<%=request.getContextPath()%>/js/utilEquifax.js"></script>
+<script src="<%=request.getContextPath()%>/js/utilMMH.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-1.6.2.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.dualListBox-1.3.min.js"></script>

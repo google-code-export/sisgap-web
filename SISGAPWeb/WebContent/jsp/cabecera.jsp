@@ -37,7 +37,8 @@ a:hover        {font: normal 11px Tahoma, Arial; color: #003399; text-transform:
     </td>
   </tr>
   <tr><td width="610" height="1" style="background-color:rgb(255,255,255);"></td></tr>
-  <tr><td width="610" height="17" align="center" bgcolor="#1F6FB0" style="font: bold 11px Arial; color:#FFFFFF;">SISTEMA DE GESTION ADMINISTRATIVA</td></tr>
+  <tr><td width="610" height="17" align="center" bgcolor="#336633" style="font: bold 11px Arial; color:#FFFFFF;">SISTEMA DE GESTION ADMINISTRATIVA</td></tr>
+  <!-- tr><td width="610" height="17" align="center" bgcolor="#1F6FB0" style="font: bold 11px Arial; color:#FFFFFF;">SISTEMA DE GESTION ADMINISTRATIVA</td></tr -->
   <tr><td width="610" height="1" style="background-color:rgb(255,255,255);"></td></tr>
   <tr><td width="610" height="10" style="background-image: url('../imagenes/bg_Menu_Cabecera.jpg')"></td></tr>
   <tr><td colspan="2" width="775" height="1" style="background-color:rgb(255,255,255);"></td></tr>

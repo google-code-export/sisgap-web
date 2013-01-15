@@ -229,6 +229,11 @@
 		   </tr>
 		</table>
 		<form name="frmPrint" method="post" action="">
+			<input type="hidden" name="nroDocReal" id="nroDocReal" value="${nroDocReal}">
+			<input type="hidden" name="nroDocInte" id="nroDocInte" value="${nroDocInte}">
+			<input type="hidden" name="asociado" id="asociado" value="${fac}">
+			<input type="hidden" name="detalle" id="detalle" value="${lstDetFac}">
+			
 			<table>
 				<tr>
 					<td><button id="btnPrint" name="btnPrint">Imprimir</button></td>

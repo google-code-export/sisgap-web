@@ -49,8 +49,9 @@
 					var nrodocInte = $("#docinte").val();
 					//alert("DocReal: "+nrodocReal+"\nDocInte: "+nrodocInte);
 
-					alert("Antes de imprimir todo");
+					alert("Antes de imprimir todo desde el recibo");
 					$('[name=metodo]').val('print');
+
 					window.close();				
 					$('#gestionarFacturacion').submit();
 
@@ -59,12 +60,12 @@
 				
 			});
 
-			function imprime(){
+/*			function imprime(){
 				alert("Antes de imprimir todo");
 				$('[name=metodo]').val('print');
-				window.close();				
+				window.close();
 				$('#gestionarFacturacion').submit();
-			}
+			}*/
 		</script>
 		<style type="text/css">
 			/*demo page css*/
@@ -89,7 +90,7 @@
 		<input type="hidden" name="docinte" id="docinte" value="${nroDocInte}" />
 		<input type="hidden" id="variable" name="variable"
 			value="<%=session.getAttribute("Respuesta")%>" />
-		
+	
 		<c-rt:set var="now" value="<%= new java.util.Date() %>" />
 		<table width="550" border="0" cellspacing="0" style="padding-left: 50px;">
 		   <tr>
@@ -223,13 +224,25 @@
 		      </td>
 		   </tr>
 		</table>
-	    <input type="hidden" name="guess" value="Imprimir">
+		    <input type="hidden" name="guess" value="Imprimir">
+
+			<input type="hidden" name="nroDocReal" id="nroDocReal" value="${nroDocReal}">
+			<input type="hidden" name="nroDocInte" id="nroDocInte" value="${nroDocInte}">
+			<input type="hidden" name="asociado" id="asociado" value="${fac.sisgapSocio}">
+			<input type="hidden" name="giro" id="giro" value="${fac.sisgapSocio.sisgapActividadSocio.actiTranNombre}">
+			<input type="hidden" name="puesto" id="puesto" value="${fac.sisgapSocio.tranPuesto}">
+			<input type="hidden" name="total" id="total" value="${total1}">
+			<input type="hidden" name="fecha" id="fecha" value="${now}">
+			<input type="hidden" name="detalle" id="detalle" value="${lstDetFac}">
+
+
 		<table border="1">
 			<tr>
 				<td><button id="btnPrint" name="btnPrint">Imprimir</button></td>
 			</tr>
 		</table>
 		</html:form>
+
 	</body>
 </html>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <jasperReport
-		 name="classic"
+		 name="Reporte Diario de Servicios Higienicos 1"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -40,7 +40,7 @@ FROM
 	INNER JOIN "SISGAP"."SISGAP_SERVICIOS" SISGAP_SERVICIOS ON SISGAP_SERVICIODETALLE."COD_SERVICIO" = SISGAP_SERVICIOS."COD_SERVICIO"
      	INNER JOIN "SISGAP"."SISGAP_SERVICIOITEM" SISGAP_SERVICIOITEM ON SISGAP_SERVICIODETALLE."COD_SERVICIOITEM" = SISGAP_SERVICIOITEM."COD_SERVICIOITEM"
 WHERE
-     TO_CHAR(SISGAP_SERVICIOS."DAT_FECHASERV",'DD/MM/YYYY') = $P{P_FECHA}
+     TO_CHAR(SISGAP_SERVICIOS."DAT_FECHASERV",'DD/MM/YYYY') = $P{P_FECHA} AND SISGAP_SERVICIOS."NUM_ESTADO" = 1
 ORDER BY
      SISGAP_SERVICIOS."STR_DESCRIPCION" ASC, SISGAP_SERVICIOITEM."STR_DESCRIPCION" ASC]]></queryString>
 
@@ -423,7 +423,7 @@ ORDER BY
 	$F{SISGAP_SERVICIODETALLE_NUM_AL}.toString() :
 	"")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="464"
 						y="2"

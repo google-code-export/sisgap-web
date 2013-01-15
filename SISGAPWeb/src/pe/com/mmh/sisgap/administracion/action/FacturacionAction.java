@@ -1,18 +1,18 @@
 package pe.com.mmh.sisgap.administracion.action;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -34,30 +34,41 @@ public class FacturacionAction extends GrandActionAbstract{
 	
 	public String codFactura="";
 	
+	private Logger logger = null;
+	
+	public FacturacionAction()
+	{  
+		logger = Logger.getLogger(this.getClass());
+		DOMConfigurator.configure("log4j.xml");
+	}  
+
 	public ActionForward cargarAction(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		System.out.println("[FacturacionAction] Inicio - cargarAction");
+		String facturaestado = request.getParameter("facestado");
+		if(facturaestado==null){
+			facturaestado = "1";
+		}
+		logger.info("Log a mostrar: "+ "saludos cordiales");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
-		List<Factura> lstCob = facadeLocal.findAll();
+		List<Factura> lstCob = facadeLocal.findAll(new Long(facturaestado));
 		request.setAttribute("lstFac", lstCob);
 		System.out.println("[FacturacionAction] Final - cargarAction");
 		return mapping.findForward("cargarAction");
 	}
 	
 	public ActionForward buscar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		System.out.println("[FacturacionAction] Inicio - buscar");
+		String facturaestado = request.getParameter("facestado");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
-		List<Factura> lstCob = facadeLocal.findAll();
+		List<Factura> lstCob = facadeLocal.findAll(new Long(facturaestado));
 		request.setAttribute("lstFac", lstCob);
 		System.out.println("[FacturacionAction] Final - buscar");
 		return mapping.findForward("cargarAction");
 	}
 	
 	public ActionForward ver(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		System.out.println("[FacturacionAction] Inicio - ver");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
-		//String codigoFactura = request.getParameter("codigoFactura");
 		codFactura = request.getParameter("codigoFactura");
 		Factura fac = null;
 		if(codFactura!=null){
@@ -74,25 +85,24 @@ public class FacturacionAction extends GrandActionAbstract{
 		request.setAttribute("tipodocumento", fac.getStrTipodoc().trim());
 		request.setAttribute("numerodocumento", fac.getNumNrodoc());
 		request.setAttribute("numeroreal", fac.getNroFactura());
-		//request.setAttribute("fechadocumento", fac.getDatFechafac());
 		request.setAttribute("fechadocumento", fechaDocumento);
 		request.setAttribute("numAcuenta", fac.getNumAcuenta());
 		request.setAttribute("isDetalle", 1);
 		request.setAttribute("fac", fac);
 		request.setAttribute("lstDetFac", lstDetFac);
-		request.setAttribute("estadoCampos", "true");
+		request.setAttribute("estadoCampos", "1");
 		
 		System.out.println("[FacturacionAction] Final - ver");
 		return mapping.findForward("agregarFacturacion");
 	}
 	
 	public ActionForward cancelarFactura(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
-//		ItemcobranzaFacadeLocal facadeLocal = (ItemcobranzaFacadeLocal) lookup(ConstantesJNDI.ITEMCOBRANZAFACADE);
 		System.out.println("[FacturacionAction] Inicio - cancelarFactura");
-		String codigoFactura = request.getParameter("nrodocumento");		
+		String codigoFactura = request.getParameter("nrodocumento");
+		String facturaestado = request.getParameter("facestado");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		facadeLocal.cancelarFactura(codigoFactura);
-		List<Factura> lstCob = facadeLocal.findAll();
+		List<Factura> lstCob = facadeLocal.findAll(new Long(facturaestado));
 		request.setAttribute("lstFac", lstCob);
 		System.out.println("[FacturacionAction] Final - cancelarFactura");
 		return mapping.findForward("cargarAction");
@@ -101,7 +111,6 @@ public class FacturacionAction extends GrandActionAbstract{
 	public ActionForward imprimirRecibo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		System.out.println("[FacturacionAction] Inicio - imprimirRecibo");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
-		//impresaFactura  nrodocumento
 		String nroDocReal = request.getParameter("nrodocumentoReal");
 		String nroDocInte = request.getParameter("nrodocumentoInterno");
 		Factura fac = null;
@@ -123,11 +132,13 @@ public class FacturacionAction extends GrandActionAbstract{
 			request.setAttribute("nroDocInte", nroDocI);
 			
 		}
-		List<Detallefactura> lstDetFac=fac.getSisgapDetallefacturas();
+		List<Detallefactura> lstDetFac = fac.getSisgapDetallefacturas();
 		
 		double total=0.0;
 		for(int i=0; i<lstDetFac.size(); i++){
 			total+=Double.parseDouble(lstDetFac.get(i).getNumTotal().toString());
+			System.out.println("Cantidad: " + lstDetFac.get(i).getNumCantidad().toString());
+			System.out.println("Total: " + lstDetFac.get(i).getNumTotal().toString());
 		}
 		
 		request.setAttribute("texto", NumberToLeterConverter.convertNumberToLetter(total));
@@ -146,7 +157,6 @@ public class FacturacionAction extends GrandActionAbstract{
 	public ActionForward imprimirBoleta(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		System.out.println("[FacturacionAction] Inicio - imprimirBoleta");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
-		//impresaFactura  nrodocumento
 		String nroDocReal = request.getParameter("nrodocumentoReal");
 		String nroDocInte = request.getParameter("nrodocumentoInterno");
 		Factura fac = null;
@@ -196,7 +206,6 @@ public class FacturacionAction extends GrandActionAbstract{
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		
 		Factura facturaBolsa = new Factura();
-		//facturaBolsa.setSisgapDetallefacturas((List<Detallefactura>) new HashSet<Detallefactura>());
 		facturaBolsa.setSisgapDetallefacturas((List<Detallefactura>) new ArrayList<Detallefactura>());
 		HttpSession session = request.getSession(true);
 		//Detalle Factura en session
@@ -204,10 +213,12 @@ public class FacturacionAction extends GrandActionAbstract{
 		
 		
 		String tipodocumento = request.getParameter("tipodocumento");
-		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento); 
+		//GENERANDO EL NUMERO CORRELATIVO DEL DOCUMENTO
+		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento);
+		////numerodocumento = new BigDecimal(891);
 		
 		session.setAttribute("listDetallefactura", listDetallefactura);
-		session.setAttribute("facturaBolsa", facturaBolsa);	
+		session.setAttribute("facturaBolsa", facturaBolsa);
 		request.setAttribute("numerodocumento", numerodocumento);
 		request.setAttribute("tipodocumento", tipodocumento);
 		request.setAttribute("estadoCampos", "false");
@@ -217,16 +228,13 @@ public class FacturacionAction extends GrandActionAbstract{
 	
 	public ActionForward selectGrabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		System.out.println("[FacturacionAction] Inicio - selectGrabar");
-		BigDecimal numerodocumento = new BigDecimal(0);
+		/*BigDecimal numerodocumento = new BigDecimal(0);
 		
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
 		
 		Factura facturaBolsa = new Factura();
-		//facturaBolsa.setSisgapDetallefacturas((List<Detallefactura>) new HashSet<Detallefactura>());
 		facturaBolsa.setSisgapDetallefacturas((List<Detallefactura>) new ArrayList<Detallefactura>());
 		HttpSession session = request.getSession(true);
-		//Detalle Factura en session
-		//List<Detallefactura> listDetallefactura = (List<Detallefactura>) new HashSet<Detallefactura>();
 		List<Detallefactura> listDetallefactura = (List<Detallefactura>) new ArrayList<Detallefactura>();
 		
 		
@@ -234,20 +242,17 @@ public class FacturacionAction extends GrandActionAbstract{
 		numerodocumento = facadeLocal.generarNrodocumento(tipodocumento);
 		
 		session.setAttribute("listDetallefactura", listDetallefactura);
-		session.setAttribute("facturaBolsa", facturaBolsa);	
+		session.setAttribute("facturaBolsa", facturaBolsa);
 		request.setAttribute("numerodocumento", numerodocumento);
-		request.setAttribute("tipodocumento", tipodocumento);
+		request.setAttribute("tipodocumento", tipodocumento);*/
 		System.out.println("[FacturacionAction] Final - selectGrabar");
 		return mapping.findForward("agregarFacturacion");
 	}
 	
-	@SuppressWarnings("unchecked")
 	public ActionForward grabar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[FacturacionAction] Inicio - grabar");
-		HttpSession session = request.getSession();
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);
-		Factura facturaBolsa = (Factura) request.getSession().getAttribute("facturaBolsa");
-//		facadeLocal.create(facturaBolsa);
+		HttpSession session = request.getSession(true);
 		
 		List<Detallefactura> listDetallefactura = (List<Detallefactura>) session.getAttribute("listDetallefactura");
 		
@@ -256,20 +261,21 @@ public class FacturacionAction extends GrandActionAbstract{
 		String cbtipodoc = request.getParameter("cbtipodoc");
 		String numerodocumento = request.getParameter("numerodocumento");
 		String montoacuenta = request.getParameter("txtacuenta");
-	
+		String facturaestado = request.getParameter("facestado");
+		
 		// Se procede a preparar el parametro fecha para luego ser convertido a fecha SQL y poder enviarlo a la BD al campo de tipo DATE
 		String fechadocumento = request.getParameter("fechadocumento"); //  dd/mm/yyyy
-		/*SimpleDateFormat fechadocumento = new SimpleDateFormat("dd-MM-yyyy");
-		java.sql.Date d = (Date) sdf.parse(fechadocumento);*/
 		
 		if(listDetallefactura!=null && codigoide!=null){
-			//facadeLocal.grebarFactura(new Long(numerodocumento), fecha, totalfac, codigoide, cbtipodoc, listDetallefactura);
 			facadeLocal.grebarFactura(new Long(numerodocumento), fechadocumento, totalfac, codigoide, cbtipodoc, listDetallefactura, montoacuenta);
-			//facadeLocal.grebarFactura(numerodocumento, totalfac, codigoide, cbtipodoc, listDetallefactura);
-		}
+		}		
 		
-		List<Factura> lstCob = facadeLocal.findAll();
+		List<Factura> lstCob = facadeLocal.findAll(new Long(facturaestado));
 		request.setAttribute("lstFac", lstCob);
+		
+		facturaestado = null;
+		listDetallefactura = null;
+		session.setAttribute("listDetallefactura", listDetallefactura);
 		System.out.println("[FacturacionAction] Final - grabar");
 		return mapping.findForward("cargarAction");
 	}
@@ -281,18 +287,13 @@ public class FacturacionAction extends GrandActionAbstract{
 
 		String codigoFactura = request.getParameter("codigoFactura");
 		String descripanulada = request.getParameter("descripanulada");
-		
+		String facturaestado = request.getParameter("facestado");
 		
 		if(codigoFactura!=null){
-			
 			facadeLocal.anularFactura(codigoFactura, descripanulada);
-//			Factura f= new Factura();
-//			f.setCodFactura(new Long(codigoFactura));
-//			facadeLocal.remove(f);
-			
 		}
 		
-		List<Factura> lstFac = facadeLocal.findAll();
+		List<Factura> lstFac = facadeLocal.findAll(new Long(facturaestado));
 		request.setAttribute("lstFac", lstFac);
 		System.out.println("[FacturacionAction] Final - eliminar");
 		return mapping.findForward("cargarAction");
@@ -332,21 +333,9 @@ public class FacturacionAction extends GrandActionAbstract{
 		return mapping.findForward("cargarAction");
 	}
 	
-	// Bolsa
-	
 	public ActionForward insertarBolsa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
-//		HttpSession session = request.getSession();
 		System.out.println("[FacturacionAction] Inicio - insertarBolsa");
 		Factura facturaBolsa = (Factura) request.getSession().getAttribute("facturaBolsa");
-		
-		String var1 = request.getParameter("codigo");
-		String var2 = request.getParameter("descrip");
-		String var3 = request.getParameter("codTipCob");
-		String var4 = request.getParameter("codMon");
-		String var5 = request.getParameter("costo");
-		String var6 = request.getParameter("cantidad");		
-		String var7 = request.getParameter("acuenta");
-		
 		
 		if (facturaBolsa != null) {
 			request.setAttribute("lstFacturaBolsa", facturaBolsa.getSisgapDetallefacturas());
@@ -359,14 +348,6 @@ public class FacturacionAction extends GrandActionAbstract{
 	public ActionForward eliminarBolsa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[FacturacionAction] Inicio - eliminarBolsa");
 		Factura facturaBolsa = (Factura) request.getSession().getAttribute("facturaBolsa");
-		
-		String var1 = request.getParameter("");
-		String var2 = request.getParameter("");
-		String var3 = request.getParameter("");
-		String var4 = request.getParameter("");
-		String var5 = request.getParameter("");
-		String var6 = request.getParameter("");
-		
 		if (facturaBolsa != null) {
 			request.setAttribute("lstFacturaBolsa", facturaBolsa.getSisgapDetallefacturas());
 		}
@@ -377,13 +358,6 @@ public class FacturacionAction extends GrandActionAbstract{
 	public ActionForward actualizarBolsa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("[FacturacionAction] Inicio - actualizarBolsa");
 		Factura facturaBolsa = (Factura) request.getSession().getAttribute("facturaBolsa");
-		
-		String var1 = request.getParameter("");
-		String var2 = request.getParameter("");
-		String var3 = request.getParameter("");
-		String var4 = request.getParameter("");
-		String var5 = request.getParameter("");
-		String var6 = request.getParameter("");
 		
 		if (facturaBolsa != null) {
 			request.setAttribute("lstFacturaBolsa", facturaBolsa.getSisgapDetallefacturas());
@@ -397,7 +371,17 @@ public class FacturacionAction extends GrandActionAbstract{
 		System.out.println("[FacturacionAction] Inicio - print");
 		
 		ImprimeDemo pr = new ImprimeDemo();
-		pr.Imprime("Johan","Muñoz Cavero");
+		String DocReal  = request.getParameter("nroDocReal");
+		String DocInte  = request.getParameter("nroDocInte");
+		String asociado = request.getParameter("asociado");
+		String giro = request.getParameter("giro");
+		String puesto = request.getParameter("puesto");
+		String total = request.getParameter("total");
+		String fecha = request.getParameter("fecha");
+		String detalle  = request.getParameter("detalle");
+		
+		
+		pr.Imprime(asociado,giro,puesto,total,fecha);
 		
 		System.out.println("[FacturacionAction] Final - print");
 		return mapping.findForward("blankpage");

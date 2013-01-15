@@ -12,7 +12,7 @@
 </head>
 <body>
 <table align="center" border="0" class="tahoma11" cellspacing="0" cellpadding="0" width="100%" height="100%" style="padding-top:5px" class=noprint>
-<tr bgcolor="#EFF3F9" height="100%" align="center" >
+<tr bgcolor="#FBEE99" height="100%" align="center" >
 <td align="center"  width="100%" class="titulo">Bienvenido a SISGAP</td>
 </tr>
 </table>

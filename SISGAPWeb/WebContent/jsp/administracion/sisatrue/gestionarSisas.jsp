@@ -39,7 +39,7 @@ $(function() {
 				Generar : function() {
 					var fecDoc = $("#fechadocumento").val();
 					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";  
-			        nueva=window.open('ReportsServlet?reporte=LISTADO_SERVICIOS_HIGIENICOS&fecDoc='+fecDoc, 'Popup', caracteristicas);  
+			        nueva=window.open('ReportsServlet?reporte=LISTADO_SISAS&fecDoc='+fecDoc, 'Popup', caracteristicas);  
 			        //return false;
 				},
 				Cancel : function() {
@@ -83,7 +83,7 @@ $(function() {
 			modal : true,
 			buttons : {
 				Eliminar : function() {
-					var frm = document.formServiciosHigienicos;
+					var frm = document.formSisas;
 					frm.codigoServicio.value = cod;
 					frm.metodo.value = 'eliminar';
 					frm.submit();
@@ -124,13 +124,13 @@ $(function() {
 		
 	function lstNuevo() {
 		//alert("Nuevo...");
-		var frm = document.formServiciosHigienicos;
+		var frm = document.formSisas;
 		frm.metodo.value = 'irGrabar';
 		frm.submit();
 	}
 
 	function grabar() {
-		var frm = document.formServiciosHigienicos;
+		var frm = document.formSisas;
 		alert("Grabando...");		
 		//frm.submit();
 	}
@@ -140,7 +140,7 @@ $(function() {
 	}
 		
 	function setTipoDoc(cod){
-		var frm = document.formServiciosHigienicos;
+		var frm = document.formSisas;
 		frm.tipodocumento.value = cod;
 	}
 
@@ -172,14 +172,14 @@ $(function() {
 	}
 
 	function ver(cod) {
-		var frm = document.formServiciosHigienicos;
+		var frm = document.formSisas;
 		frm.codigoServicio.value = cod;
 		frm.metodo.value = 'ver';
 		frm.submit();
 	}
 
 	function editar(cod) {
-		var frm = document.formServiciosHigienicos;
+		var frm = document.formSisas;
 		frm.codigoServicio.value = cod;
 		frm.metodo.value = 'editar';
 		frm.submit();
@@ -188,7 +188,7 @@ $(function() {
 	function eliminar(cod) {
 		rpta = confirmar("¿Esta seguro que desea eliminar este registro?");
 		if (rpta){
-			var frm = document.formServiciosHigienicos;
+			var frm = document.formSisas;
 			frm.codigoServicio.value = cod;
 			frm.metodo.value = 'eliminar';
 			frm.submit();
@@ -204,7 +204,7 @@ $(function() {
 </head>
 <body>
 
-	<html:form action="/servicioshigienicos.do" styleId="formServiciosHigienicos">
+	<html:form action="/registrosisas.do" styleId="formSisas">
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoServicio" id="codigoServicio"/>		
 		
@@ -214,12 +214,12 @@ $(function() {
 
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
 			<tr bgcolor="#EFF3F9">
-				<td width=885 align="left" class="titulo">Ingresos / Servicios Higienicos</td>
+				<td width=885 align="left" class="titulo">Ingresos / Sisas</td>
 			</tr>
 		</table>
 		<fieldset>
 			<legend>
-				<span class="titulo">Listado de Cobros de Servicios Higienicos
+				<span class="titulo">Listado de Cobros de Sisas
 				<table border="0">
 					<tr>
 						<td>
@@ -247,7 +247,7 @@ $(function() {
 		<display:table name="lstSSHH"
 						class="consultanormal"
 						excludedParams="metodo" 
-						requestURI="/servicioshigienicos.do?metodo=cargarAction"
+						requestURI="/registrosisas.do?metodo=cargarAction"
 						id="row"
 						export="false">
 				<display:column title="" style="width:60px;">
@@ -264,12 +264,6 @@ $(function() {
 				<display:column title="Descripcion" property="strDescripcion" sortable="true" style="width:300px;"></display:column>
 				<display:column title="Fecha de Creación" format="{0,date,dd-MM-yyyy}" property="datFechacrea" sortable="true" style="width:150px;"></display:column>
 				<display:column title="Total" format="S/. {0,number,###.00}" property="numTotal" sortable="true" style="width:100px;"></display:column>
-				<display:column title="Estado">
-					<c:choose>
-						<c:when test="${row.numEstado==1}">Pagado</c:when>
-						<c:when test="${row.numEstado==3}">Anulado</c:when>
-					</c:choose>
-				</display:column>
 		</display:table>
 		</fieldset>	
 

@@ -36,7 +36,8 @@
 	width: 116;
 	border-top: ;
 	font: 11px arial;
-	color: #2D466F;
+	/*color: #2D466F;*/
+	color: #FD8C01;
 	text-align: center;
 	text-decoration: underline;
 	cursor: hand;
@@ -46,12 +47,14 @@
 	width: 116;
 	border-top: ;
 	font: 11px arial;
-	color: #2D466F;
+	/*color: #2D466F;*/
+	color: #FD8C01;
 	text-align: center;
 }
 
 .SM_cb90023 {
-	background-color: #E7EBF0;
+	/*background-color: #E7EBF0;*/
+	background-color: #FBFCD0;
 }
 
 .SM_ps90023 {
@@ -70,7 +73,8 @@
 	width: 116;
 	border-top: 0;
 	font: 11px arial;
-	color: #2D466F;
+	/*color: #2D466F;*/
+	color: #FD8C01;
 	text-align: center;
 }
 
@@ -158,9 +162,17 @@
 				</li>
 				<li>
 					<div class="botonDelMenu">		
+						<a href="<%=request.getContextPath()%>/registrovigilancia.do?metodo=cargarAction" target="FraMain">						
+							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/vigilancia_3.png"> 
+							Vigilancia
+					    </a>
+					</div>
+				</li>
+				<li>
+					<div class="botonDelMenu">		
 						<a href="<%=request.getContextPath()%>/registrosisas.do?metodo=cargarAction" target="FraMain">						
 							<img alt="" src="<%=request.getContextPath()%>/imagenes/menu/seleccionarConceptosAtributos.png"> 
-							Vigilancia
+							Control de SISA
 					    </a>
 					</div>
 				</li>
@@ -271,21 +283,7 @@
 					    <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/vigilancia_2.png"/>
 					    Reporte General de Vigilancia</a>			
 					</div>
-				</li>
-				<!-- li>
-					<div class="botonDelMenu" style="visibility: hidden;">		
-						<a href="<%=request.getContextPath()%>/repDicGen.do?metodo=cargarAction" target="FraMain">						
-				        <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/reporteDiccionarioGeneral.png"> 
-				        Reporte del Diccionario en general</a>	
-					</div>
-				</li>
-				<li>
-					<div class="botonDelMenu" style="visibility: hidden;">
-						 <a href="<%=request.getContextPath()%>/repModGen.do?metodo=cargarAction" target="FraMain">						
-						 <img alt="" src="<%=request.getContextPath()%>/imagenes/menu/buscarModelosGenerales.png"> 
-						 Buscar modelos generados</a>	
-					</div>
-				</li -->			
+				</li>		
 			</ul>
 		</div>
 		</div>

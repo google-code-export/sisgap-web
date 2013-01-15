@@ -98,6 +98,10 @@ div#users-contain table td,div#users-contain table th {
 }
 
 
+.editText {
+	padding:5px; border:1px solid #ccc; background:#f4f4f4
+}
+
 </style>
 <script type="text/javascript">
 
@@ -135,7 +139,18 @@ var codMon = "";
 
 	$(function() {
 
+		$('.editText').dblclick( function(){
+			var text = $(this).text();
+			$(this).empty().html('<input type="text" value="'+text+'">').find('input').focus();
+		}).keypress( function(e){
+			if(e.keyCode == 13){
+				var text = $('input', this).val();
+				$(this).html( text );
+			}
+		});
+
 		$("#btn-aceptar-item").button();
+		$("#btn-actualizar-item").button();
 		$("#btn-cancelar").button();
 		$("#registra-f").button();
 		$("#regresar-f").button();
@@ -177,10 +192,10 @@ var codMon = "";
 					var caracteristicas = "height=500,width=800,scrollTo,resizable=1,scrollbars=1,location=0";
 					
 					if(tipDocumento=='R'){  
-			        	nueva=window.open("gestionarFacturacion.do?metodo=imprimirRecibo&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+			        	nueva=window.open("agregarFacturacion.do?metodo=imprimirRecibo&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
 					}
 					if(tipDocumento=='B'){  
-			        	nueva=window.open("gestionarFacturacion.do?metodo=imprimirBoleta&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
+			        	nueva=window.open("agregarFacturacion.do?metodo=imprimirBoleta&nrodocumentoReal="+nroDocReal+"&nrodocumentoInterno="+nroDocInterno,'Popup', caracteristicas);
 					}
 			        //return false;
 			        $(this).dialog("close"); 
@@ -224,6 +239,7 @@ var codMon = "";
 			}
 		}
 
+		
 		function checkRegexp(o, regexp, n) {
 			if (!(regexp.test(o.val()))) {
 				o.addClass("ui-state-error");
@@ -234,7 +250,22 @@ var codMon = "";
 			}
 		}
 
-
+		
+		function SumarColumna(tablagrid, columna) {
+		    var resultVal = 0.0;
+			//$("#tableDetalle tbody tr").not(':first').not(':last').each(
+		    $("#"+ tablagrid +" tbody tr").not(':last').each(
+		        function() {
+		            var celdaValor = $(this).find('td:eq(' + columna + ')');
+		            if (celdaValor.val() != null)
+		                    resultVal += parseFloat(celdaValor.html().replace(',','.'));
+		        } //function
+		    ); //each*/
+		    $("#tableDetalle tbody tr:last td:eq(" + columna + ")").html(resultVal.toFixed(2).toString());//.replace('.',','));
+		    resultado = resultVal;
+		    return resultado;
+		}   
+		
 		$("#buscarsocio-form").dialog({
 			autoOpen : false,
 			height : 300,
@@ -252,8 +283,8 @@ var codMon = "";
 		$("#dialog-form-item").dialog(
 		{
 			autoOpen : false,
-			height : 390,
-			width : 480,
+			height : 400,
+			width : 500,
 			modal : true
 		});
 
@@ -274,15 +305,19 @@ var codMon = "";
 		$("#create-user").button().click(function() {
 			var fecdoc = $('[name=fechadocumento]').val();
 			var nomsoc = $('[name=socio-f]').val();
+
+			$("#btn-aceptar-item").css("display","block");
+			$("#btn-actualizar-item").css("display","none");			
+			
 			if (fecdoc==""){
 				alert("debe ingresar la fecha del documento...");
 				$('[name=fechadocumento]').focus();
 			}else if (nomsoc==""){
-				alert("debe seleccionar el socio...");
+				alert("debe seleccionar el Asociado...");
 				$('[name=buscar-socio]').focus();
 			}else{
 				$("#registra-f").removeAttr("disabled");
-				alert("Antes de abrir ventana...");
+				//alert("Antes de abrir ventana...");
 				$("#dialog-form").dialog("open");
 			}
 			return false;
@@ -296,27 +331,28 @@ var codMon = "";
 		$("#btn-buscar-socio").button().click(function() {
 			var nombre =  $('[name=nombresocio]').val();
 			var nropto =  $('[name=numeropuesto]').val();
+
 				$.ajax({
 			        type: "POST",
 			        url: "/SISGAPWeb/AjaxServlet",
 			        data: "action=BUSCAR_SOCIO&nombre="+nombre+"&opcion=factura&nropto="+nropto,
 			        success: function(datos){
 			        	$("#tablesocios").html(datos);
-			      }
-			});
+			      	}
+				});
 		});
 		
 		$("#btn-aceptar-item").button().click(function() {
 			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + " " + $("#especif-p").val() + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
-			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();
-					
-					$.ajax({
-				        type: "POST",
-				        url: "/SISGAPWeb/AjaxServlet",
-				        data: "action=AGREGAR_ITEM&"+campos,
-				        success: function(datos){					        
-				        	$("#tableDetalle").html(datos);
-				      }
+			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();			
+			
+				$.ajax({
+			        type: "POST",
+			        url: "/SISGAPWeb/AjaxServlet",
+			        data: "action=AGREGAR_ITEM&"+campos,
+			        success: function(datos){					        
+			        	$("#tableDetalle").html(datos);
+			      	}
 				});
 
 			$("#cantidad-p").val(redondea(0,2));
@@ -325,8 +361,35 @@ var codMon = "";
 			$("#especif-p").val("");					
 			$("#dialog-form-item").dialog("close");
 		});
-		
 
+		$("#btn-actualizar-item").button().click(function() {
+			var campos="codigo="+ $("#codigo-p").val() + "&descrip="+ $("#descrip-p").val() + " " + $("#especif-p").val() + "&codTipCob="+ codTipCob + "&codMon="+ codMon  +
+			"&costo="+ $("#costo-p").val() + "&cantidad="+ $("#cantidad-p").val() + "&acuenta="+ $("#acuenta-p").val() + "&total="+ $("#total-p").val();
+
+			var cId = $("#codigo-p").val(); 
+			var filaCont = $('#tableDetalle tbody tr').length;
+			var coluCont = $('#tableDetalle thead tr th').length;
+			/*for(j=0; j<coluCont; j++){
+				var nombre_titulo = $('#tableDetalle thead:parent').find('tr:eq(0)').find('th:eq('+j+')').text();
+				var nombre_detalle1 = $('#tableDetalle tbody:parent').find('tr:eq(0)').find('td:eq('+j+')').text();
+				var nombre_detalle2 = $('#tableDetalle tbody:parent').find('tr:eq(1)').find('td:eq('+j+')').text();
+				alert("Nombre: "+nombre_titulo+"\nDetalle1: "+nombre_detalle1+"\nDetalle2: "+nombre_detalle2);
+			}*/
+			for(var k=0; k<filaCont-1; k++){
+				var campoId = $('#tableDetalle tbody:parent').find('tr:eq('+k+')').find('td:eq(1)').text();
+				if(campoId==cId){
+					alert("Código: "+campoId);
+					$("#tableDetalle tbody tr:eq("+ k + ") td:eq(6)").html($("#cantidad-p").val());
+					$("#tableDetalle tbody tr:eq("+ k + ") td:eq(7)").html($("#total-p").val());
+					$("#tableDetalle tbody tr:eq("+ k + ") td:eq(8)").html($("#acuenta-p").val());    
+				}
+			}
+			$('#txttotal').val(SumarColumna('tableDetalle',7));
+			$('#txtacuenta').val(SumarColumna('tableDetalle',8));
+			$("#dialog-form-item").dialog("close");
+		});
+		
+		
 		$("#btn-buscar-producto").button().click(function() {
 			var nombre =  $('#nombreProducto').val();
 			var codigo = $("#codigo-f").val();
@@ -342,15 +405,16 @@ var codMon = "";
 		});
 
 		
-		$("#registra-f").button().click(function() {
+		/*$("#registra-f").button().click(function() {
+			//alert("Grabara la Factura correspondiente...");
 			$('[name=metodo]').val('grabar');
-			$('#gestionarFacturacion').submit();
+			$('#agregarFacturacion').submit();
 			
-		});
+		});*/
 
 		$("#regresar-f").button().click(function() {
 			$('[name=metodo]').val('cargarAction');
-			$('#gestionarFacturacion').submit();
+			$('#agregarFacturacion').submit();
 		});
 		
 
@@ -389,7 +453,7 @@ var codMon = "";
 					
 	});
 
-
+	
 	function agregarItem(codigo, descrip, codTipCobranza, codMoneda , costo, desCodTipCobranza, desCodMoneda, codReciboLuz) {
 		codTipCob = codTipCobranza;
 		descriCob = descrip;
@@ -397,21 +461,17 @@ var codMon = "";
 		var codide = $("#codigoide-f").val();
 
 		//Verifica Item Seleccionado si es recibo de luz; jala el total del socio
-		//alert("codReciboLuz--> "+codReciboLuz);
 		if (codReciboLuz=="" || codReciboLuz==0){
 			$.ajax({
 		        type: "POST",
 		        url: "/SISGAPWeb/AjaxServlet",
 		        data: "action=BUSCAR_RECIBO_ESPECIAL&descriCob="+descriCob,
 		        success: function(datos){
-			        //alert(datos);
 			        if(datos==""){
 				        alert("Item de generacion especial");
 				        return false;
 				    }else{
-						//alert("Fecha: "+datos.substring(0,10)+"\nFlgVar: "+datos.substring(10,11)+"\nCostoAdd: "+datos.substring(11,12));
 						var costoAD = datos.substring(11,datos.length);
-						//alert("costoAD: "+costoAD);
 						var fechaBD = datos.substring(0,10);
 						temp=""+fechaBD;
 						while (temp.indexOf("-")>-1){
@@ -419,20 +479,11 @@ var codMon = "";
 							temp=""+(temp.substring(0,pos)+"/"+temp.substring((pos+1),temp.length));
 						}
 						fechaBD=temp;
-						/*var fecha = new Date();
-						var dd = fecha.getDate();
-						var mm = fecha.getMonth()+1;
-						var yy = fecha.getYear();*/
 						var fecha = $("#fechadocumento").val();
 						var dd = fecha.substring(8,10);
 						var mm = fecha.substring(5,7);
 						var yy = fecha.substring(0,4);						
 						var fecha_textual = [yy, mm, dd].join("/");
-						/*var fecha_final = fecha_textual.split("/"); //Cortas en partes la cadena que obtienes del calendario
-						var fecha_textual = $("#fechadocumento").val();
-						var fecha_final = fecha_textual.split("/");
-						var fhcorrecta = fecha_final[0] + "/" + ( (parseInt(fecha_final[1]) < 10) ? ("0" + fecha_final[1]) : fecha_final[1] ) + "/" + ( (parseInt(fecha_final[2]) < 10) ? ("0" + fecha_final[2]) : fecha_final[2] );*/
-						//alert("fechaBD ["+fechaBD+"]\nfecha_textual ["+fecha_textual+"]");
 						var datePat =/^(\d{4})(\/)(\d{1,2})\2(\d{1,2})$/;
 						var matchArray = fechaBD.match(datePat);
 						if (matchArray == null)
@@ -453,15 +504,13 @@ var codMon = "";
 						dia = matchArray[4];
 						ano = matchArray[1];
 						FecFin = ano+mes+dia;
-						//alert("valor de FecIni "+FecIni+"\nvalor de FecFin "+FecFin);
+
 						var total = 0;
 						var costo = parseFloat($("#costo-p").val());
 						var adici = parseFloat(costoAD);
-						if(FecIni<FecFin)
-						{
+						if(FecIni<FecFin){
 							total=costo+adici;
-							$("#costo-p").val(total);	
-							//alert(total);	
+							$("#costo-p").val(total);		
 						}
 						
 						if (datos.substring(10,11)=="S"){
@@ -481,7 +530,7 @@ var codMon = "";
 		        data: "action=BUSCAR_RECIBO_LUZ_SOCIO&codide="+codide+"&codReciboLuz="+codReciboLuz,
 		        success: function(datos){
 		        	if(datos==""){
-						alert("El Socio no tiene recibo de luz generado.");
+						alert("El Asociado no tiene recibo de luz generado.");
 						return false;
 		        	}else{
 		        		$("#cantidad-p").val(redondea(datos,2));
@@ -507,6 +556,29 @@ var codMon = "";
 		
 	} 
 
+
+	function actualizarItem(codigo, descrip, codTipCobranza,codMoneda , costo, desCodTipCobranza, desCodMoneda, codReciboLuz) {
+		codTipCob = codTipCobranza;
+		descriCob = descrip;
+		codMon = codMoneda;
+		var codide = $("#codigoide-f").val();
+		
+		$("#dialog-form").dialog("close");
+		$("#codigo-p").val(codigo);
+		$("#descrip-p").val(descrip);
+		$("#tipoCobranza-p").val(desCodTipCobranza);
+		$("#moneda-p").val(desCodMoneda);
+		$("#costo-p").val(costo);
+		$("#total-p").val(0);
+		$("#acuenta-p").val(0);
+		$("#cantidad-p").val(0);
+		$("#dialog-form-item").dialog("open");
+		$("#cantidad-p").focus();
+		
+	} 
+
+	
+	
 	function redondea(sVal, nDec){ 
 		var n = parseFloat(sVal); 
 		var s = "0.00"; 
@@ -569,9 +641,59 @@ var codMon = "";
 	        success: function(datos){					        
 	        	$("#tableDetalle").html(datos);
 	      }
-		});		
-		
+		});				
 	} 
+
+
+	//function editarDetalle(codigo,descri,tipoCob,moneda,numCosto,numCantidad,numTotal,numAcuenta) {
+	function editarDetalle(codigo) {
+		//alert("Codigo: "+codigo+"\nDescri: "+descri+"\nTipo Cob: "+tipoCob+"\nMoneda: "+moneda+"\nNumCosto: "+numCosto+"\nNumCantidad: "+numCantidad+"\nNumTotal: "+numTotal+"\nNumAcuenta: "+numAcuenta);
+
+		$('#codigo-p').val(codigo);
+		var cId = codigo; 
+		var filaCont = $('#tableDetalle tbody tr').length;
+		var coluCont = $('#tableDetalle thead tr th').length;
+		for(var k=0; k<filaCont-1; k++){
+			var campoId = $('#tableDetalle tbody:parent').find('tr:eq('+k+')').find('td:eq(1)').text();
+			if(campoId==cId){
+				//alert("Código: "+campoId);
+				//$("#tableDetalle tbody tr:eq("+ k + ") td:eq(1)").text();
+				/*alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(2)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(3)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(4)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(5)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(6)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(7)").text());
+				alert($("#tableDetalle tbody tr:eq("+ k + ") td:eq(8)").text());*/
+				
+				$("#descrip-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(2)").text());
+				$("#tipoCobranza-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(3)").text());
+				$("#moneda-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(4)").text());
+				$("#costo-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(5)").text());
+				$("#cantidad-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(6)").text());
+				$("#total-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(7)").text());
+				$("#acuenta-p").val($("#tableDetalle tbody tr:eq("+ k + ") td:eq(8)").text());
+			}
+		}
+		$("#dialog-form-item").dialog("open");
+		//$("#dialog-form-item").dialog("close");
+
+		/*for(j=0; j<coluCont; j++){
+			var nombre_titulo = $('#tableDetalle thead:parent').find('tr:eq(0)').find('th:eq('+j+')').text();
+			var nombre_detalle1 = $('#tableDetalle tbody:parent').find('tr:eq(0)').find('td:eq('+j+')').text();
+			var nombre_detalle2 = $('#tableDetalle tbody:parent').find('tr:eq(1)').find('td:eq('+j+')').text();
+			alert("Nombre: "+nombre_titulo+"\nDetalle1: "+nombre_detalle1+"\nDetalle2: "+nombre_detalle2);
+		}*/
+		
+		//$("#cantidad-p").focus();
+
+
+				//$("#btn-aceptar-item").removeAttr("style:none");
+		/*$("#btn-aceptar-item").attr("style:none");
+		$("#btn-actualizar-item").attr("style:block");*/
+		$("#btn-aceptar-item").css("display","none");
+		$("#btn-actualizar-item").css("display","block");
+	}
 
 	function agregarSocio(codigo, razonSocial , puesto, codigoIde) {
 		$("#codigo-f").val(codigo);
@@ -592,14 +714,24 @@ var codMon = "";
 	}
 
 	function pagar(){
-		$('[name=metodo]').val('cancelarFactura');	
-		$('#gestionarFacturacion').submit();
+		$('[name=metodo]').val('cancelarFactura');		
+		$('#agregarFacturacion').submit();
 	}
 
+	function actualizarItems(costo,cantidad,total,acuenta){
+		//alert("Costo: "+costo+"\nCantidad: "+cantidad+"\nTotal: "+total+"\nA Cta: "+acuenta);
+		var Tot = cantidad*costo;
+	}
+
+	function grabarFactura(){
+		//alert("pruebas");
+		$('[name=metodo]').val('grabar');
+		$('#agregarFacturacion').submit();		
+	}
 </script>
 </head>
 <body>
-<html:form action="/gestionarFacturacion.do" styleId="gestionarFacturacion">
+<html:form action="/gestionarFacturacion.do" styleId="agregarFacturacion">
 		<input type="hidden" name="metodo" />
 		<input type="hidden" name="codigoide" id="codigoide-f" />
 		<input type="hidden" name="cbtipodoc" value="${tipodocumento}" />
@@ -610,9 +742,10 @@ var codMon = "";
 		<input type="hidden" name="direccion" value="${direccion-f}" />
 		<input type="hidden" name="detfactura" value="${lstDetFac}" />
 		<input type="hidden" name="nroacuenta" value="${numeroacuenta}" />
+		<input type="hidden" name="facestado" value="1" />
 		
 		<table border="0" width="885" class="tahoma11" cellpadding="3"	cellspacing="1">
-			<tr bgcolor="#EFF3F9">
+			<tr bgcolor="#FBEE99">
 				<td width=885 align="left" class="titulo">Administración/Recibo de Ingreso/Boleta de Venta</td>
 			</tr>
 		</table>
@@ -666,11 +799,13 @@ var codMon = "";
 					</td>
 					<td>&nbsp;</td>
 					<td>Código</td>
-					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${fac.sisgapSocio.tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" tabindex="24"/></td>
+					<!-- td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${fac.sisgapSocio.tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" tabindex="24"/></td -->
+					<td><input type="text" name="codigo-f" id="codigo-f" size="10" value="${tranCodigo}" class="text ui-widget-content ui-corner-all" readonly="readonly" tabindex="24"/></td>
 				</tr>
 				<tr>
 					<td>Puesto</td>
-					<td><input type="text" name="direccion-f" id="direccion-f" size="10" value="${fac.sisgapSocio.tranPuesto}" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly" tabindex="25"/></td>
+					<!-- td><input type="text" name="direccion-f" id="direccion-f" size="10" value="${fac.sisgapSocio.tranPuesto}" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly" tabindex="25"/></td -->
+					<td><input type="text" name="direccion-f" id="direccion-f" size="10" value="${tranPuesto}" class="text ui-widget-content ui-corner-all" style=" width : 158px;" readonly="readonly" tabindex="25"/></td>
 					<td>Tipo Documento</td>
 					<td>
 						<select name="cbtipodocx" id="cbtipodoc" class="text ui-widget-content ui-corner-all" disabled="disabled" style=" width : 100px;">
@@ -704,7 +839,7 @@ var codMon = "";
 								<table id='detalle-f' class='ui-widget ui-widget-content' width='100%'>
 								<thead>
 								<tr class='ui-widget-header'>
-									<th>Action</th>
+									<th>Acci&oacuten</th>
 									<th>C&oacutedigo</th>
 									<th>Descripci&oacuten</th>
 									<th>Tipo de Cobranza</th>
@@ -772,7 +907,7 @@ var codMon = "";
 				</div>
 				<c:choose>
 					<c:when test="${isDetalle!=1}">
-						<button id="registra-f" name="registra-f">Registrar Factura</button>
+						<button id="registra-f" name="registra-f" onclick="grabarFactura();">Registrar Factura</button>
 					</c:when>
 					<c:when test="${isDetalle==1}">
 						<button id="regresar-f" name="regresar-f">Regresar</button>
@@ -831,8 +966,9 @@ var codMon = "";
 					</tr>
 				</table>
 				<br>
-				<button id="btn-aceptar-item" tabindex="10">Agregar</button>
-				<button id="btn-cancelar" tabindex="11">Cancelar</button>
+				<button id="btn-aceptar-item" tabindex="10" style="display: block">Agregar</button>
+				<button id="btn-actualizar-item" tabindex="11" style="display: none">Actualizar</button>
+				<button id="btn-cancelar" tabindex="12">Cancelar</button>
 			</fieldset>
 		</div>
 		<div id="buscarsocio-form" title="Buscar Socio">		

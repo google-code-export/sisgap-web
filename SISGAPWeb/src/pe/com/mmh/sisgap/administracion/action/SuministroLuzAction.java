@@ -16,13 +16,17 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import pe.com.mmh.sisgap.administracion.ejb.FacturaFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacade;
 import pe.com.mmh.sisgap.administracion.ejb.SuministroLuzFacadeLocal;
+import pe.com.mmh.sisgap.administracion.ejb.VigilanciaFacadeLocal;
 import pe.com.mmh.sisgap.comun.BaseDispatchAction;
 import pe.com.mmh.sisgap.comun.GrandActionAbstract;
 import pe.com.mmh.sisgap.comun.constantes.ConstantesJNDI;
 import pe.com.mmh.sisgap.domain.Factura;
+import pe.com.mmh.sisgap.domain.ReciboLuzAsociado;
 import pe.com.mmh.sisgap.domain.ReciboluzOrg;
 import pe.com.mmh.sisgap.domain.SuministroLusReciboSocio;
+import pe.com.mmh.sisgap.domain.Vigilancia;
 
 public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstract{
 	
@@ -37,7 +41,7 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 	public ActionForward buscar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
 		System.out.println("[SuministroLuzAction] buscar");
 		FacturaFacadeLocal facadeLocal = (FacturaFacadeLocal)lookup(ConstantesJNDI.FACTURAFACADE);		
-		List<Factura> lstCob = facadeLocal.findAll();
+		List<Factura> lstCob = facadeLocal.findAlls();
 		request.setAttribute("lstFac", lstCob);
 		return mapping.findForward("cargarAction");
 	}
@@ -544,6 +548,30 @@ public class SuministroLuzAction extends GrandActionAbstract{//GrandActionAbstra
 		
 		return mapping.findForward("agrebarSuministroluz");
 	}
+	
+
+	public ActionForward verReporteSuministroLuz(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		System.out.println("[SuministroLuzAction] Inicio - verReporteSuministroLuz");
+		
+		String codigoSocios = request.getParameter("xcodSocio");
+		
+		SuministroLuzFacadeLocal facadeLocal = (SuministroLuzFacadeLocal) lookup(ConstantesJNDI.SUMINISTROLUZ);
+		List<ReciboLuzAsociado> list = facadeLocal.findSuministroxAsociado(new BigDecimal(codigoSocios));
+		
+		/*for (int a=0; a<list.size(); a++){
+			System.out.println(list.get(a).getCodigoRecibo().toString()+" "+list.get(a).getCodigoSocio().toString()+" "+
+					list.get(a).getCorrelativo().toString()+" "+list.get(a).getTotal().intValue()+" "+
+					list.get(a).getTotalReciboOrg().intValue()+" "+list.get(a).getPeriodo().toString()+" "+
+					list.get(a).getEstado());
+		}*/
+		request.setAttribute("lstSuministroAsociado", list);
+		
+		System.out.println("[SuministroLuzAction] Final - verReporteSuministroLuz");
+		return mapping.findForward("mostrarAction");
+	}
+
+	
+	
 	
 	public Object lookup(String JNDIName){
 		try {
